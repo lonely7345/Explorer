@@ -1,0 +1,7 @@
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/rest/NotebookApi.java
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/socket/NotebookServer.java
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/rest/ZeppelinRestApi.java
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/server/ZeppelinServer.java
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/socket/Message.java
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/rest/NotebookResponse.java
+/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/src/main/java/com/nflabs/zeppelin/server/JsonResponse.java

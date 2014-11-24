@@ -1,0 +1,92 @@
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-zengine/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+nov 24, 2014 12:51:21 PM com.sun.jersey.api.core.PackagesResourceConfig init
+INFORMACIÓN: Scanning for root resource and provider classes in the packages:
+  com.nflabs.zeppelin.rest
+  com.wordnik.swagger.jersey.listing
+nov 24, 2014 12:51:21 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Root resource classes found:
+  class com.nflabs.zeppelin.rest.NotebookApi
+  class com.wordnik.swagger.jersey.listing.ApiListingResourceJSON
+  class com.nflabs.zeppelin.rest.ZeppelinRestApi
+nov 24, 2014 12:51:21 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Provider classes found:
+  class com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider
+  class com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider
+nov 24, 2014 12:51:21 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Initiating Jersey application, version 'Jersey: 1.9 09/02/2011 11:17 AM'
+nov 24, 2014 12:51:21 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Adding the following classes declared in META-INF/services/jersey-server-components to the resource configuration:
+  class org.atmosphere.jersey.AtmosphereResourceConfigurator
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-zengine/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+nov 24, 2014 1:00:39 PM com.sun.jersey.api.core.PackagesResourceConfig init
+INFORMACIÓN: Scanning for root resource and provider classes in the packages:
+  com.nflabs.zeppelin.rest
+  com.wordnik.swagger.jersey.listing
+nov 24, 2014 1:00:40 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Root resource classes found:
+  class com.nflabs.zeppelin.rest.NotebookApi
+  class com.wordnik.swagger.jersey.listing.ApiListingResourceJSON
+  class com.nflabs.zeppelin.rest.ZeppelinRestApi
+nov 24, 2014 1:00:40 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Provider classes found:
+  class com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider
+  class com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider
+nov 24, 2014 1:00:40 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Initiating Jersey application, version 'Jersey: 1.9 09/02/2011 11:17 AM'
+nov 24, 2014 1:00:40 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Adding the following classes declared in META-INF/services/jersey-server-components to the resource configuration:
+  class org.atmosphere.jersey.AtmosphereResourceConfigurator
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-zengine/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+nov 24, 2014 1:30:47 PM com.sun.jersey.api.core.PackagesResourceConfig init
+INFORMACIÓN: Scanning for root resource and provider classes in the packages:
+  com.nflabs.zeppelin.rest
+  com.wordnik.swagger.jersey.listing
+nov 24, 2014 1:30:47 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Root resource classes found:
+  class com.wordnik.swagger.jersey.listing.ApiListingResourceJSON
+  class com.nflabs.zeppelin.rest.ZeppelinRestApi
+  class com.nflabs.zeppelin.rest.NotebookApi
+nov 24, 2014 1:30:47 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Provider classes found:
+  class com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider
+  class com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider
+nov 24, 2014 1:30:47 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Initiating Jersey application, version 'Jersey: 1.9 09/02/2011 11:17 AM'
+nov 24, 2014 1:30:47 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Adding the following classes declared in META-INF/services/jersey-server-components to the resource configuration:
+  class org.atmosphere.jersey.AtmosphereResourceConfigurator
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-server/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/idiaz/workspace/stratio-crossdata-ishell/zeppelin-zengine/target/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+nov 24, 2014 1:35:51 PM com.sun.jersey.api.core.PackagesResourceConfig init
+INFORMACIÓN: Scanning for root resource and provider classes in the packages:
+  com.nflabs.zeppelin.rest
+  com.wordnik.swagger.jersey.listing
+nov 24, 2014 1:35:51 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Root resource classes found:
+  class com.wordnik.swagger.jersey.listing.ApiListingResourceJSON
+  class com.nflabs.zeppelin.rest.NotebookApi
+  class com.nflabs.zeppelin.rest.ZeppelinRestApi
+nov 24, 2014 1:35:51 PM com.sun.jersey.api.core.ScanningResourceConfig logClasses
+INFORMACIÓN: Provider classes found:
+  class com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider
+  class com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider
+nov 24, 2014 1:35:51 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Initiating Jersey application, version 'Jersey: 1.9 09/02/2011 11:17 AM'
+nov 24, 2014 1:35:51 PM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFORMACIÓN: Adding the following classes declared in META-INF/services/jersey-server-components to the resource configuration:
+  class org.atmosphere.jersey.AtmosphereResourceConfigurator
