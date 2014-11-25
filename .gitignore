@@ -55,6 +55,7 @@ Thumbs.db
 #intelliJ IDEA project files
 .idea/
 *.iml
+atlassian-ide-plugin.xml
 
 # maven target files
 target/
