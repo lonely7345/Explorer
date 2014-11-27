@@ -12,6 +12,85 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ /*navigation bar menu*/
+
+
+#notebook{
+  padding-left:12px;
+  padding-right:12px;
+}
+
+.displayNavBar {
+  display: inline !important;
+}
+
+navbar-inverse {
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+  font-size: 18px;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  color: #fff;
+  background-color: #3071a9;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+  background-color: #3071a9;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  color: #fff;
+  background-color: #080808;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-brand {
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Patua One', cursive;
+  font-size: 32px;
+}
+
+a.navbar-brand:hover {
+  color: #fff !important;
+}
+
+.server-status {
+  color:#fff;
+  font-size:12px;
+  margin-top: 6px;
+  margin-left: 20px;
+}
+
+.server-connected {
+  color: #00CC00;
+}
+
+.server-disconnected {
+  color: rgba(240, 48, 0, 1);
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+
+/*paragraph*/
 
 .paragraph-col {
   margin: 0 0 0 0px;
@@ -64,7 +143,7 @@
   line-height: 1.42857143!important;
   word-break: break-all!important;
   word-wrap: break-word!important;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .ace-tm .ace_marker-layer .ace_selection {
@@ -267,7 +346,7 @@
 .noteAction {
   margin-left: -10px;
   margin-right: -10px;
-  margin-top: -10px;
+  margin-top: 60px;
   font-family: 'Roboto', sans-serif;
 }
 
