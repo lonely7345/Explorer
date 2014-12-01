@@ -1,9 +1,0 @@
-com/nflabs/zeppelin/spark/dep/RepositoryListener.class
-com/nflabs/zeppelin/spark/SparkSqlInterpreter.class
-com/nflabs/zeppelin/spark/SparkInterpreter.class
-com/nflabs/zeppelin/spark/dep/Booter.class
-com/nflabs/zeppelin/spark/dep/RepositorySystemFactory$ManualWagonProvider.class
-com/nflabs/zeppelin/spark/dep/TransferListener.class
-com/nflabs/zeppelin/spark/dep/RepositorySystemFactory.class
-com/nflabs/zeppelin/spark/dep/DependencyResolver.class
-com/nflabs/zeppelin/spark/ZeppelinContext.class

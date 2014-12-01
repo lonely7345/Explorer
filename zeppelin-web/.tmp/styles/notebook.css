@@ -21,6 +21,8 @@
 }
 
 .displayNavBar {
+  padding-left:15px;
+  padding-right:15px;
   display: inline !important;
 }
 
@@ -163,6 +165,8 @@ a.navbar-brand:hover {
   text-align: center;
   white-space: nowrap;
   border-radius: .25em;
+  display:-webkit-inline-flex;
+  display:inline-flex;
 }
 
 .note-jump {
@@ -355,7 +359,8 @@ a.navbar-brand:hover {
 
 .new_h3 {
   margin-top: 1px;
-  padding-top: 7px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .form-control2 {

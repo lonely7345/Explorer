@@ -35,7 +35,6 @@ notebook/
 **/testing/
 
 # OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*
@@ -60,4 +59,8 @@ atlassian-ide-plugin.xml
 # maven target files
 target/
 **/target/
-
+crossdata/target
+markdown/target
+shell/target
+spark/target
+zeppelin-server/target
