@@ -1,13 +1,14 @@
 package com.stratio.crossdata;
 
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import com.nflabs.zeppelin.interpreter.Interpreter;
 import com.nflabs.zeppelin.interpreter.InterpreterResult;
+import com.nflabs.zeppelin.scheduler.Scheduler;
+import com.nflabs.zeppelin.scheduler.SchedulerFactory;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.data.Row;
@@ -25,8 +26,6 @@ import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.common.result.StorageResult;
 import com.stratio.crossdata.driver.BasicDriver;
 import com.stratio.crossdata.sh.utils.ConsoleUtils;
-
-import scala.Console;
 
 public class CrossdataInterpreter extends Interpreter {
 
@@ -141,6 +140,10 @@ public class CrossdataInterpreter extends Interpreter {
 
     @Override public int getProgress() {
         return 0;
+    }
+    @Override
+    public Scheduler getScheduler() {
+        return SchedulerFactory.singleton().createOrGetParallelScheduler("interpreter_" + this.hashCode(), 100);
     }
 
     @Override public List<String> completion(String buf, int cursor) {

@@ -51,6 +51,7 @@ public abstract class Interpreter {
 	
 	public Scheduler getScheduler() {
 		return SchedulerFactory.singleton().createOrGetFIFOScheduler("interpreter_"+this.hashCode());
+
 	}
 	
 	public void destroy() {
