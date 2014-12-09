@@ -99,7 +99,7 @@ public class CrossdataInterpreter extends Interpreter {
             CrossdataManifest manifest;
             try {
                 manifest = ConsoleUtils.parseFromXmlToManifest(typeManifest,
-                        tokens[2].replace(";", "").replace("\"", "").replace("'", ""));
+                        tokens[2].replace(";", "").replace("\"", "").replace("'", "").trim());
             } catch (ManifestException | FileNotFoundException e) {
                 return new InterpreterResult(InterpreterResult.Code.ERROR, "CrossdataManifest couldn't be parsed");
             }
