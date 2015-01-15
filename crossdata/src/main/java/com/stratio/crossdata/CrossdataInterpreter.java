@@ -2,35 +2,28 @@ package com.stratio.crossdata;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
+import com.nflabs.zeppelin.interpreter.AsyncInterpreterResult;
 import com.nflabs.zeppelin.interpreter.Interpreter;
 import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.nflabs.zeppelin.scheduler.Scheduler;
 import com.nflabs.zeppelin.scheduler.SchedulerFactory;
-import com.stratio.crossdata.common.data.Cell;
-import com.stratio.crossdata.common.data.ResultSet;
-import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.ConnectorName;
+import com.stratio.crossdata.common.data.DataStoreName;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
 import com.stratio.crossdata.common.exceptions.ManifestException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.manifest.CrossdataManifest;
-import com.stratio.crossdata.common.metadata.structures.ColumnMetadata;
 import com.stratio.crossdata.common.result.CommandResult;
-import com.stratio.crossdata.common.result.ConnectResult;
 import com.stratio.crossdata.common.result.ErrorResult;
-import com.stratio.crossdata.common.result.MetadataResult;
-import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.result.Result;
-import com.stratio.crossdata.common.result.StorageResult;
 import com.stratio.crossdata.driver.BasicDriver;
 import com.stratio.crossdata.sh.utils.ConsoleUtils;
+import com.stratio.crossdata.utils.CrossdataUtils;
 
 public class CrossdataInterpreter extends Interpreter {
 
     private final BasicDriver xdDriver;
-    private boolean endStream;
 
     static {
         Interpreter.register("xd", CrossdataInterpreter.class.getName());
@@ -56,9 +49,6 @@ public class CrossdataInterpreter extends Interpreter {
     }
 
     @Override public InterpreterResult interpret(String st) {
-        Result result;
-
-        //if stream flag check endStream flag and return result sacado del map
         try {
             connect();
         } catch (ConnectionException e) {
@@ -66,18 +56,67 @@ public class CrossdataInterpreter extends Interpreter {
         }
         StringBuilder sb = new StringBuilder();
         String normalizedSentence = st.trim().toLowerCase();
-        if (normalizedSentence.startsWith("streaming")) { //streaming spike
-            while (!endStream){
-                //check results UNDEFINED
-                //bind values -> mete el objeto del result en un map en memoria
-                //interpret(string flag)
-                //Console.setOut(new PrintStream(System.out.printf("molo mucho")));
+        if (normalizedSentence.startsWith("clean metadata")) {
+            xdDriver.cleanMetadata();
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS, "METADATA clean successful");
+        } else if (normalizedSentence.startsWith("reset serverdata")) {
+            xdDriver.resetServerdata();
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS, "SERVER DATA reset successful");
+        } else if (normalizedSentence.startsWith("describe connectors")) {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,
+                    ConsoleUtils.stringResult(xdDriver.describeConnectors()));
+        } else if (normalizedSentence.startsWith("describe connector ")) {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,
+                    ConsoleUtils.stringResult(xdDriver.describeConnector(
+                            new ConnectorName(
+                                    st.toLowerCase().replace("describe connector ", "").replace(";", "").trim()))));
+        } else if (normalizedSentence.startsWith("describe system")) {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,
+                    ConsoleUtils.stringResult(xdDriver.describeSystem()));
+        } else if (normalizedSentence.startsWith("describe datastore ")) {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,
+                    ConsoleUtils.stringResult(xdDriver.describeDatastore(new DataStoreName(st.toLowerCase().replace
+                            ("describe datastore ", "").replace(";", "").trim()))));
+        } else if (normalizedSentence.startsWith("describe catalogs")) {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,
+                    ConsoleUtils.stringResult(xdDriver.listCatalogs()));
+        } else if (normalizedSentence.startsWith("drop datastore")) {
+            try {
+                Result resultManifest = xdDriver.dropManifest(CrossdataManifest.TYPE_DATASTORE,
+                        st.toLowerCase().replace("drop datastore ", "").replace(";", "").trim());
+                String message;
+                if (resultManifest.hasError()) {
+                    ErrorResult errorResult = (ErrorResult) resultManifest;
+                    message = errorResult.getErrorMessage();
+                } else {
+                    CommandResult commandResult = (CommandResult) resultManifest;
+                    message = commandResult.getResult().toString();
+                }
+                return new InterpreterResult(InterpreterResult.Code.SUCCESS, message);
+
+            } catch (ManifestException e) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't drop");
             }
-            endStream=false;
-            return new InterpreterResult(InterpreterResult.Code.SUCCESS,"STREAMING QUERY ended");
-        }else if (normalizedSentence.startsWith("reset metadata")) {
-            xdDriver.resetMetadata();
-            return new InterpreterResult(InterpreterResult.Code.SUCCESS,"METADATA reset successful");
+        } else if (normalizedSentence.startsWith("drop connector")) {
+            try {
+                Result resultManifest = xdDriver.dropManifest(CrossdataManifest.TYPE_CONNECTOR,
+                        st.toLowerCase().replace("drop connector ", "").replace(";", "").trim());
+                String message;
+                if (resultManifest.hasError()) {
+                    ErrorResult errorResult = (ErrorResult) resultManifest;
+                    message = errorResult.getErrorMessage();
+                } else {
+                    CommandResult commandResult = (CommandResult) resultManifest;
+                    message = commandResult.getResult().toString();
+                }
+                return new InterpreterResult(InterpreterResult.Code.SUCCESS, message);
+
+            } catch (ManifestException e) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't drop");
+            }
+        } else if (normalizedSentence.startsWith("explain plan for")) {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,
+                    ConsoleUtils.stringResult(xdDriver.explainPlan(st.substring("explain plan for".length()))));
         } else if (normalizedSentence.startsWith("add connector") || normalizedSentence
                 .startsWith("add datastore")) {
             // Get manifest type
@@ -100,10 +139,10 @@ public class CrossdataInterpreter extends Interpreter {
             try {
                 manifest = ConsoleUtils.parseFromXmlToManifest(typeManifest,
                         tokens[2].replace(";", "").replace("\"", "").replace("'", "").trim());
-            } catch (ManifestException e)  {
+            } catch (ManifestException e) {
                 return new InterpreterResult(InterpreterResult.Code.ERROR, "CrossdataManifest couldn't be parsed");
-            } catch ( FileNotFoundException e){
-                return new InterpreterResult(InterpreterResult.Code.ERROR, "CrossdataManifest couldn't be accessed \n"+
+            } catch (FileNotFoundException e) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR, "CrossdataManifest couldn't be accessed \n" +
                         e.toString());
             }
             Result metaResult;
@@ -114,16 +153,14 @@ public class CrossdataInterpreter extends Interpreter {
                 return new InterpreterResult(InterpreterResult.Code.ERROR, "CrossdataManifest couldn't added to " +
                         "server");
             }
-            return new InterpreterResult(InterpreterResult.Code.SUCCESS, resultToString
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS, CrossdataUtils.resultToString
                     (metaResult));
 
         } else {
             try {
-                result = xdDriver.executeQuery(st);
-                sb.append(resultToString(result));
-                return new InterpreterResult(InterpreterResult.Code.SUCCESS, sb.toString());
-            } catch (UnsupportedException e) {
-                return new InterpreterResult(InterpreterResult.Code.ERROR, e.getMessage());
+                CrossdataResultHandler callback = new CrossdataResultHandler();
+                xdDriver.asyncExecuteQuery(st, callback);
+                return new AsyncInterpreterResult(InterpreterResult.Code.SUCCESS, callback);
             } catch (Exception e) {
                 return new InterpreterResult(InterpreterResult.Code.ERROR, e.getMessage());
             }
@@ -131,7 +168,6 @@ public class CrossdataInterpreter extends Interpreter {
     }
 
     @Override public void cancel() {
-        endStream=true;
     }
 
     @Override public void bindValue(String name, Object o) {
@@ -144,6 +180,7 @@ public class CrossdataInterpreter extends Interpreter {
     @Override public int getProgress() {
         return 0;
     }
+
     @Override
     public Scheduler getScheduler() {
         return SchedulerFactory.singleton().createOrGetParallelScheduler("interpreter_" + this.hashCode(), 100);
@@ -169,56 +206,6 @@ public class CrossdataInterpreter extends Interpreter {
      */
     public void connect() throws ConnectionException {
         xdDriver.connect(xdDriver.getUserName());
-    }
-
-    public String resultToString(Result result) {
-        if (ErrorResult.class.isInstance(result)) {
-            return ErrorResult.class.cast(result).getErrorMessage();
-        }
-        if (result instanceof QueryResult) {
-            QueryResult queryResult = (QueryResult) result;
-            return queryResultToString(queryResult);
-        } else if (result instanceof CommandResult) {
-            CommandResult commandResult = (CommandResult) result;
-            return String.class.cast(commandResult.getResult());
-        } else if (result instanceof ConnectResult) {
-            ConnectResult connectResult = (ConnectResult) result;
-            return String.valueOf("Connected with SessionId=" + connectResult.getSessionId());
-        } else if (result instanceof MetadataResult) {
-            MetadataResult metadataResult = (MetadataResult) result;
-            return metadataResult.toString();
-        } else if (result instanceof StorageResult) {
-            StorageResult storageResult = (StorageResult) result;
-            return storageResult.toString();
-        } else {
-            return "Unknown result";
-        }
-    }
-
-    public String queryResultToString(QueryResult result) {
-        StringBuilder sb = new StringBuilder();
-        if (result.getResultSet().isEmpty()) {
-            return "%text OK";
-        }
-
-        ResultSet resultSet = null;
-        resultSet = result.getResultSet();
-        sb.append("%table ");
-
-        for (ColumnMetadata c : resultSet.getColumnMetadata()) {
-
-            sb.append(c.getColumnNameToShow()).append("\t");
-        }
-        sb.replace(sb.length() - 1, sb.length(), "\n");
-
-        for (Row r : resultSet.getRows()) {
-            for (Map.Entry<String, Cell> c : r.getCells().entrySet()) {
-                sb.append(c.getValue()).append("\t");
-            }
-            sb.replace(sb.length() - 1, sb.length(), "\n");
-        }
-
-        return sb.toString();
     }
 
 }

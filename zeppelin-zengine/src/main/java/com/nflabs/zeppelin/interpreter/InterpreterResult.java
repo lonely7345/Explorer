@@ -21,7 +21,7 @@ public class InterpreterResult implements Serializable{
 	Code code;
 	Type type;
 	String msg;
-	
+
 	public InterpreterResult(Code code) {
 		this.code = code;
 		this.msg = null;

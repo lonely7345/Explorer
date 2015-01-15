@@ -53,13 +53,13 @@ if [[ ! -d "$ZEPPELIN_NOTEBOOK_DIR" ]]; then
   mkdir -p "$ZEPPELIN_NOTEBOOK_DIR"
 fi
 
-if [ "x$SPARK_HOME" != "x" ]; then
-  source $SPARK_HOME/bin/utils.sh
-  SUBMIT_USAGE_FUNCTION=usage
-  gatherSparkSubmitOpts "$@"
-  ZEPPELIN_RUNNER=$SPARK_HOME/bin/spark-submit
+#if [ "x$SPARK_HOME" != "x" ]; then
+#  source $SPARK_HOME/bin/utils.sh
+#  SUBMIT_USAGE_FUNCTION=usage
+#  gatherSparkSubmitOpts "$@"
+#  ZEPPELIN_RUNNER=$SPARK_HOME/bin/spark-submit
 
-  exec $ZEPPELIN_NICENESS $ZEPPELIN_RUNNER --class $ZEPPELIN_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options -Dzeppelin.log.file=$ZEPPELIN_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
-else
+#  exec $ZEPPELIN_NICENESS $ZEPPELIN_RUNNER --class $ZEPPELIN_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options -Dzeppelin.log.file=$ZEPPELIN_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
+#else
   $ZEPPELIN_RUNNER $JAVA_OPTS -cp $CLASSPATH $ZEPPELIN_SERVER "$@"
-fi
+#fi
