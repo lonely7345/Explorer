@@ -134,9 +134,10 @@ angular.module('zeppelinWebApp')
       $window.parent.postMessage(angular.toJson(message), '*');
     }
   });
-
   // TODO: this may have impact on performance when there are many paragraphs in a note.
   $rootScope.$on('updateParagraph', function(event, data) {
+//  console.log('*****Entro al updateParagraph antes del if');
+//    if (data.paragraph.id === $scope.paragraph.id && data.paragraph.status !== $scope.paragraph.status){
     if (data.paragraph.id === $scope.paragraph.id &&
          (
              data.paragraph.dateCreated !== $scope.paragraph.dateCreated ||
@@ -160,7 +161,7 @@ angular.module('zeppelinWebApp')
       var newGraphMode = $scope.getGraphMode(data.paragraph);
       var resultRefreshed = (data.paragraph.dateFinished !== $scope.paragraph.dateFinished);
 
-      //console.log("updateParagraph oldData %o, newData %o. type %o -> %o, mode %o -> %o", $scope.paragraph, data, oldType, newType, oldGraphMode, newGraphMode);
+      console.log("updateParagraph oldData %o, newData %o. type %o -> %o, mode %o -> %o", $scope.paragraph, data, oldType, newType, oldGraphMode, newGraphMode);
 
       if ($scope.paragraph.text !== data.paragraph.text) {
         if ($scope.dirtyText) {         // check if editor has local update
@@ -183,7 +184,9 @@ angular.module('zeppelinWebApp')
       $scope.paragraph.errorMessage = data.paragraph.errorMessage;
       $scope.paragraph.jobName = data.paragraph.jobName;
       $scope.paragraph.title = data.paragraph.title;
-      $scope.paragraph.status = data.paragraph.status;
+      if(data.paragraph.status === 'REFRESH_RESULT'){
+        $scope.paragraph.status = 'RUNNING';
+      }else  $scope.paragraph.status = data.paragraph.status;
       $scope.paragraph.result = data.paragraph.result;
       $scope.paragraph.settings = data.paragraph.settings;
 
@@ -226,7 +229,8 @@ angular.module('zeppelinWebApp')
   });
 
   $scope.isRunning = function(){
-    if($scope.paragraph.status==='RUNNING' || $scope.paragraph.status==='PENDING') {
+    if($scope.paragraph.status==='RUNNING' || $scope.paragraph.status==='REFRESH_RESULT' || $scope.paragraph
+    .status==='PENDING') {
       return true;
     } else {
       return false;

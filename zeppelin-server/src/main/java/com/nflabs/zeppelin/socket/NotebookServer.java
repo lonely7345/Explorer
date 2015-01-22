@@ -431,6 +431,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         public void onProgressUpdate(Job job, int progress) {
             notebookServer.broadcast(note.id(),
                     new Message(OP.PROGRESS).put("id", job.getId()).put("progress", job.progress()));
+
         }
 
         @Override
@@ -439,8 +440,11 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
 
         @Override
         public void afterStatusChange(Job job, Status before, Status after) {
-            System.out.println("after status change");
             if (before != Status.REFRESH_RESULT) {
+                if (after == Status.PENDING) {
+                    //reset data on screen
+                    job.setReturn("%text ");
+                }
                 if (after == Status.ERROR) {
                     job.getException().printStackTrace();
                 }
@@ -452,13 +456,12 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
                         e.printStackTrace();
                     }
                 }
-
-                notebookServer.broadcastNote(note);
-                System.out.println("notebookserver - broadcastNote + paragraph status " + after);
-                if (job.getStatus() == Job.Status.REFRESH_RESULT) {
-                    job.setStatus(Job.Status.RUNNING);
+                if (Paragraph.class.isInstance(job)) {
+                    Paragraph p = Paragraph.class.cast(job);
+                    notebookServer.broadcast(note.id(), new Message(OP.PARAGRAPH).put("paragraph", p));
+                } else {
+                    notebookServer.broadcastNote(note);
                 }
-                System.out.println("notebookserver return " + job.getReturn());
             }
         }
     }

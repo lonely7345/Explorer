@@ -281,7 +281,7 @@ public class Note implements Serializable, JobListener {
 		note.setReplLoader(replLoader);
 		note.jobListenerFactory = jobListenerFactory;
 		for(Paragraph p : note.paragraphs){
-			if(p.getStatus() == Status.PENDING || p.getStatus() == Status.RUNNING){
+			if(p.getStatus() == Status.PENDING || p.getStatus() == Status.REFRESH_RESULT ||p.getStatus() == Status.RUNNING){
 				p.setStatus(Status.ABORT);
 			}
 		}

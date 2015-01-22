@@ -9,10 +9,9 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.nflabs.zeppelin.interpreter.AsyncInterpreterResult;
 import com.nflabs.zeppelin.interpreter.Interpreter;
-import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.nflabs.zeppelin.interpreter.Interpreter.FormType;
+import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.nflabs.zeppelin.notebook.form.Input;
 import com.nflabs.zeppelin.notebook.form.Setting;
 import com.nflabs.zeppelin.scheduler.Job;
@@ -155,6 +154,7 @@ public class Paragraph extends Job implements Serializable {
 
     @Override
     public Map<String, Object> info() {
+
         return null;
     }
 
@@ -180,14 +180,10 @@ public class Paragraph extends Job implements Serializable {
             settings.setForms(inputs);
             script = Input.getSimpleQuery(settings.getParams(), scriptBody);
         }
+        // inject itself for streaming
+        repl.bindValue("paragraph", this);
         logger().info("RUN : " + script);
-        Object ret = repl.interpret(script);//TODO modify!!!
-        if (AsyncInterpreterResult.class.isInstance(ret)) {
-            System.out.println("Paragraph - AsyncInterpreterResult");
-            AsyncInterpreterResult async = AsyncInterpreterResult.class.cast(ret);
-            async.getResultHandler().setParagraph(this);
-        }
-        return ret;
+        return repl.interpret(script);
     }
 
     @Override

@@ -50,6 +50,10 @@ public abstract class Job {
             return this == RUNNING;
         }
 
+        boolean isRefreshing() {
+            return this == REFRESH_RESULT;
+        }
+
         boolean isPending() {
             return this == PENDING;
         }
@@ -128,14 +132,20 @@ public abstract class Job {
     }
 
     public boolean isTerminated() {
-        return !this.status.isReady() && !this.status.isRunning() && !this.status.isPending();
+        return !this.status.isReady() && !this.status.isRunning() && !this.status.isPending() && !this.status
+                .isRefreshing();
     }
 
     public boolean isRunning() {
         return this.status.isRunning();
     }
 
+    public boolean isRefreshing() {
+        return this.status.isRefreshing();
+    }
+
     public void run() {
+
         if (aborted) {
             setStatus(Status.ABORT);
             aborted = false;
@@ -152,20 +162,11 @@ public abstract class Job {
             if (AsyncInterpreterResult.class.isInstance(runResult)) {
                 AsyncInterpreterResult async = AsyncInterpreterResult.class.cast(runResult);
                 ResultHandler handler = async.getResultHandler();
-                //                Object resultData = handler.getParagraph().getResult();
-                //                if (InterpreterResult.class.isInstance(resultData)) {
-                //                    InterpreterResult ir = InterpreterResult.class.cast(resultData);
-                //                    System.out.println(ir.message());
-                //                    result = ir;
-                //                }
-                if (handler.isLastResult() != null) {
-                    while (!handler.isLastResult()) {
-                        System.out.println("wait 500");
-                        wait(500);
+                while ((handler.isLastResult() == null || !handler.isLastResult()) && !aborted) {
+                    Thread.sleep(500);
+                    if (status == Status.ABORT) {
+                        aborted=true;
                     }
-
-                } else {
-                    System.out.println("Job - is last result = null");
                 }
             } else {
                 result = runResult;

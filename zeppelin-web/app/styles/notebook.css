@@ -21,6 +21,7 @@
 }
 
 .displayNavBar {
+  background-color: #444;
   padding-left:15px;
   padding-right:15px;
   display: inline !important;
@@ -29,7 +30,7 @@
 navbar-inverse {
   padding-left: 20px;
   padding-right: 20px;
-  background-color: #333;
+  background-color: #444;
   color: #fff;
   border-color: #333;
   font-size: 18px;
@@ -37,16 +38,16 @@ navbar-inverse {
 
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
   color: #fff;
-  background-color: #3071a9;
+  /*background-color: #3071a9;*/
 }
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-  background-color: #3071a9;
+  /*background-color: #3071a9;*/
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.2);
+ /* background-color: rgba(0, 0, 0, 0.2);*/
 
 }
 
@@ -56,7 +57,7 @@ navbar-inverse {
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
   color: #fff;
-  background-color: #080808;
+  /*background-color: #444444;*/
 }
 
 .navbar-inverse .navbar-nav > li > a {

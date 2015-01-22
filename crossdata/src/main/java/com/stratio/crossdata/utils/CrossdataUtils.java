@@ -43,7 +43,7 @@ public class CrossdataUtils {
     public static String queryResultToString(QueryResult result) {
         StringBuilder sb = new StringBuilder();
         if (result.getResultSet().isEmpty()) {
-            return "%text OK";
+            return "%text EMPTY result";
         }
 
         ResultSet resultSet = null;

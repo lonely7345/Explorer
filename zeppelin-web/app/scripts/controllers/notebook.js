@@ -117,7 +117,9 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
     var running = false;
     if(!$scope.note){ return false; }
     for (var i=0; i<$scope.note.paragraphs.length; i++) {
-      if ( $scope.note.paragraphs[i].status === 'PENDING' || $scope.note.paragraphs[i].status === 'RUNNING') {
+      if ( $scope.note.paragraphs[i].status === 'PENDING' || $scope.note.paragraphs[i].status === 'REFRESH_RESULT'||
+      $scope.note
+      .paragraphs[i].status === 'RUNNING') {
         running = true;
         break;
       }
