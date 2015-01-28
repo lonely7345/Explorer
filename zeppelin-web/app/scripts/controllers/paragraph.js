@@ -269,6 +269,13 @@ angular.module('zeppelinWebApp')
   $scope.insertNew = function() {
     $rootScope.$emit('insertParagraph', $scope.paragraph.id);
   };
+  $scope.split = function(data){
+  var paragraphData = {
+                         id: $scope.paragraph.id,
+                         paragraph: data
+                       };
+    $rootScope.$emit('split', paragraphData);
+  };
 
   $scope.removeParagraph = function() {
     var result = confirm('Do you want to delete this paragraph?');

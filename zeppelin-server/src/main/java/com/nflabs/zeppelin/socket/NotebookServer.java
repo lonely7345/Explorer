@@ -100,6 +100,9 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             case MOVE_PARAGRAPH:
                 moveParagraph(conn, notebook, messagereceived);
                 break;
+            case SPLIT_INTO_PARAGRAPHS:
+                splitIntoParagraphs(conn, notebook, messagereceived);
+                break;
             case INSERT_PARAGRAPH:
                 insertParagraph(conn, notebook, messagereceived);
                 break;
@@ -379,6 +382,22 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         note.insertParagraph(index);
         note.persist();
         broadcastNote(note);
+    }
+
+    private void splitIntoParagraphs(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
+        final int index = (int) Double.parseDouble(fromMessage.get("index").toString());
+        final String script = fromMessage.get("paragraph").toString();
+        final Note note = notebook.getNote(getOpenNoteId(conn));
+
+        String[] paragraphs = script.split(";");
+
+        for (int i = 0; i < paragraphs.length; i++) {
+            note.insertParagraph(index+i, paragraphs[i]);
+            note.persist();
+            broadcastNote(note);
+
+        }
+
     }
 
     private void cancelParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {

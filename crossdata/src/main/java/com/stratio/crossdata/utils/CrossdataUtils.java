@@ -28,7 +28,7 @@ public class CrossdataUtils {
             return String.class.cast(commandResult.getResult());
         } else if (result instanceof ConnectResult) {
             ConnectResult connectResult = (ConnectResult) result;
-            return String.valueOf("Connected with SessionId=" + connectResult.getSessionId());
+            return String.valueOf(connectResult.getSessionId());
         } else if (result instanceof MetadataResult) {
             MetadataResult metadataResult = (MetadataResult) result;
             return metadataResult.toString();

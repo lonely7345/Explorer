@@ -11,6 +11,7 @@ import com.nflabs.zeppelin.scheduler.Job;
 import com.nflabs.zeppelin.scheduler.Scheduler;
 import com.nflabs.zeppelin.scheduler.SchedulerFactory;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.result.ErrorResult;
 import com.stratio.crossdata.common.result.InProgressResult;
 import com.stratio.crossdata.common.result.Result;
@@ -37,7 +38,6 @@ public class CrossdataInterpreter extends Interpreter {
         try {
             connect();
         } catch (ConnectionException e) {
-            //            return new InterpreterResult(InterpreterResult.Code.ERROR, "couldn't connect with Crossdata server");
             System.out.println(e.getMessage());
         }
 
@@ -53,21 +53,40 @@ public class CrossdataInterpreter extends Interpreter {
 
     @Override public InterpreterResult interpret(String st) {
         Result result;
+        String[] commands = st.split(";");
 
-        CrossdataResultHandler callback = new CrossdataResultHandler(this, paragraph);
+        if (commands.length > 1) {
+            StringBuilder sb = new StringBuilder();
 
-        try {
-            result = xdDriver.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback);
-            if (ErrorResult.class.isInstance(result)) {
-                return new InterpreterResult(InterpreterResult.Code.ERROR,
-                        ErrorResult.class.cast(result).getErrorMessage());
-            } else if (InProgressResult.class.isInstance(result)) {
-                return new AsyncInterpreterResult(InterpreterResult.Code.SUCCESS, callback);
+            for (String i : commands) {
+                try {
+                    String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim()+";";
+                    System.out.println("*****[CrossdataInterpreter]interpret multiline query -> "+normalized);
+                    result = xdDriver.executeRawQuery(normalized);
+                    sb.append(CrossdataUtils.resultToString(result)).append(System.getProperty("line.separator"));
+                } catch (Exception e) {
+                    return new InterpreterResult(InterpreterResult.Code.ERROR, e.getLocalizedMessage());
+                }
             }
-            return new InterpreterResult(InterpreterResult.Code.SUCCESS, CrossdataUtils.resultToString(result));
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS, sb.toString());
 
-        } catch (Exception e) {
-            return new InterpreterResult(InterpreterResult.Code.ERROR, e.getMessage());
+        } else {
+
+            CrossdataResultHandler callback = new CrossdataResultHandler(this, paragraph);
+
+            try {
+                result = xdDriver.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback);
+                if (ErrorResult.class.isInstance(result)) {
+                    return new InterpreterResult(InterpreterResult.Code.ERROR,
+                            ErrorResult.class.cast(result).getErrorMessage());
+                } else if (InProgressResult.class.isInstance(result)) {
+                    return new AsyncInterpreterResult(InterpreterResult.Code.SUCCESS, callback);
+                }
+                return new InterpreterResult(InterpreterResult.Code.SUCCESS, CrossdataUtils.resultToString(result));
+
+            } catch (Exception e) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR, e.getMessage());
+            }
         }
 
     }

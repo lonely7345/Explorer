@@ -24,6 +24,8 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
     }
 
     @Override public void processError(Result errorResult) {
+        System.out.println(
+                "*****[CrossdataResultHandler]ErrorResult ->" + ErrorResult.class.cast(errorResult).getErrorMessage());
         paragraph.setReturn(new InterpreterResult(InterpreterResult.Code.SUCCESS,
                 ErrorResult.class.cast(errorResult).getErrorMessage()));
         isLastResult = true;
@@ -32,10 +34,17 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
     @Override public void processResult(Result result) {
         StringBuilder sb = new StringBuilder();
         sb.append(CrossdataUtils.resultToString(result));
+        System.out.println("*****[CrossdataResultHandler]ProcessResult "+ result.getClass());
+        System.out.println("*****[CrossdataResultHandler]ProcessResult ->" + sb.toString());
         paragraph.setReturn(new InterpreterResult(InterpreterResult.Code.SUCCESS, sb.toString()));
         if (QueryResult.class.isInstance(result)) {
             QueryResult qr = QueryResult.class.cast(result);
+            System.out.println("*****[CrossdataResultHandler]ProcessResult -> isLastResult = "+qr.isLastResultSet());
             isLastResult = qr.isLastResultSet();
+            //ñapa hasta que en crossdata venga bien el lastresultset
+            if(!paragraph.getText().contains("WINDOW")){
+                isLastResult = true;
+            }
             if (paragraph.getStatus() == Job.Status.RUNNING) {
                 paragraph.setStatus(Job.Status.REFRESH_RESULT);
                 paragraph.setStatus(Job.Status.RUNNING);

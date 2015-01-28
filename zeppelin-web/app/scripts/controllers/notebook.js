@@ -218,6 +218,28 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
     $rootScope.$emit('sendNewEvent', { op: 'MOVE_PARAGRAPH', data : {id: paragraphId, index: newIndex}});
   });
 
+ $rootScope.$on('split', function(event, data) {
+    var newIndex = -1;
+    var paragraphId = data.id;
+    var paragraphData = data.paragraph;
+    for (var i=0; i<$scope.note.paragraphs.length; i++) {
+      if ($scope.note.paragraphs[i].id === paragraphId) {
+        newIndex = i+1;
+        break;
+      }
+    }
+
+    if (newIndex === $scope.note.paragraphs.length) {
+      alert('Cannot insert after the last paragraph.');
+      return;
+    }
+    if (newIndex < 0 || newIndex > $scope.note.paragraphs.length) {
+      return;
+    }
+    $rootScope.$emit('sendNewEvent', { op: 'SPLIT_INTO_PARAGRAPHS', data : {index: newIndex, paragraph: paragraphData}
+     });
+  });
+
   // create new paragraph on current position
   $rootScope.$on('insertParagraph', function(event, paragraphId) {
     var newIndex = -1;

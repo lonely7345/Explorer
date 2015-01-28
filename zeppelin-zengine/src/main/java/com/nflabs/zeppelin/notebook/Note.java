@@ -121,7 +121,17 @@ public class Note implements Serializable, JobListener {
 		}
 		return p;
 	}
-	
+
+	public Paragraph insertParagraph(int index, String text) {
+		Paragraph p = new Paragraph(this, replLoader);
+		p.setText(text);
+		synchronized(paragraphs){
+			paragraphs.add(index, p);
+		}
+		return p;
+	}
+
+
 	/**
 	 * Remove paragraph by id
 	 * @param paragraphId

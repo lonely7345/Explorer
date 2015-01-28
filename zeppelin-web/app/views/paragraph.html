@@ -295,9 +295,9 @@ limitations under the License.
       {{paragraph.status}}
     </span>
 
-    <span ng-if="paragraph.status=='RUNNING'">
-      {{getProgress()}}%
-    </span>
+    <!--<span ng-if="paragraph.status=='RUNNING'">-->
+      <!--{{getProgress()}}%-->
+    <!--</span>-->
 
     <!-- Run / Cancel button -->
     <span class="icon-control-play" style="cursor:pointer;color:#3071A9" tooltip-placement="top" tooltip="Run this paragraph"
@@ -327,6 +327,10 @@ limitations under the License.
               ng-options="col for col in colWidthOption"></select>
           </form>
           </a>
+        </li>
+        <li>
+          <a class="icon-scissors" style="cursor:pointer"
+             ng-click="split(getEditorValue())"> Split</a>
         </li>
         <li>
           <a class="icon-arrow-up" style="cursor:pointer"

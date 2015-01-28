@@ -61,7 +61,6 @@ angular.module('zeppelinWebApp')
     } else if (op === 'NOTES_INFO') {
       $rootScope.$emit('setNoteMenu', data.notes);
     } else if (op === 'PARAGRAPH') {
-//      console.log('*****Entro en el UpdateParagraph');
       $rootScope.$emit('updateParagraph', data);
     } else if (op === 'PROGRESS') {
       $rootScope.$emit('updateProgress', data);

@@ -46,6 +46,10 @@ public class Message {
         INSERT_PARAGRAPH,   // [c-s] create new paragraph below current paragraph
 		                    // @param target index
 
+		SPLIT_INTO_PARAGRAPHS, // [c-s] create new paragraph below current paragraph
+		                       // @param target first index
+		                       // @param commands list<String> of commands
+
         COMPLETION,         // [c-s] ask completion candidates
 		                    // @param id
 		                    // @param buf current code
