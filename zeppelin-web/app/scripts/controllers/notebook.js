@@ -236,7 +236,8 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
     if (newIndex < 0 || newIndex > $scope.note.paragraphs.length) {
       return;
     }
-    $rootScope.$emit('sendNewEvent', { op: 'SPLIT_INTO_PARAGRAPHS', data : {index: newIndex, paragraph: paragraphData}
+    $rootScope.$emit('sendNewEvent', { op: 'SPLIT_INTO_PARAGRAPHS', data : {index: newIndex, id: paragraphId,
+    paragraph: paragraphData}
      });
   });
 

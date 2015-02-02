@@ -391,8 +391,13 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
 
         String[] paragraphs = script.split(";");
 
+        note.removeParagraph(String.class.cast(fromMessage.get("id")));
+        note.persist();
+        broadcastNote(note);
+
         for (int i = 0; i < paragraphs.length; i++) {
-            note.insertParagraph(index+i, paragraphs[i]);
+            note.insertParagraph(index + i - 1,
+                    paragraphs[i].replaceAll("(\\r|\\n)", "").concat(";"));
             note.persist();
             broadcastNote(note);
 
