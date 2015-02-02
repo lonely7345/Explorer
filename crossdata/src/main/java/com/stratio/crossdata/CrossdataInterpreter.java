@@ -11,7 +11,6 @@ import com.nflabs.zeppelin.scheduler.Job;
 import com.nflabs.zeppelin.scheduler.Scheduler;
 import com.nflabs.zeppelin.scheduler.SchedulerFactory;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.result.ErrorResult;
 import com.stratio.crossdata.common.result.InProgressResult;
 import com.stratio.crossdata.common.result.Result;
@@ -55,7 +54,7 @@ public class CrossdataInterpreter extends Interpreter {
         Result result;
         String[] commands = st.split(";");
 
-        if (commands.length > 1) {
+        if (commands.length > 1) { //multiline command
             StringBuilder sb = new StringBuilder();
 
             for (String i : commands) {
@@ -63,7 +62,8 @@ public class CrossdataInterpreter extends Interpreter {
                     String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim()+";";
                     System.out.println("*****[CrossdataInterpreter]interpret multiline query -> "+normalized);
                     result = xdDriver.executeRawQuery(normalized);
-                    sb.append(CrossdataUtils.resultToString(result)).append(System.getProperty("line.separator"));
+                    sb.append(CrossdataUtils.resultToString(result)).append(
+                            System.getProperty("line.separator")).append(System.getProperty("line.separator"));
                 } catch (Exception e) {
                     return new InterpreterResult(InterpreterResult.Code.ERROR, e.getLocalizedMessage());
                 }
