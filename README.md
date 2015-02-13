@@ -41,14 +41,21 @@ If you wish to configure Zeppelin option (like port number), configure the follo
 ./conf/zeppelin-env.sh
 ./conf/zeppelin-site.xml
 ```
+**Crossdata files**
 
-**Run**
+You can modify Crossdata driver properties in:
+```
+/crossdata/src/main/resources/driver-application.conf
+```
+
+
+###Run
 ```
 ./bin/zeppelin.sh -> to launch a console session depending instance 
 ./bin/zeppelin-daemon.sh start -> to launch the demo
 ```
 
-**Stop**
+###Stop
 ```
 ./bin/zeppelin-daemo.sh stop
 ```
