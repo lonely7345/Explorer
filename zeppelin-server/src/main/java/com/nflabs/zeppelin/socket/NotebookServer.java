@@ -12,6 +12,15 @@ import com.nflabs.zeppelin.scheduler.JobListener;
 import com.nflabs.zeppelin.server.ZeppelinServer;
 import com.nflabs.zeppelin.socket.Message.OP;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -20,7 +29,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -111,6 +123,9 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
                 break;
             case NOTE_UPDATE:
                 updateNote(conn, notebook, messagereceived);
+                break;
+            case SEND_TO_DATAVIS:
+                sendToDatavis(conn, notebook, messagereceived);
                 break;
             case COMPLETION:
                 completion(conn, notebook, messagereceived);
@@ -225,11 +240,11 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         }
     }
 
-    private void broadcastNote(Note note) {
+    public void broadcastNote(Note note) {
         broadcast(note.id(), new Message(OP.NOTE).put("note", note));
     }
 
-    private void broadcastNoteList() {
+    public void broadcastNoteList() {
         Notebook notebook = notebook();
         List<Note> notes = notebook.getAllNotes();
         List<Map<String, String>> notesInfo = new LinkedList<Map<String, String>>();
@@ -382,6 +397,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         note.insertParagraph(index);
         note.persist();
         broadcastNote(note);
+
     }
 
     private void splitIntoParagraphs(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
@@ -440,6 +456,49 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         broadcastNote(note);
 
         note.run(paragraphId);
+    }
+
+    private String postQueryDatavis(String query) throws IOException {
+        HttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("http://localhost:9000/dataviews");
+        String responseString = "";
+        // Request parameters and other properties.
+        List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+        params.add(new BasicNameValuePair("name", query));
+        params.add(new BasicNameValuePair("query", query));
+        params.add(new BasicNameValuePair("iDataSource", "1"));
+        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+        //Execute and get the response.
+        HttpResponse response = httpclient.execute(httppost);
+        HttpEntity entity = response.getEntity();
+
+        if (entity != null) {
+            InputStream instream = entity.getContent();
+            try {
+                responseString = IOUtils.toString(instream);
+            } finally {
+                instream.close();
+            }
+        }
+
+        return responseString;
+    }
+
+    private void sendToDatavis(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
+        final String paragraphId = (String) fromMessage.get("id");
+        if (paragraphId == null) {
+            return;
+        }
+        final Note note = notebook.getNote(getOpenNoteId(conn));
+        Paragraph p = note.getParagraph(paragraphId);
+        String query = (String) fromMessage.get("paragraph");
+
+        //check datavis connection
+        //post through datavis api endpoint -> careful about CORS header
+        p.setReturn(postQueryDatavis(query));
+        broadcast(note.id(), new Message(OP.PARAGRAPH).put("paragraph", p));
+
     }
 
     public static class ParagraphJobListener implements JobListener {

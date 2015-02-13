@@ -25,7 +25,8 @@
  *
  * @author anthonycorbacho
  */
-angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $route, $routeParams, $location, $rootScope) {
+angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $http, $route, $routeParams, $location,
+$rootScope) {
   $scope.note = null;
   $scope.showEditor = false;
   $scope.editorToggled = false;
@@ -202,6 +203,60 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
     return noteCopy;
   };
 
+  $rootScope.$on('sendToDatavis', function(event, data){
+    console.log("sendToDatavis "+ data);
+    console.log(JSON.stringify(data));
+    //data.paragraphId = id
+    //data.paragraph = query
+//    var name = data.paragraph;
+//    var query = data.paragraph;
+//    var idDataSource = 1;
+    var postData = {
+                     "name": '"'+data.paragraph+'"',
+                     "description":'"'+data.paragraph+'"',
+                     "query": '"'+data.paragraph+'"',
+                     "properties": {
+                       "fields": "List[scala.Tuple2<java.lang.String, play.api.libs.json.JsValue>]",
+                       "value": "scala.collection.Map<java.lang.String, play.api.libs.json.JsValue>"
+                     },
+                     "idDataSource": "1"
+                   };
+//    var dataHardcoded = {
+//                          "name": "harcodedData",
+//                          "description": "harcoded",
+//                          "query": "select * from tablaHard",
+//                          "properties": {
+//                            "fields": "List[scala.Tuple2<java.lang.String, play.api.libs.json.JsValue>]",
+//                            "value": "scala.collection.Map<java.lang.String, play.api.libs.json.JsValue>"
+//                          },
+//                          "idDataSource": "1"
+//                        };
+//
+//    console.log(JSON.stringify(dataHardcoded));
+//
+//    $http.post('http://localhost:9000/dataviews', dataHardcoded).
+      $http.post('http://localhost:9000/dataviews', postData).
+      success(function(data, status, headers, config) {
+        console.log(JSON.stringify(data));
+        console.log(JSON.stringify(status));
+        console.log(JSON.stringify(headers));
+
+        alert("Successfully sent to Datavis");
+      }).
+      error(function(data, status, headers, config) {
+        console.log(JSON.stringify(data));
+        console.log(JSON.stringify(status));
+        console.log(JSON.stringify(headers));
+
+        alert("There was an error " + data);
+      });
+
+     // $rootScope.$emit('sendNewEvent', { op: 'SEND_TO_DATAVIS', data : {id: data.id, query: data.paragraph}});
+
+
+  });
+
+
   $rootScope.$on('moveParagraphUp', function(event, paragraphId) {
     var newIndex = -1;
     for (var i=0; i<$scope.note.paragraphs.length; i++) {
@@ -250,11 +305,11 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
         break;
       }
     }
-
-    if (newIndex === $scope.note.paragraphs.length) {
-      alert('Cannot insert after the last paragraph.');
-      return;
-    }
+//
+//    if (newIndex === $scope.note.paragraphs.length) { //TODO -> FIX for inserting after last paragraph
+//      alert('Cannot insert after the last paragraph.');
+//      return;
+//    }
     if (newIndex < 0 || newIndex > $scope.note.paragraphs.length) {
       return;
     }

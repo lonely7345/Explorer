@@ -27,7 +27,7 @@ function getPort() {
   }
   // brunch port
   if (port === 3333 || port === 9000) {
-    port = 8080; 
+    port = 8080;
   }
   return port+1;
 }
@@ -47,10 +47,10 @@ function getWebsocketProtocol() {
  * # zeppelinWebApp
  *
  * Main module of the application.
- * 
+ *
  * @author anthonycorbacho
  */
-angular
+var app = angular
   .module('zeppelinWebApp', [
     'ngAnimate',
     'ngCookies',
@@ -60,13 +60,14 @@ angular
     'ui.ace',
     'ui.bootstrap',
     'ngTouch',
-    'ngDragDrop'
+    'ngDragDrop',
+
   ])
   .config(function ($routeProvider, WebSocketProvider) {
     WebSocketProvider
       .prefix('')
       .uri(getWebsocketProtocol() + '://' + location.hostname + ':' + getPort());
-      
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html'
@@ -84,5 +85,22 @@ angular
       });
   });
 
-  
-  
+  app.config(['$httpProvider', function ($httpProvider) {
+         $httpProvider.defaults.useXDomain = true;
+         delete $httpProvider.defaults.headers.common['X-Requested-With'];
+         $httpProvider.defaults.headers.common["Accept"] = "*/*";
+         $httpProvider.defaults.headers.common["Content-Type"] = "text/plain";
+  }]).factory('featuresData', function ($http) {
+         return{
+             doCrossDomainGet: function() {
+                 return $http({
+                     url:'http://localhost:9000',
+                     method: 'POST'
+                 })
+             }
+         }
+  });
+
+
+
+

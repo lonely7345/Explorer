@@ -286,6 +286,14 @@ angular.module('zeppelinWebApp')
     }
   };
 
+  $scope.sendToDatavis = function(data){
+    var paragraphData = {
+                             id: $scope.paragraph.id,
+                             paragraph: data
+                           };
+      $rootScope.$emit('sendToDatavis', paragraphData);
+  };
+
   $scope.toggleEditor = function() {
     if ($scope.paragraph.config.editorHide) {
       $scope.openEditor();

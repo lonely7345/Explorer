@@ -54,7 +54,11 @@ public class Message {
 		                    // @param id
 		                    // @param buf current code
 		                    // @param cursor cursor position in code
-		
+
+        SEND_TO_DATAVIS,    // [c-s] check Datavis connection and send query if available
+                            // @param paragraphid to set Datavis response
+                            // @param query
+
 		COMPLETION_LIST,    // [s-c] send back completion candidates list
 		                    // @param id
 		                    // @param completions list of string
