@@ -44,13 +44,13 @@ If you wish to configure Zeppelin option (like port number), configure the follo
 
 **Run**
 ```
-bin/zeppelin.sh -> to launch a console session depending instance 
+./bin/zeppelin.sh -> to launch a console session depending instance 
 ./bin/zeppelin-daemon.sh start -> to launch the demo
 ```
 
 **Stop**
 ```
-bin/zeppelin-daemo.sh stop
+./bin/zeppelin-daemo.sh stop
 ```
 
 browse localhost:8080 in your browser. 8081 port should be accessible for websocket connection.
