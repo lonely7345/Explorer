@@ -1,5 +1,5 @@
 #Stratio Crossdata ishell
-========================
+
 
 Interactive shell to manage **Crossdata based** on Zeppelin
 
@@ -13,14 +13,14 @@ _Core feature_:
 To know more about Zeppelin, visit our web site http://zeppelin-project.org
 
 ##Requirements
-----------------
+
 
 Java 1.7
 Tested on Mac OSX, CentOS 6.X
 Maven (if you want to build from the source code)
 
 ##Getting Started
-----------------
+
 
 ###Build
 
