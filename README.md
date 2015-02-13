@@ -1,7 +1,7 @@
 #Stratio Crossdata ishell
 
 
-Interactive shell to manage **Crossdata based** on Zeppelin
+Interactive shell to manage **Crossdata** based on Zeppelin
 
 Zeppelin, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
 
