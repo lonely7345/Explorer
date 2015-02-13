@@ -213,7 +213,7 @@ $rootScope) {
 //    var idDataSource = 1;
     var postData = {
                      "name": '"'+data.paragraph+'"',
-                     "description":'"'+data.paragraph+'"',
+                     "description:'"'+data.paragraph+'"',
                      "query": '"'+data.paragraph+'"',
                      "properties": {
                        "fields": "List[scala.Tuple2<java.lang.String, play.api.libs.json.JsValue>]",
@@ -284,10 +284,10 @@ $rootScope) {
       }
     }
 
-    if (newIndex === $scope.note.paragraphs.length) {
-      alert('Cannot insert after the last paragraph.');
-      return;
-    }
+//    if (newIndex === $scope.note.paragraphs.length) {
+//      alert('Cannot insert after the last paragraph.');
+//      return;
+//    }
     if (newIndex < 0 || newIndex > $scope.note.paragraphs.length) {
       return;
     }
