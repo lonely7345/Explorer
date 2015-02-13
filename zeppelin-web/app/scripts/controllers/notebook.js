@@ -213,7 +213,7 @@ $rootScope) {
 //    var idDataSource = 1;
     var postData = {
                      "name": '"'+data.paragraph+'"',
-                     "description:'"'+data.paragraph+'"',
+                     "description":'"'+data.paragraph+'"',
                      "query": '"'+data.paragraph+'"',
                      "properties": {
                        "fields": "List[scala.Tuple2<java.lang.String, play.api.libs.json.JsValue>]",
