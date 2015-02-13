@@ -36,12 +36,14 @@ Build with specific version
 
 If you wish to configure Zeppelin option (like port number), configure the following files:
 
-`./conf/zeppelin-env.sh
-./conf/zeppelin-site.xml`
+`./conf/zeppelin-env.sh`
+
+`./conf/zeppelin-site.xml`
 
 **Run**
 
 `bin/zeppelin.sh` -> to launch a console session depending instance 
+
 `./bin/zeppelin-daemon.sh start` -> to launch the demo
 
 **Stop**
