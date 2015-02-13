@@ -7,9 +7,9 @@ Zeppelin, a web-based notebook that enables interactive data analytics. You can 
 
 _Core feature_:
 
-*Web based notebook style editor.
-*Crossdata interpreter
-*Built-in Apache Spark support
++ Web based notebook style editor.
++ Crossdata interpreter
++ Built-in Apache Spark support
 To know more about Zeppelin, visit our web site http://zeppelin-project.org
 
 ##Requirements
