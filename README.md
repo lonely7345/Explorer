@@ -1,5 +1,6 @@
 #Stratio Crossdata ishell
 
+_UPDATE_ Spark interpreter is pending to be updated to 1.2 version for being able to work with akka 2.3.4. Since this is not yet performed, Spark interpreter won't work.
 
 Interactive shell to manage **Crossdata** based on Zeppelin
 
