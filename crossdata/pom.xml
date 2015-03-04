@@ -25,17 +25,17 @@
         <dependency>
             <groupId>com.stratio.crossdata</groupId>
             <artifactId>crossdata-driver</artifactId>
-            <version>0.2.0-RC1</version>
+            <version>0.2.0-001</version>
         </dependency>
         <dependency>
             <groupId>com.stratio.crossdata</groupId>
             <artifactId>crossdata-common</artifactId>
-            <version>0.2.0-RC1</version>
+            <version>0.2.0-001</version>
         </dependency>
         <dependency>
             <groupId>com.stratio.crossdata</groupId>
             <artifactId>crossdata-shell</artifactId>
-            <version>0.2.0-RC1</version>
+            <version>0.2.0-001</version>
         </dependency>
 
     </dependencies>
