@@ -1,0 +1,32 @@
+.container{
+  background-color:#28395C;
+}
+
+.stratio-notebook{
+  margin-top:150px;
+  max-width:350px;
+
+}
+#stratio-notebook-login-header{
+  color: #FFFFFF;
+  font-size:2.5em;
+  text-align: center;
+}
+.panel-heading{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  font-size: 1em;
+}
+.form-signin{
+  padding: 25px 20px 25px 20px;
+  font-size: 1em;
+}
+#error{
+  text-align: center;
+}
+#stratio-notebook-login-footer{
+  color: #444444;
+  font-size:0.6em;
+  text-align: center;
+}

@@ -48,10 +48,13 @@ function getWebsocketProtocol() {
  *
  * Main module of the application.
  *
- * @author anthonycorbacho
+ * @author anthonycorbacho & adapted by idiaz
  */
+
+angular.module('Authentication', []);
 var app = angular
   .module('zeppelinWebApp', [
+    'Authentication',
     'ngAnimate',
     'ngCookies',
     'ngRoute',
@@ -60,7 +63,7 @@ var app = angular
     'ui.ace',
     'ui.bootstrap',
     'ngTouch',
-    'ngDragDrop',
+    'ngDragDrop'
 
   ])
   .config(function ($routeProvider, WebSocketProvider) {
@@ -72,6 +75,11 @@ var app = angular
       .when('/', {
         templateUrl: 'views/main.html'
       })
+      .when('/login', {
+        templateUrl: '/views/login.html',
+        controller: 'LoginController',
+        hideMenus: true
+      })
       .when('/notebook/:noteId', {
         templateUrl: 'views/notebooks.html',
         controller: 'NotebookCtrl'
@@ -81,9 +89,23 @@ var app = angular
         controller: 'NotebookCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/login'
       });
-  });
+  }).run(['$rootScope', '$location', '$cookieStore', '$http',
+       function ($rootScope, $location, $cookieStore, $http) {
+         // keep user logged in after page refresh
+         $rootScope.globals = $cookieStore.get('globals') || {};
+         if ($rootScope.globals.currentUser) {
+           $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+         }
+
+         $rootScope.$on('$locationChangeStart', function (event, next, current) {
+           // redirect to login page if not logged in
+           if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+             $location.path('/login');
+           }
+         });
+       }]);
 
   app.config(['$httpProvider', function ($httpProvider) {
          $httpProvider.defaults.useXDomain = true;
