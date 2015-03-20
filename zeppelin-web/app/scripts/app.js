@@ -73,20 +73,21 @@ var app = angular
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html'
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
       })
       .when('/login', {
-        templateUrl: '/views/login.html',
+        templateUrl: 'views/login.html',
         controller: 'LoginController',
         hideMenus: true
       })
       .when('/notebook/:noteId', {
-        templateUrl: 'views/notebooks.html',
-        controller: 'NotebookCtrl'
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
       })
       .when('/notebook/:noteId/paragraph/:paragraphId?', {
-        templateUrl: 'views/notebooks.html',
-        controller: 'NotebookCtrl'
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
       })
       .otherwise({
         redirectTo: '/login'

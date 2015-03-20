@@ -58,20 +58,22 @@ $rootScope) {
 
   /** Init the new controller */
   var initNotebook = function() {
-    $rootScope.$emit('sendNewEvent', {op: 'GET_NOTE', data: {id: $routeParams.noteId}});
-  };
+  if($rootScope.active!=="none"){
+    if($scope.note){
+        $scope.note.id=$rootScope.active;
+        }
 
-  initNotebook();
-
-  /** Remove the note and go back tot he main page */
-  /** TODO(anthony): In the nearly future, go back to the main page and telle to the dude that the note have been remove */
-  $scope.removeNote = function(noteId) {
-    var result = confirm('Do you want to delete this notebook?');
-    if (result) {
-      $rootScope.$emit('sendNewEvent', {op: 'DEL_NOTE', data: {id: noteId}});
-      $location.path('/#');
+    $rootScope.$emit('sendNewEvent', {op: 'GET_NOTE', data: {id: $rootScope.active}});
+    }else{
+       console.log("note = none");
     }
   };
+
+  $scope.$watch( function(){return $rootScope.active;}, function(){
+      initNotebook();
+  });
+
+
 
   $scope.runNote = function() {
     var result = confirm('Run all paragraphs?');
@@ -178,7 +180,7 @@ $rootScope) {
 
   var initialize = function() {
     if(!$scope.note.config.looknfeel) {
-      $scope.note.config.looknfeel = 'default';
+      $scope.note.config.looknfeel = 'simple';
     }
   };
 
@@ -206,11 +208,7 @@ $rootScope) {
   $rootScope.$on('sendToDatavis', function(event, data){
     console.log("sendToDatavis "+ data);
     console.log(JSON.stringify(data));
-    //data.paragraphId = id
-    //data.paragraph = query
-//    var name = data.paragraph;
-//    var query = data.paragraph;
-//    var idDataSource = 1;
+
     var postData = {
                      "name": '"'+data.paragraph+'"',
                      "description":'"'+data.paragraph+'"',
@@ -221,20 +219,7 @@ $rootScope) {
                      },
                      "idDataSource": "1"
                    };
-//    var dataHardcoded = {
-//                          "name": "harcodedData",
-//                          "description": "harcoded",
-//                          "query": "select * from tablaHard",
-//                          "properties": {
-//                            "fields": "List[scala.Tuple2<java.lang.String, play.api.libs.json.JsValue>]",
-//                            "value": "scala.collection.Map<java.lang.String, play.api.libs.json.JsValue>"
-//                          },
-//                          "idDataSource": "1"
-//                        };
-//
-//    console.log(JSON.stringify(dataHardcoded));
-//
-//    $http.post('http://localhost:9000/dataviews', dataHardcoded).
+
       $http.post('http://localhost:9000/dataviews', postData).
       success(function(data, status, headers, config) {
         console.log(JSON.stringify(data));

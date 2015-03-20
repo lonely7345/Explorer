@@ -20,13 +20,26 @@
  * @description
  * # NavCtrl
  * Controller of the top navigation, mainly use for the dropdown menu
- * 
+ *
  * @author anthonycorbacho
  */
-angular.module('zeppelinWebApp').controller('NavCtrl', function($scope, $rootScope, $routeParams) {
+angular.module('zeppelinWebApp').controller('NavCtrl',['$scope', '$rootScope', '$routeParams', 'AuthenticationService',
+function($scope, $rootScope, $routeParams, AuthenticationService) {
   /** Current list of notes (ids) */
   $scope.notes = [];
+  $rootScope.active = "none";
+  $rootScope.creationDate="none";
 
+
+  $scope.activate = function (noteId, noteDate){
+      if($rootScope.active !== noteId){
+         $rootScope.active=noteId;
+         $rootScope.creationDate= noteDate;
+      }else{ $rootScope.active="none";
+         $rootScope.creationDate="none";
+      }
+  };
+//TODO: remove this when the new menu is finished
   /** Set the new menu */
   $rootScope.$on('setNoteMenu', function(event, notes) {
       $scope.notes = notes;
@@ -41,13 +54,26 @@ angular.module('zeppelinWebApp').controller('NavCtrl', function($scope, $rootSco
   $scope.createNewNote = function() {
     $rootScope.$emit('sendNewEvent', {op: 'NEW_NOTE'});
   };
-  
+
+    /** Remove the note and go back tot he main page */
+    /** TODO(anthony): In the nearly future, go back to the main page and telle to the dude that the note have been remove */
+    $scope.removeNote = function(noteId) {
+//      var result = confirm('Do you want to delete this notebook? '+noteId);
+  //    if (result) {
+        $rootScope.$emit('sendNewEvent', {op: 'DEL_NOTE', data: {id: noteId}});
+  //      $location.path('/#');
+  //    }
+    };
+
   /** Check if the note url is equal to the current note */
-  $scope.isActive = function(noteId) {
-    if ($routeParams.noteId === noteId) {
+  $rootScope.isActive = function(noteId) {
+    if ($rootScope.active === noteId) {
       return true;
     }
     return false;
   };
-  
-});
+
+  $scope.logout = function(){
+     AuthenticationService.ClearCredentials();
+  };
+}]);

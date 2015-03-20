@@ -252,6 +252,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             Map<String, String> info = new HashMap<String, String>();
             info.put("id", note.id());
             info.put("name", note.getName());
+            info.put("date", note.getCreationDate());
             notesInfo.add(info);
         }
         broadcastAll(new Message(OP.NOTES_INFO).put("notes", notesInfo));

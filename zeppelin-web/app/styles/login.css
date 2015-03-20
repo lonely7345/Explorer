@@ -1,14 +1,16 @@
 .container{
-  background-color:#28395C;
+  background-color:#444;
+  height:100%;
+  width:100%;
 }
 
-.stratio-notebook{
-  margin-top:150px;
+.stratio-notebook-login-block{
+  margin-top:180px;
   max-width:350px;
 
 }
 #stratio-notebook-login-header{
-  color: #FFFFFF;
+  color: #00c7f7;
   font-size:2.5em;
   text-align: center;
 }
@@ -26,7 +28,7 @@
   text-align: center;
 }
 #stratio-notebook-login-footer{
-  color: #333333;
+  color: #777;
   font-size:0.8em;
   text-align: center;
 }

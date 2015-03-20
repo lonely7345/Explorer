@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,13 +37,14 @@ import com.nflabs.zeppelin.scheduler.Scheduler;
 public class Note implements Serializable, JobListener {
 	transient Logger logger = LoggerFactory.getLogger(Note.class);
 	List<Paragraph> paragraphs = new LinkedList<Paragraph>();
-	private String name;
+    private String name;
 	private String id;
-	
+    private String creationDate;
+
 	private transient NoteInterpreterLoader replLoader;
-	private transient ZeppelinConfiguration conf;
-	private transient JobListenerFactory jobListenerFactory;
-	
+    private transient ZeppelinConfiguration conf;
+    private transient JobListenerFactory jobListenerFactory;
+
 	/**
 	 * note configurations
 	 *
@@ -49,37 +52,42 @@ public class Note implements Serializable, JobListener {
 	 *  - cron
 	 */
     private Map<String, Object> config = new HashMap<String, Object>();
-    
+
     /**
      * note information
-     * 
+     *
      *  - cron : cron expression validity.
      */
     private Map<String, Object> info = new HashMap<String, Object>();
 
-	public Note(){		
+	public Note(){
 	}
-	
+
 	public Note(ZeppelinConfiguration conf, NoteInterpreterLoader replLoader, JobListenerFactory jobListenerFactory, org.quartz.Scheduler quartzSched){
 		this.conf = conf;
 		this.replLoader = replLoader;
 		this.jobListenerFactory = jobListenerFactory;
 		generateId();
+        this.creationDate=new SimpleDateFormat("EEE, d MMM, HH:mm a").format(new Date(System.currentTimeMillis()));
 	}
-	
+
 	private void generateId(){
 		//id = "note_"+System.currentTimeMillis()+"_"+new Random(System.currentTimeMillis()).nextInt();
 	  /** This is actually more humain readable */
 	  id = IdHashes.encode(System.currentTimeMillis() + new Random(System.currentTimeMillis()).nextInt());
 	}
-	
+
 	public String id(){
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
+
+    public String getCreationDate() {
+        return creationDate;
+    }
 
 	public void setName(String name) {
 		this.name = name;
@@ -91,12 +99,12 @@ public class Note implements Serializable, JobListener {
 
 	public void setReplLoader(NoteInterpreterLoader replLoader) {
 		this.replLoader = replLoader;
-	}	
-	
+	}
+
 	public void setZeppelinConfiguration(ZeppelinConfiguration conf){
 		this.conf = conf;
 	}
-	
+
 	/**
 	 * Add paragraph last
 	 * @param p
@@ -108,7 +116,7 @@ public class Note implements Serializable, JobListener {
 		}
 		return p;
 	}
-	
+
 	/**
 	 * Insert paragraph in given index
 	 * @param index

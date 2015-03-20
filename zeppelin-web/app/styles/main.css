@@ -17,294 +17,241 @@
 @import url(//fonts.googleapis.com/css?family=Source+Code+Pro);
 @import url(//fonts.googleapis.com/css?family=Montserrat);
 
+/* app css stylesheet */
+/* reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+html, body {
+    line-height: 1;
+    height: 100%;
+    min-height: 100%;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*********************/
+/******* style *******/
+/*********************/
 
 /* basics */
 
-html,body {
-  padding:0px;
-  width: 100%;
-  height: 100%;
-  min-height:100%;
-  font-family: 'Montserrat', sans-serif;
+html, body {
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.bodyAsIframe {
-  background: white;
-  padding:0px;
-  width: 100%;
-  height: 100%;
-  min-height:100%;
+.fill {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: auto;
+    height: 100%;
 }
 
-body.asIframe {
-  padding:0px;
-  width: 100%;
-  height: 100%;
-  min-height:100%;
+/*** top bar ***/
+
+.note-top-bar .navbar-inverse {
+    background-color: #444444;
+    border: 0;
+    color: white;
 }
 
-
-.container {
-  padding:0px;
-  width: 100%;
-  height: ;
-  min-height:100%;
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-text{
+    color: #BBB;
 }
 
-#intro {
-  width: 100%;
-  height: 1000px;
-  min-height:1000px;
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-text:hover{
+    color: 00c7f7;
 }
 
-.ng-scope{
-  width: 100%;
-  height: 100%;
-  min-height:100%;
+.navbar-inverse .navbar-brand {
+    color: #BBB;
+    text-decoration: none;
+    font-family: 'Patua One', cursive;
+    font-size: 32px;
 }
 
-h1,h2,h3 {
-  margin: 0px;
+.navbar-brand {
+    padding: 5px 15px 0 15px;
 }
 
-/* start button */
-
-a {
-  -moz-transition: all 0.2s ease-in-out, color 0.2s ease-in-out;
-  -webkit-transition: all 0.2s ease-in-out, color 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out, color 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out, color 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out, color 0.2s ease-in-out;
+/* user profile*/
+.note-usr {
+    margin-right: 30px;
 }
 
-.btn-dark {
-    border-radius: 5px;
+.note-usr img {
+    margin-right: 20px;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>
+.open>a:hover{
+    background-color: #00c7f7;
+    color: #222;
+}
+
+.server-status {
     color: #fff;
-    background-color: #41B6E6;;
+    padding: 17px 15px 17px 15px;
+    background-color: #222;
 }
 
-.btn-dark:hover,
-.btn-dark:focus,
-.btn-dark:active {
-    color: #41B6E6;
-    background-color: rgba(0,0,0,0.7);
+.server-connected {
+    color: #54FF74;
 }
 
-/* intro section with Crossdata header*/
-
-.intro-header {
-  min-height: 100%;
-  background: url(../images/spiderWeb.jpg) no-repeat center center scroll;
+.server-disconnected {
+    color: #FF4641;
 }
 
-/* center Crossdata logo */
+/*** main container ***/
 
-.text-vertical-center {
-  padding-top: 375px;
-  text-align: center;
-  vertical-align: middle;
-  color: #999999;
-
+#main-container {
+    height: 100%;
+    position: relative;
+    display: table;
 }
 
-.text-vertical-center h1{
-  font-size: 8em;
-  font-weight: 700;
-  color:#41B6E6;
+/* left-side note selector */
+
+#note-list {
+    min-height: 100%;
+    height: 100%;
+    display: inline;
+    background-color: #DDDDDD;
+    padding: 0 20px 0 20px;
+    border-right: 1px solid #BBB;
 }
 
-.text-vertical-center h3{
-  margin-top: 20px;
-  margin-bottom: 15px;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom:
-  px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;
-  margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom:
-  px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;
-  margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;margin-bottom: px15;
+#note-list .h3 {
+    color: #555;
 }
 
-
-
-/* new workspace section*/
-/*
-.modal-dialog-center {
-  margin: 0;
-  position: absolute;
-  width:100%;
-  padding:6em;
-  padding-top:11em;
+.note-list-header {
+    margin-top: 50px;
 }
 
-.modal-body {
-  height:400px;
-  padding:0px;
-}*/
-
-/*workspace buttons*/
-/*
-.modal-dialog-center li{
-  display: inline;
+.note-list-items {
+    margin-top: 20px;
 }
 
-.modal-dialog-center li button{
-  height: 3.5em;
-  width: 10em;
-  font-size: 1.5em;
-  padding: 10px;
-  margin:10px;
-}*/
-
-#create-workspace{
-  width:100%;
-  height:1000px;
-  background-color: #333333;
-  overflow:hidden;
-  background: url(../images/gradient_gray.jpg) no-repeat center center scroll;
-  background-size: cover;
-  background-attachment: local;
+.note-list-item {
+    margin: 7px 0px 7px 0px;
+    padding: 15px 10px 15px 15px;
 }
 
-.separator{
-  background-color: #000000;
-  width: 100%;
-  height: 20px;
+.note-list-item:hover {
+    background-color: #00c7f7;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.note-button-active {
+    background-color: #00c7f7;
+    font-color: white;
 
 }
 
-.create-workspace-box {
-  position:relative;
-  border-radius: 10px;
-  padding:2%;
-  left:50%;
-  margin-top:200px;
-  margin-left:-500px;
-  width: 1000px;
-  height: 600px;
-  background-color: #FFFFFF;
+.note-button-date{
+    font-size:0.7em;
+    margin-top:5px;
+    text-align:right;
+    color:#AAA;
 }
 
-#box-header{
-  height: 15%;
-  text-align: center;
-  vertical-align: center;
+.note-desc {
+    font-size: 0.8em;
 }
 
-#box-body{
-  height: 80%;
-  text-align:center;
+#new-note {
+    margin-top: 15px;
+    background-color: #00c7f7;
 }
 
-#box-body ul{
-  margin: 0;
-}
+/* notebook shell*/
 
-#box-body h1{
-}
-
-#box-body li{
-  display: inline;
-}
-
-#box-body li a{
-  text-align:center;
-  vertical-align:middle;
-  height: 50px;
-  width: 250px;
-  font-size: 1.35em;
-  padding: 10px;
-  margin:10px;
+#note-shell {
+    min-height: 100%;
+    height: 100%;
+    display: block;
+    padding:0;
 
 }
-
-#box-footer{
-  height: 10%;
+.note-date-top{
+    padding-top:65px;
+    padding: 65px 0 0 20px;
+    color: #444;
+    font-size: 0.9em;
+    height:90px;
+    width:100%;
+    background-color: #DDD;
 }
-
-#box-footer button{
-  display: inline;
-  margin: 5px;
+.note-tip{
+    border-left: 1px solid #F9D3D3;
+    padding-left:10px;
+    margin-left:40px;
+    padding-top:45px;
+    color:#444;
 }
-
-/**
- * Box and well
- */
- /*
-.box{
-  border-style: solid;
-  min-height: 20px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.box,
-.well {
-  background-color: #ffffff;
-  border-color: #e5e5e5;
-  border-width: 1px 1px 2px;
-  border-radius: 3px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.box-heading{
-  position:relative;
-  max-width: 100%;
-  /*font-size: 20px;//
-  font-weight:300;
-  white-space: nowrap;
-  /*overflow:hidden;//
-  text-overflow: ellipsis;
-  vertical-align: middle;
-  margin: 0 0 15px;
-  padding-bottom: 2px;
-}
-/**
-h1.box-heading,
-h2.box-heading,
-h3.box-heading,
-h4.box-heading,
-h5.box-heading,
-h6.box-heading{
-  font-size: 20px;
-}//
-.box-heading > .btn-group,
-.box-heading > .btn{
-  margin-top: -3px;
+.note-workspace {
+    margin: 0 0 0 40px;
+    position: absolute;
+    border-left: 1px solid #F9D3D3;
+    height: 100%;
+    left: 0;
+    right: 0;
 }
 
 
-.icheck-label{
-  position: relative;
-  top: 0;
-}
 
-.keys {
-  padding-right: 10px;
-  color: #999;
-  text-align: right;
-  white-space: nowrap;
-}
 
-.kbd-dark {
-  color: #eee;
-  background-color: #222;
-  background-image: none;
-  border: 0;
-}
 
-kbd {
-  background-color: #e7e7e7;
-  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
-  background-image: linear-gradient(#fefefe, #e7e7e7);
-  background-repeat: repeat-x;
-  display: inline-block;
-  padding: 4px 5px;
-  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  line-height: 10px;
-  color: #000;
-  border: 1px solid #cfcfcf;
-  border-radius: 2px;
-}
 
-.home {
-  min-height: 400px;
-}*/
+
