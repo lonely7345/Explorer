@@ -8,6 +8,9 @@
 # conf file
 conf/zeppelin-env.sh
 conf/zeppelin-site.xml
+conf/keystore
+conf/truststore
+conf/interpreter.json
 
 #webapp
 zeppelin-web/node_modules
@@ -27,7 +30,7 @@ jobs/
 zan-repo/
 drivers/
 warehouse/
-notebook/
+local-repo/
 
 **/sessions/
 **/data/
@@ -35,6 +38,7 @@ notebook/
 **/testing/
 
 # OS generated files #
+######################
 .DS_Store
 .DS_Store?
 ._*
@@ -54,13 +58,18 @@ Thumbs.db
 #intelliJ IDEA project files
 .idea/
 *.iml
-atlassian-ide-plugin.xml
 
 # maven target files
 target/
 **/target/
-crossdata/target
-markdown/target
-shell/target
-spark/target
-zeppelin-server/target
+
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+*.swp
+
