@@ -1,4 +1,4 @@
-#Stratio Crossdata ishell
+#Stratio Notebook
 
 _UPDATE_ Spark interpreter is pending to be updated to 1.2 version for being able to work with akka 2.3.4. Since this is not yet performed, Spark interpreter won't work.
 
@@ -11,7 +11,7 @@ _Core feature_:
 + Web based notebook style editor.
 + Crossdata interpreter
 + Built-in Apache Spark support
-To know more about Zeppelin, visit our web site http://zeppelin-project.org
+To know more about Zeppelin, visit http://zeppelin-project.org
 
 ##Requirements
 
