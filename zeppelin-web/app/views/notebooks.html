@@ -17,12 +17,12 @@ limitations under the License.
 
     <div class="noteAction" ng-show="note.id && !paragraphUrl">
         <h3 class="new_h3">
-            <input type="text" class="form-control2" placeholder="{{note.name || 'Note ' + note.id}}"
+            <input type="text" class="form-control2" placeholder="{{note.name || 'Notebook ' + note.id}}"
                    style="width:200px;"
                    ng-show="showEditor" ng-model="note.name" ng-enter="sendNewName()" ng-delete="showEditor = false"
                    autofocus/>
 
-            <p class="form-control-static2" ng-click="showEditor = true" ng-show="!showEditor">{{note.name || 'Note ' +
+            <p class="form-control-static2" ng-click="showEditor = true" ng-show="!showEditor">{{note.name || 'Notebook ' +
                 note.id}}</p>
          <span class="labelBtn btn-group">
             <button type="button"
