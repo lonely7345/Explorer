@@ -20,7 +20,7 @@
  * @description
  * # ngEnter
  * Bind the <enter> event
- * 
+ *
  * @author anthonycorbacho
  */
 angular.module('zeppelinWebApp').directive('ngEnter', function() {

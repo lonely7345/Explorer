@@ -113,4 +113,9 @@ angular.module('zeppelinWebApp')
     }
   });
 
+  $rootScope.$on('changeActiveNotebook', function(event, data){
+    console.log("main->onChangeActiveNotebook "+data.id+" "+data.date);
+    $rootScope.$broadcast('rootChangeActiveNotebook', data);
+  });
+
 });

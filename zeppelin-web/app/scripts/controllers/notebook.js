@@ -28,6 +28,7 @@
 angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $http, $route, $routeParams, $location,
 $rootScope) {
   $scope.note = null;
+  $scope.active = 'none';
   $scope.showEditor = false;
   $scope.editorToggled = false;
   $scope.tableToggled = false;
@@ -57,21 +58,16 @@ $rootScope) {
   };
 
   /** Init the new controller */
-  var initNotebook = function() {
-  if($rootScope.active!=="none"){
-    if($scope.note){
-        $scope.note.id=$rootScope.active;
-        }
-
-    $rootScope.$emit('sendNewEvent', {op: 'GET_NOTE', data: {id: $rootScope.active}});
-    }else{
-       console.log("note = none");
-    }
+  var initNotebook = function(notebookId) {
+    $rootScope.$emit('sendNewEvent', {op: 'GET_NOTE', data: {id: notebookId}});
   };
-
-  $scope.$watch( function(){return $rootScope.active;}, function(){
-      initNotebook();
-  });
+  $rootScope.$on('rootChangeActiveNotebook', function(event, data) {
+//     console.log("onRootChangeActiveNotebook note "+note);
+     $scope.active = data.id;
+     if(data.id!=='none') {
+        initNotebook(data.id);
+     }
+   });
 
 
 
@@ -160,15 +156,15 @@ $rootScope) {
 
   /** update the current note */
   $rootScope.$on('setNoteContent', function(event, note) {
-    $scope.paragraphUrl = $routeParams.paragraphId;
-    $scope.asIframe = $routeParams.asIframe;
-    if ($scope.paragraphUrl) {
-      note = cleanParagraphExcept($scope.paragraphUrl, note);
-      $rootScope.$emit('setIframe', $scope.asIframe);
-    }
-
+//    $scope.paragraphUrl = $routeParams.paragraphId;
+//    $scope.asIframe = $routeParams.asIframe;
+//    if ($scope.paragraphUrl) {
+//      note = cleanParagraphExcept($scope.paragraphUrl, note);
+//      $rootScope.$emit('setIframe', $scope.asIframe);
+//    }
+    $scope.note = note;
     if ($scope.note === null) {
-      $scope.note = note;
+      console.log($scope.note);
       initialize();
     } else {
       updateNote(note);
@@ -356,6 +352,8 @@ $rootScope) {
 
   var updateNote = function(note) {
     /** update Note name */
+
+    console.log("update note" + JSON.stringify(note));
     if (note.name !== $scope.note.name) {
       console.log('change note name: %o to %o', $scope.note.name, note.name);
       $scope.note.name = note.name;

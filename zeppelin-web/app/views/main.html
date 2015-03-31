@@ -1,6 +1,6 @@
-<div class="wrap fill">
+<div class="wrap fill" ng-controller="NavCtrl">
   <!-- top menu -->
-  <div ng-controller="NavCtrl" class="note-top-bar">
+  <div class="note-top-bar">
     <header class="navbar navbar-inverse navbar-fixed-top ">
       <div class="navbar-header ">
         <a href="#" class="navbar-brand">
@@ -30,7 +30,7 @@
   <section class="fill">
     <!-- notebook main content -->
     <section id="main-container">
-      <aside id="note-list" class="col-lg-2 col-md-3 " ng-controller="NavCtrl">
+      <aside id="note-list" class="col-lg-2 col-md-3 " >
         <section>
           <header class="header note-list-header clearfix"><span class="pull-right"><button
             class="btn btn-dark btn-icon" id="new-note" data-toggle="tooltip"
@@ -50,14 +50,15 @@
             <div class="note-list-items"> <!-- note list -->
               <ul id="note-items" class="list-group ">
                 <li class="list-group-item note-list-item "
-                    ng-repeat="note in notes | filter:search" ng-class="{'note-button-active': isActive(note.id)}">
-                  <div class="note-item-content" ng-click="activate(note.id, note.date)">
+                    ng-repeat="note in notes | filter:search"
+                    ng-class="{'note-button-active': $parent.active === note.id}">
+                  <div class="note-item-content" >
                     <button class="destroy close"
                             ng-click="removeNote(note.id)">×
                     </button>
-                    <div class="note-name"><strong>{{note.name ||
+                    <div class="note-name" ng-click="activate(note.id, note.date)"><strong>{{note.name ||
                       'Notebook ' + note.id}} </strong></div>
-                    <span class="note-button-date ">{{note.date}}</span></div>
+                    <span class="note-button-date " ng-click="activate(note.id, note.date)">{{note.date}}</span></div>
                 </li>
               </ul>
             </div>
@@ -69,10 +70,10 @@
            background-position-y: 30px; background-size: 100% 40px; background-repeat-x: initial; background-repeat-y: initial;
            background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial;"
         >
-        <div class="note-date-top"><span ng-show="active!=='none'">Created on {{creationDate}}</span></div>
+        <div class="note-date-top"><span ng-show="activeDate!=='none'">Created on {{activeDate}}</span></div>
         <div
           class="note-tip"
-          ng-show="isActive('none')"><span>Click on an existing Notebook or create a new one</span></div>
+          ng-if="active==='none'"><span>Click on an existing Notebook or create a new one</span></div>
         <div class="note-workspace" ng-include src="'views/notebooks.html'">
         </div>
 
