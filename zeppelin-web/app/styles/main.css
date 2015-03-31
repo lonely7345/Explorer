@@ -244,9 +244,11 @@ html, body {
     margin: 0 0 0 40px;
     position: absolute;
     border-left: 1px solid #F9D3D3;
-    height: 100%;
     left: 0;
     right: 0;
+    top: 90px;
+    bottom: 0;
+    overflow-y: auto;
 }
 
 
