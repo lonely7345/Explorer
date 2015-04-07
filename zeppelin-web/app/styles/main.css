@@ -154,17 +154,22 @@ html, body {
 /*** main container ***/
 
 #main-container {
+    width: 100%;
+    min-width: 100%;
     height: 100%;
     position: relative;
-    display: table;
+    display: inline-block;
 }
 
 /* left-side note selector */
-
+.note-list {
+    min-width: 350px;
+    width: 350px;
+}
 #note-list {
     min-height: 100%;
     height: 100%;
-    display: inline;
+    display: inline-block;
     background-color: #DDDDDD;
     padding: 0 20px 0 20px;
     border-right: 1px solid #BBB;
@@ -216,11 +221,15 @@ html, body {
 }
 
 /* notebook shell*/
+.note-shell{
+    position:absolute;
+    right: 0;
+    left: 350px;
+}
 
 #note-shell {
-    min-height: 100%;
     height: 100%;
-    display: block;
+    display: inline-block;
     padding:0;
 
 }
