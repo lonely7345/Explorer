@@ -21,6 +21,7 @@ public class CrossdataInterpreter extends Interpreter {
 
     private final BasicDriver xdDriver;
     private Paragraph paragraph;
+    private String sessionId;
 
     static {
         Interpreter.register("xd", CrossdataInterpreter.class.getName());
@@ -53,6 +54,7 @@ public class CrossdataInterpreter extends Interpreter {
     @Override public InterpreterResult interpret(String st) {
         Result result;
         String[] commands = st.split(";");
+        sessionId="sessionId";
 
         if (commands.length > 1) { //multiline command
             StringBuilder sb = new StringBuilder();
@@ -61,7 +63,7 @@ public class CrossdataInterpreter extends Interpreter {
                 try {
                     String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim()+";";
                     System.out.println("*****[CrossdataInterpreter]interpret multiline query -> "+normalized);
-                    result = xdDriver.executeRawQuery(normalized);
+                    result = xdDriver.executeRawQuery(normalized, sessionId);
                     sb.append(CrossdataUtils.resultToString(result)).append(
                             System.getProperty("line.separator")).append(System.getProperty("line.separator"));
                 } catch (Exception e) {
@@ -75,7 +77,7 @@ public class CrossdataInterpreter extends Interpreter {
             CrossdataResultHandler callback = new CrossdataResultHandler(this, paragraph);
 
             try {
-                result = xdDriver.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback);
+                result = xdDriver.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback, sessionId);
                 if (ErrorResult.class.isInstance(result)) {
                     return new InterpreterResult(InterpreterResult.Code.ERROR,
                             ErrorResult.class.cast(result).getErrorMessage());
@@ -130,7 +132,7 @@ public class CrossdataInterpreter extends Interpreter {
      * @return Whether the connection has been successfully established.
      */
     public void connect() throws ConnectionException {
-        xdDriver.connect(xdDriver.getUserName());
+        xdDriver.connect(xdDriver.getUserName(), "PASSWORD"); //TODO: get user password from front
     }
 
 }

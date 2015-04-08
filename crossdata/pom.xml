@@ -14,6 +14,9 @@
     <version>0.0.1</version>
     <name>Zeppelin: Crossdata interpreter</name>
     <url>https://github.com/Stratio/crossdata</url>
+    <properties>
+        <crossdata.version>0.3.0-SNAPSHOT</crossdata.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -25,18 +28,18 @@
         <dependency>
             <groupId>com.stratio.crossdata</groupId>
             <artifactId>crossdata-driver</artifactId>
-            <version>0.2.0-001</version>
+            <version>${crossdata.version}</version>
         </dependency>
         <dependency>
             <groupId>com.stratio.crossdata</groupId>
             <artifactId>crossdata-common</artifactId>
-            <version>0.2.0-001</version>
+            <version>${crossdata.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.stratio.crossdata</groupId>
-            <artifactId>crossdata-shell</artifactId>
-            <version>0.2.0-001</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.stratio.crossdata</groupId>-->
+            <!--<artifactId>crossdata-shell</artifactId>-->
+            <!--<version>${crossdata.version}</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
