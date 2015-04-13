@@ -1,7 +1,5 @@
 #Stratio Notebook
 
-_UPDATE_ Spark interpreter is pending to be updated to 1.2 version for being able to work with akka 2.3.4. Since this is not yet performed, Spark interpreter won't work.
-
 Interactive shell to manage **Crossdata** based on Zeppelin
 
 Zeppelin, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
@@ -14,7 +12,6 @@ _Core feature_:
 To know more about Zeppelin, visit http://zeppelin-project.org
 
 ##Requirements
-
 
 Java 1.7
 Tested on Mac OSX, CentOS 6.X
@@ -46,7 +43,7 @@ If you wish to configure Zeppelin option (like port number), configure the follo
 
 You can modify Crossdata driver properties in:
 ```
-/crossdata/src/main/resources/driver-application.conf
+./crossdata/src/main/resources/driver-application.conf
 ```
 
 
