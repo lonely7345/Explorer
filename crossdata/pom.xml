@@ -35,12 +35,6 @@
             <artifactId>crossdata-common</artifactId>
             <version>${crossdata.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.stratio.crossdata</groupId>-->
-            <!--<artifactId>crossdata-shell</artifactId>-->
-            <!--<version>${crossdata.version}</version>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>
