@@ -114,7 +114,7 @@ html, body {
 .navbar-inverse .navbar-brand {
     color: #BBB;
     text-decoration: none;
-    font-family: 'Patua One', cursive;
+    font-family: 'source-code-pro', cursive;
     font-size: 32px;
 }
 
@@ -196,6 +196,11 @@ html, body {
     background-color: #00c7f7;
     cursor: pointer;
     cursor: hand;
+
+}
+
+.note-list-item:hover .note-button-date{
+    color:white;
 }
 
 .note-button-active {
@@ -209,6 +214,10 @@ html, body {
     margin-top:5px;
     text-align:right;
     color:#AAA;
+}
+
+.note-button-active .note-button-date{
+   color:white;
 }
 
 .note-desc {
