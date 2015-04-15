@@ -30,7 +30,8 @@ angular.module('zeppelinWebApp')
 
   $scope.paragraph = null;
   $scope.editor = null;
-  var editorMode = {scala: 'ace/mode/scala', sql: 'ace/mode/sql', markdown: 'ace/mode/markdown'};
+  var editorMode = {crossdata: 'ace/mode/xdql', scala: 'ace/mode/scala', sql: 'ace/mode/sql', markdown:
+  'ace/mode/markdown'};
 
   $scope.forms = {};
 
@@ -486,8 +487,10 @@ angular.module('zeppelinWebApp')
         $scope.editor.getSession().setMode(editorMode.sql);
       } else if ( String(code).startsWith('%md')) {
         $scope.editor.getSession().setMode(editorMode.markdown);
-      } else {
+      } else if ( String(code).startsWith('%s')) {
         $scope.editor.getSession().setMode(editorMode.scala);
+      } else {
+        $scope.editor.getSession().setMode(editorMode.crossdata);
       }
 
       $scope.editor.commands.addCommand({
@@ -515,8 +518,8 @@ angular.module('zeppelinWebApp')
       */
 
       // autocomplete on 'ctrl+.'
-      $scope.editor.commands.bindKey('ctrl-.', 'startAutocomplete');
-      $scope.editor.commands.bindKey('ctrl-space', null);
+      $scope.editor.commands.bindKey('ctrl-space', 'startAutocomplete');
+      $scope.editor.commands.bindKey('ctrl-.', null);
 
       // handle cursor moves
       $scope.editor.keyBinding.origOnCommandKey = $scope.editor.keyBinding.onCommandKey;
