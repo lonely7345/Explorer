@@ -239,11 +239,11 @@
 }
 
 .ace-tm .ace_keyword.ace_operator {
-  color: cyan!important;
+  color: #00c7f7!important;
 }
 
-.ace-tm .ace_keyword.ace_numeric {
-  color: cyan!important;
+.ace-tm .ace_constant.ace_numeric {
+  color: #A1A1A1!important;
 }
 
 .emacs-mode .ace_cursor {
