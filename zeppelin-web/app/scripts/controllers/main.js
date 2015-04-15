@@ -27,7 +27,7 @@ angular.module('zeppelinWebApp')
         .controller('MainCtrl', function($scope, WebSocket, $rootScope, $window) {
 
   $scope.WebSocketWaitingList = [];
-  $rootScope.connected = false;
+  $rootScope.connected = true;
   $scope.looknfeel = 'simple';
 
 
