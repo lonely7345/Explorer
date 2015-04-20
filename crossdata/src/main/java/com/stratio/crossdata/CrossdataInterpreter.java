@@ -24,7 +24,7 @@ public class CrossdataInterpreter extends Interpreter {
     private String sessionId;
 
     static {
-        Interpreter.register("xd", CrossdataInterpreter.class.getName());
+        Interpreter.register("xdql", CrossdataInterpreter.class.getName());
     }
 
     public CrossdataInterpreter(Properties property) {
@@ -44,7 +44,7 @@ public class CrossdataInterpreter extends Interpreter {
     }
 
     @Override public void close() {
-
+        xdDriver.close();
     }
 
     @Override public Object getValue(String name) {

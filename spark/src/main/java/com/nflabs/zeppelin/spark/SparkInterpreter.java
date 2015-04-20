@@ -75,7 +75,7 @@ public class SparkInterpreter extends Interpreter {
     private Map<String, Object> binder;
     private SparkEnv env;
 
-        static SparkInterpreter _singleton;
+    static SparkInterpreter _singleton;
 
     public static SparkInterpreter singleton() {
         return _singleton;
