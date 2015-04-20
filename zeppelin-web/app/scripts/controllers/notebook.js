@@ -30,8 +30,8 @@ $rootScope) {
   $scope.note = null;
   $scope.active = 'none';
   $scope.showEditor = false;
-  $scope.editorToggled = false;
-  $scope.tableToggled = false;
+  $scope.editorToggled = true;
+  $scope.tableToggled = true;
   $scope.looknfeelOption = [ 'default', 'simple' ];
   $scope.cronOption = [
     {name: 'None', value : undefined},
