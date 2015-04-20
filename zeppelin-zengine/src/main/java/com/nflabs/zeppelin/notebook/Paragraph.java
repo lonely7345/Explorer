@@ -62,23 +62,24 @@ public class Paragraph extends Job implements Serializable {
     }
 
     public String getRequiredReplName() {
-        String replNameRaw = ((String) config.get("interpreter"));
-        switch (replNameRaw) {
-        case "crossdata":
-            replName = "xdql";
-            break;
-        case "markdown":
-            replName = "md";
-            break;
-        case "sql":
-            replName = "sql";
-            break;
-        case "spark":
-            replName = "s";
-            break;
+        if (config.get("interpreter") != null) {
+            String replNameRaw = ((String) config.get("interpreter"));
+            switch (replNameRaw) {
+            case "crossdata":
+                replName = "xdql";
+                break;
+            case "markdown":
+                replName = "md";
+                break;
+            case "sql":
+                replName = "sql";
+                break;
+            case "spark":
+                replName = "s";
+                break;
+            }
         }
-        System.out.println(replName);
-        if (this.replName != null) {
+        if (replName != null) {
             return replName;
         }
         return getRequiredReplName(text);
