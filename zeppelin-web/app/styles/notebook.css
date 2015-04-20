@@ -251,6 +251,10 @@
   border: none;
 }
 
+.interpreter-selector{
+  margin: -4px 10px 0px 0px;
+}
+
 .paragraph .status {
   font-size: 10px;
   color: #AAAAAA;

@@ -33,6 +33,12 @@ angular.module('zeppelinWebApp')
   var editorMode = {crossdata: 'ace/mode/xdql', scala: 'ace/mode/scala', sql: 'ace/mode/sql', markdown:
   'ace/mode/markdown'};
 
+  $scope.editorModeMap = {};
+  $scope.editorModeMap[editorMode.crossdata]="crossdata";
+  $scope.editorModeMap[editorMode.sql]="sql";
+  $scope.editorModeMap[editorMode.scala]="spark";
+  $scope.editorModeMap[editorMode.markdown]="markdown";
+
   $scope.forms = {};
 
   // Controller init
@@ -79,6 +85,10 @@ angular.module('zeppelinWebApp')
   };
 
   var initializeDefault = function(){
+    if (!$scope.paragraph.config.interpreter) {
+      $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+    }
+
     if (!$scope.paragraph.config.looknfeel) {
       $scope.paragraph.config.looknfeel = 'default';
     }
@@ -137,7 +147,6 @@ angular.module('zeppelinWebApp')
   });
   // TODO: this may have impact on performance when there are many paragraphs in a note.
   $rootScope.$on('updateParagraph', function(event, data) {
-//  console.log('*****Entro al updateParagraph antes del if');
 //    if (data.paragraph.id === $scope.paragraph.id && data.paragraph.status !== $scope.paragraph.status){
     if (data.paragraph.id === $scope.paragraph.id &&
          (
@@ -162,7 +171,7 @@ angular.module('zeppelinWebApp')
       var newGraphMode = $scope.getGraphMode(data.paragraph);
       var resultRefreshed = (data.paragraph.dateFinished !== $scope.paragraph.dateFinished);
 
-      console.log("updateParagraph oldData %o, newData %o. type %o -> %o, mode %o -> %o", $scope.paragraph, data, oldType, newType, oldGraphMode, newGraphMode);
+//      console.log("updateParagraph oldData %o, newData %o. type %o -> %o, mode %o -> %o", $scope.paragraph, data, oldType, newType, oldGraphMode, newGraphMode);
 
       if ($scope.paragraph.text !== data.paragraph.text) {
         if ($scope.dirtyText) {         // check if editor has local update
@@ -228,6 +237,11 @@ angular.module('zeppelinWebApp')
       }
     }
   });
+
+  $scope.setInterpreter = function (interpreter){
+//       console.log("set interpreter "+interpreter);
+       $scope.paragraph.config.interpreter= interpreter;
+  };
 
   $scope.isRunning = function(){
     if($scope.paragraph.status==='RUNNING' || $scope.paragraph.status==='REFRESH_RESULT' || $scope.paragraph
@@ -418,6 +432,7 @@ angular.module('zeppelinWebApp')
       $scope.editor.focus();
       var hight = $scope.editor.getSession().getScreenLength() * $scope.editor.renderer.lineHeight + $scope.editor.renderer.scrollBar.getWidth();
       setEditorHeight(_editor.container.id, hight);
+      $scope.editor.getSession().setMode(editorMode.crossdata);
 
       $scope.editor.getSession().setUseWrapMode(true);
       if (navigator.appVersion.indexOf('Mac') !== -1 ) {
@@ -476,6 +491,9 @@ angular.module('zeppelinWebApp')
       });
 
 
+
+
+
       $scope.editor.getSession().on('change', function(e, editSession) {
         hight = editSession.getScreenLength() * $scope.editor.renderer.lineHeight + $scope.editor.renderer.scrollBar.getWidth();
         setEditorHeight(_editor.container.id, hight);
@@ -484,14 +502,40 @@ angular.module('zeppelinWebApp')
 
       var code = $scope.editor.getSession().getValue();
       if ( String(code).startsWith('%sql')) {
-        $scope.editor.getSession().setMode(editorMode.sql);
+        $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.sql];
+        console.log(String(code) + " -> "+ $scope.paragraph.config.interpreter);
       } else if ( String(code).startsWith('%md')) {
-        $scope.editor.getSession().setMode(editorMode.markdown);
+        $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.markdown];
+        console.log(String(code) + " -> "+ $scope.paragraph.config.interpreter);
       } else if ( String(code).startsWith('%s')) {
-        $scope.editor.getSession().setMode(editorMode.scala);
-      } else {
-        $scope.editor.getSession().setMode(editorMode.crossdata);
+        $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
+        console.log(String(code) + " -> "+ $scope.paragraph.config.interpreter);
+      } else if(String(code).startsWith('%xdql')){
+        $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+        console.log(String(code) + " -> "+ $scope.paragraph.config.interpreter);
       }
+
+      var getModeByValue = function(value){
+          for(var key in $scope.editorModeMap){
+              if($scope.editorModeMap[key]===value){
+                return key;
+              }
+          }
+      }
+
+      $scope.$watch(
+  // This function returns the value being watched. It is called for each turn of the $digest loop
+      function() { return $scope.paragraph.config.interpreter; },
+  // This is the change listener, called when the value returned from the above function changes
+      function(newValue, oldValue) {
+       if ( newValue !== oldValue ) {
+         var newMode= getModeByValue(newValue);
+         $scope.editor.getSession().setMode(newMode);
+//          console.log("watch interpreter -> "+ $scope.paragraph.config.interpreter + " old "+ oldValue + " new "
+//          +newValue + "new mode -> "+newMode );
+       }
+      }
+      );
 
       $scope.editor.commands.addCommand({
         name: 'run',

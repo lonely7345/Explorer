@@ -33,10 +33,7 @@ function($scope, $rootScope, $routeParams, AuthenticationService) {
 
 
   $scope.activate = function (noteId, noteDate){
-      console.log("activate "+noteId +" "+noteDate);
-      console.log("active "+$scope.active);
       if(noteId!== $scope.active){
-        console.log("activate->rootScope.emit - changeActiveNotebook");
         $rootScope.$emit('changeActiveNotebook', {id:noteId, date:noteDate});
         $scope.active = noteId;
         $scope.activeDate=noteDate;

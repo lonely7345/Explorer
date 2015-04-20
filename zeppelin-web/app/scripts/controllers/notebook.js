@@ -353,7 +353,7 @@ $rootScope) {
   var updateNote = function(note) {
     /** update Note name */
 
-    console.log("update note" + JSON.stringify(note));
+    console.log("Note updated --- " + JSON.stringify(note));
     if (note.name !== $scope.note.name) {
       console.log('change note name: %o to %o', $scope.note.name, note.name);
       $scope.note.name = note.name;

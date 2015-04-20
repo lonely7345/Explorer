@@ -28,6 +28,7 @@ public class Paragraph extends Job implements Serializable {
     String text;
     private Map<String, Object> config; // paragraph configs like isOpen, colWidth, etc...
     public final Setting settings; // form and parameter settings
+    String replName;
 
     public Paragraph(JobListener listener, NoteInterpreterLoader replLoader) {
         super(generateId(), listener);
@@ -36,6 +37,7 @@ public class Paragraph extends Job implements Serializable {
         text = null;
         settings = new Setting();
         config = new HashMap<String, Object>();
+        replName = null;
     }
 
     private static String generateId() {
@@ -60,10 +62,30 @@ public class Paragraph extends Job implements Serializable {
     }
 
     public String getRequiredReplName() {
+        String replNameRaw = ((String) config.get("interpreter"));
+        switch (replNameRaw) {
+        case "crossdata":
+            replName = "xdql";
+            break;
+        case "markdown":
+            replName = "md";
+            break;
+        case "sql":
+            replName = "sql";
+            break;
+        case "spark":
+            replName = "s";
+            break;
+        }
+        System.out.println(replName);
+        if (this.replName != null) {
+            return replName;
+        }
         return getRequiredReplName(text);
     }
 
     public static String getRequiredReplName(String text) {
+
         if (text == null) {
             return null;
         }

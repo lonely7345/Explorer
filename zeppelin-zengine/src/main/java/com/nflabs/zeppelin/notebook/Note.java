@@ -243,7 +243,7 @@ public class Note implements Serializable, JobListener {
 		Paragraph p = getParagraph(paragraphId);
 		p.setNoteReplLoader(replLoader);
 		p.setListener(jobListenerFactory.getParagraphJobListener(this));
-		Interpreter intp = replLoader.getRepl(p.getRequiredReplName());		
+		Interpreter intp = replLoader.getRepl(p.getRequiredReplName());	//TODO set a replloader from paragraph config
 		intp.getScheduler().submit(p);
 	}
 	
