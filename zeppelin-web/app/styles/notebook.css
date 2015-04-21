@@ -287,6 +287,9 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.paragraph-settings {
+  margin-top:1px;
+}
 
 .disable {
   opacity:0.4!important;
