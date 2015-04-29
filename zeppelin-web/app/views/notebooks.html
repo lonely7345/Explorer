@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<div id="notebook" class="wrap" ng-controller="NotebookCtrl" ng-hide="active === 'none'">
+<div id="notebook" class="wrap" ng-controller="NotebookCtrl" ng-hide="active === 'none' && !asIframe">
 
     <div class="noteAction" ng-show="note.id && !paragraphUrl">
         <h3 class="new_h3">
@@ -119,7 +119,7 @@ limitations under the License.
     <div id="{{currentParagraph.id}}_paragraphColumn_main"
          ng-repeat="currentParagraph in note.paragraphs"
          ng-controller="ParagraphCtrl"
-         ng-Init="init(currentParagraph)"
+         ng-Init="init(currentParagraph, note.id)"
          ng-class="{
                     'paragraph-col col-md-12': !currentParagraph.config.colWidth || paragraphUrl,
                     'paragraph-col col-md-{{currentParagraph.config.colWidth}}': currentParagraph.config.colWidth && !paragraphUrl

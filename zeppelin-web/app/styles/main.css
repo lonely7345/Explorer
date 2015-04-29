@@ -93,6 +93,7 @@ html, body {
     position: absolute;
     width: auto;
     height: 100%;
+    overflow-y: hidden;
 }
 
 /*** top bar ***/
@@ -163,8 +164,8 @@ html, body {
 
 /* left-side note selector */
 .note-list {
-    min-width: 350px;
-    width: 350px;
+    min-width: 300px;
+    width: 300px;
 }
 #note-list {
     min-height: 100%;
@@ -233,7 +234,14 @@ html, body {
 .note-shell{
     position:absolute;
     right: 0;
-    left: 350px;
+    left: 300px;
+}
+/* asIframe - shell*/
+.note-shell-full{
+    position:absolute;
+    right: 0;
+    left: 0px;
+    overflow-y: auto;
 }
 
 #note-shell {

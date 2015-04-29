@@ -24,7 +24,7 @@
  * @author anthonycorbacho
  */
 angular.module('zeppelinWebApp')
-        .controller('MainCtrl', function($scope, WebSocket, $rootScope, $window) {
+        .controller('MainCtrl', function($scope, WebSocket, $rootScope, $route, $routeParams, $window) {
 
   $scope.WebSocketWaitingList = [];
   $rootScope.connected = true;
@@ -61,7 +61,10 @@ angular.module('zeppelinWebApp')
     if (op === 'NOTE') {
       $rootScope.$emit('setNoteContent', data.note);
     } else if (op === 'NOTES_INFO') {
-      $rootScope.$emit('setNoteMenu', data.notes);
+      if($scope.asIframe){
+        console.log($routeParams);
+        $rootScope.$emit('sendNewEvent', {op: 'GET_NOTE', data: {id: $routeParams.noteId}});
+      } else {$rootScope.$emit('setNoteMenu', data.notes);}
     } else if (op === 'PARAGRAPH') {
       $rootScope.$emit('updateParagraph', data);
     } else if (op === 'PROGRESS') {
@@ -114,7 +117,7 @@ angular.module('zeppelinWebApp')
   });
 
   $rootScope.$on('changeActiveNotebook', function(event, data){
-//    console.log("main->onChangeActiveNotebook "+data.id+" "+data.date);
+    console.log("### MAIN.JS -> onChangeActiveNotebook "+data.id+" "+data.date);
     $rootScope.$broadcast('rootChangeActiveNotebook', data);
   });
 

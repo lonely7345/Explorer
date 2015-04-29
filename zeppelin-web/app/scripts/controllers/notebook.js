@@ -69,8 +69,6 @@ $rootScope) {
      }
    });
 
-
-
   $scope.runNote = function() {
     var result = confirm('Run all paragraphs?');
     if (result) {
@@ -156,15 +154,19 @@ $rootScope) {
 
   /** update the current note */
   $rootScope.$on('setNoteContent', function(event, note) {
-//    $scope.paragraphUrl = $routeParams.paragraphId;
-//    $scope.asIframe = $routeParams.asIframe;
-//    if ($scope.paragraphUrl) {
-//      note = cleanParagraphExcept($scope.paragraphUrl, note);
-//      $rootScope.$emit('setIframe', $scope.asIframe);
-//    }
+    console.log("### NOTEBOOK.JS -> on setNoteContent "+ $routeParams.asIframe);
+    $scope.paragraphUrl = $routeParams.paragraphId;
+    $scope.asIframe = $routeParams.asIframe;
+    if ($scope.paragraphUrl) {
+    console.log("### NOTEBOOK.JS -> on setNoteContent ");
+    console.log(note);
+      note = cleanParagraphExcept($scope.paragraphUrl, note);
+      console.log("### NOTEBOOK.JS -> setIframe"+$scope.asIframe);
+      $rootScope.$emit('setIframe', $scope.asIframe);
+    }
     $scope.note = note;
     if ($scope.note === null) {
-      console.log($scope.note);
+      console.log($scope.note)
       initialize();
     } else {
       updateNote(note);
@@ -182,13 +184,14 @@ $rootScope) {
 
   var cleanParagraphExcept = function(paragraphId, note) {
     var noteCopy = {};
+    console.log(note.id);
     noteCopy.id = note.id;
     noteCopy.name = note.name;
     noteCopy.config = note.config;
     noteCopy.info = note.info;
     noteCopy.paragraphs = [];
     for (var i=0; i<note.paragraphs.length; i++) {
-      if (note.paragraphs[i].id === paragraphId) {
+      if (note.paragraphs[i].hasOwnProperty("id") && note.paragraphs[i].id === paragraphId) {
         noteCopy.paragraphs[0] = note.paragraphs[i];
         if (!noteCopy.paragraphs[0].config) {
           noteCopy.paragraphs[0].config = {};

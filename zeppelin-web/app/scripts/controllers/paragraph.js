@@ -27,7 +27,6 @@
  */
 angular.module('zeppelinWebApp')
         .controller('ParagraphCtrl', function($scope, $rootScope, $route, $window, $element, $routeParams, $location, $timeout) {
-
   $scope.paragraph = null;
   $scope.editor = null;
   var editorMode = {crossdata: 'ace/mode/xdql', scala: 'ace/mode/scala', sql: 'ace/mode/sql', markdown:
@@ -42,8 +41,9 @@ angular.module('zeppelinWebApp')
   $scope.forms = {};
 
   // Controller init
-  $scope.init = function(newParagraph) {
+  $scope.init = function(newParagraph, noteId) {
     $scope.paragraph = newParagraph;
+    $scope.paragraph.noteId= noteId;
     $scope.chart = {};
     $scope.colWidthOption = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ];
     $scope.showTitleEditor = false;
@@ -524,9 +524,7 @@ angular.module('zeppelinWebApp')
       }
 
       $scope.$watch(
-  // This function returns the value being watched. It is called for each turn of the $digest loop
       function() { return $scope.paragraph.config.interpreter; },
-  // This is the change listener, called when the value returned from the above function changes
       function(newValue, oldValue) {
        if ( newValue !== oldValue ) {
          var newMode= getModeByValue(newValue);
@@ -1354,10 +1352,17 @@ angular.module('zeppelinWebApp')
       return this.slice(0, str.length) === str;
     };
   }
+//  $scope.$on('rootChangeActiveNotebook', function (event, data){
+//    console.log("### PARAGRAPH.JS -> on rootChangeActiveNotebook "+ data.id);
+//    $scope.activeNote = data.id;
+//
+//  });
 
   $scope.goToSingleParagraph = function () {
-    var noteId = $route.current.pathParams.noteId;
-    var redirectToUrl = location.protocol + '//' + location.host + '/#/notebook/' + noteId + '/paragraph/' + $scope.paragraph.id+'?asIframe';
+//    console.log("### PARAGRAPH.JS -> goToSingleParagraph (active note) "+ $scope.paragraph.noteId);
+//    console.log("### PARAGRAPH.JS -> goToSingleParagraph "+ location.protocol + '//' + location.host + '/#/notebook/' + $scope.paragraph.noteId + '/paragraph/' + $scope.paragraph.id+'?asIframe');
+    var redirectToUrl = location.protocol + '//' + location.host + '/#/notebook/' + $scope.paragraph.noteId +
+    '/paragraph/' + $scope.paragraph.id+'?asIframe';
     $window.open(redirectToUrl);
   };
 

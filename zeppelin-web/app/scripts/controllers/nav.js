@@ -23,6 +23,7 @@
  *
  * @author anthonycorbacho
  */
+
 angular.module('zeppelinWebApp').controller('NavCtrl',['$scope', '$rootScope', '$routeParams',
 'AuthenticationService',
 function($scope, $rootScope, $routeParams, AuthenticationService) {
@@ -33,7 +34,8 @@ function($scope, $rootScope, $routeParams, AuthenticationService) {
 
 
   $scope.activate = function (noteId, noteDate){
-      if(noteId!== $scope.active){
+    console.log("### NAV.JS -> activate "+noteId);
+      if(noteId!== $scope.active ){
         $rootScope.$emit('changeActiveNotebook', {id:noteId, date:noteDate});
         $scope.active = noteId;
         $scope.activeDate=noteDate;
@@ -71,5 +73,6 @@ function($scope, $rootScope, $routeParams, AuthenticationService) {
   $scope.logout = function(){
      AuthenticationService.ClearCredentials();
   };
+
 
 }]);
