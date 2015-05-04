@@ -59,9 +59,9 @@
                                         <button class="destroy close"
                                                 ng-click="removeNote(note.id)">×
                                         </button>
-                                        <div class="note-name" ng-click="activate(note.id, note.date)"><strong>{{note.name
+                                        <div class="note-name" ng-click="activate(note.id, note.date)"><span>{{note.name
                                             ||
-                                            'Notebook ' + note.id}} </strong></div>
+                                            'Notebook ' + note.id}} </span></div>
                                         <span class="note-button-date " ng-click="activate(note.id, note.date)">{{note.date}}</span>
                                     </div>
                                 </li>
