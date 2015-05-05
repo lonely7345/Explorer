@@ -22,7 +22,7 @@
 html, body, div, span, applet, object, iframe,
 p,
 a, abbr, acronym, address, big, cite,
-del, dfn, img, ins, kbd, q, s, samp,
+del, dfn, img, ins, q, s, samp,
 small, strike,sub, sup, tt, var,
 center,
 dl, dt, dd,
@@ -110,6 +110,17 @@ html, body {
     color: 00c7f7;
 }
 
+#main > div > div > div > header > ul > li.note-usr.dropdown > ul > li > span{
+    color: #333;
+    padding: 4px 20px;
+    display:block;
+    cursor:pointer;
+}
+
+#main > div > div > div > header > ul > li.note-usr.dropdown > ul > li > span:hover{
+    background-color: rgba(0,0,0,.05);
+}
+
 .navbar-inverse .navbar-brand {
     color: #BBB;
     text-decoration: none;
@@ -121,7 +132,7 @@ html, body {
     padding: 5px 15px 0 15px;
 }
 
-/* user profile*/
+/* user profile */
 .note-usr {
     margin-right: 30px;
 }
@@ -148,6 +159,55 @@ html, body {
 
 .server-disconnected {
     color: #FF4641;
+}
+/* Help modal */
+
+.keys {
+  padding-right: 10px;
+  color: #999;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.kbd-dark {
+  color: #eee;
+  background-color: #222;
+  background-image: none;
+  border: 0;
+}
+
+kbd {
+  background-color: #e7e7e7;
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  display: inline-block;
+  padding: 4px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #000;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+}
+
+.modal-header{
+   text-align: center;!important
+}
+
+.modal-body{
+   padding: 20px 0px 20px 140px;!important
+}
+
+.center-modal{
+    padding: 40px 20px;
+    position: fixed;
+    top: 25%;
+    left: 18.5%;
+    z-index: 1050;
+    width: 80%;
+    height: 80%;
+    margin-left: -10%;
+
 }
 
 /*** main container ***/

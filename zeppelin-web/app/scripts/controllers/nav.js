@@ -25,8 +25,8 @@
  */
 
 angular.module('zeppelinWebApp').controller('NavCtrl',['$scope', '$rootScope', '$routeParams',
-'AuthenticationService',
-function($scope, $rootScope, $routeParams, AuthenticationService) {
+'AuthenticationService','$modal',
+function($scope, $rootScope, $routeParams, AuthenticationService, $modal) {
   /** Current list of notes (ids) */
   $scope.notes = [];
   $scope.active = "none";
@@ -74,5 +74,9 @@ function($scope, $rootScope, $routeParams, AuthenticationService) {
      AuthenticationService.ClearCredentials();
   };
 
+  $scope.openHelp = function(){
+     var modalInstance = $modal.open({animation: true, templateUrl: '/views/modal-shortcut.html', windowClass:
+     'center-modal'});
+  };
 
 }]);
