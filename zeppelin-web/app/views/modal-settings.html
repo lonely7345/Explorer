@@ -15,86 +15,17 @@ limitations under the License.
 -->
 
 <div class="modal-header">
-    <h3 class="modal-title">Keyboard shortcuts</h3>
+    <h3 class="modal-title">Settings</h3>
 </div>
-<div class="modal-body">
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Shift</kbd> + <kbd class="kbd-dark">Enter</kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Run the note
-        </div>
+<div class="modal-body" ng-controller="NavCtrl" style="overflow:hidden;">
+    <div>
+        <span class="settings-crossdata-title" style="font-size:1.5em;padding-right:160px;">Crossdata</span>
+        <a class="btn btn-dark" ng-click="getInterpreterSettings()">+</a>
+        <a class="btn btn-dark" ng-click="saveInterpreterSettings()">Save</a>
+        <a class="btn btn-dark" ng-click="restartInterpreterConnection()">Refresh</a>
+        <a class="btn btn-dark" ng-click="resetToDefault()">Restore</a>
     </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Ctrl</kbd> + <kbd class="kbd-dark">Spacebar</kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Syntax autocomplete helper
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Ctrl</kbd> + <kbd class="kbd-dark">a</kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Select the whole line
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Ctrl</kbd> + <kbd class="kbd-dark">x</kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Cut the line
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Ctrl</kbd> + <kbd class="kbd-dark">v</kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Paste the line
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Up arrow </kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Move cursor Up
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="keys">
-                <kbd class="kbd-dark">Down arrow</kbd>
-            </div>
-        </div>
-        <div class="col-md-8">
-            Move cursor Down
-        </div>
-    </div>
-
+    <textarea ng-model="interpreterSettings" ng-show="showCrossdataProperties" style="width:550px;
+    height:400px;"></textarea>
 </div>
 

@@ -40,6 +40,21 @@ function getWebsocketProtocol() {
   return protocol;
 }
 
+function getRestApiBase() {
+  var port = Number(location.port);
+  if (port === 'undefined' || port === 0) {
+    port = 80;
+    if (location.protocol === 'https:') {
+      port = 443;
+    }
+  }
+
+  if (port === 3333 || port === 9000) {
+    port = 8080;
+  }
+  return location.protocol+"//"+location.hostname+":"+port+"/api";
+}
+
 /**
  * @ngdoc overview
  * @name zeppelinWebApp

@@ -17,11 +17,10 @@
                     {{globals.currentUser.username}}  <b
                         class="caret"></b> </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="#"> <span class="badge bg-danger pull-right">3</span> Notifications </a></li>
-                        <li><span ng-click="openHelp()">Help
-                        </span></li>
+                        <li><span ng-click="openSettings()">Settings</span></li>
+                        <!--<li><a href="profile.html">Profile</a></li>-->
+                        <!--<li><a href="#"> <span class="badge bg-danger pull-right">3</span> Notifications </a></li>-->
+                        <li><span ng-click="openHelp()">Help</span></li>
                         <li class="divider"></li>
                         <li><a href="/" ng-click="logout()">Logout</a></li>
                     </ul>

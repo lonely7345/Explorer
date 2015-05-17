@@ -206,27 +206,32 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		}
 		return getBooleanValue(propertyName, defaultValue);
 	}
-	
+
 	public String getNotebookDir(){
 		return getRelativeDir(ConfVars.ZEPPELIN_NOTEBOOK_DIR);
 	}
-	
+
 	public String getInterpreterDir(){
 		return getRelativeDir(ConfVars.ZEPPELIN_INTERPRETER_DIR);
 	}
-	
+
 	public String getRelativeDir(ConfVars c){
 		return getRelativeDir(getString(c));
 	}
-	
+
 	public String getRelativeDir(String path){
 		if(path!=null && path.startsWith("/")){
 			return path;
 		} else {
 			return getString(ConfVars.ZEPPELIN_HOME)+"/"+path;
-		}		
+		}
 	}
-	
+	public String getCrossdataSettingsPath() {
+		return getRelativeDir("conf/driver-settings.conf");
+	}
+	public String getCrossdataDefaultSettingsPath() {
+		return getRelativeDir("conf/driver-settings-default.conf");
+	}
 
 	public static enum ConfVars {
 		ZEPPELIN_HOME				("zeppelin.home", "../"),
@@ -236,8 +241,8 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		ZEPPELIN_INTERPRETERS		("zeppelin.interpreters", "com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter"),
 		ZEPPELIN_INTERPRETER_DIR	("zeppelin.interpreter.dir", "interpreter"),
 		ZEPPELIN_INTERPRETER_MODE	("zeppelin.interpreter.mode", "share"),     // 'separate', 'share'
-		ZEPPELIN_ENCODING			("zeppelin.encoding", "UTF-8"), 
-		ZEPPELIN_NOTEBOOK_DIR       ("zeppelin.notebook.dir", "notebook")		
+		ZEPPELIN_ENCODING			("zeppelin.encoding", "UTF-8"),
+		ZEPPELIN_NOTEBOOK_DIR       ("zeppelin.notebook.dir", "notebook")
 		;
 
 		private String varName;

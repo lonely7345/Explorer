@@ -23,6 +23,7 @@ import com.nflabs.zeppelin.conf.ZeppelinConfiguration;
 import com.nflabs.zeppelin.conf.ZeppelinConfiguration.ConfVars;
 import com.nflabs.zeppelin.interpreter.InterpreterFactory;
 import com.nflabs.zeppelin.notebook.Notebook;
+import com.nflabs.zeppelin.rest.InterpreterRestApi;
 import com.nflabs.zeppelin.rest.ZeppelinRestApi;
 import com.nflabs.zeppelin.scheduler.SchedulerFactory;
 import com.nflabs.zeppelin.socket.NotebookServer;
@@ -189,6 +190,9 @@ public class ZeppelinServer extends Application {
         ZeppelinRestApi root = new ZeppelinRestApi();
         root.setNotebookServer(getWebsocket());
         singletons.add(root);
+
+        InterpreterRestApi interpreterApi = new InterpreterRestApi(replFactory);
+        singletons.add(interpreterApi);
 
         return singletons;
     }
