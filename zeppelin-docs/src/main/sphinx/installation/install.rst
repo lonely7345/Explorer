@@ -2,10 +2,10 @@
 Install Zeppelin
 =================
 
-Instructions for the Impatient
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Instructions
+^^^^^^^^^^^^^
 
-Install Zeppelin in local mode
+Install Stratio Notebook in local mode
 
 .. code-block:: bash
 
@@ -32,21 +32,22 @@ Configuring Zeppelin with existing hadoop cluster, refer this section.
 
 Prerequisites
 -------------
-Java 1.6 or Later
+Java 1.7 or Later
 Apache Hadoop (Standalone mode)
 Download
-To get Zeppelin distribution, download a recent release.
+To get Stratio Notebook distribution, download a recent release.
 
 Install
 -------
-Unpack the downloaded Zeppelin distribution.
+Unpack the downloaded Notebook distribution.
 
 Configure
 ---------
-Configuration can be done by both environment variable and java properties. If both defined, environment vaiable is used.
+Configuration can be done by both environment variable and java properties. If both defined, environment variable is
+used.
 
 =========================    =======================  ============================== ===========
-zepplin-env.sh	             zepplin-site.xml         Default value  		     Description
+zeppelin-env.sh	             zeppelin-site.xml         Default value  		     Description
 =========================    =======================  ============================== ===========
 ZEPPELIN_HOME	  		    		   	   		   	     Zeppelin Home directory
 ZEPPELIN_PORT         	     zeppelin.server.port     8080	   		     Zeppelin server port
