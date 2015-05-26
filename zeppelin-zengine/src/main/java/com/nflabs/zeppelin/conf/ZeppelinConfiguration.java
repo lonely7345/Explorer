@@ -227,10 +227,10 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		}
 	}
 	public String getCrossdataSettingsPath() {
-		return getRelativeDir("conf/driver-settings.conf");
+		return getRelativeDir("conf/crossdata/driver-application.conf");
 	}
 	public String getCrossdataDefaultSettingsPath() {
-		return getRelativeDir("conf/driver-settings-default.conf");
+		return getRelativeDir("conf/crossdata/driver-settings-default.conf");
 	}
 
 	public static enum ConfVars {

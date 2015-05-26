@@ -37,6 +37,7 @@ public class CrossdataInterpreter extends Interpreter {
     @Override public void open() {
         try {
             connect();
+            System.out.println("Crossdata's driver connected");
         } catch (ConnectionException e) {
             System.out.println(e.getMessage());
         }

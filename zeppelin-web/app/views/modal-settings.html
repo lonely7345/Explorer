@@ -21,11 +21,11 @@ limitations under the License.
     <div>
         <span class="settings-crossdata-title" style="font-size:1.5em;padding-right:160px;">Crossdata</span>
         <a class="btn btn-dark" ng-click="getInterpreterSettings()">+</a>
-        <a class="btn btn-dark" ng-click="saveInterpreterSettings()">Save</a>
-        <a class="btn btn-dark" ng-click="restartInterpreterConnection()">Refresh</a>
-        <a class="btn btn-dark" ng-click="resetToDefault()">Restore</a>
+        <!--<a class="btn btn-dark" ng-click="saveInterpreterSettings()">Save</a>-->
+        <!--<a class="btn btn-dark" ng-click="restartInterpreterConnection()">Refresh</a>-->
+        <!--<a class="btn btn-dark" ng-click="resetToDefault()">Restore</a>-->
     </div>
-    <textarea ng-model="interpreterSettings" ng-show="showCrossdataProperties" style="width:550px;
-    height:400px;"></textarea>
+    <textarea readonly ng-model="interpreterSettings" ng-show="showCrossdataProperties" style="width:550px;
+    height:250px;"></textarea>
 </div>
 
