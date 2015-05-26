@@ -1,5 +1,6 @@
 package com.stratio.crossdata;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,9 +20,10 @@ import com.stratio.crossdata.utils.CrossdataUtils;
 
 public class CrossdataInterpreter extends Interpreter {
 
-    private final BasicDriver xdDriver;
+    private BasicDriver xdDriver;
     private Paragraph paragraph;
     private String sessionId;
+    private HashMap<String, String> queryIds;
 
     static {
         Interpreter.register("xdql", CrossdataInterpreter.class.getName());
@@ -32,9 +34,14 @@ public class CrossdataInterpreter extends Interpreter {
         //Driver that connects to the CROSSDATA servers.
         xdDriver = new BasicDriver();
         xdDriver.setUserName("USER");
+        queryIds= new HashMap<String,String>();
     }
 
     @Override public void open() {
+        if(xdDriver == null){
+            xdDriver = new BasicDriver();
+            xdDriver.setUserName("USER");
+        }
         try {
             connect();
             System.out.println("Crossdata's driver connected");
@@ -46,6 +53,7 @@ public class CrossdataInterpreter extends Interpreter {
 
     @Override public void close() {
         xdDriver.close();
+        xdDriver = null;
     }
 
     @Override public Object getValue(String name) {
@@ -65,6 +73,7 @@ public class CrossdataInterpreter extends Interpreter {
                     String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim()+";";
                     System.out.println("*****[CrossdataInterpreter]interpret multiline query -> "+normalized);
                     result = xdDriver.executeRawQuery(normalized, sessionId);
+
                     sb.append(CrossdataUtils.resultToString(result)).append(
                             System.getProperty("line.separator")).append(System.getProperty("line.separator"));
                 } catch (Exception e) {
@@ -83,6 +92,7 @@ public class CrossdataInterpreter extends Interpreter {
                     return new InterpreterResult(InterpreterResult.Code.ERROR,
                             ErrorResult.class.cast(result).getErrorMessage());
                 } else if (InProgressResult.class.isInstance(result)) {
+                    queryIds.put(paragraph.getId(), result.getQueryId());
                     return new AsyncInterpreterResult(InterpreterResult.Code.SUCCESS, callback);
                 }
                 return new InterpreterResult(InterpreterResult.Code.SUCCESS, CrossdataUtils.resultToString(result));
@@ -99,6 +109,9 @@ public class CrossdataInterpreter extends Interpreter {
     }
 
     @Override public void cancel() {
+        assert paragraph.getResult() != null: paragraph;
+        String queryId = queryIds.get(paragraph.getId());
+        xdDriver.stopProcess(queryId, sessionId);
         paragraph.setStatus(Job.Status.ABORT);
         paragraph.setListener(null);
         paragraph = null;
