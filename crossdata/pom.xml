@@ -12,7 +12,7 @@
     <artifactId>crossdata-interpreter</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
-    <name>Zeppelin: Crossdata interpreter</name>
+    <name>Notebook: Crossdata interpreter</name>
     <url>https://github.com/Stratio/crossdata</url>
     <properties>
         <crossdata.version>0.3.0-RC1</crossdata.version>
