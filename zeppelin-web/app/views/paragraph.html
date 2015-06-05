@@ -34,7 +34,7 @@ limitations under the License.
     </div>
 
     <div>
-        <div ng-show="!paragraph.config.editorHide">
+        <div ng-if="!paragraph.config.editorHide">
             <div id="{{paragraph.id}}_editor"
                  style="opacity: 1;"
                  class="editor"
@@ -67,7 +67,7 @@ limitations under the License.
 
 
         <form id="{{paragraph.id}}_form" role="form"
-              ng-show="!paragraph.config.tableHide && !asIframe"
+              ng-if="!paragraph.config.tableHide && !asIframe"
               class="form-horizontal">
             <div class="form-group"
                  ng-repeat="formulaire in paragraph.settings.forms"
@@ -105,7 +105,7 @@ limitations under the License.
         </form>
 
         <!-- Rendering -->
-        <div class='tableDisplay' ng-show="!paragraph.config.tableHide">
+        <div class='tableDisplay' ng-if="!paragraph.config.tableHide">
             <div id="{{paragraph.id}}_switch"
                  ng-if="paragraph.result.type == 'TABLE' && !asIframe"
                  class="btn-group"

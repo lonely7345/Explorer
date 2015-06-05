@@ -22,6 +22,7 @@ zeppelin-web/src
 **nbproject/
 **node/
 
+export/
 logs/
 run/
 metastore_db/

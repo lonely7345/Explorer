@@ -94,6 +94,12 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             case GET_NOTE:
                 sendNote(conn, notebook, messagereceived);
                 break;
+            case IMPORT_NOTE:
+                importNote(notebook, messagereceived);
+                break;
+            case EXPORT_NOTE:
+                exportNote(notebook, messagereceived);
+                break;
             case NEW_NOTE:
                 createNote(conn, notebook);
                 break;
@@ -217,6 +223,38 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             }
         }
         return id;
+    }
+
+    private void importNote(Notebook notebook, Message fromMessage)  {
+        String path = (String) fromMessage.get("path");
+        String[] filePath = path.split("/");
+        String filename = filePath[filePath.length-1];
+        System.out.println("##### filename " + filename);
+        Note note = null;
+        try {
+            note = notebook.importFromFile(filename, path);
+            System.out.println("##### Noteid " + note.id());
+            for(Paragraph p : note.getParagraphs()){
+                System.out.println("##### Paragraph: "+p.getText());
+            }
+            note.persist();
+            broadcastNote(note);
+            broadcastNoteList();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void exportNote(Notebook notebook, Message fromMessage) throws IOException {
+        String filename = (String) fromMessage.get("filename");
+//        String path = (String) fromMessage.get("path");
+        String path = "export";
+        String id = (String) fromMessage.get("id");
+        Note note = notebook.getNote(id);
+        System.out.println("export Note "+ filename + " "+ id );
+        note.exportToFile(path,filename);
+
     }
 
     private void broadcast(String noteId, Message m) {

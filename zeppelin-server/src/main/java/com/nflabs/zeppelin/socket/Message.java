@@ -7,8 +7,16 @@ public class Message {
 	public static enum OP {
 		GET_NOTE,      // [c-s] client load note
 		               // @param id note id
-		
-		NOTE,          // [s-c] note info 
+
+		IMPORT_NOTE,   // [c-s] client import note
+		               // @param filename note name
+		               // @param path note path
+
+		EXPORT_NOTE,   // [c-s] client export note
+		               // @param filename note name
+		               // @param path note path
+
+		NOTE,          // [s-c] note info
 		               // @param note serlialized Note object
 		
 		PARAGRAPH,	   // [s-c] paragraph info

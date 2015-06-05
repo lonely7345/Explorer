@@ -33,6 +33,8 @@ $rootScope) {
   $scope.editorToggled = true;
   $scope.tableToggled = true;
   $scope.looknfeelOption = [ 'default', 'simple' ];
+  $scope.exportFilename="mynotebook";
+  $scope.importPath="full/path/to/file";
   $scope.cronOption = [
     {name: 'None', value : undefined},
     {name: '1m', value: '0 0/1 * * * ?'},
@@ -110,6 +112,20 @@ $rootScope) {
     $rootScope.$emit('closeTable');
   };
 
+  $scope.exportNote = function(noteId){
+    console.log("note id = "+noteId+" filename "+ $scope.exportFilename);
+    $rootScope.$emit('sendNewEvent', {op: 'EXPORT_NOTE', data: {id: $scope.note.id, filename: $scope.exportFilename}});
+  };
+
+  $scope.importNote = function(){
+    console.log(" filename "+ $scope.importPath);
+    $rootScope.$emit('sendNewEvent', {op: 'IMPORT_NOTE', data: {path: $scope.importPath}});
+  };
+
+  $scope.fileNameChanged= function(element){
+    console.log(element.files);
+  };
+
   $scope.isNoteRunning = function() {
     var running = false;
     if(!$scope.note){ return false; }
@@ -155,8 +171,7 @@ $rootScope) {
   /** update the current note */
   $rootScope.$on('setNoteContent', function(event, note) {
     console.log("### NOTEBOOK.JS -> on setNoteContent "+ $routeParams.asIframe);
-    $scope.paragraphUrl = $routeParams.paragraphId;
-    $scope.asIframe = $routeParams.asIframe;
+    $scope.paragraphUrl = $routeParams.paragraphId; $scope.asIframe = $routeParams.asIframe;
     if ($scope.paragraphUrl) {
     console.log("### NOTEBOOK.JS -> on setNoteContent ");
     console.log(note);
