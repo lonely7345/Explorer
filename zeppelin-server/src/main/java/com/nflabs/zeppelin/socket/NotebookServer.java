@@ -240,21 +240,26 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             note.persist();
             broadcastNote(note);
             broadcastNoteList();
+            broadcastAll(new Message(OP.IMPORT_INFO).put("info","imported successfully"));
         } catch (Throwable e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+            broadcastAll(new Message(OP.IMPORT_INFO).put("info", e.getMessage() ));
         }
     }
 
-    private void exportNote(Notebook notebook, Message fromMessage) throws IOException {
+    private void exportNote(Notebook notebook, Message fromMessage)  {
         String filename = (String) fromMessage.get("filename");
-//        String path = (String) fromMessage.get("path");
         String path = "export";
         String id = (String) fromMessage.get("id");
         Note note = notebook.getNote(id);
         System.out.println("export Note "+ filename + " "+ id );
-        note.exportToFile(path,filename);
-
+        try {
+            note.exportToFile(path, filename);
+            broadcastAll(new Message(OP.EXPORT_INFO).put("info", "Exported successfully in "+path ));
+        } catch (IOException e) {
+            broadcastAll(new Message(OP.EXPORT_INFO).put("info", e.getMessage() ));
+        }
     }
 
     private void broadcast(String noteId, Message m) {

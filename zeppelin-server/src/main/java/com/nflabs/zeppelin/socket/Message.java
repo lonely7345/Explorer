@@ -76,6 +76,11 @@ public class Message {
 		NOTES_INFO,    // [s-c] list of note infos
 		               // @param notes serialized List<NoteInfo> object
 
+		EXPORT_INFO,    // [s-c] list of note infos
+		                // @param notes serialized List<NoteInfo> object
+
+		IMPORT_INFO,    // [s-c] list of note infos
+                 		// @param notes serialized List<NoteInfo> object
 		PARAGRAPH_REMOVE,
 	}	
 	public OP op;

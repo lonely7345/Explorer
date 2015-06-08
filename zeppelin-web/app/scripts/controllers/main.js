@@ -71,6 +71,8 @@ angular.module('zeppelinWebApp')
       $rootScope.$emit('updateProgress', data);
     } else if (op === 'COMPLETION_LIST') {
       $rootScope.$emit('completionList', data);
+    } else if (op === 'EXPORT_INFO' || op === 'IMPORT_INFO'){
+      alert(data.info);
     }
   });
 
