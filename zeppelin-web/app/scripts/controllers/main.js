@@ -29,6 +29,9 @@ angular.module('zeppelinWebApp')
   $scope.WebSocketWaitingList = [];
   $rootScope.connected = true;
   $scope.looknfeel = 'simple';
+  $scope.lastChangedNotebookId="";
+  $scope.lastChangedNotebookDate="";
+
 
 
   var init = function() {
@@ -119,8 +122,15 @@ angular.module('zeppelinWebApp')
   });
 
   $rootScope.$on('changeActiveNotebook', function(event, data){
-    console.log("### MAIN.JS -> onChangeActiveNotebook "+data.id+" "+data.date);
-    $rootScope.$broadcast('rootChangeActiveNotebook', data);
+//    console.log(event);
+//    console.log("### MAIN.JS -> $scope.lastChangedNotebookId "+ $scope.lastChangedNotebookId+ " $scope.lastChangedNotebookDate"+$scope.lastChangedNotebookDate );
+//    console.log("### MAIN.JS -> data.id "+data.id+" data.date "+data.date);
+    if(!($scope.lastChangedNotebookId===data.id && $scope.lastChangedNotebookDate===data.date)){
+      $scope.lastChangedNotebookId=data.id;
+      $scope.lastChangedNotebookDate=data.date;
+//      console.log("### MAIN.JS -> onChangeActiveNotebook "+data.id+" "+data.date);
+      $rootScope.$broadcast('rootChangeActiveNotebook', data);
+    }
   });
 
 });

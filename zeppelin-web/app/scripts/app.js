@@ -96,10 +96,6 @@ var app = angular
         controller: 'LoginController',
         hideMenus: true
       })
-      .when('/notebook/:noteId', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
       .when('/notebook/:noteId/paragraph/:paragraphId?', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'

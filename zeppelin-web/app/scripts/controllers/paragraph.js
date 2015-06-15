@@ -446,7 +446,9 @@ angular.module('zeppelinWebApp')
       $scope.editor.setOptions({
           enableBasicAutocompletion: true,
           enableSnippets: false,
-          enableLiveAutocompletion:false
+          enableLiveAutocompletion:false,
+//          fontFamily:"sans-serif"
+//          fontSize:"12pt"
       });
       var remoteCompleter = {
           getCompletions : function(editor, session, pos, prefix, callback) {

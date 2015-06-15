@@ -16,7 +16,7 @@ limitations under the License.
 <div id="notebook" class="wrap" ng-controller="NotebookCtrl" ng-hide="active === 'none' && !asIframe">
 
     <div class="noteAction" ng-show="note.id && !paragraphUrl">
-        <h3 class="new_h3">
+        <h2 class="new_h3">
             <input type="text" class="form-control2" placeholder="{{note.name || 'Notebook ' + note.id}}"
                    style="width:200px;"
                    ng-show="showEditor" ng-model="note.name" ng-enter="sendNewName()" ng-delete="showEditor = false"
@@ -161,7 +161,7 @@ limitations under the License.
                     </li>
                 </ul>
             </div>
-        </h3>
+        </h2>
     </div>
 
     <div class="note-jump"></div>

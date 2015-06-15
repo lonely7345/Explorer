@@ -27,7 +27,7 @@
 }
 
 .paragraph {
-  padding: 2px 8px 4px 8px;
+  padding: 2px 8px 2px 8px;
   min-height: 32px;
 }
 
@@ -72,7 +72,7 @@
   line-height: 1.42857143!important;
   word-break: break-all!important;
   word-wrap: break-word!important;
-  font-family: 'Montserrat', sans-serif;
+  /*font-family: 'Montserrat', sans-serif;*/
 }
 
 .ace-tm .ace_marker-layer .ace_selection {
@@ -96,7 +96,7 @@
 }
 
 .note-jump {
-  margin-top: 20px;
+  margin-top: 18px;
 }
 
 .noteBtnfa {
@@ -121,20 +121,28 @@
   /*display: none;*/
   float: right;
   color: #999;
-  margin-top: 1px;
-  margin-right: 5px;
+  /*margin-top: 1px;
+  margin-right: 5px;*/
   position:absolute;
   clear:both;
-  right:15px;
-  top: 16px;
+  right: 2px!important;
+  top: -28px!important;
+  border-style: solid;
+  border-color:#DDD;
+  border-width: 1px;
+  border-bottom-width:0px;
   text-align:right;
-  font-size:12px;
+  font-size:16px;
 }
 
 .paragraph .control li{
-  font-size:12px;
-  margin-bottom:4px;
+  font-size:16px;
+  /*margin-bottom:4px;*/
   color: #333333;
+}
+
+.paragraph .control .span{
+  font-size:16px;
 }
 
 .paragraph table {
@@ -150,7 +158,6 @@
 .paragraph .title div {
   width: 80%;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif;
   font-size: 14px!important;
   text-transform: capitalize;
 }
@@ -169,8 +176,7 @@
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   text-transform: capitalize;
-  font-family: 'source-code-pro', 'Ubuntu Mono';
-  font-size: 14px!important;
+  font-size: 16px!important;
 }
 
 .paragraph .editor {
@@ -186,11 +192,9 @@
   unicode-bidi: embed;
   display: block!important;
   margin: 0 0 0px!important;
-  /*font-size: 12px!important;*/
   line-height: 1.42857143!important;
   word-break: break-all!important;
   word-wrap: break-word!important;
-  font-family: 'source-code-pro', sans-serif;
   font-size: 14px!important;
   margin-bottom: 5px !important;
 }
@@ -210,8 +214,7 @@
 .ace_editor {
   position: relative;
   overflow: hidden;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
-  font-size: 14px !important;
+  font-size: 16px !important;
   line-height: normal;
   direction: ltr;
 }
@@ -284,7 +287,6 @@
 .paragraph .executionTime {
   color: #999;
   font-size: 10px;
-  font-family: 'Roboto', sans-serif;
 }
 
 .paragraph-settings {
@@ -300,7 +302,7 @@
   margin-left: -10px;
   margin-right: -10px;
   margin-top: 10px;
-  font-family: 'Roboto', sans-serif;
+  /*font-family: 'Roboto', sans-serif;*/
 }
 
 .noteAction li{
@@ -343,14 +345,8 @@
 
 /* panel default */
 .panel-default {
-  /* border: none; */
   border-color: #DDDDDD;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.panel-group .panel-default {
-  /*border: solid #e5e5e5;
-  border-width: 1px 1px 2px;*/
 }
 
 .panel-default > .panel-heading {

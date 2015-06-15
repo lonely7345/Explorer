@@ -27,11 +27,6 @@ If you want to build Zeppelin from the source, please first clone this repositor
 mvn clean package
 ```
 
-Build with specific version
-```
-mvn clean package -Dspark.version=1.1.1 -Dhadoop.version=2.0.0-mr1-cdh4.6.0
-```
-
 ###Configure
 
 If you wish to configure Zeppelin option (like port number), configure the following files:
@@ -43,19 +38,23 @@ If you wish to configure Zeppelin option (like port number), configure the follo
 
 You can modify Crossdata driver properties in:
 ```
-./crossdata/src/main/resources/driver-application.conf
+./conf/crossdata/driver-application.conf
 ```
 
 
 ###Run
 ```
 ./bin/zeppelin.sh -> to launch a console session depending instance 
-./bin/zeppelin-daemon.sh start -> to launch the demo
+./bin/zeppelin-daemon.sh start -> to launch the service
 ```
+Since there is no real auth system yet, you have to use dummy credentials to enter:
+
+username : test
+password : test
 
 ###Stop
 ```
-./bin/zeppelin-daemo.sh stop
+./bin/zeppelin-daemon.sh stop
 ```
 
 browse localhost:8080 in your browser. 8081 port should be accessible for websocket connection.

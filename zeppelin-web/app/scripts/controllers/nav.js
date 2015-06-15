@@ -31,6 +31,7 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
     $scope.activate = function(noteId, noteDate) {
 //        console.log("### NAV.JS -> activate " + noteId);
         if (noteId !== $scope.active) {
+//            console.log("### NAV.JS -> emit changeActiveNotebook else " + noteId);
             $rootScope.$emit('changeActiveNotebook', {
                 id: noteId,
                 date: noteDate
@@ -38,6 +39,7 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             $scope.active = noteId;
             $scope.activeDate = noteDate;
         } else {
+//            console.log("### NAV.JS -> emit changeActiveNotebook else " + noteId);
             $rootScope.$emit('changeActiveNotebook', {
                 id: 'none',
                 date: 'none'
@@ -46,6 +48,7 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             $scope.activeDate = "none";
         }
     };
+
     /** Set the new menu */
     $rootScope.$on('setNoteMenu', function(event, notes) {
         $scope.notes = notes;

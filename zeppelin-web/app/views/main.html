@@ -14,8 +14,8 @@
                 </li>
                 <li class="note-usr dropdown"><a href="#" class="dropdown-toggle"> <span
                         class="avatar pull-left"> <img src="images/zepLogo.png" width="30"> </span>
-                    {{globals.currentUser.username}}  <b
-                        class="caret"></b> </a>
+                    {{globals.currentUser.username}} <b
+                            class="caret"></b> </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><span ng-click="openSettings()">Settings</span></li>
                         <!--<li><a href="profile.html">Profile</a></li>-->
@@ -56,13 +56,16 @@
                                     ng-repeat="note in notes | filter:search"
                                     ng-class="{'note-button-active': $parent.active === note.id}">
                                     <div class="note-item-content">
+                                        <div class="note-item-clickable" ng-click="activate(note.id, note.date)">
+                                            <div class="note-name" ><span>{{note.name
+                                            ||
+                                            'Notebook ' + note.id}} </span>
+                                            </div>
+                                            <span class="note-button-date ">{{note.date}}</span>
+                                        </div>
                                         <button class="destroy close"
                                                 ng-click="removeNote(note.id)">×
                                         </button>
-                                        <div class="note-name" ng-click="activate(note.id, note.date)"><span>{{note.name
-                                            ||
-                                            'Notebook ' + note.id}} </span></div>
-                                        <span class="note-button-date " ng-click="activate(note.id, note.date)">{{note.date}}</span>
                                     </div>
                                 </li>
                             </ul>
