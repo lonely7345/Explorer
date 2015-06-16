@@ -240,7 +240,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             note.persist();
             broadcastNote(note);
             broadcastNoteList();
-            broadcastAll(new Message(OP.IMPORT_INFO).put("info","imported successfully"));
+            broadcastAll(new Message(OP.IMPORT_INFO).put("info","Imported successfully"));
         } catch (Throwable e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

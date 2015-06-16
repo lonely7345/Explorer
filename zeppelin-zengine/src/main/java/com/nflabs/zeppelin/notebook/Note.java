@@ -118,14 +118,14 @@ public class Note implements Serializable, JobListener {
         return p;
     }
 
-    public List<Paragraph> addParagraphs(List<Paragraph> paragraphList){
-        for(Paragraph p : paragraphList){
+    public List<Paragraph> addParagraphs(List<Paragraph> paragraphList) {
+        for (Paragraph p : paragraphList) {
             synchronized (paragraphs) {
                 paragraphs.add(p);
             }
         }
 
-       return paragraphList;
+        return paragraphList;
     }
 
     /**
@@ -336,17 +336,31 @@ public class Note implements Serializable, JobListener {
             return null;
         }
 
+        String[] filenameWithExtension = filename.split("\\.");
+        for (String aFilenameWithExtension : filenameWithExtension) {
+            System.out.println("##### Note-> " + aFilenameWithExtension);
+        }
+        String ext = filenameWithExtension[filenameWithExtension.length - 1];
         FileInputStream ins = new FileInputStream(file);
-        String json = IOUtils.toString(ins, ConfVars.ZEPPELIN_ENCODING.getStringValue());
-        Note note = gson.fromJson(json, Note.class);
-        n.addParagraphs(note.getParagraphs());
-        n.setName(note.getName() + " - copy");
-        for (Paragraph p : n.paragraphs) {
-            if (p.getStatus() == Status.PENDING || p.getStatus() == Status.REFRESH_RESULT
-                    || p.getStatus() == Status.RUNNING) {
-                p.setStatus(Status.ABORT);
+        String fileString = IOUtils.toString(ins, ConfVars.ZEPPELIN_ENCODING.getStringValue());
+        if (ext.compareToIgnoreCase("json") == 0) {
+            Note note = gson.fromJson(fileString, Note.class);
+            n.addParagraphs(note.getParagraphs());
+            n.setName(note.getName() + " - copy");
+            for (Paragraph p : n.paragraphs) {
+                if (p.getStatus() == Status.PENDING || p.getStatus() == Status.REFRESH_RESULT
+                        || p.getStatus() == Status.RUNNING) {
+                    p.setStatus(Status.ABORT);
+                }
+            }
+        } else {
+            String[] lines = fileString.split("\\r?\\n");
+            for (String line : lines) {
+                Paragraph p = n.addParagraph();
+                p.setText(line);
             }
         }
+
         return n;
     }
 
