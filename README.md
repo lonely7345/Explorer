@@ -29,17 +29,28 @@ mvn clean package
 
 ###Configure
 
-If you wish to configure Zeppelin option (like port number), configure the following files:
+If you wish to configure Zeppelin options (like port number), configure the following files:
 ```
 ./conf/zeppelin-env.sh
 ./conf/zeppelin-site.xml
 ```
+
 **Crossdata files**
 
-You can modify Crossdata driver properties in:
+You can modify Crossdata driver's properties in:
 ```
 ./conf/crossdata/driver-application.conf
 ```
+For using another Crossdata's version modify:
+```
+./crossdata/pom.xml
+```
+```
+    <properties>
+        <crossdata.version>HERE_YOUR_CROSSDATA'S_VERSION</crossdata.version>
+    </properties>
+```
+
 
 
 ###Run
@@ -49,8 +60,10 @@ You can modify Crossdata driver properties in:
 ```
 Since there is no real auth system yet, you have to use dummy credentials to enter:
 
+```
 username : test
 password : test
+```
 
 ###Stop
 ```
@@ -59,3 +72,11 @@ password : test
 
 browse localhost:8080 in your browser. 8081 port should be accessible for websocket connection.
 **For configuration details check ./conf subdirectory.**
+
+###Save
+Stratio Notebook allows you to save and import notebooks from a file.
+For saving a Notebook to a file you just should specify the filename and it will automatically create an "export"
+directory in the same path where Stratio Notebook resides. The file will have ".json" extension.
+To load a Notebook from file you should indicate the full path on the system to access it.
+
+*Be sure to have the right access and modify permissions for the user that is logged in the selected path*
