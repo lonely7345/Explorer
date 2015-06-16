@@ -13,7 +13,7 @@
     <groupId>com.stratio</groupId>
     <artifactId>zeppelin-web</artifactId>
     <packaging>war</packaging>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>Notebook: web Application</name>
 
     <build>

@@ -6,13 +6,13 @@
   <parent>
     <artifactId>notebook</artifactId>
     <groupId>com.stratio</groupId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
   </parent>
 
   <groupId>com.stratio</groupId>
   <artifactId>zeppelin-zengine</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.0</version>
+  <version>0.2.0-SNAPSHOT</version>
   <name>Notebook: Zengine</name>
   <description>Notebook engine</description>
   <url>http://www.stratio.com</url>
