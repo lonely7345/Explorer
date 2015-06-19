@@ -5,8 +5,8 @@ import java.io.PrintStream;
 import java.util.Iterator;
 
 import org.apache.spark.SparkContext;
+import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.SchemaRDD;
 
 import scala.Tuple2;
 
@@ -33,7 +33,7 @@ public class ZeppelinContext {
 	public SQLContext sqlContext;
 	private Setting form;
 	
-	public SchemaRDD sql(String sql) {
+	public DataFrame sql(String sql) {
 		return sqlContext.sql(sql);
 	}
 	

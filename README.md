@@ -70,7 +70,7 @@ password : test
 ./bin/zeppelin-daemon.sh stop
 ```
 
-browse localhost:8080 in your browser. 8081 port should be accessible for websocket connection.
+browse localhost:8084 in your browser. 8085 port should be accessible for websocket connection.
 **For configuration details check ./conf subdirectory.**
 
 ###Save

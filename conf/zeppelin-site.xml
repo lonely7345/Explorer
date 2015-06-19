@@ -22,7 +22,7 @@
 
 <property>
   <name>zeppelin.server.port</name>
-  <value>8080</value>
+  <value>8084</value>
   <description>Server port. port+1 is used for web socket.</description>
 </property>
 

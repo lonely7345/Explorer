@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -129,19 +130,33 @@ public class SparkInterpreter extends Interpreter {
         }
         return sc;
     }
+    private boolean useHiveContext() {
+      return Boolean.parseBoolean(System.getenv("ZEPPELIN_SPARK_USEHIVECONTEXT"));
+    }
 
     public SQLContext getSQLContext() {
         if (sqlc == null) {
-            // save / load sc from common share
-            Map<String, Object> share = (Map<String, Object>) getProperty().get("share");
-            sqlc = (SQLContext) share.get("sqlc");
-            if (sqlc == null) {
+            if (useHiveContext()) {
+                String name = "org.apache.spark.sql.hive.HiveContext";
+                Constructor<?> hc;
+                try {
+                    hc = getClass().getClassLoader().loadClass(name)
+                            .getConstructor(SparkContext.class);
+                    sqlc = (SQLContext) hc.newInstance(getSparkContext());
+                } catch (NoSuchMethodException | SecurityException
+                        | ClassNotFoundException | InstantiationException
+                        | IllegalAccessException | IllegalArgumentException
+                        | InvocationTargetException e) {
+                    logger.warn("Can't create HiveContext. Fallback to SQLContext", e);
+                    // when hive dependency is not loaded, it'll fail.
+                    // in this case SQLContext can be used.
+                    sqlc = new SQLContext(getSparkContext());
+                }
+            } else {
                 sqlc = new SQLContext(getSparkContext());
-
-                // The same reason with SparkContext, it'll not be shared, so commenting out.
-                //share.put("sqlc", sqlc);
             }
         }
+
         return sqlc;
     }
 
@@ -160,6 +175,7 @@ public class SparkInterpreter extends Interpreter {
 
     public SparkContext createSparkContext() {
         logger.info("------ Create new SparkContext " + getMaster() + " -------");
+        System.out.println("------ Create new SparkContext " + getMaster() + " -------");
 
         String execUri = System.getenv("SPARK_EXECUTOR_URI");
         String[] jars = SparkILoop.getAddedJars();
@@ -176,7 +192,7 @@ public class SparkInterpreter extends Interpreter {
         }
 
         if (classServerUri == null) {
-            try { // for spark 1.3x
+            try { // for spark 1.3x, 1.4x
                 Method classServer = interpreter.intp().getClass().getMethod("classServerUri");
                 classServerUri = (String) classServer.invoke(interpreter.intp());
             } catch (NoSuchMethodException | SecurityException | IllegalAccessException
@@ -195,25 +211,10 @@ public class SparkInterpreter extends Interpreter {
         }
         if (System.getenv("SPARK_HOME") != null) {
             conf.setSparkHome(System.getenv("SPARK_HOME"));
+            System.out.println("##### SPARK_HOME: "+System.getenv("SPARK_HOME"));
         }
         conf.set("spark.scheduler.mode", "FAIR");
-        //        logger.error(getMaster());
-        //        SparkConf conf = new SparkConf().setMaster(getMaster());
-        //        conf.setAppName("StratioNotebook");
-        //        conf.setJars(jars);
-        //        conf.set("spark.repl.class.uri", interpreter.intp().classServer().uri());
 
-        //        if (execUri != null) {
-        //            logger.error("spark executor uri " + execUri);
-        //            conf.set("spark.executor.uri", execUri);
-        //        }
-        //
-        //        if (System.getenv("SPARK_HOME") != null) {
-        //            logger.error("SPARK_HOME" + System.getenv("SPARK_HOME"));
-        //            conf.setSparkHome(System.getenv("SPARK_HOME"));
-        //        }
-
-        //        conf.set("spark.scheduler.mode", "FAIR");
 
         return new SparkContext(conf);
     }
@@ -315,7 +316,23 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
         NoteInterpreterLoader noteInterpreterLoader = (NoteInterpreterLoader) getProperty().get("noteIntpLoader");
         z = new ZeppelinContext(sc, sqlc, dep, noteInterpreterLoader, printStream);
 
-        this.interpreter.loadFiles(settings);
+        try {
+            if (sc.version().startsWith("1.1") || sc.version().startsWith("1.2")) {
+                Method loadFiles = this.interpreter.getClass().getMethod("loadFiles", Settings.class);
+                loadFiles.invoke(this.interpreter, settings);
+            } else if (sc.version().startsWith("1.3")) {
+                Method loadFiles = this.interpreter.getClass().getMethod(
+                        "org$apache$spark$repl$SparkILoop$$loadFiles", Settings.class);
+                loadFiles.invoke(this.interpreter, settings);
+            } else if (sc.version().startsWith("1.4")) {
+                Method loadFiles = this.interpreter.getClass().getMethod(
+                        "org$apache$spark$repl$SparkILoop$$loadFiles", Settings.class);
+                loadFiles.invoke(this.interpreter, settings);
+            }
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            logger.error(e.getMessage());//TODO
+        }
 
         intp.interpret("@transient var _binder = new java.util.HashMap[String, Object]()");
         binder = (Map<String, Object>) getValue("_binder");
@@ -327,8 +344,25 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
         intp.interpret("@transient val z = _binder.get(\"z\").asInstanceOf[com.nflabs.zeppelin.spark.ZeppelinContext]");
         intp.interpret("@transient val sc = _binder.get(\"sc\").asInstanceOf[org.apache.spark.SparkContext]");
         intp.interpret("@transient val sqlc = _binder.get(\"sqlc\").asInstanceOf[org.apache.spark.sql.SQLContext]");
+        intp.interpret("@transient val sqlContext = _binder.get(\"sqlc\").asInstanceOf[org.apache.spark.sql.SQLContext]");
         intp.interpret("import org.apache.spark.SparkContext._");
         intp.interpret("import sqlc._");
+
+        if (sc.version().startsWith("1.1")) {
+            intp.interpret("import sqlContext._");
+        } else if (sc.version().startsWith("1.2")) {
+            intp.interpret("import sqlContext._");
+        } else if (sc.version().startsWith("1.3")) {
+            intp.interpret("import sqlContext.implicits._");
+            intp.interpret("import sqlContext.sql");
+            intp.interpret("import org.apache.spark.sql.functions._");
+        } else if (sc.version().startsWith("1.4")) {
+            intp.interpret("import sqlContext.implicits._");
+            intp.interpret("import sqlContext.sql");
+            intp.interpret("import org.apache.spark.sql.functions._");
+        }
+        //TODO CHECK depInterpreter jars to load whatever its needed
+
     }
 
     private List<File> currentClassPath() {
@@ -370,7 +404,7 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
         if ("form".equals(name) && o instanceof Setting) { // form controller injection from Paragraph.jobRun
             z.setFormSetting((Setting) o);
         }
-        getResultCode(intp.bindValue(name, o));
+//        getResultCode(intp.bindValue(name, o));
     }
 
     public Object getValue(String name) {
@@ -475,11 +509,11 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
                 int[] progressInfo = null;
                 if (sc.version().startsWith("1.0")) {
                     progressInfo = getProgressFromStage_1_0x(sparkListener, job.finalStage());
-                } else if (sc.version().startsWith("1.1") || sc.version().startsWith("1.2")) {
-                    progressInfo = getProgressFromStage_1_1x(sparkListener, job.finalStage());
                 } else {
-                    continue;
+                    progressInfo = getProgressFromStage_1_1x(sparkListener, job.finalStage());
                 }
+
+
                 totalTasks += progressInfo[0];
                 completedTasks += progressInfo[1];
             }

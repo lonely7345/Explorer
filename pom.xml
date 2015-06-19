@@ -97,7 +97,7 @@
         <module>zeppelin-docs</module>
     </modules>
     <properties>
-        <spark.version>1.2.1</spark.version>
+        <spark.version>1.4.0</spark.version>
         <scala.version>2.10.4</scala.version>
         <scala.binary.version>2.10</scala.binary.version>
         <scala.macros.version>2.0.1</scala.macros.version>
@@ -126,6 +126,9 @@
         <io.netty.version>4.0.23.Final</io.netty.version>
         <guava.version>15.0</guava.version>
         <scalatest.version>2.2.1</scalatest.version>
+        <codehaus.jackson.version>1.8.8</codehaus.jackson.version>
+        <fasterxml.jackson.version>2.4.4</fasterxml.jackson.version>
+
 
         <PermGen>64m</PermGen>
         <MaxPermGen>512m</MaxPermGen>
@@ -775,17 +778,49 @@
                 </exclusions>
             </dependency>
 
-            <dependency>
                 <!-- Matches the version of jackson-core-asl pulled in by avro -->
+            <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-mapper-asl</artifactId>
-                <version>1.8.8</version>
+                <version>${codehaus.jackson.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-core-asl</artifactId>
-                <version>1.8.8</version>
+                <version>${codehaus.jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-xc</artifactId>
+                <version>${codehaus.jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-jaxrs</artifactId>
+                <version>${codehaus.jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${fasterxml.jackson.version}</version>
+            </dependency>
+
+            <!-- Guava is excluded because of SPARK-6149.  The Guava version referenced in this module is
+                 15.0, which causes runtime incompatibility issues. -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-scala_2.10</artifactId>
+                <version>${fasterxml.jackson.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -835,11 +870,11 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                    </formats>
-                </configuration>
+                <!--<configuration>-->
+                    <!--<formats>-->
+                        <!--<format>html</format>-->
+                    <!--</formats>-->
+                <!--</configuration>-->
                 <executions>
                     <execution>
                         <id>covertura</id>
@@ -975,12 +1010,12 @@
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.17</version>
-                    <configuration combine.children="append">
-                        <argLine>-Xmx2g -Xms1g -Dfile.encoding=UTF-8</argLine>
-                        <encoding>UTF-8</encoding>
-                        <inputEncoding>UTF-8</inputEncoding>
-                        <outputEncoding>UTF-8</outputEncoding>
-                    </configuration>
+                    <!--<configuration combine.children="append">-->
+                        <!--<argLine>-Xmx2g -Xms1g -Dfile.encoding=UTF-8</argLine>-->
+                        <!--<encoding>UTF-8</encoding>-->
+                        <!--<inputEncoding>UTF-8</inputEncoding>-->
+                        <!--<outputEncoding>UTF-8</outputEncoding>-->
+                    <!--</configuration>-->
                     <!-- <excludes> <exclude>**/itest/**</exclude> </excludes> <executions>
                         <execution> <id>surefire-itest</id> <phase>integration-test</phase> <goals>
                         <goal>test</goal> </goals> <configuration> <excludes> <exclude>none</exclude>
@@ -1239,36 +1274,36 @@
             </properties>
         </profile>
 
-        <profile>
-            <id>mapr4</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <hadoop.version>2.3.0-mapr-4.0.0-FCS</hadoop.version>
-                <yarn.version>2.3.0-mapr-4.0.0-FCS</yarn.version>
-                <hbase.version>0.94.17-mapr-1405-4.0.0-FCS</hbase.version>
-                <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.curator</groupId>
-                    <artifactId>curator-recipes</artifactId>
-                    <version>2.4.0</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.apache.zookeeper</groupId>
-                            <artifactId>zookeeper</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.zookeeper</groupId>
-                    <artifactId>zookeeper</artifactId>
-                    <version>3.4.5-mapr-1406</version>
-                </dependency>
-            </dependencies>
-        </profile>
+        <!--<profile>-->
+            <!--<id>mapr4</id>-->
+            <!--<activation>-->
+                <!--<activeByDefault>false</activeByDefault>-->
+            <!--</activation>-->
+            <!--<properties>-->
+                <!--<hadoop.version>2.3.0-mapr-4.0.0-FCS</hadoop.version>-->
+                <!--<yarn.version>2.3.0-mapr-4.0.0-FCS</yarn.version>-->
+                <!--<hbase.version>0.94.17-mapr-1405-4.0.0-FCS</hbase.version>-->
+                <!--<zookeeper.version>3.4.5-mapr-1406</zookeeper.version>-->
+            <!--</properties>-->
+            <!--<dependencies>-->
+                <!--<dependency>-->
+                    <!--<groupId>org.apache.curator</groupId>-->
+                    <!--<artifactId>curator-recipes</artifactId>-->
+                    <!--<version>2.4.0</version>-->
+                    <!--<exclusions>-->
+                        <!--<exclusion>-->
+                            <!--<groupId>org.apache.zookeeper</groupId>-->
+                            <!--<artifactId>zookeeper</artifactId>-->
+                        <!--</exclusion>-->
+                    <!--</exclusions>-->
+                <!--</dependency>-->
+                <!--<dependency>-->
+                    <!--<groupId>org.apache.zookeeper</groupId>-->
+                    <!--<artifactId>zookeeper</artifactId>-->
+                    <!--<version>3.4.5-mapr-1406</version>-->
+                <!--</dependency>-->
+            <!--</dependencies>-->
+        <!--</profile>-->
 
         <!-- Build without Hadoop dependencies that are included in some runtime environments. -->
         <profile>

@@ -11,10 +11,10 @@ import org.apache.spark.SparkContext;
 import org.apache.spark.scheduler.ActiveJob;
 import org.apache.spark.scheduler.DAGScheduler;
 import org.apache.spark.scheduler.Stage;
+import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.SchemaRDD;
 import org.apache.spark.sql.catalyst.expressions.Attribute;
-import org.apache.spark.sql.catalyst.expressions.Row;
 import org.apache.spark.ui.jobs.JobProgressListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,11 +73,11 @@ public class SparkSqlInterpreter extends Interpreter {
 		SQLContext sqlc = getSparkInterpreter().getSQLContext();
 		SparkContext sc = sqlc.sparkContext();
 		sc.setJobGroup(jobGroup, "Zeppelin", false);
-		SchemaRDD rdd;
+		DataFrame dataFrame;
 		Row[] rows = null;
 		try {
-			rdd = sqlc.sql(st);
-			rows = rdd.take(maxResult+1);
+			dataFrame = sqlc.sql(st);
+			rows = dataFrame.take(maxResult+1);
 		} catch(Exception e){
 			logger.error("Error", e);
 			sc.clearJobGroup();
@@ -86,7 +86,8 @@ public class SparkSqlInterpreter extends Interpreter {
 		
 		String msg = null;
 		// get field names
-		List<Attribute> columns = scala.collection.JavaConverters.asJavaListConverter(rdd.queryExecution().analyzed().output()).asJava();
+		List<Attribute> columns = scala.collection.JavaConverters.asJavaListConverter(
+				dataFrame.queryExecution().analyzed().output()).asJava();
 		for(Attribute col : columns) {
 			if(msg==null) {
 				msg = col.name();
