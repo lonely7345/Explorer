@@ -162,9 +162,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             } else $scope.paragraph.status = data.paragraph.status;
             $scope.paragraph.result = data.paragraph.result;
             $scope.paragraph.settings = data.paragraph.settings;
-            if (data.paragraph.status === 'FINISHED') {
-                data.paragraph.config.tableHide = false;
-            }
+
             if (!$scope.asIframe) {
                 $scope.paragraph.config = data.paragraph.config;
                 initializeDefault();
@@ -231,6 +229,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                 params: $scope.paragraph.settings.params
             }
         };
+        $scope.closeTable();
         $rootScope.$emit('sendNewEvent', paragraphData);
     };
     $scope.moveUp = function() {
