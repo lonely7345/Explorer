@@ -489,6 +489,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         Map<String, Object> params = (Map<String, Object>) fromMessage.get("params");
         p.settings.setParams(params);
         Map<String, Object> config = (Map<String, Object>) fromMessage.get("config");
+        config.put("tableHide",false);
         p.setConfig(config);
 
         // if it's the last paragraph, let's add a new one

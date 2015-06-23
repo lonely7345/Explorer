@@ -66,12 +66,8 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
                 $rootScope.$emit('setNoteMenu', data.notes);
             }
         } else if (op === 'PARAGRAPH') {
-            $rootScope.$emit('updateParagraph', data);
             console.log(data);
-            if (data.status !== null && data.status === 'FINISHED') {
-                console.log("rootScope.$emit -> openTable");
-                $rootScope.$emit('openTable');
-            }
+            $rootScope.$emit('updateParagraph', data);
         } else if (op === 'PROGRESS') {
             $rootScope.$emit('updateProgress', data);
         } else if (op === 'COMPLETION_LIST') {
