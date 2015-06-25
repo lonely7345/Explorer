@@ -13,9 +13,10 @@ To know more about Zeppelin, visit http://zeppelin-project.org
 
 ##Requirements
 
-Java 1.7
-Tested on Mac OSX, CentOS 6.X
-Maven (if you want to build from the source code)
+Java 1.7  
+Tested on Mac OSX, CentOS 6.X, Ubuntu 14.X   
+Maven (if you want to build from the source code)  
+Node.js Package Manager   
 
 ##Getting Started
 
@@ -56,6 +57,9 @@ For using another Crossdata's version modify:
 ###Run
 ```
 ./bin/zeppelin.sh -> to launch a console session depending instance 
+```
+or   
+```
 ./bin/zeppelin-daemon.sh start -> to launch the service
 ```
 Since there is no real auth system yet, you have to use dummy credentials to enter:
