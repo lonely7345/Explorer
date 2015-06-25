@@ -243,8 +243,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             broadcastAll(new Message(OP.IMPORT_INFO).put("info","Imported successfully"));
         } catch (Throwable e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
-            broadcastAll(new Message(OP.IMPORT_INFO).put("info", e.getMessage() ));
+            broadcastAll(new Message(OP.IMPORT_INFO).put("info", e.getMessage()));
         }
     }
 
@@ -258,7 +257,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             note.exportToFile(path, filename);
             broadcastAll(new Message(OP.EXPORT_INFO).put("info", "Exported successfully in "+path ));
         } catch (IOException e) {
-            broadcastAll(new Message(OP.EXPORT_INFO).put("info", e.getMessage() ));
+            broadcastAll(new Message(OP.EXPORT_INFO).put("info", "Could not load the file"));
         }
     }
 

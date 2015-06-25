@@ -95,6 +95,7 @@
         <module>zeppelin-server</module>
         <module>zeppelin-distribution</module>
         <module>zeppelin-docs</module>
+        <module>streaming</module>
     </modules>
     <properties>
         <spark.version>1.4.0</spark.version>

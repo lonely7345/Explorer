@@ -55,7 +55,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
             $rootScope.$emit('setNoteContent', data.note);
         } else if (op === 'NOTES_INFO') {
             if ($scope.asIframe) {
-                console.log($routeParams);
+//                console.log($routeParams);
                 $rootScope.$emit('sendNewEvent', {
                     op: 'GET_NOTE',
                     data: {

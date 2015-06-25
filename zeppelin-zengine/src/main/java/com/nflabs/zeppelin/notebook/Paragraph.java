@@ -77,6 +77,9 @@ public class Paragraph extends Job implements Serializable {
             case "spark":
                 replName = "s";
                 break;
+            case "streaming":
+                replName = "str";
+                break;
             }
         }
         if (replName != null) {

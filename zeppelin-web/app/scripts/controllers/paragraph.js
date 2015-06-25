@@ -28,12 +28,14 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     $scope.editor = null;
     var editorMode = {
         crossdata: 'ace/mode/xdql',
+        streaming: 'ace/mode/text',
         scala: 'ace/mode/scala',
         sql: 'ace/mode/sql',
         markdown: 'ace/mode/markdown'
     };
     $scope.editorModeMap = {};
     $scope.editorModeMap[editorMode.crossdata] = "crossdata";
+    $scope.editorModeMap[editorMode.streaming] = "streaming";
     $scope.editorModeMap[editorMode.sql] = "sql";
     $scope.editorModeMap[editorMode.scala] = "spark";
     $scope.editorModeMap[editorMode.markdown] = "markdown";
@@ -428,6 +430,9 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                 console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%s')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
+                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+            } else if (String(code).startsWith('%str')) {
+                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.streaming];
                 console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%xdql')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
