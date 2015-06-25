@@ -15,7 +15,7 @@
     <name>Notebook: Crossdata interpreter</name>
     <url>https://github.com/Stratio/crossdata</url>
     <properties>
-        <crossdata.version>0.3.3</crossdata.version>
+        <crossdata.version>0.4.0-SNAPSHOT</crossdata.version>
     </properties>
 
     <dependencies>

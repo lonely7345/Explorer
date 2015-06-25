@@ -16,11 +16,13 @@ import com.stratio.crossdata.common.result.ErrorResult;
 import com.stratio.crossdata.common.result.InProgressResult;
 import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.driver.BasicDriver;
+import com.stratio.crossdata.driver.DriverConnection;
 import com.stratio.crossdata.utils.CrossdataUtils;
 
 public class CrossdataInterpreter extends Interpreter {
 
     private BasicDriver xdDriver;
+    private DriverConnection xdConnection;
     private Paragraph paragraph;
     private String sessionId;
     private HashMap<String, String> queryIds;
@@ -72,7 +74,7 @@ public class CrossdataInterpreter extends Interpreter {
                 try {
                     String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim()+";";
                     System.out.println("*****[CrossdataInterpreter]interpret multiline query -> "+normalized);
-                    result = xdDriver.executeRawQuery(normalized, sessionId);
+                    result = xdConnection.executeRawQuery(normalized);
 
                     sb.append(CrossdataUtils.resultToString(result)).append(
                             System.getProperty("line.separator")).append(System.getProperty("line.separator"));
@@ -87,7 +89,7 @@ public class CrossdataInterpreter extends Interpreter {
             CrossdataResultHandler callback = new CrossdataResultHandler(this, paragraph);
 
             try {
-                result = xdDriver.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback, sessionId);
+                result = xdConnection.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback);
                 if (ErrorResult.class.isInstance(result)) {
                     return new InterpreterResult(InterpreterResult.Code.ERROR,
                             ErrorResult.class.cast(result).getErrorMessage());
@@ -105,13 +107,13 @@ public class CrossdataInterpreter extends Interpreter {
     }
 
     public void removeHandler(String queryId) {
-        xdDriver.removeResultHandler(queryId);
+        xdConnection.removeResultHandler(queryId);
     }
 
     @Override public void cancel() {
         assert paragraph.getResult() != null: paragraph;
         String queryId = queryIds.get(paragraph.getId());
-        xdDriver.stopProcess(queryId, sessionId);
+        xdConnection.stopProcess(queryId);
         paragraph.setStatus(Job.Status.ABORT);
         paragraph.setListener(null);
         paragraph = null;
@@ -146,7 +148,7 @@ public class CrossdataInterpreter extends Interpreter {
      * @return Whether the connection has been successfully established.
      */
     public void connect() throws ConnectionException {
-        xdDriver.connect(xdDriver.getUserName(), "PASSWORD"); //TODO: get user password from front
+       xdConnection = xdDriver.connect(xdDriver.getUserName(), "PASSWORD"); //TODO: get user password from front
     }
 
 }
