@@ -6,6 +6,9 @@ import java.util.Properties;
 import com.nflabs.zeppelin.interpreter.Interpreter;
 import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.stratio.streaming.api.StratioStreamingAPI;
+import com.stratio.streaming.commons.exceptions.StratioStreamingException;
+import com.stratio.streaming.utils.StreamingApiWrapper;
+import com.stratio.streaming.utils.StreamingSyntaxParser;
 
 /**
  * Created by idiaz on 23/06/15.
@@ -13,6 +16,8 @@ import com.stratio.streaming.api.StratioStreamingAPI;
 
 public class StreamingInterpreter extends Interpreter {
     StratioStreamingAPI api;
+    StreamingApiWrapper wrapper;
+    StreamingSyntaxParser parser;
 
     static {
         Interpreter.register("str", StreamingInterpreter.class.getName());
@@ -21,6 +26,8 @@ public class StreamingInterpreter extends Interpreter {
     public StreamingInterpreter(Properties property) {
         super(property);
         api = new StratioStreamingAPI();
+        wrapper = new StreamingApiWrapper(api);
+        parser= new StreamingSyntaxParser(wrapper);
 
     }
 
@@ -51,8 +58,11 @@ public class StreamingInterpreter extends Interpreter {
     }
 
     @Override public InterpreterResult interpret(String st) {
-
-        return null;
+        try {
+            return new InterpreterResult(InterpreterResult.Code.SUCCESS,parser.parse(st));
+        } catch (StratioStreamingException e) {
+            return new InterpreterResult(InterpreterResult.Code.ERROR,"%text ".concat(e.getMessage()));
+        }
     }
 
     @Override public void cancel() {
