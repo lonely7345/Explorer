@@ -5,13 +5,12 @@
   <parent>
     <artifactId>notebook</artifactId>
     <groupId>com.stratio</groupId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
   </parent>
 
-  <groupId>com.stratio</groupId>
   <artifactId>zeppelin-api-ui</artifactId>
   <packaging>war</packaging>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.2.0</version>
   <name>Notebook: Documentation</name>
   <url>http://www.stratio.com</url>
   

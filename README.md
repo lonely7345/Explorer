@@ -1,5 +1,21 @@
 #Stratio Notebook
 
+
+```v0.2.0 Changes  
+-Run paragraph force output visualization 
+-Notebook’s loading delay minimized
+    +Font load improvement
+    +Websocket call control
+-Update to Spark 1.4.0 
+-Connection to remote Spark cluster
+-Stratio Streaming intepreter completed
+    +Customized parser for streaming shell syntax
+    +Syntax highlighting and help command
+    +Syntax autocomplete helper
+
+```
+
+
 Interactive shell to manage **Crossdata** based on Zeppelin
 
 Zeppelin, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
@@ -83,4 +99,8 @@ For saving a Notebook to a file you just should specify the filename and it will
 directory in the same path where Stratio Notebook resides. The file will have ".json" extension.
 To load a Notebook from file you should indicate the full path on the system to access it.
 
-*Be sure to have the right access and modify permissions for the user that is logged in the selected path*
+*Be sure to have the right access and modify permissions for the user that is logged in the selected path*  
+
+###Issues and support  
+If you detect any bug or issue and need support, you can use  
+[Jira](http://crossdata.atlassian.net/)
