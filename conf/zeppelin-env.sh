@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# export JAVA_HOME=
+# export MASTER=                 # spark master
+# export KAFKA=                  # kafka server:port
+# export ZOOKEEPER=              # zookeeper server:port
+# export ZEPPELIN_JAVA_OPTS      # additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
+# export ZEPPELIN_MEM            # zeppelin jvm mem options Defualt -Xmx1024m -XX:MaxPermSize=512m
+
+# export ZEPPELIN_CONF_DIR       # Alternate zeppelin conf dir. Default is ${HBASE_HOME}/conf.
+# export ZEPPELIN_LOG_DIR        # Where log files are stored.  PWD by default.
+# export ZEPPELIN_PID_DIR        # The pid files are stored. /tmp by default.
+# export ZEPPELIN_NOTEBOOK_DIR   # Where notebook saved
+# export ZEPPELIN_IDENT_STRING   # A string representing this instance of zeppelin. $USER by default
+# export ZEPPELIN_NICENESS       # The scheduling priority for daemons. Defaults to 0.
+# export ZEPPELIN_SPARK_USEHIVECONTEXT    # Use HiveContext instead of SQLContext if set true. true by default.
+
