@@ -2,6 +2,8 @@
 
 # export JAVA_HOME=
 # export MASTER=                 # spark master
+# export KAFKA=                  # kafka server:port
+# export ZOOKEEPER=              # zookeeper server:port
 # export ZEPPELIN_JAVA_OPTS      # additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
 # export ZEPPELIN_MEM            # zeppelin jvm mem options Defualt -Xmx1024m -XX:MaxPermSize=512m
 
