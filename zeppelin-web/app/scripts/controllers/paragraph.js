@@ -28,7 +28,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     $scope.editor = null;
     var editorMode = {
         crossdata: 'ace/mode/xdql',
-        streaming: 'ace/mode/text',
+        streaming: 'ace/mode/streaming',
         scala: 'ace/mode/scala',
         sql: 'ace/mode/sql',
         markdown: 'ace/mode/markdown'
