@@ -20,11 +20,11 @@
 # * limitations under the License.
 # */
 #
-# Runs Zeppelin daemon
+# Runs Notebook daemon
 #
 #
 
-usage="Usage: zeppelin-daemon.sh [--config <conf-dir>]\
+usage="Usage: notebook-daemon.sh [--config <conf-dir>]\
  (start|stop|restart|status) \
  <args...>"
 
@@ -49,54 +49,54 @@ shift
 
 
 HOSTNAME=`hostname`
-ZEPPELIN_LOGFILE=$ZEPPELIN_LOG_DIR/zeppelin-$ZEPPELIN_IDENT_STRING-$HOSTNAME.log
-log=$ZEPPELIN_LOG_DIR/zeppelin-$ZEPPELIN_IDENT_STRING-$HOSTNAME.out
-pid=$ZEPPELIN_PID_DIR/zeppelin-$ZEPPELIN_IDENT_STRING-$HOSTNAME.pid
+NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/zeppelin-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+log=$NOTEBOOK_LOG_DIR/zeppelin-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
+pid=$NOTEBOOK_PID_DIR/zeppelin-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
 
 
-if [ "${ZEPPELIN_NICENESS}" = "" ]; then
-    export ZEPPELIN_NICENESS=0
+if [ "${NOTEBOOK_NICENESS}" = "" ]; then
+    export NOTEBOOK_NICENESS=0
 fi
 
-ZEPPELIN_MAIN=com.nflabs.zeppelin.server.ZeppelinServer
+NOTEBOOK_MAIN=com.nflabs.zeppelin.server.ZeppelinServer
 
-JAVA_OPTS+=" -Dzeppelin.log.file=$ZEPPELIN_LOGFILE"
+JAVA_OPTS+=" -Dzeppelin.log.file=$NOTEBOOK_LOGFILE"
 
 function init(){
-    if [ ! -d "$ZEPPELIN_LOG_DIR" ]; then
-	echo "Log dir doesn't exist, create $ZEPPELIN_LOG_DIR"
-	mkdir -p "$ZEPPELIN_LOG_DIR"
+    if [ ! -d "$NOTEBOOK_LOG_DIR" ]; then
+	echo "Log dir doesn't exist, create $NOTEBOOK_LOG_DIR"
+	mkdir -p "$NOTEBOOK_LOG_DIR"
     fi
 
-    if [ ! -d "$ZEPPELIN_PID_DIR" ]; then
-	echo "Pid dir doesn't exist, create $ZEPPELIN_PID_DIR"
-	mkdir -p "$ZEPPELIN_PID_DIR"
+    if [ ! -d "$NOTEBOOK_PID_DIR" ]; then
+	echo "Pid dir doesn't exist, create $NOTEBOOK_PID_DIR"
+	mkdir -p "$NOTEBOOK_PID_DIR"
     fi
 
-    if [ ! -d "$ZEPPELIN_NOTEBOOK_DIR" ]; then
-	echo "Pid dir doesn't exist, create $ZEPPELIN_NOTEBOOK_DIR"
-	mkdir -p "$ZEPPELIN_NOTEBOOK_DIR"
+    if [ ! -d "$NOTEBOOK_NOTEBOOK_DIR" ]; then
+	echo "Pid dir doesn't exist, create $NOTEBOOK_NOTEBOOK_DIR"
+	mkdir -p "$NOTEBOOK_NOTEBOOK_DIR"
     fi
 }
 
 function start(){
     if [ -f "$pid" ]; then
 	if kill -0 `cat $pid` > /dev/null 2>&1; then
-	    echo zeppelin running as process `cat $pid`. Stop it first.
+	    echo notebook running as process `cat $pid`. Stop it first.
 	    exit 1
 	fi
     fi
     
     init
 
-    echo "Start Zeppelin"
-    nohup nice -n $ZEPPELIN_NICENESS $ZEPPELIN_RUNNER $JAVA_OPTS -cp $CLASSPATH $ZEPPELIN_MAIN "$@" >> "$log" 2>&1 < /dev/null &
+    echo "Start Notebook"
+    nohup nice -n $NOTEBOOK_NICENESS $NOTEBOOK_RUNNER $JAVA_OPTS -cp $CLASSPATH $NOTEBOOK_MAIN "$@" >> "$log" 2>&1 < /dev/null &
     newpid=$!
     echo $newpid > $pid
     sleep 2
     # Check if the process has died; in that case we'll tail the log so the user can see
     if ! kill -0 $newpid >/dev/null 2>&1; then
-	echo "failed to launch Zeppelin:"
+	echo "failed to launch Notebook:"
 	if [ "${CI}" == "true" ]; then
 	    tail -1000 "$log" | sed 's/^/  /'
 	else
@@ -108,7 +108,7 @@ function start(){
     if [ "${CI}" == "true" ]; then  # if it is CI wait until server is up and running and ready to serve.
 	COUNT=0
 	while [ $COUNT -lt 30 ]; do
-	    curl -v localhost:8080 2>&1 | grep '200 OK'
+	    curl -v localhost:8084 2>&1 | grep '200 OK'
 	    if [ $? -ne 0 ]; then
 		sleep 1
 		continue
@@ -124,7 +124,7 @@ function start(){
 function stop(){
     if [ -f $pid ]; then
 	if kill -0 `cat $pid` > /dev/null 2>&1; then
-	    echo Shutdown Zeppelin
+	    echo Shutdown Notebook
 
 	    COUNT=0
 	    while [ $COUNT -lt 5 ]; do
@@ -137,26 +137,26 @@ function stop(){
 		fi
 	    done
 	    if kill -0 `cat $pid` > /dev/null 2>&1; then
-		echo "failed to stop Zeppelin:"
+		echo "failed to stop Notebook:"
 		tail -2 "$log" | sed 's/^/  /'
 		echo "full log in $log"
 	    fi
 
 	else
-	    echo no Zeppelin to stop
+	    echo no Notebook to stop
 	fi
     else
-	echo no Zeppelin to stop
+	echo no Notebook to stop
     fi
 
 }
 
 function status(){
     if [ -f "${pid}" ] && kill -0 `cat $pid` > /dev/null 2>&1; then
-	echo "Zeppelin is running `cat $pid`"
+	echo "Notebook is running `cat $pid`"
 	exit 0
     else
-	echo "Zeppelin is not running"
+	echo "Notebook is not running"
 	exit 1
     fi
 }

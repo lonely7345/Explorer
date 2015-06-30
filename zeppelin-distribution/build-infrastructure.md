@@ -1,16 +1,16 @@
-Zeppelin dependency graph:
+Notebook dependency graph:
 --------------
                      hive, hadoop, ...
                        | | |
                        v v v
   Zeppelin Server  <- Zengine -> Zeppelin CLI
          +               |
-    zeppeli web          v
+    zeppelin web          v
                         ZAN
 
 
 
-Zeppelin artifacts:
+Notebook artifacts:
 ------------------
 Zeppelin CLI    - Commandline UI             - executable
 Zeppelin Server - Web UI, server to host it  - executable
@@ -25,7 +25,8 @@ Build process:
 compile                => *.class, minify *.js
 build modules          => *.jar, war
 test                   => UnitTest reports
-package -P build-distr => final .zip
+package -P package-deb => .deb file
+package -P package-rpm => .rpm file
 integration-test       => selenium over running zeppelin-server (from package)
 
 

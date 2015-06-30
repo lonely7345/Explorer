@@ -115,6 +115,17 @@
                 <configuration>
                   <name>Notebook</name>
                   <assembly>
+                    <mkdirs>
+                      <path>/var/run/sds</path>
+                      <attributes>
+                        <user>stratio</user>
+                        <group>stratio</group>
+                      </attributes>
+                    </mkdirs>
+                    <copyDirectory>
+                      <from>target/notebook-${project.version}/bin/dist-commons</from>
+                      <to>/etc/default</to>
+                    </copyDirectory>
                     <copyDirectory>
                       <from>target/notebook-${project.version}/bin</from>
                       <to>/opt/sds/notebook/bin</to>
@@ -125,7 +136,7 @@
                     </copyDirectory>
                     <copyDirectory>
                       <from>target/notebook-${project.version}/conf</from>
-                      <to>/etc/sds/notebook/conf</to>
+                      <to>/etc/sds/notebook</to>
                     </copyDirectory>
                     <copyDirectory>
                       <from>target/notebook-${project.version}/interpreter</from>
@@ -173,7 +184,7 @@
               <deb>
                 <section>devel</section>
               </deb>
-              <architecture>noarch</architecture>
+              <architecture>all</architecture>
               <defaults>
                 <fileAttributes>
                   <user>stratio</user>
@@ -192,6 +203,17 @@
                 <configuration>
                   <name>Notebook</name>
                   <assembly>
+                    <mkdirs>
+                      <path>/var/run/sds</path>
+                      <attributes>
+                        <user>stratio</user>
+                        <group>stratio</group>
+                      </attributes>
+                    </mkdirs>
+                    <copyDirectory>
+                      <from>target/notebook-${project.version}/bin/dist-commons</from>
+                      <to>/etc/default</to>
+                    </copyDirectory>
                     <copyDirectory>
                       <from>target/notebook-${project.version}/bin</from>
                       <to>/opt/sds/notebook/bin</to>
@@ -202,12 +224,21 @@
                     </copyDirectory>
                     <copyDirectory>
                       <from>target/notebook-${project.version}/conf</from>
-                      <to>/etc/sds/notebook/conf</to>
+                      <to>/etc/sds/notebook</to>
                     </copyDirectory>
                     <copyDirectory>
                       <from>target/notebook-${project.version}/interpreter</from>
                       <to>/opt/sds/notebook/interpreter</to>
                     </copyDirectory>
+                    <copyFile>
+                      <path>../LICENSE</path>
+                      <toFile>/DEBIAN/StratioNotebookLicense</toFile>
+                      <attributes>
+                        <user>root</user>
+                        <group>root</group>
+                        <mode>755</mode>
+                      </attributes>
+                    </copyFile>
                   </assembly>
                 </configuration>
                 <goals>

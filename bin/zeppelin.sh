@@ -21,7 +21,7 @@
 # Run Zeppelin 
 #
 function usage() {
-  echo "Usage: bin/zeppelin.sh [spark options] [application options]"
+  echo "Usage: bin/notebook.sh [spark options] [application options]"
   exit 0
 }
 
@@ -32,8 +32,8 @@ bin=`cd "$bin">/dev/null; pwd`
 
 HOSTNAME=`hostname`
 ZEPPELIN_LOGFILE=$ZEPPELIN_LOG_DIR/zeppelin-$ZEPPELIN_IDENT_STRING-$HOSTNAME.log
-log=$ZEPPELIN_LOG_DIR/zeppelin-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.out
-pid=$ZEPPELIN_PID_DIR/zeppelin-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.pid
+log=$ZEPPELIN_LOG_DIR/notebook-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.out
+pid=$ZEPPELIN_PID_DIR/notebook-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.pid
   
 ZEPPELIN_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
 JAVA_OPTS+=" -Dzeppelin.log.file=$ZEPPELIN_LOGFILE"
@@ -48,9 +48,9 @@ if [[ ! -d "$ZEPPELIN_PID_DIR" ]]; then
   mkdir -p "$ZEPPELIN_PID_DIR"
 fi
 
-if [[ ! -d "$ZEPPELIN_NOTEBOOK_DIR" ]]; then
-  echo "Pid dir doesn't exist, create $ZEPPELIN_NOTEBOOK_DIR"
-  mkdir -p "$ZEPPELIN_NOTEBOOK_DIR"
+if [[ ! -d "$ZEPPELIN_ZEPPELIN_DIR" ]]; then
+  echo "Pid dir doesn't exist, create $ZEPPELIN_ZEPPELIN_DIR"
+  mkdir -p "$ZEPPELIN_ZEPPELIN_DIR"
 fi
 
 #if [ "x$SPARK_HOME" != "x" ]; then
