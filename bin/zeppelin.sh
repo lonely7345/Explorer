@@ -21,7 +21,7 @@
 # Run Zeppelin 
 #
 function usage() {
-  echo "Usage: bin/notebook.sh [spark options] [application options]"
+  echo "Usage: bin/zeppelin.sh [spark options] [application options]"
   exit 0
 }
 
@@ -32,8 +32,8 @@ bin=`cd "$bin">/dev/null; pwd`
 
 HOSTNAME=`hostname`
 ZEPPELIN_LOGFILE=$ZEPPELIN_LOG_DIR/zeppelin-$ZEPPELIN_IDENT_STRING-$HOSTNAME.log
-log=$ZEPPELIN_LOG_DIR/notebook-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.out
-pid=$ZEPPELIN_PID_DIR/notebook-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.pid
+log=$ZEPPELIN_LOG_DIR/zeppelin-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.out
+pid=$ZEPPELIN_PID_DIR/zeppelin-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.pid
   
 ZEPPELIN_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
 JAVA_OPTS+=" -Dzeppelin.log.file=$ZEPPELIN_LOGFILE"
