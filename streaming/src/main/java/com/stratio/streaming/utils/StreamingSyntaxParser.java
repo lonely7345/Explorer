@@ -64,7 +64,6 @@ public class StreamingSyntaxParser {
         for (Map.Entry<Command, Pattern> p : commandPatterns.entrySet()) {
             matcher = p.getValue().matcher(input);
             if (matcher.find()) {
-                System.out.println(matcher.group(2));
                 String filtered = matcher.group(2);
                 switch (p.getKey()) {
                 case ADD_QUERY:
