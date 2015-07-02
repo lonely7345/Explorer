@@ -1,19 +1,4 @@
 #!/bin/bash
-
-
-function addJarInDir(){
-    if [ -d "${1}" ]; then
-	for jar in `find ${1} -maxdepth 1 -name '*jar'`; do
-	    NOTEBOOK_CLASSPATH=$jar:$NOTEBOOK_CLASSPATH
-	done
-    fi
-}
-addJarInDir ${NOTEBOOK_HOME}
-
-addJarInDir ${NOTEBOOK_HOME}/zeppelin-zengine/target/lib
-addJarInDir ${NOTEBOOK_HOME}/zeppelin-server/target/lib
-addJarInDir ${NOTEBOOK_HOME}/zeppelin-web/target/lib
-
 # Validate java installation
 function checkJava() {
     if [ -x "$JAVA_HOME/bin/java" ]; then
@@ -39,7 +24,6 @@ function checkUser () {
 # Check run directory
 function checkRunDirectory() {
     # check ownership
-    # groupship -> stratio
     if [ ! -d "$RUN_DIR" ]; then
         mkdir -p "$RUN_DIR"
         chown "$USER":"$GROUP" $RUN_DIR
@@ -49,25 +33,6 @@ function checkRunDirectory() {
             exit 1
         fi
     fi
-}
-# Check folders
-function checkFolders(){
-
-if [[ ! -d "$NOTEBOOK_LOG_DIR" ]]; then
-  echo "Log dir doesn't exist, create $NOTEBOOK_LOG_DIR"
-  mkdir -p "$NOTEBOOK_LOG_DIR"
-fi
-
-if [[ ! -d "$NOTEBOOK_PID_DIR" ]]; then
-  echo "Pid dir doesn't exist, create $NOTEBOOK_PID_DIR"
-  mkdir -p "$NOTEBOOK_PID_DIR"
-fi
-
-if [[ ! -d "$NOTEBOOK_NOTEBOOK_DIR" ]]; then
-  echo "Pid dir doesn't exist, create $NOTEBOOK_NOTEBOOK_DIR"
-  mkdir -p "$NOTEBOOK_NOTEBOOK_DIR"
-fi
-
 }
 ###########################################################################################
 
@@ -79,7 +44,6 @@ function validateService() {
 
 # Validate start
 function validateStart() {
-    checkFolders
     checkJava
 }
 

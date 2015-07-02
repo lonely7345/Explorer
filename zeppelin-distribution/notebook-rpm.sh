@@ -39,9 +39,7 @@ fi
 start() {
     validateStart
     echo -n "Starting $NAME: "
-    #daemon --user $USER --pidfile $NOTEBOOK_PID_FILE "$DAEMON"
-    daemon --user $USER --pidfile $NOTEBOOK_PID_FILE "$DAEMON"
-    #$NOTEBOOK_RUNNER $JAVA_OPTS -cp $CLASSPATH $NOTEBOOK_SERVER "$@" >> "$log" 2>&1 < /dev/null &
+    daemon --user $USER --pidfile $PIDFILE "$DAEMON $DAEMON_OPTS"
     echo
     touch $LOCKFILE
 }
@@ -70,7 +68,7 @@ condrestart(){
 }
 
 getStatus(){
-    status -p $NOTEBOOK_PID_FILE $NAME -l $LOCKFILE
+    status -p $PIDFILE $NAME -l $LOCKFILE
 }
 
 usage(){

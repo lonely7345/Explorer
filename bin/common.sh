@@ -21,6 +21,7 @@
 # */
 
 FWDIR="$(cd `dirname $0`; pwd)"
+INSTALL_HOME="/opt/sds/notebook/lib/"
 
 if [ "x$NOTEBOOK_HOME" == "x" ] ; then
     export NOTEBOOK_HOME=$FWDIR/..
@@ -67,6 +68,8 @@ if [ -f "${NOTEBOOK_CONF_DIR}/notebook-env.sh" ]; then
     . "${NOTEBOOK_CONF_DIR}/notebook-env.sh"
 fi
 
+
+
 NOTEBOOK_CLASSPATH+=":${NOTEBOOK_CONF_DIR}"
 
 function addJarInDir(){
@@ -82,6 +85,7 @@ addJarInDir ${NOTEBOOK_HOME}
 addJarInDir ${NOTEBOOK_HOME}/zeppelin-zengine/target/lib
 addJarInDir ${NOTEBOOK_HOME}/zeppelin-server/target/lib
 addJarInDir ${NOTEBOOK_HOME}/zeppelin-web/target/lib
+addJarInDir $INSTALL_HOME
 
 
 if [ -d "${NOTEBOOK_HOME}/zeppelin-zengine/target/classes" ]; then
@@ -105,7 +109,7 @@ export NOTEBOOK_CLASSPATH
 export SPARK_CLASSPATH+=${NOTEBOOK_CLASSPATH}
 export CLASSPATH+=${NOTEBOOK_CLASSPATH}
 
-# Text encoding for 
+# Text encoding for
 # read/write job into files,
 # receiving/displaying query/result.
 if [ "x$NOTEBOOK_ENCODING" == "x" ]; then
@@ -131,6 +135,12 @@ export RUNNER
 
 if [ "x$NOTEBOOK_IDENT_STRING" == "x" ]; then
   export NOTEBOOK_IDENT_STRING="$USER"
+fi
+
+NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+
+if [ -d "$INSTALL_HOME" ]; then
+    NOTEBOOK_LOGFILE="/var/log/sds/notebook/notebook_app.log"
 fi
 
 if [ "x$DEBUG" == "x" ] ; then
