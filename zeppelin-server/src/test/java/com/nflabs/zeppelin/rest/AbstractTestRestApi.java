@@ -33,7 +33,7 @@ public abstract class AbstractTestRestApi {
     if (System.getProperty("url") != null) {
       url = System.getProperty("url");
     } else {
-      url = "http://localhost:8080";
+      url = "http://localhost:8084";
     }
     url += restApiUrl;
     if (path != null)
@@ -42,7 +42,7 @@ public abstract class AbstractTestRestApi {
   }
 
   protected static String getUrlToTest() {
-    String url = "http://localhost:8080" + restApiUrl;
+    String url = "http://localhost:8084" + restApiUrl;
     if (System.getProperty("url") != null) {
       url = System.getProperty("url");
     }

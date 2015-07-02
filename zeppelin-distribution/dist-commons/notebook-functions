@@ -50,7 +50,25 @@ function checkRunDirectory() {
         fi
     fi
 }
+# Check folders
+function checkFolders(){
 
+if [[ ! -d "$NOTEBOOK_LOG_DIR" ]]; then
+  echo "Log dir doesn't exist, create $NOTEBOOK_LOG_DIR"
+  mkdir -p "$NOTEBOOK_LOG_DIR"
+fi
+
+if [[ ! -d "$NOTEBOOK_PID_DIR" ]]; then
+  echo "Pid dir doesn't exist, create $NOTEBOOK_PID_DIR"
+  mkdir -p "$NOTEBOOK_PID_DIR"
+fi
+
+if [[ ! -d "$NOTEBOOK_NOTEBOOK_DIR" ]]; then
+  echo "Pid dir doesn't exist, create $NOTEBOOK_NOTEBOOK_DIR"
+  mkdir -p "$NOTEBOOK_NOTEBOOK_DIR"
+fi
+
+}
 ###########################################################################################
 
 # Validate service
@@ -61,6 +79,7 @@ function validateService() {
 
 # Validate start
 function validateStart() {
+    checkFolders
     checkJava
 }
 

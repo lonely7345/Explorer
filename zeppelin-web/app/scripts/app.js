@@ -27,7 +27,7 @@ function getPort() {
   }
   // brunch port
   if (port === 3333 || port === 9000) {
-    port = 8080;
+    port = 8084;
   }
   return port+1;
 }
@@ -50,7 +50,7 @@ function getRestApiBase() {
   }
 
   if (port === 3333 || port === 9000) {
-    port = 8080;
+    port = 8084;
   }
   return location.protocol+"//"+location.hostname+":"+port+"/api";
 }

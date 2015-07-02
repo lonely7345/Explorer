@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>streaming-interpreter</artifactId>
+    <name>Notebook: Streaming Interpreter</name>
+    <description>Interpreter for Stratio Streaming</description>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

@@ -41,7 +41,7 @@ public class ZeppelinServer extends Application {
         ZeppelinConfiguration conf = ZeppelinConfiguration.create();
         conf.setProperty("args", args);
 
-        int port = conf.getInt(ConfVars.ZEPPELIN_PORT);
+        int port = conf.getInt(ConfVars.NOTEBOOK_PORT);
         final Server server = setupJettyServer(port);
         websocket = new com.nflabs.zeppelin.socket.NotebookServer(port + 1);
 
@@ -132,7 +132,7 @@ public class ZeppelinServer extends Application {
 
     private static WebAppContext setupWebAppContext(ZeppelinConfiguration conf) {
         WebAppContext webApp = new WebAppContext();
-        File webapp = new File(conf.getString(ConfVars.ZEPPELIN_WAR));
+        File webapp = new File(conf.getString(ConfVars.NOTEBOOK_WAR));
         if (webapp.isDirectory()) { // Development mode, read from FS
             //webApp.setDescriptor(webapp+"/WEB-INF/web.xml");
             webApp.setResourceBase(webapp.getPath());
@@ -153,7 +153,7 @@ public class ZeppelinServer extends Application {
      */
     private static WebAppContext setupWebAppSwagger(ZeppelinConfiguration conf) {
         WebAppContext webApp = new WebAppContext();
-        File webapp = new File(conf.getString(ConfVars.ZEPPELIN_API_WAR));
+        File webapp = new File(conf.getString(ConfVars.NOTEBOOK_API_WAR));
 
         if (webapp.isDirectory()) {
             webApp.setResourceBase(webapp.getPath());

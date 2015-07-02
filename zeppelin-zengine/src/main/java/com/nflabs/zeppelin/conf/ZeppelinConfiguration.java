@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ZeppelinConfiguration extends XMLConfiguration {
-    private static final String ZEPPELIN_SITE_XML = "zeppelin-site.xml";
-	private static final long serialVersionUID = 4749305895693848035L;
+    private static final String NOTEBOOK_SITE_XML = "notebook-site.xml";
+	private static final long serialVersionUID = -8830696863101855773L;
     private static final Logger LOG = LoggerFactory.getLogger(ZeppelinConfiguration.class);
 	private static ZeppelinConfiguration conf;
 
@@ -51,15 +51,15 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		URL url;
 
-		url = ZeppelinConfiguration.class.getResource(ZEPPELIN_SITE_XML);
+		url = ZeppelinConfiguration.class.getResource(NOTEBOOK_SITE_XML);
 		if (url == null) {
 			 ClassLoader cl = ZeppelinConfiguration.class.getClassLoader();
 			 if (cl!=null) {
-				 url = cl.getResource(ZEPPELIN_SITE_XML);
+				 url = cl.getResource(NOTEBOOK_SITE_XML);
 			 }
 		}
 		if (url == null) {
-			url = classLoader.getResource(ZEPPELIN_SITE_XML);
+			url = classLoader.getResource(NOTEBOOK_SITE_XML);
 		}
 
 		if (url == null){
@@ -208,11 +208,11 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	}
 
 	public String getNotebookDir(){
-		return getRelativeDir(ConfVars.ZEPPELIN_NOTEBOOK_DIR);
+		return getRelativeDir(ConfVars.NOTEBOOK_NOTEBOOK_DIR);
 	}
 
 	public String getInterpreterDir(){
-		return getRelativeDir(ConfVars.ZEPPELIN_INTERPRETER_DIR);
+		return getRelativeDir(ConfVars.NOTEBOOK_INTERPRETER_DIR);
 	}
 
 	public String getRelativeDir(ConfVars c){
@@ -223,7 +223,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		if(path!=null && path.startsWith("/")){
 			return path;
 		} else {
-			return getString(ConfVars.ZEPPELIN_HOME)+"/"+path;
+			return getString(ConfVars.NOTEBOOK_HOME)+"/"+path;
 		}
 	}
 	public String getCrossdataSettingsPath() {
@@ -234,15 +234,15 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	}
 
 	public static enum ConfVars {
-		ZEPPELIN_HOME				("zeppelin.home", "../"),
-		ZEPPELIN_PORT				("zeppelin.server.port", 8080),
-		ZEPPELIN_WAR				("zeppelin.war", "../zeppelin-web/src/main/webapp"),
-	    ZEPPELIN_API_WAR            ("zeppelin.api.war", "../zeppelin-docs/src/main/swagger"),
-		ZEPPELIN_INTERPRETERS		("zeppelin.interpreters", "com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter"),
-		ZEPPELIN_INTERPRETER_DIR	("zeppelin.interpreter.dir", "interpreter"),
-		ZEPPELIN_INTERPRETER_MODE	("zeppelin.interpreter.mode", "share"),     // 'separate', 'share'
-		ZEPPELIN_ENCODING			("zeppelin.encoding", "UTF-8"),
-		ZEPPELIN_NOTEBOOK_DIR       ("zeppelin.notebook.dir", "notebook")
+		NOTEBOOK_HOME("zeppelin.home", "../"),
+		NOTEBOOK_PORT("zeppelin.server.port", 8084),
+		NOTEBOOK_WAR("zeppelin.war", "../zeppelin-web/src/main/webapp"),
+	    NOTEBOOK_API_WAR("zeppelin.api.war", "../zeppelin-docs/src/main/swagger"),
+		NOTEBOOK_INTERPRETERS("zeppelin.interpreters", "com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter"),
+		NOTEBOOK_INTERPRETER_DIR("zeppelin.interpreter.dir", "interpreter"),
+		NOTEBOOK_INTERPRETER_MODE("zeppelin.interpreter.mode", "share"),     // 'separate', 'share'
+		NOTEBOOK_ENCODING("zeppelin.encoding", "UTF-8"),
+		NOTEBOOK_NOTEBOOK_DIR("zeppelin.notebook.dir", "notebook")
 		;
 
 		private String varName;

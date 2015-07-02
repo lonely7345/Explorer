@@ -95,7 +95,7 @@
                             <contactEmail>idiaz@stratio.com</contactEmail>
                             <rpm>
                                 <group>devel</group>
-                                <requires>apache-commons-daemon-jsvc, htop</requires>
+                                <requires>bash</requires>
                             </rpm>
                             <architecture>noarch</architecture>
                             <defaults>
@@ -131,7 +131,7 @@
                                             </attributes>
                                         </mkdirs>
                                         <copyDirectory>
-                                            <from>target/notebook-${project.version}/bin/dist-commons</from>
+                                            <from>dist-commons</from>
                                             <to>/etc/default</to>
                                         </copyDirectory>
                                         <copyDirectory>
@@ -151,8 +151,8 @@
                                             <to>/opt/sds/notebook/interpreter</to>
                                         </copyDirectory>
                                         <copyFile>
-                                            <path>../bin/zeppelin.sh</path>
-                                            <toFile>/etc/rc.d/notebook</toFile>
+                                            <path>notebook-rpm.sh</path>
+                                            <toFile>/etc/rc.d/init.d/notebook</toFile>
                                         </copyFile>
                                     </assembly>
                                 </configuration>
@@ -231,7 +231,7 @@
                                             </attributes>
                                         </mkdirs>
                                         <copyDirectory>
-                                            <from>target/notebook-${project.version}/bin/dist-commons</from>
+                                            <from>dist-commons</from>
                                             <to>/etc/default</to>
                                         </copyDirectory>
                                         <copyDirectory>
@@ -260,7 +260,7 @@
                                             </attributes>
                                         </copyFile>
                                         <copyFile>
-                                            <path>../bin/zeppelin.sh</path>
+                                            <path>notebook-deb.sh</path>
                                             <toFile>/etc/init.d/notebook</toFile>
                                         </copyFile>
                                     </assembly>

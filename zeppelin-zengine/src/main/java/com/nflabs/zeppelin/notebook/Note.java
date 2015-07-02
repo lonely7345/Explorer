@@ -15,7 +15,6 @@ import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -289,7 +288,7 @@ public class Note implements Serializable, JobListener {
 
         String json = gson.toJson(this);
         FileOutputStream out = new FileOutputStream(file);
-        out.write(json.getBytes(conf.getString(ConfVars.ZEPPELIN_ENCODING)));
+        out.write(json.getBytes(conf.getString(ConfVars.NOTEBOOK_ENCODING)));
         out.close();
     }
 
@@ -313,7 +312,7 @@ public class Note implements Serializable, JobListener {
 
         String json = gson.toJson(this);
         FileOutputStream out = new FileOutputStream(file);
-        out.write(json.getBytes(conf.getString(ConfVars.ZEPPELIN_ENCODING)));
+        out.write(json.getBytes(conf.getString(ConfVars.NOTEBOOK_ENCODING)));
         out.close();
     }
 
@@ -342,7 +341,7 @@ public class Note implements Serializable, JobListener {
         }
         String ext = filenameWithExtension[filenameWithExtension.length - 1];
         FileInputStream ins = new FileInputStream(file);
-        String fileString = IOUtils.toString(ins, ConfVars.ZEPPELIN_ENCODING.getStringValue());
+        String fileString = IOUtils.toString(ins, ConfVars.NOTEBOOK_ENCODING.getStringValue());
         if (ext.compareToIgnoreCase("json") == 0) {
             Note note = gson.fromJson(fileString, Note.class);
             n.addParagraphs(note.getParagraphs());
@@ -379,7 +378,7 @@ public class Note implements Serializable, JobListener {
         }
 
         FileInputStream ins = new FileInputStream(file);
-        String json = IOUtils.toString(ins, conf.getString(ConfVars.ZEPPELIN_ENCODING));
+        String json = IOUtils.toString(ins, conf.getString(ConfVars.NOTEBOOK_ENCODING));
         Note note = gson.fromJson(json, Note.class);
         note.setZeppelinConfiguration(conf);
         note.setReplLoader(replLoader);

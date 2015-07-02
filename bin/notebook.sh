@@ -18,10 +18,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Run Zeppelin 
+# Run Notebook
 #
 function usage() {
-  echo "Usage: bin/zeppelin.sh [spark options] [application options]"
+  echo "Usage: bin/notebook.sh"
   exit 0
 }
 
@@ -31,35 +31,33 @@ bin=`cd "$bin">/dev/null; pwd`
 . $bin/common.sh
 
 HOSTNAME=`hostname`
-ZEPPELIN_LOGFILE=$ZEPPELIN_LOG_DIR/zeppelin-$ZEPPELIN_IDENT_STRING-$HOSTNAME.log
-log=$ZEPPELIN_LOG_DIR/zeppelin-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.out
-pid=$ZEPPELIN_PID_DIR/zeppelin-cli-$ZEPPELIN_IDENT_STRING-$HOSTNAME.pid
-  
-ZEPPELIN_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
-JAVA_OPTS+=" -Dzeppelin.log.file=$ZEPPELIN_LOGFILE"
+NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
 
-if [[ ! -d "$ZEPPELIN_LOG_DIR" ]]; then
-  echo "Log dir doesn't exist, create $ZEPPELIN_LOG_DIR"
-  mkdir -p "$ZEPPELIN_LOG_DIR"
+NOTEBOOK_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
+JAVA_OPTS+=" -Dzeppelin.log.file=$NOTEBOOK_LOGFILE"
+
+if [[ ! -d "$NOTEBOOK_LOG_DIR" ]]; then
+  echo "Log dir doesn't exist, create $NOTEBOOK_LOG_DIR"
+  mkdir -p "$NOTEBOOK_LOG_DIR"
 fi
 
-if [[ ! -d "$ZEPPELIN_PID_DIR" ]]; then
-  echo "Pid dir doesn't exist, create $ZEPPELIN_PID_DIR"
-  mkdir -p "$ZEPPELIN_PID_DIR"
+if [[ ! -d "$NOTEBOOK_PID_DIR" ]]; then
+  echo "Pid dir doesn't exist, create $NOTEBOOK_PID_DIR"
+  mkdir -p "$NOTEBOOK_PID_DIR"
 fi
 
-if [[ ! -d "$ZEPPELIN_ZEPPELIN_DIR" ]]; then
-  echo "Pid dir doesn't exist, create $ZEPPELIN_ZEPPELIN_DIR"
-  mkdir -p "$ZEPPELIN_ZEPPELIN_DIR"
+if [[ ! -d "$NOTEBOOK_NOTEBOOK_DIR" ]]; then
+  echo "Pid dir doesn't exist, create $NOTEBOOK_NOTEBOOK_DIR"
+  mkdir -p "$NOTEBOOK_NOTEBOOK_DIR"
 fi
 
 #if [ "x$SPARK_HOME" != "x" ]; then
 #  source $SPARK_HOME/bin/utils.sh
 #  SUBMIT_USAGE_FUNCTION=usage
 #  gatherSparkSubmitOpts "$@"
-#  ZEPPELIN_RUNNER=$SPARK_HOME/bin/spark-submit
+#  NOTEBOOK_RUNNER=$SPARK_HOME/bin/spark-submit
 
-#  exec $ZEPPELIN_NICENESS $ZEPPELIN_RUNNER --class $ZEPPELIN_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options -Dzeppelin.log.file=$ZEPPELIN_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
+#  exec $NOTEBOOK_NICENESS $NOTEBOOK_RUNNER --class $NOTEBOOK_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options -Dzeppelin.log.file=$NOTEBOOK_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
 #else
-  $ZEPPELIN_RUNNER $JAVA_OPTS -cp $CLASSPATH $ZEPPELIN_SERVER "$@"
+  $NOTEBOOK_RUNNER $JAVA_OPTS -cp $CLASSPATH $NOTEBOOK_SERVER "$@"
 #fi

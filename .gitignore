@@ -6,8 +6,8 @@
 *.ear
 
 # conf file
-conf/zeppelin-env.sh
-conf/zeppelin-site.xml
+conf/notebook-env.sh
+conf/notebook-site.xml
 conf/keystore
 conf/truststore
 conf/interpreter.json

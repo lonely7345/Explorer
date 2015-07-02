@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -16,9 +15,6 @@ import org.quartz.SchedulerException;
 import com.nflabs.zeppelin.conf.ZeppelinConfiguration;
 import com.nflabs.zeppelin.conf.ZeppelinConfiguration.ConfVars;
 import com.nflabs.zeppelin.interpreter.mock.MockInterpreterFactory;
-import com.nflabs.zeppelin.notebook.Note;
-import com.nflabs.zeppelin.notebook.Notebook;
-import com.nflabs.zeppelin.notebook.Paragraph;
 import com.nflabs.zeppelin.scheduler.Job;
 import com.nflabs.zeppelin.scheduler.Job.Status;
 import com.nflabs.zeppelin.scheduler.JobListener;
@@ -39,7 +35,7 @@ public class NotebookTest implements JobListenerFactory{
 		notebookDir = new File(System.getProperty("java.io.tmpdir")+"/ZeppelinLTest_"+System.currentTimeMillis()+"/notebook");
 		notebookDir.mkdirs();
 
-		System.setProperty(ConfVars.ZEPPELIN_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());
+		System.setProperty(ConfVars.NOTEBOOK_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());
 
 		conf = ZeppelinConfiguration.create();
         

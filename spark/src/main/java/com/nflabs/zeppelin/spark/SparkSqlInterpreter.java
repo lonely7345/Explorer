@@ -41,7 +41,7 @@ public class SparkSqlInterpreter extends Interpreter {
 		Interpreter.register("sql", SparkSqlInterpreter.class.getName());
 	}
 	
-	private final String jobGroup = "zeppelin-"+this.hashCode();
+	private final String jobGroup = "notebook-"+this.hashCode();
 	private int maxResult;
 	
 	public SparkSqlInterpreter(Properties property) {
@@ -51,7 +51,7 @@ public class SparkSqlInterpreter extends Interpreter {
 	@Override
 	public void open() {
 		ZeppelinConfiguration conf = ZeppelinConfiguration.create();
-		this.maxResult = conf.getInt("ZEPPELIN_SPARK_MAX_RESULT", "zeppelin.spark.maxResult", 10000);
+		this.maxResult = conf.getInt("NOTEBOOK_SPARK_MAX_RESULT", "zeppelin.spark.maxResult", 10000);
 	}
 	
 	
@@ -72,7 +72,7 @@ public class SparkSqlInterpreter extends Interpreter {
 	public InterpreterResult interpret(String st) {
 		SQLContext sqlc = getSparkInterpreter().getSQLContext();
 		SparkContext sc = sqlc.sparkContext();
-		sc.setJobGroup(jobGroup, "Zeppelin", false);
+		sc.setJobGroup(jobGroup, "Notebook", false);
 		DataFrame dataFrame;
 		Row[] rows = null;
 		try {

@@ -131,7 +131,7 @@ public class SparkInterpreter extends Interpreter {
         return sc;
     }
     private boolean useHiveContext() {
-      return Boolean.parseBoolean(System.getenv("ZEPPELIN_SPARK_USEHIVECONTEXT"));
+      return Boolean.parseBoolean(System.getenv("NOTEBOOK_SPARK_USEHIVECONTEXT"));
     }
 
     public SQLContext getSQLContext() {
@@ -418,7 +418,7 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
         }
     }
 
-    private final String jobGroup = "zeppelin-" + this.hashCode();
+    private final String jobGroup = "notebook-" + this.hashCode();
 
     /**
      * Interpret a single line
@@ -432,7 +432,7 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
 
     public InterpreterResult interpret(String[] lines) {
         synchronized (this) {
-            sc.setJobGroup(jobGroup, "Zeppelin", false);
+            sc.setJobGroup(jobGroup, "Notebook", false);
             InterpreterResult r = _interpret(lines);
             sc.clearJobGroup();
             return r;

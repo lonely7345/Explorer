@@ -19,7 +19,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>zeppelin-zengine</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
+            <version>0.2.0</version>
         </dependency>
 
         <dependency>
@@ -328,11 +328,11 @@
                 <version>1.6</version>
                 <executions>
                     <execution>
-                        <id>start-zeppelin</id>
+                        <id>start-notebook</id>
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <target unless="skipTests">
-                                <exec executable="./zeppelin-daemon.sh" dir="${zeppelin.daemon.package.base}"
+                                <exec executable="./notebook-daemon.sh" dir="${notebook.daemon.package.base}"
                                       spawn="true">
                                     <arg value="start"/>
                                 </exec>
@@ -344,11 +344,11 @@
                     </execution>
 
                     <execution>
-                        <id>stop-zeppelin</id>
+                        <id>stop-notebook</id>
                         <phase>post-integration-test</phase>
                         <configuration>
                             <target unless="skipTests">
-                                <exec executable="./zeppelin-daemon.sh" dir="${zeppelin.daemon.package.base}"
+                                <exec executable="./notebook-daemon.sh" dir="${notebook.daemon.package.base}"
                                       spawn="false">
                                     <arg value="stop"/>
                                 </exec>
@@ -370,9 +370,9 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <zeppelin.daemon.package.base>
+                <notebook.daemon.package.base>
                     ../bin
-                </zeppelin.daemon.package.base>
+                </notebook.daemon.package.base>
             </properties>
         </profile>
 
@@ -382,9 +382,9 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <zeppelin.daemon.package.base>
-                    ../zeppelin-distribution/target/zeppelin-${project.version}/zeppelin-${project.version}/bin
-                </zeppelin.daemon.package.base>
+                <notebook.daemon.package.base>
+                    ../notebook-distribution/target/notebook-${project.version}/notebook-${project.version}/bin
+                </notebook.daemon.package.base>
             </properties>
         </profile>
     </profiles>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "x$NOTEBOOK_HOME" == "x" ] ; then
-    export NOTEBOOK_HOME="/etc/sds/notebook"
+    export NOTEBOOK_HOME="/opt/sds/notebook"
 fi
 
 if [ "x$NOTEBOOK_CONF_DIR" == "x" ] ; then
@@ -91,7 +91,7 @@ else
     NOTEBOOK_RUNNER=java
 fi
 
-export RUNNER
+export NOTEBOOK_RUNNER
 
 
 if [ "x$NOTEBOOK_IDENT_STRING" == "x" ]; then
@@ -101,3 +101,18 @@ fi
 if [ "x$DEBUG" == "x" ] ; then
     export DEBUG=0
 fi
+
+############################ SERVICE VARIABLES ############################
+# Run Notebook as this user ID and group ID
+USER=stratio
+GROUP=stratio
+
+# Define other required variables
+LOCKFILE="/var/lock/subsys/$NAME"
+HOSTNAME=`hostname`
+NOTEBOOK_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
+NOTEBOOK_PID_FILE=$NOTEBOOK_PID_DIR/notebook-cli-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
+NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+JAVA_OPTS+=" -Dzeppelin.log.file=$NOTEBOOK_LOGFILE"
+log=$NOTEBOOK_LOG_DIR/notebook-cli-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
+DAEMON=/opt/sds/notebook/bin/notebook

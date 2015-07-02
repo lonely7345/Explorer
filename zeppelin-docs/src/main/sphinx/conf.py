@@ -55,7 +55,7 @@ def maven_version(pom):
 
 
 def get_version():
-    version = os.environ.get('ZEPPELIN_VERSION', '').strip()
+    version = os.environ.get('NOTEBOOK_VERSION', '').strip()
     return version or maven_version('../../../pom.xml')
 
 # -- General configuration -----------------------------------------------------

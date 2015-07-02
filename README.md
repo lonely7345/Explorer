@@ -1,19 +1,24 @@
 #Stratio Notebook
 
 
-```v0.2.0 Changes  
--Run paragraph force output visualization 
--Notebook’s loading delay minimized
-    +Font load improvement
-    +Websocket call control
--Update to Spark 1.4.0 
--Connection to remote Spark cluster
--Stratio Streaming intepreter completed
-    +Customized parser for streaming shell syntax
-    +Syntax highlighting and help command
-    +Syntax autocomplete helper
 
-```
+**v0.2.0 Changes**
+
+--------------------------------------------------------
+
+-Run paragraph force output visualization   
+-Notebook’s loading delay minimized  
+    +Font load improvement  
+    +Websocket call control  
+-Update to Spark 1.4.0   
+-Connection to remote Spark cluster  
+-Stratio Streaming intepreter completed  
+    +Customized parser for streaming shell syntax  
+    +Syntax highlighting and help command   
+    +Syntax autocomplete helper     
+    
+--------------------------------------------------------
+
 
 
 Interactive shell to manage **Crossdata** based on Zeppelin
@@ -48,36 +53,37 @@ mvn clean package
 
 If you wish to configure Zeppelin options (like port number), configure the following files:
 ```
-./conf/zeppelin-env.sh
-./conf/zeppelin-site.xml
+./conf/notebook-env.sh
+./conf/notebook-site.xml
 ```
 
 **Crossdata files**
 
-You can modify Crossdata driver's properties in:
+You can modify Crossdata driver's properties in:  
 ```
 ./conf/crossdata/driver-application.conf
-```
-For using another Crossdata's version modify:
+```  
+For using another Crossdata's version modify:   
 ```
 ./crossdata/pom.xml
-```
+```  
+
 ```
     <properties>
         <crossdata.version>HERE_YOUR_CROSSDATA'S_VERSION</crossdata.version>
     </properties>
-```
+```  
 
 
 
 ###Run
 ```
-./bin/zeppelin.sh -> to launch a console session depending instance 
-```
+./bin/notebook.sh -> to launch a console session depending instance 
+```  
 or   
 ```
-./bin/zeppelin-daemon.sh start -> to launch the service
-```
+./bin/notebook-daemon.sh start -> to launch the service
+```  
 Since there is no real auth system yet, you have to use dummy credentials to enter:
 
 ```
@@ -87,7 +93,7 @@ password : test
 
 ###Stop
 ```
-./bin/zeppelin-daemon.sh stop
+./bin/notebook-daemon.sh stop
 ```
 
 browse localhost:8084 in your browser. 8085 port should be accessible for websocket connection.

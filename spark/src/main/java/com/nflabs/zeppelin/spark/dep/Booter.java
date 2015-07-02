@@ -18,7 +18,8 @@ public class Booter {
     MavenRepositorySystemSession session = new MavenRepositorySystemSession();
 
     ZeppelinConfiguration conf = ZeppelinConfiguration.create();
-    LocalRepository localRepo = new LocalRepository(conf.getRelativeDir(conf.getString("ZEPPELIN_DEP_LOCAL_REPO", "zeppelin.dep.localrepo", "local-repo")));
+    LocalRepository localRepo = new LocalRepository(conf.getRelativeDir(conf.getString("NOTEBOOK_DEP_LOCAL_REPO",
+            "zeppelin.dep.localrepo", "local-repo")));
     session.setLocalRepositoryManager(system.newLocalRepositoryManager(localRepo));
 
     //session.setTransferListener(new ConsoleTransferListener());

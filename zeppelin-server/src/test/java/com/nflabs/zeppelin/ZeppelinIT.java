@@ -55,7 +55,7 @@ public class ZeppelinIT {
 		if (System.getProperty("url")!=null) {
 			url = System.getProperty("url");
 		} else {
-			url = "http://localhost:8080";
+			url = "http://localhost:8084";
 		}
 
 		long start = System.currentTimeMillis();
@@ -182,7 +182,7 @@ public class ZeppelinIT {
     if (System.getProperty("url") != null) {
       url = System.getProperty("url");
     } else {
-      url = "http://localhost:8080";
+      url = "http://localhost:8084";
     }
     if (path != null)
       url += path;

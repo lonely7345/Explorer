@@ -64,7 +64,7 @@ public class Notebook {
     }
 
     private boolean isLoaderStatic() {
-        return "share".equals(conf.getString(ConfVars.ZEPPELIN_INTERPRETER_MODE));
+        return "share".equals(conf.getString(ConfVars.NOTEBOOK_INTERPRETER_MODE));
     }
 
     /**

@@ -1,5 +1,5 @@
 =================
-Install Zeppelin
+Install Notebook
 =================
 
 Instructions
@@ -9,7 +9,7 @@ Install Stratio Notebook in local mode
 
 .. code-block:: bash
 
-  # this scripts install hadoop and zeppelin in current directory and start zeppelin in local mode
+  # this scripts install hadoop and notebook in current directory and start notebook in local mode
   # download and unarchive hadoop distribution package
   curl -O http://apache.mirror.cdnetworks.com/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-bin.tar.gz
   tar -xzf hadoop-1.2.1-bin.tar.gz
@@ -19,16 +19,16 @@ Install Stratio Notebook in local mode
   tar -xzf zeppelin-0.3.0.tar.gz
 
   # set HADOOP_HOME
-  echo "export HADOOP_HOME=`pwd`/hadoop-1.2.1" >> zeppelin-0.3.0/conf/zeppelin-env.sh
+  echo "export HADOOP_HOME=`pwd`/hadoop-1.2.1" >> notebook-0.3.0/conf/notebook-env.sh
 
-  # start zeppelin
-  ./zeppelin-0.3.0/bin/zeppelin-daemon.sh start
+  # start notebook
+  ./notebook-0.3.0/bin/notebook-daemon.sh start
 
-You can access Zeppelin with browser http://localhost:8080
+You can access Notebook with browser http://localhost:8084
 
 Install
 ^^^^^^^
-Configuring Zeppelin with existing hadoop cluster, refer this section.
+Configuring Notebook with existing hadoop cluster, refer this section.
 
 Prerequisites
 -------------
@@ -47,21 +47,21 @@ Configuration can be done by both environment variable and java properties. If b
 used.
 
 =========================    =======================  ============================== ===========
-zeppelin-env.sh	             zeppelin-site.xml         Default value  		     Description
+notebook-env.sh	             notebook-site.xml         Default value  		     Description
 =========================    =======================  ============================== ===========
-ZEPPELIN_HOME	  		    		   	   		   	     Zeppelin Home directory
-ZEPPELIN_PORT         	     zeppelin.server.port     8080	   		     Zeppelin server port
-ZEPPELIN_JOB_DIR             zeppelin.job.dir         jobs	   		     Zeppelin persist/load session in this directory. Can be a path or a URI. location on HDFS supported
-ZEPPELIN_ZAN_REPO            zeppelin.zan.repo        https://github.com/NFLabs/zan  Remote ZAN repository URL
-ZEPPELIN_ZAN_LOCAL_REPO      zeppelin.zan.localrepo   zan-repo	 		     Zeppelin library local repository. Local filesystem path
-ZEPPELIN_ZAN_SHARED_REPO     zeppelin.zan.sharedrepo				     Zeppelin library shared repository. Location on HDFS. Usufull when your backend (eg. hiveserver) is not running on the sam machine and want to use zeppelin library with resource file(eg. in hive 'ADD FILE 'path'). So your backend can get resource file from shared repository.
-ZEPPELIN_DRIVERS             zeppelin.drivers         hive:hive2://,exec:exec://     Comma separated list of [Name]:[Connection URI]
-ZEPPELIN_DRIVER_DIR          zeppelin.driver.dir      drivers			     Zeppelin driver directory.
+NOTEBOOK_HOME	  		    		   	   		   	     Notebook Home directory
+NOTEBOOK_PORT         	     zeppelin.server.port     8084	   		     Notebook server port
+NOTEBOOK_JOB_DIR             zeppelin.job.dir         jobs	   		     Notebook persist/load session in this directory. Can be a path or a URI. location on HDFS supported
+NOTEBOOK_ZAN_REPO            zeppelin.zan.repo        https://github.com/NFLabs/zan  Remote ZAN repository URL
+NOTEBOOK_ZAN_LOCAL_REPO      zeppelin.zan.localrepo   zan-repo	 		     Notebook library local repository. Local filesystem path
+NOTEBOOK_ZAN_SHARED_REPO     zeppelin.zan.sharedrepo				     Notebook library shared repository. Location on HDFS. Usufull when your backend (eg. hiveserver) is not running on the sam machine and want to use zeppelin library with resource file(eg. in hive 'ADD FILE 'path'). So your backend can get resource file from shared repository.
+NOTEBOOK_DRIVERS             zeppelin.drivers         hive:hive2://,exec:exec://     Comma separated list of [Name]:[Connection URI]
+NOTEBOOK_DRIVER_DIR          zeppelin.driver.dir      drivers			     Notebook driver directory.
 =========================    =======================  ============================== ===========
 
 Configuring with existing Hive
 -------------------------------
-If you have hive already installed in your hadoop cluster, just run hive server and make Zeppelin to connect it. There're two different version of hive servers, Hive Server1, Hive Server2. Make sure you have Hive server running.
+If you have hive already installed in your hadoop cluster, just run hive server and make Notebook to connect it. There're two different version of hive servers, Hive Server1, Hive Server2. Make sure you have Hive server running.
 
 And then, add connection uri in zeppelin.drivers at zeppelin-site.xml If you have Hive Server 1 installed and running on host hiveserver1Address on port 10000, configuration property can be
 
@@ -86,17 +86,17 @@ If Hive Server 2 installed and running on host hiveserver2Address on port 10000,
 Start/Stop
 ^^^^^^^^^^
 
-**Start Zeppelin**
+**Start Notebook**
 
 .. code-block:: bash
 
-  bin/zeppelin-daemon.sh start
+  bin/notebook-daemon.sh start
 
-After successful start, visit http://localhost:8080 with your web browser
+After successful start, visit http://localhost:8084 with your web browser
 
-**Stop Zeppelin**
+**Stop Notebook**
 
 .. code-block:: bash
 
-  bin/zeppelin-daemon.sh stop
+  bin/notebook-daemon.sh stop
 
