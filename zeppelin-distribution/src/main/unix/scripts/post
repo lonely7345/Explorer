@@ -1,0 +1,5 @@
+#!/bin/bash
+
+chmod +x /opt/sds/notebook/bin/*
+chmod +x /etc/rc.d/init.d/notebook
+/sbin/chkconfig --add notebook

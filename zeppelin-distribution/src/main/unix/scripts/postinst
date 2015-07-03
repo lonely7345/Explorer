@@ -1,0 +1,8 @@
+#! /bin/bash
+
+set -e
+
+chmod +x /opt/sds/notebook/bin/*
+chmod +x /etc/init.d/notebook
+
+update-rc.d notebook defaults

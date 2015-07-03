@@ -2,7 +2,7 @@
 #
 #   /etc/rc.d/init.d/elasticsearch
 #
-#   Elasticsearch service
+#   Notebook service
 #
 ### BEGIN INIT INFO
 # Provides:          Notebook
@@ -47,7 +47,7 @@ start() {
 stop() {
     validateStop
     echo -n "Shutting down $NAME: "
-    killproc -p $NOTEBOOK_PID_FILE $NAME
+    killproc -p $PIDFILE $NAME
     local exit_status=$?
     echo
     rm -f $LOCKFILE
