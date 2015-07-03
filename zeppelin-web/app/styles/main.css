@@ -298,6 +298,9 @@ kbd {
     margin-top: 15px;
     background-color: #00c7f7;
 }
+#refresh-note-list{
+    margin-top:15px;
+}
 
 /* notebook shell*/
 .note-shell{

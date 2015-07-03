@@ -34,12 +34,21 @@
             <aside id="note-list" class="note-list" ng-if="!asIframe">
 
                 <section>
-                    <header class="header note-list-header clearfix"><span class="pull-right"><button
-                            class="btn btn-dark btn-icon" id="new-note" data-toggle="tooltip"
-                            data-placement="right" ng-click="createNewNote()" href="javascript:void(0);" title=""
+                    <header class="header note-list-header clearfix">
+                        <span class="pull-right">
+                    <button
+                            class="btn btn-dark btn-icon" id="refresh-note-list" data-toggle="tooltip"
+                            data-placement="right" ng-click="refreshNoteList()" href="javascript:void(0);"
+                            title=""
                             data-original-title="New"><i
-                            class="fa fa-plus"></i>
+                            class="fa fa-refresh"></i>
                     </button>
+                        <button
+                                class="btn btn-dark btn-icon" id="new-note" data-toggle="tooltip"
+                                data-placement="right" ng-click="createNewNote()" href="javascript:void(0);" title=""
+                                data-original-title="New"><i
+                                class="fa fa-plus"></i>
+                        </button>
           </span>
 
                         <p class="h3">Notebook</p>
@@ -57,7 +66,7 @@
                                     ng-class="{'note-button-active': $parent.active === note.id}">
                                     <div class="note-item-content">
                                         <div class="note-item-clickable" ng-click="activate(note.id, note.date)">
-                                            <div class="note-name" ><span>{{note.name
+                                            <div class="note-name"><span>{{note.name
                                             ||
                                             'Notebook ' + note.id}} </span>
                                             </div>

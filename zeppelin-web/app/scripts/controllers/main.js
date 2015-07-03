@@ -11,8 +11,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-'use strict';
+ */'use strict';
 /**
  * @ngdoc function
  * @name zeppelinWebApp.controller:MainCtrl
@@ -28,7 +27,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
     $scope.looknfeel = 'simple';
     $scope.lastChangedNotebookId = "";
     $scope.lastChangedNotebookDate = "";
-    $scope.lastParagraphRunId="";
+    $scope.lastParagraphRunId = "";
     var init = function() {
             $scope.asIframe = (($window.location.href.indexOf('asIframe') > -1) ? true : false);
         };
@@ -44,6 +43,9 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
                 WebSocket.send(JSON.stringify($scope.WebSocketWaitingList[o]));
             }
         }
+        $rootScope.$emit('sendNewEvent', {
+            op: 'LIST_NOTES'
+        });
     });
     WebSocket.onmessage(function(event) {
         var payload;
@@ -69,9 +71,8 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
             }
         } else if (op === 'PARAGRAPH') {
             $rootScope.$emit('updateParagraph', data);
-//            console.log(data.paragraph.id);
-            if(data.paragraph.id === $scope.lastParagraphRunId && (data.paragraph.status ==='RUNNING' || data.paragraph
-            .status ==='FINISHED')){
+            //            console.log(data.paragraph.id);
+            if (data.paragraph.id === $scope.lastParagraphRunId && (data.paragraph.status === 'RUNNING' || data.paragraph.status === 'FINISHED')) {
                 $rootScope.$emit('focusParagraph', data.paragraph.id);
             }
         } else if (op === 'PROGRESS') {
@@ -130,7 +131,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
         }
     });
     $rootScope.$on('lastParagraphRunId', function(event, data) {
-        console.log("lastParagraphRunId "+data);
+        console.log("lastParagraphRunId " + data);
         $scope.lastParagraphRunId = data;
     });
 });

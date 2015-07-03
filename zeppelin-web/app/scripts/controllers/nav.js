@@ -65,6 +65,11 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             op: 'NEW_NOTE'
         });
     };
+    $scope.refreshNoteList = function() {
+        $rootScope.$emit('sendNewEvent',{
+            op: 'LIST_NOTES'
+        });
+    };
     $scope.removeNote = function(noteId) {
         $rootScope.$emit('sendNewEvent', {
             op: 'DEL_NOTE',
