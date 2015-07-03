@@ -21,7 +21,7 @@
 # */
 
 FWDIR="$(cd `dirname $0`; pwd)"
-INSTALL_HOME="/opt/sds/notebook/lib/"
+INSTALL_HOME="/opt/sds/notebook/"
 
 if [ "x$NOTEBOOK_HOME" == "x" ] ; then
     export NOTEBOOK_HOME=$FWDIR/..
@@ -29,6 +29,10 @@ fi
 
 if [ "x$NOTEBOOK_CONF_DIR" == "x" ] ; then
     export NOTEBOOK_CONF_DIR="$NOTEBOOK_HOME/conf"
+fi
+
+if [ -d "$INSTALL_HOME" ]; then
+    export NOTEBOOK_CONF_DIR="/etc/sds/notebook"
 fi
 
 if [ "x$NOTEBOOK_LOG_DIR" == "x" ]; then
@@ -85,7 +89,7 @@ addJarInDir ${NOTEBOOK_HOME}
 addJarInDir ${NOTEBOOK_HOME}/zeppelin-zengine/target/lib
 addJarInDir ${NOTEBOOK_HOME}/zeppelin-server/target/lib
 addJarInDir ${NOTEBOOK_HOME}/zeppelin-web/target/lib
-addJarInDir $INSTALL_HOME
+addJarInDir $INSTALL_HOME/lib
 
 
 if [ -d "${NOTEBOOK_HOME}/zeppelin-zengine/target/classes" ]; then
