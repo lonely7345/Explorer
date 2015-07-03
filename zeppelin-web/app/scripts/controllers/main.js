@@ -11,7 +11,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */'use strict';
+ */
+'use strict';
 /**
  * @ngdoc function
  * @name zeppelinWebApp.controller:MainCtrl
@@ -27,6 +28,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
     $scope.looknfeel = 'simple';
     $scope.lastChangedNotebookId = "";
     $scope.lastChangedNotebookDate = "";
+    $scope.lastParagraphRunId="";
     var init = function() {
             $scope.asIframe = (($window.location.href.indexOf('asIframe') > -1) ? true : false);
         };
@@ -55,7 +57,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
             $rootScope.$emit('setNoteContent', data.note);
         } else if (op === 'NOTES_INFO') {
             if ($scope.asIframe) {
-//                console.log($routeParams);
+                //                console.log($routeParams);
                 $rootScope.$emit('sendNewEvent', {
                     op: 'GET_NOTE',
                     data: {
@@ -66,8 +68,12 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
                 $rootScope.$emit('setNoteMenu', data.notes);
             }
         } else if (op === 'PARAGRAPH') {
-            console.log(data);
             $rootScope.$emit('updateParagraph', data);
+//            console.log(data.paragraph.id);
+            if(data.paragraph.id === $scope.lastParagraphRunId && (data.paragraph.status ==='RUNNING' || data.paragraph
+            .status ==='FINISHED')){
+                $rootScope.$emit('focusParagraph', data.paragraph.id);
+            }
         } else if (op === 'PROGRESS') {
             $rootScope.$emit('updateProgress', data);
         } else if (op === 'COMPLETION_LIST') {
@@ -93,7 +99,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
                 WebSocket.send(JSON.stringify(data));
             }
         };
-    /** get the childs event and sebd to the websocket server */
+    /** get the childs event and send to the websocket server */
     $rootScope.$on('sendNewEvent', function(event, data) {
         if (!event.defaultPrevented) {
             send(data);
@@ -122,5 +128,9 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
             //      console.log("### MAIN.JS -> onChangeActiveNotebook "+data.id+" "+data.date);
             $rootScope.$broadcast('rootChangeActiveNotebook', data);
         }
+    });
+    $rootScope.$on('lastParagraphRunId', function(event, data) {
+        console.log(data);
+        $scope.lastParagraphRunId = data;
     });
 });

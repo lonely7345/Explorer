@@ -13,7 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */'use strict';
+ */
+'use strict';
 /**
  * @ngdoc function
  * @name zeppelinWebApp.controller:ParagraphCtrl
@@ -36,7 +37,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     $scope.editorModeMap = {};
     $scope.editorModeMap[editorMode.crossdata] = "crossdata";
     $scope.editorModeMap[editorMode.streaming] = "streaming";
-    $scope.editorModeMap[editorMode.sql] = "sql";
+    $scope.editorModeMap[editorMode.sql] = "spark-sql";
     $scope.editorModeMap[editorMode.scala] = "spark";
     $scope.editorModeMap[editorMode.markdown] = "markdown";
     $scope.forms = {};
@@ -164,7 +165,6 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             } else $scope.paragraph.status = data.paragraph.status;
             $scope.paragraph.result = data.paragraph.result;
             $scope.paragraph.settings = data.paragraph.settings;
-
             if (!$scope.asIframe) {
                 $scope.paragraph.config = data.paragraph.config;
                 initializeDefault();
@@ -231,7 +231,15 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                 params: $scope.paragraph.settings.params
             }
         };
-        $scope.closeTable();
+        $rootScope.$emit('lastParagraphRunId', $scope.paragraph.id);
+//        $($scope.paragraph.id)
+//        $scope.editor.focus();
+//        $('.note-workspace').scrollTo('#' + $scope.paragraph.id + '_editor', 300, {
+//            offset: 360
+//        });
+//        console.log("focusParagraph");
+        //        $rootScope.scrollTop=$(".note-workspace").scrollTop();
+        //        console.log($rootScope.scrollTop);
         $rootScope.$emit('sendNewEvent', paragraphData);
     };
     $scope.moveUp = function() {
@@ -534,9 +542,11 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     $rootScope.$on('focusParagraph', function(event, paragraphId) {
         if ($scope.paragraph.id === paragraphId) {
             $scope.editor.focus();
-            $('body').scrollTo('#' + paragraphId + '_editor', 300, {
+            $('.note-workspace').scrollTo('#' + paragraphId + '_editor', 300, {
                 offset: -60
             });
+//            console.log("focusParagraph");
+            $rootScope.$emit('lastParagraphRunId', "");
         }
     });
     $rootScope.$on('runParagraph', function(event) {

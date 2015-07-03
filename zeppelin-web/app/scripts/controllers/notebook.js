@@ -23,7 +23,8 @@
  *
  * @author anthonycorbacho
  */
-angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $http, $route, $routeParams, $location, $rootScope) {
+angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $http, $route, $routeParams, $location,
+$rootScope) {
     $scope.note = null;
     $scope.active = 'none';
     $scope.showEditor = false;
@@ -195,12 +196,12 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ht
     };
     /** update the current note */
     $rootScope.$on('setNoteContent', function(event, note) {
-        console.log("### NOTEBOOK.JS -> on setNoteContent " + $routeParams.asIframe);
+//        console.log("### NOTEBOOK.JS -> on setNoteContent " + $routeParams.asIframe);
         $scope.paragraphUrl = $routeParams.paragraphId;
         $scope.asIframe = $routeParams.asIframe;
         if ($scope.paragraphUrl) {
-            console.log("### NOTEBOOK.JS -> on setNoteContent ");
-            console.log(note);
+//            console.log("### NOTEBOOK.JS -> on setNoteContent ");
+//            console.log(note);
             note = cleanParagraphExcept($scope.paragraphUrl, note);
             console.log("### NOTEBOOK.JS -> setIframe" + $scope.asIframe);
             $rootScope.$emit('setIframe', $scope.asIframe);
@@ -324,7 +325,7 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ht
             }
         }
         //
-        //    if (newIndex === $scope.note.paragraphs.length) { //TODO -> FIX for inserting after last paragraph
+        //    if (newIndex === $scope.note.paragraphs.length) { //
         //      alert('Cannot insert after the last paragraph.');
         //      return;
         //    }
