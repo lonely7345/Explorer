@@ -232,7 +232,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             }
         };
         $rootScope.$emit('lastParagraphRunId', $scope.paragraph.id);
-//        $($scope.paragraph.id)
+        $($scope.paragraph.id)
 //        $scope.editor.focus();
 //        $('.note-workspace').scrollTo('#' + $scope.paragraph.id + '_editor', 300, {
 //            offset: 360
@@ -546,7 +546,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                 offset: -60
             });
 //            console.log("focusParagraph");
-            $rootScope.$emit('lastParagraphRunId', "");
+//            $rootScope.$emit('lastParagraphRunId', "");
         }
     });
     $rootScope.$on('runParagraph', function(event) {
