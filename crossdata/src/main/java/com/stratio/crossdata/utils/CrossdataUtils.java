@@ -8,7 +8,10 @@ import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.result.CommandResult;
 import com.stratio.crossdata.common.result.ConnectResult;
+import com.stratio.crossdata.common.result.ConnectToConnectorResult;
+import com.stratio.crossdata.common.result.DisconnectResult;
 import com.stratio.crossdata.common.result.ErrorResult;
+import com.stratio.crossdata.common.result.InProgressResult;
 import com.stratio.crossdata.common.result.MetadataResult;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.result.Result;
@@ -29,12 +32,25 @@ public class CrossdataUtils {
         } else if (result instanceof ConnectResult) {
             ConnectResult connectResult = (ConnectResult) result;
             return String.valueOf(connectResult.getSessionId());
+        } else if (result instanceof DisconnectResult){
+            DisconnectResult disconnectResult = (DisconnectResult) result;
+            return String.valueOf("Disconnected from SessionId=" + disconnectResult.getSessionId());
         } else if (result instanceof MetadataResult) {
             MetadataResult metadataResult = (MetadataResult) result;
             return metadataResult.toString();
         } else if (result instanceof StorageResult) {
             StorageResult storageResult = (StorageResult) result;
             return storageResult.toString();
+        } else if (result instanceof InProgressResult) {
+            InProgressResult inProgressResult = (InProgressResult) result;
+            return "Query " + inProgressResult.getQueryId() + " in progress";
+        } else if (result instanceof ConnectToConnectorResult) {
+            ConnectToConnectorResult connectResult = (ConnectToConnectorResult) result;
+            if (connectResult.hasError()){
+                return String.valueOf("ERROR: Couldn't connect to cluster: "+connectResult.getException().getMessage());
+            }else{
+                return String.valueOf("Connected to cluster successfully");
+            }
         } else {
             return "Unknown result";
         }
