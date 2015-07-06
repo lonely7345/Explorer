@@ -52,7 +52,7 @@ do_start(){
     fi
     lockfile-create $LOCKFILE
     start-stop-daemon --start --user $USER -c $USER --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
-    start-stop-daemon --start -b --quiet --pidfile $PIDFILE --exec $DAEMON || return 2
+    start-stop-daemon --start -b --quiet --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_OPTS || return 2
 	# Add code here, if necessary, that waits for the process to be ready
 	# to handle requests from services started subsequently which depend
 	# on this one.  As a last resort, sleep for some time.
