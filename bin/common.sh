@@ -110,7 +110,8 @@ if [ "x$HADOOP_HOME" != "x" ] && [ -d "${HADOOP_HOME}" ]; then
 fi
 
 export NOTEBOOK_CLASSPATH
-export SPARK_CLASSPATH+=${NOTEBOOK_CLASSPATH}
+#export SPARK_CLASSPATH+=${NOTEBOOK_CLASSPATH} //TODO check if there is any problem not adding notebook classes to
+# spark
 export CLASSPATH+=${NOTEBOOK_CLASSPATH}
 
 # Text encoding for
@@ -121,7 +122,7 @@ if [ "x$NOTEBOOK_ENCODING" == "x" ]; then
 fi
 
 if [ "x$NOTEBOOK_MEM" == "x" ]; then
-  export NOTEBOOK_MEM="-Xmx1024m -XX:MaxPermSize=512m"
+  export NOTEBOOK_MEM="-Xmx2048m -XX:MaxPermSize=1024m"
 fi
 
 
