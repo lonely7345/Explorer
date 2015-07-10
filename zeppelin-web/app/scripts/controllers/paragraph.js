@@ -28,6 +28,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     $scope.paragraph = null;
     $scope.editor = null;
     var editorMode = {
+        shell: 'ace/mode/text',
         crossdata: 'ace/mode/xdql',
         streaming: 'ace/mode/streaming',
         scala: 'ace/mode/scala',
@@ -35,6 +36,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
         markdown: 'ace/mode/markdown'
     };
     $scope.editorModeMap = {};
+    $scope.editorModeMap[editorMode.shell] = "shell";
     $scope.editorModeMap[editorMode.crossdata] = "crossdata";
     $scope.editorModeMap[editorMode.streaming] = "streaming";
     $scope.editorModeMap[editorMode.sql] = "spark-sql";
@@ -432,6 +434,9 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             var code = $scope.editor.getSession().getValue();
             if (String(code).startsWith('%sql')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.sql];
+                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+            } else if (String(code).startsWith('%sh')) {
+                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.shell];
                 console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%md')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.markdown];

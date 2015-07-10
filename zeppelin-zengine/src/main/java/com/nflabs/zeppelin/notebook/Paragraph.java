@@ -65,6 +65,9 @@ public class Paragraph extends Job implements Serializable {
         if (config.get("interpreter") != null) {
             String replNameRaw = ((String) config.get("interpreter"));
             switch (replNameRaw) {
+            case "shell":
+                replName = "sh";
+                break;
             case "crossdata":
                 replName = "xdql";
                 break;
