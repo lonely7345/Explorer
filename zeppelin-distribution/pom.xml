@@ -102,7 +102,7 @@
                                 <fileAttributes>
                                     <user>stratio</user>
                                     <group>stratio</group>
-                                    <mode>0755</mode>
+                                    <mode>0644</mode>
                                 </fileAttributes>
                             </defaults>
 
