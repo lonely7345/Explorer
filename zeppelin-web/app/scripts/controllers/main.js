@@ -72,7 +72,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
         } else if (op === 'PARAGRAPH') {
             $rootScope.$emit('updateParagraph', data);
             //            console.log(data.paragraph.id);
-            if (data.paragraph.id === $scope.lastParagraphRunId && (data.paragraph.status === 'RUNNING' || data.paragraph.status === 'FINISHED')) {
+            if (data.paragraph.id === $scope.lastParagraphRunId && data.paragraph.status === 'RUNNING' ) {
                 $rootScope.$emit('focusParagraph', data.paragraph.id);
             }
         } else if (op === 'PROGRESS') {
