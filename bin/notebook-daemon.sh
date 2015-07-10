@@ -49,9 +49,9 @@ shift
 
 
 HOSTNAME=`hostname`
-NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/zeppelin-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
-log=$NOTEBOOK_LOG_DIR/zeppelin-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
-pid=$NOTEBOOK_PID_DIR/zeppelin-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
+NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+log=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
+pid=$NOTEBOOK_PID_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
 
 
 if [ "${NOTEBOOK_NICENESS}" = "" ]; then
@@ -60,7 +60,7 @@ fi
 
 NOTEBOOK_MAIN=com.nflabs.zeppelin.server.ZeppelinServer
 
-JAVA_OPTS+=" -Dzeppelin.log.file=$NOTEBOOK_LOGFILE"
+JAVA_OPTS+=" -Dnotebook.log.file=$NOTEBOOK_LOGFILE"
 
 function init(){
     if [ ! -d "$NOTEBOOK_LOG_DIR" ]; then

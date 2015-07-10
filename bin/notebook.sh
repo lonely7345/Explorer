@@ -32,9 +32,11 @@ bin=`cd "$bin">/dev/null; pwd`
 
 HOSTNAME=`hostname`
 NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+echo NOTEBOOK_HOME $NOTEBOOK_HOME
+echo NOTEBOOK_LOGFILE $NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
 
 NOTEBOOK_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
-JAVA_OPTS+=" -Dzeppelin.log.file=$NOTEBOOK_LOGFILE"
+JAVA_OPTS+=" -Dnotebook.log.file=$NOTEBOOK_LOGFILE"
 
 if [[ ! -d "$NOTEBOOK_LOG_DIR" ]]; then
   echo "Log dir doesn't exist, create $NOTEBOOK_LOG_DIR"
@@ -57,7 +59,8 @@ fi
 #  gatherSparkSubmitOpts "$@"
 #  NOTEBOOK_RUNNER=$SPARK_HOME/bin/spark-submit
 
-#  exec $NOTEBOOK_NICENESS $NOTEBOOK_RUNNER --class $NOTEBOOK_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options -Dzeppelin.log.file=$NOTEBOOK_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
+#  exec $NOTEBOOK_NICENESS $NOTEBOOK_RUNNER --class $NOTEBOOK_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options
+# -Dnotebook.log.file=$NOTEBOOK_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
 #else
   exec $NOTEBOOK_RUNNER $JAVA_OPTS -cp $CLASSPATH $NOTEBOOK_SERVER "$@"
 #fi
