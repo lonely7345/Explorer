@@ -49,8 +49,8 @@ public class SparkSqlInterpreter extends Interpreter {
 
     @Override
     public void open() {
-        getSparkInterpreter().open();
-        getSparkInterpreter().interpret("");
+//        getSparkInterpreter().open();
+//        getSparkInterpreter().interpret("");
         ZeppelinConfiguration conf = ZeppelinConfiguration.create();
         this.maxResult = conf.getInt("NOTEBOOK_SPARK_MAX_RESULT", "zeppelin.spark.maxResult", 10000);
     }
