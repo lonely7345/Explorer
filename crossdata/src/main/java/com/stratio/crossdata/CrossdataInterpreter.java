@@ -26,6 +26,7 @@ public class CrossdataInterpreter extends Interpreter {
     private Paragraph paragraph;
     private String sessionId;
     private HashMap<String, String> queryIds;
+    private boolean driverConnected;
 
     static {
         Interpreter.register("xdql", CrossdataInterpreter.class.getName());
@@ -37,6 +38,7 @@ public class CrossdataInterpreter extends Interpreter {
         xdDriver = new BasicDriver();
         xdDriver.setUserName("USER");
         queryIds= new HashMap<String,String>();
+        driverConnected =false;
     }
 
     @Override public void open() {
@@ -47,8 +49,10 @@ public class CrossdataInterpreter extends Interpreter {
         try {
             connect();
             System.out.println("Crossdata's driver connected");
+            driverConnected =true;
         } catch (ConnectionException e) {
             System.out.println(e.getMessage());
+            driverConnected =false;
         }
 
     }
@@ -66,6 +70,11 @@ public class CrossdataInterpreter extends Interpreter {
         Result result;
         String[] commands = st.split(";");
         sessionId="sessionId";
+        if(!driverConnected){
+            open();
+            if(!driverConnected) return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't connect to "
+                    + "Crossdata's server. Not found answer");
+        }
 
         if (commands.length > 1) { //multiline command
             StringBuilder sb = new StringBuilder();
