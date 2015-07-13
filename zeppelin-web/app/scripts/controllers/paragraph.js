@@ -235,11 +235,11 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
         };
         $rootScope.$emit('lastParagraphRunId', $scope.paragraph.id);
         $($scope.paragraph.id)
-//        $scope.editor.focus();
-//        $('.note-workspace').scrollTo('#' + $scope.paragraph.id + '_editor', 300, {
-//            offset: 360
-//        });
-//        console.log("focusParagraph");
+        //        $scope.editor.focus();
+        //        $('.note-workspace').scrollTo('#' + $scope.paragraph.id + '_editor', 300, {
+        //            offset: 360
+        //        });
+        //        console.log("focusParagraph");
         //        $rootScope.scrollTop=$(".note-workspace").scrollTop();
         //        console.log($rootScope.scrollTop);
         $rootScope.$emit('sendNewEvent', paragraphData);
@@ -362,6 +362,26 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     };
     $scope.aceChanged = function() {
         $scope.dirtyText = $scope.editor.getSession().getValue();
+        var code = $scope.editor.getSession().getValue();
+        if (String(code).startsWith('%sql ')) {
+            $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.sql];
+            console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+        } else if (String(code).startsWith('%sh ')) {
+            $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.shell];
+            console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+        } else if (String(code).startsWith('%md ')) {
+            $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.markdown];
+            console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+        } else if (String(code).startsWith('%s ')) {
+            $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
+            console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+        } else if (String(code).startsWith('%str ')) {
+            $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.streaming];
+            console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+        } else if (String(code).startsWith('%xdql ')) {
+            $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+            console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+        }
     };
     $scope.aceLoaded = function(_editor) {
         var langTools = ace.require('ace/ext/language_tools');
@@ -431,26 +451,6 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                 setEditorHeight(_editor.container.id, hight);
                 $scope.editor.resize();
             });
-            var code = $scope.editor.getSession().getValue();
-            if (String(code).startsWith('%sql')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.sql];
-                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
-            } else if (String(code).startsWith('%sh')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.shell];
-                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
-            } else if (String(code).startsWith('%md')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.markdown];
-                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
-            } else if (String(code).startsWith('%s')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
-                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
-            } else if (String(code).startsWith('%str')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.streaming];
-                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
-            } else if (String(code).startsWith('%xdql')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
-                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
-            }
             var getModeByValue = function(value) {
                     for (var key in $scope.editorModeMap) {
                         if ($scope.editorModeMap[key] === value) {
@@ -470,6 +470,26 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                     //          +newValue + "new mode -> "+newMode );
                 }
             });
+//            var code = $scope.editor.getSession().getValue();
+//            if (String(code).startsWith('%sql')) {
+//                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.sql];
+//                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+//            } else if (String(code).startsWith('%sh')) {
+//                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.shell];
+//                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+//            } else if (String(code).startsWith('%md')) {
+//                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.markdown];
+//                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+//            } else if (String(code).startsWith('%s')) {
+//                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
+//                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+//            } else if (String(code).startsWith('%str')) {
+//                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.streaming];
+//                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+//            } else if (String(code).startsWith('%xdql')) {
+//                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+//                console.log(String(code) + " -> " + $scope.paragraph.config.interpreter);
+//            }
             $scope.editor.commands.addCommand({
                 name: 'run',
                 bindKey: {
@@ -550,8 +570,8 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             $('.note-workspace').scrollTo('#' + paragraphId + '_editor', 300, {
                 offset: -60
             });
-//            console.log("focusParagraph");
-//            $rootScope.$emit('lastParagraphRunId', "");
+            console.log("focusParagraph");
+            //            $rootScope.$emit('lastParagraphRunId', "");
         }
     });
     $rootScope.$on('runParagraph', function(event) {
