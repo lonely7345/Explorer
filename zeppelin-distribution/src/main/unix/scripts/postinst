@@ -2,6 +2,20 @@
 
 set -e
 
+USER="stratio"
+GROUP="stratio"
+
+if ! getent group $GROUP >/dev/null 2>&1; then
+   groupadd $GROUP
+fi
+if ! getent passwd $USER >/dev/null 2>&1; then
+   [ -d /opt ] || mkdir /opt
+   useradd -M -d /opt/sds -g $GROUP -s /bin/bash $USER
+else
+   usermod -G $GROUP $USER
+fi
+
+
 chmod +x /opt/sds/notebook/bin/*
 chmod +x /etc/init.d/notebook
 

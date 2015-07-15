@@ -34,12 +34,26 @@ function checkRunDirectory() {
         fi
     fi
 }
+
+# Check lock directory
+function checkLockDirectory() {
+    # check ownership
+    if [ ! -d "$LOCKDIR" ]; then
+        mkdir -p "$LOCKDIR"
+        chmod 755 $LOCKDIR
+        if [ $? -ne 0 ]; then
+            echo "Oops! something unexpected occurred" >&2
+            exit 1
+        fi
+    fi
+}
 ###########################################################################################
 
 # Validate service
 function validateService() {
     checkUser
     checkRunDirectory
+    checkLockDirectory
 }
 
 # Validate start
