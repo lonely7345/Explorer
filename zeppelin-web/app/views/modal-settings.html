@@ -17,15 +17,25 @@ limitations under the License.
 <div class="modal-header">
     <h3 class="modal-title">Settings</h3>
 </div>
-<div class="modal-body" ng-controller="NavCtrl" style="overflow:hidden;">
-    <div>
-        <span class="settings-crossdata-title" style="font-size:1.5em;padding-right:160px;">Crossdata</span>
-        <a class="btn btn-dark" ng-click="getInterpreterSettings()">+</a>
-        <!--<a class="btn btn-dark" ng-click="saveInterpreterSettings()">Save</a>-->
+<div class="modal-body" style="overflow:hidden;">
+    <div class="settings-interpreter">
+        <div class="settings-interpreter-name"><span class="settings-interpreter-title">
+        Crossdata</span></div>
+        <a class="btn btn-dark" ng-click="getCrossdataInterpreterSettings()">+</a>
+        <a class="btn btn-dark" ng-click="saveCrossdataInterpreterSettings()">Save</a>
         <!--<a class="btn btn-dark" ng-click="restartInterpreterConnection()">Refresh</a>-->
         <!--<a class="btn btn-dark" ng-click="resetToDefault()">Restore</a>-->
+    <textarea class="settings-interpreter-textarea "ng-model="interpreterSettings"
+              ng-show="showCrossdataProperties"></textarea>
     </div>
-    <textarea readonly ng-model="interpreterSettings" ng-show="showCrossdataProperties" style="width:550px;
-    height:250px;"></textarea>
+
+    <div class="settings-interpreter">
+        <div class="settings-interpreter-name"><span class="settings-interpreter-title">
+        Ingestion</span></div>
+        <a class="btn btn-dark" ng-click="getIngestionInterpreterSettings()">+</a>
+        <a class="btn btn-dark" ng-click="saveIngestionInterpreterSettings()">Save</a>
+    <textarea class="settings-interpreter-textarea "ng-model="interpreterSettings"
+              ng-show="showIngestionProperties"></textarea>
+    </div>
 </div>
 

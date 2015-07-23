@@ -163,18 +163,33 @@ public class InterpreterFactory {
     public void loadCrossdataDefaultSettings() throws IOException {
         saveToFile(loadFromFile(conf.getCrossdataDefaultSettingsPath()), conf.getCrossdataSettingsPath());
     }
+    public String loadIngestionSettings(){
+        if (conf.getIngestionSettingsPath()== null){
+        return "Ingestion settings file not found";
+        }
+        return loadFromFile(conf.getIngestionSettingsPath());
+    }
+    public void saveIngestionSettings(String file) throws IOException {
+        saveToFile(file, conf.getIngestionSettingsPath());
+    }
+    public void saveEditorSettings(String body,String path ) throws IOException {
+        saveToFile(body,path);
+    }
+    public String loadEditorData(String path){
+        return loadFromFile(path);
+    }
 
 
     private String loadFromFile(String path) {
 
-        File settingFile = new File(path);
-        if (!settingFile.exists()) {
+        File fileToRead = new File(path);
+        if (!fileToRead.exists()) {
             // nothing to read
             return "empty";
         }
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream(settingFile);
+            fis = new FileInputStream(fileToRead);
 
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader bufferedReader = new BufferedReader(isr);

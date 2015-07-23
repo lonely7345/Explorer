@@ -2,6 +2,7 @@ package com.nflabs.zeppelin.socket;
 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import com.nflabs.zeppelin.interpreter.InterpreterFactory;
 import com.nflabs.zeppelin.notebook.JobListenerFactory;
 import com.nflabs.zeppelin.notebook.Note;
 import com.nflabs.zeppelin.notebook.Notebook;

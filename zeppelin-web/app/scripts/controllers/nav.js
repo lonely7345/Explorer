@@ -11,7 +11,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */'use strict';
+ */
+'use strict';
 /**
  * @ngdoc function
  * @name zeppelinWebApp.controller:NavCtrl
@@ -26,12 +27,10 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
     $scope.notes = [];
     $scope.active = "none";
     $scope.activeDate = "none";
-    $scope.showCrossdataProperties = false;
-    $scope.interpreterSettings="";
     $scope.activate = function(noteId, noteDate) {
-//        console.log("### NAV.JS -> activate " + noteId);
+        //        console.log("### NAV.JS -> activate " + noteId);
         if (noteId !== $scope.active) {
-//            console.log("### NAV.JS -> emit changeActiveNotebook else " + noteId);
+            //            console.log("### NAV.JS -> emit changeActiveNotebook else " + noteId);
             $rootScope.$emit('changeActiveNotebook', {
                 id: noteId,
                 date: noteDate
@@ -39,7 +38,7 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             $scope.active = noteId;
             $scope.activeDate = noteDate;
         } else {
-//            console.log("### NAV.JS -> emit changeActiveNotebook else " + noteId);
+            //            console.log("### NAV.JS -> emit changeActiveNotebook else " + noteId);
             $rootScope.$emit('changeActiveNotebook', {
                 id: 'none',
                 date: 'none'
@@ -48,10 +47,12 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             $scope.activeDate = "none";
         }
     };
-
     /** Set the new menu */
     $rootScope.$on('setNoteMenu', function(event, notes) {
         $scope.notes = notes;
+    });
+    $rootScope.$on('openPropertiesEditor', function(event, path) {
+        $scope.openPropertiesEditor(path);
     });
     var loadNotes = function() {
             $rootScope.$emit('sendNewEvent', {
@@ -66,7 +67,7 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
         });
     };
     $scope.refreshNoteList = function() {
-        $rootScope.$emit('sendNewEvent',{
+        $rootScope.$emit('sendNewEvent', {
             op: 'LIST_NOTES'
         });
     };
@@ -97,17 +98,70 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
     $scope.openSettings = function() {
         var modalInstance = $modal.open({
             animation: true,
+            controller: 'modalSettingsController',
             templateUrl: '/views/modal-settings.html',
             windowClass: 'center-modal'
         });
     };
-    $scope.getInterpreterSettings = function() {
+    $scope.openPropertiesEditor = function(path) {
+        console.log(path);
+        var modalInstance = $modal.open({
+            animation: true,
+            controller: 'modalEditController',
+            templateUrl: '/views/modal-editor.html',
+            windowClass: 'center-modal',
+            resolve: {
+                properties: function() {
+                    return $http.get(getRestApiBase() + '/interpreter/settings/editor?path=' + path).
+                    success(function(data, status, headers, config) {
+                        console.log("success");
+                    }).
+                    error(function(data, status, headers, config) {
+                        console.log('Error %o %o', status, data.message);
+                    });
+                },
+                resolvePath: function(){
+                    return path;
+                }
+            }
+        });
+    };
+}]);
+angular.module('zeppelinWebApp').controller('modalEditController', function($scope, $modalInstance, properties,
+resolvePath, $http) {
+    $scope.properties = properties.data.body;
+    var message = resolvePath +"~"+$scope.properties;
+
+    $scope.saveEditorSettings = function() {
+        console.log("saveEditorSettings");
+        $http.put(getRestApiBase() + '/interpreter/settings/editor',message).
+        success(function(data, status, headers, config) {
+            alert('Editor settings saved');
+            console.log('Settings saved');
+        }).
+        error(function(data, status, headers, config) {
+            alert('Error ' + status + " " + data.message);
+            console.log('Error %o %o', status, data.message);
+        });
+    };
+    $scope.ok = function() {
+        $modalInstance.close();
+    };
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+});
+
+angular.module('zeppelinWebApp').controller('modalSettingsController', function($scope, $modalInstance, $http) {
+    $scope.showCrossdataProperties = false;
+    $scope.showIngestionProperties = false;
+    $scope.interpreterSettings = "";
+    $scope.getCrossdataInterpreterSettings = function() {
         if (!$scope.showCrossdataProperties) {
             $scope.showCrossdataProperties = true;
-            $http.get(getRestApiBase() + '/interpreter/settings').
+            $http.get(getRestApiBase() + '/interpreter/settings/crossdata').
             success(function(data, status, headers, config) {
                 var receivedData = data.body;
-//                console.log("getInterpreterSettings=%o", data.body);
                 $scope.interpreterSettings = receivedData;
             }).
             error(function(data, status, headers, config) {
@@ -115,14 +169,42 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             });
         } else $scope.showCrossdataProperties = false;
     };
-    $scope.saveInterpreterSettings = function() {
-        console.log("saveIntepreterSettings");
-        $http.put(getRestApiBase() + '/interpreter/settings', $scope.interpreterSettings).
+    $scope.getIngestionInterpreterSettings = function() {
+        if (!$scope.showIngestionProperties) {
+            $scope.showIngestionProperties = true;
+            $http.get(getRestApiBase() + '/interpreter/settings/ingestion').
+            success(function(data, status, headers, config) {
+                var receivedData = data.body;
+                $scope.interpreterSettings = receivedData;
+            }).
+            error(function(data, status, headers, config) {
+                console.log('Error %o %o', status, data.message);
+            });
+        } else $scope.showIngestionProperties = false;
+    };
+    $scope.saveCrossdataInterpreterSettings = function() {
+        console.log("saveCrossdataIntepreterSettings");
+        $http.put(getRestApiBase() + '/interpreter/settings/crossdata', $scope.interpreterSettings).
         success(function(data, status, headers, config) {
-//            console.log($scope.interpreterSettings);
+            //            console.log($scope.interpreterSettings);
+            alert('Crossdata settings saved');
             console.log('Settings saved');
         }).
         error(function(data, status, headers, config) {
+            alert('Error ' + status + " " + data.message);
+            console.log('Error %o %o', status, data.message);
+        });
+    };
+    $scope.saveIngestionInterpreterSettings = function() {
+        console.log("saveIngestionIntepreterSettings");
+        $http.put(getRestApiBase() + '/interpreter/settings/ingestion', $scope.interpreterSettings).
+        success(function(data, status, headers, config) {
+            //            console.log($scope.interpreterSettings);
+            alert('Ingestion settings saved');
+            console.log('Settings saved');
+        }).
+        error(function(data, status, headers, config) {
+            alert('Error ' + status + " " + data.message);
             console.log('Error %o %o', status, data.message);
         });
     };
@@ -140,5 +222,10 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
             console.log('Error %o %o', status, data.message);
         });
     };
-
-}]);
+    $scope.ok = function() {
+        $modalInstance.close();
+    };
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+});

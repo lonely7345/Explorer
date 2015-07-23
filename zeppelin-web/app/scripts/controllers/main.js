@@ -127,7 +127,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
             $scope.lastChangedNotebookId = data.id;
             $scope.lastChangedNotebookDate = data.date;
             //      console.log("### MAIN.JS -> onChangeActiveNotebook "+data.id+" "+data.date);
-            $rootScope.$broadcast('rootChangeActiveNotebook', data);
+            $rootScope.$emit('rootChangeActiveNotebook', data);
         }
     });
     $rootScope.$on('lastParagraphRunId', function(event, data) {

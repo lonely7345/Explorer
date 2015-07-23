@@ -37,9 +37,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 				throw new RuntimeException("Unsupported VarType");
 			}
 		}
-
 	}
-
 
 	/**
 	 * Load from resource
@@ -231,6 +229,9 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	}
 	public String getCrossdataDefaultSettingsPath() {
 		return getRelativeDir("conf/crossdata/driver-settings-default.conf");
+	}
+	public String getIngestionSettingsPath() {
+		return getRelativeDir("conf/ingestion/ingestion.conf");
 	}
 
 	public static enum ConfVars {
