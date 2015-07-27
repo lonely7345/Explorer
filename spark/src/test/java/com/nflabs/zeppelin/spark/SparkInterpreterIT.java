@@ -13,7 +13,7 @@ import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.nflabs.zeppelin.interpreter.InterpreterResult.Code;
 
 
-public class SparkInterpreterTest {
+public class SparkInterpreterIT {
 	private SparkInterpreter repl;
 	HashMap<String, Object> share = new HashMap<String, Object>();
 	

@@ -12,7 +12,7 @@ import org.junit.Test;
 import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.nflabs.zeppelin.interpreter.InterpreterResult.Type;
 
-public class SparkSqlInterpreterTest {
+public class SparkSqlInterpreterIT {
 
 	private SparkInterpreter repl;
 	private SparkSqlInterpreter sql;

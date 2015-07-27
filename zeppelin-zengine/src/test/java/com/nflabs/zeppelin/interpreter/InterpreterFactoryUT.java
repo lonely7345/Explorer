@@ -12,7 +12,7 @@ import com.nflabs.zeppelin.conf.ZeppelinConfiguration;
 import com.nflabs.zeppelin.interpreter.Interpreter;
 import com.nflabs.zeppelin.interpreter.InterpreterFactory;
 
-public class InterpreterFactoryTest {
+public class InterpreterFactoryUT {
 
 	@Before
 	public void setUp() throws Exception {
