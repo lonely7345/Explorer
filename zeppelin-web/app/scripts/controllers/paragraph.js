@@ -225,7 +225,6 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
 
     $scope.runParagraph = function(data) {
         //console.log('send new paragraph: %o with %o', $scope.paragraph.id, data);
-        console.log("runParagraph");
         var code = $scope.editor.getSession().getValue();
         var path;
         if (String(code).startsWith('%ing edit ')) {

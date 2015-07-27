@@ -131,7 +131,7 @@ angular.module('zeppelinWebApp').controller('MainCtrl', function($scope, WebSock
         }
     });
     $rootScope.$on('lastParagraphRunId', function(event, data) {
-        console.log("lastParagraphRunId " + data);
+//        console.log("lastParagraphRunId " + data);
         $scope.lastParagraphRunId = data;
     });
 });

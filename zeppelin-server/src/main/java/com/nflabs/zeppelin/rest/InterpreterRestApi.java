@@ -125,7 +125,8 @@ public class InterpreterRestApi {
     public Response saveEditorSettings(String file) {
         String[] split = file.split("~");
         String path = split[0];
-        String body = file.substring(path.length()+3);
+        String body = file.substring(path.length()+1);
+
 
         try {
             interpreterFactory.saveEditorSettings(body, path);

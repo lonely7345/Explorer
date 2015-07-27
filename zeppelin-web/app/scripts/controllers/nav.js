@@ -11,8 +11,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-'use strict';
+ */'use strict';
 /**
  * @ngdoc function
  * @name zeppelinWebApp.controller:NavCtrl
@@ -120,21 +119,20 @@ angular.module('zeppelinWebApp').controller('NavCtrl', ['$scope', '$rootScope', 
                         console.log('Error %o %o', status, data.message);
                     });
                 },
-                resolvePath: function(){
+                resolvePath: function() {
                     return path;
                 }
             }
         });
     };
 }]);
-angular.module('zeppelinWebApp').controller('modalEditController', function($scope, $modalInstance, properties,
-resolvePath, $http) {
-    $scope.properties = properties.data.body;
-    var message = resolvePath +"~"+$scope.properties;
-
+angular.module('zeppelinWebApp').controller('modalEditController', function($scope, $modalInstance, properties, resolvePath, $http) {
+    $scope.file = {};
+    $scope.file.text = properties.data.body;
     $scope.saveEditorSettings = function() {
+        var message = resolvePath + "~" + $scope.file.text;
         console.log("saveEditorSettings");
-        $http.put(getRestApiBase() + '/interpreter/settings/editor',message).
+        $http.put(getRestApiBase() + '/interpreter/settings/editor', message).
         success(function(data, status, headers, config) {
             alert('Editor settings saved');
             console.log('Settings saved');
@@ -151,7 +149,6 @@ resolvePath, $http) {
         $modalInstance.dismiss('cancel');
     };
 });
-
 angular.module('zeppelinWebApp').controller('modalSettingsController', function($scope, $modalInstance, $http) {
     $scope.showCrossdataProperties = false;
     $scope.showIngestionProperties = false;
