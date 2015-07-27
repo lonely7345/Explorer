@@ -52,9 +52,9 @@ public class DependencyResolver {
 	private final String [] EXCLUSIONS = new String[]{
 		"org.scala-lang:scala-library",
 		"org.scala-lang:scala-compiler",
-		"com.nflabs.zeppelin:zeppelin-zengine",
-		"com.nflabs.zeppelin:zeppelin-spark",
-		"com.nflabs.zeppelin:zeppelin-server"
+		"com.stratio.notebook:notebook-engine",
+		"com.stratio.notebook:notebook-spark",
+		"com.stratio.notebook:notebook-server"
 	};
 	
 

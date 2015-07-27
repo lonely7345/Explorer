@@ -71,13 +71,13 @@
     <inceptionYear>2013</inceptionYear>
 
     <modules>
-        <module>zeppelin-zengine</module>
+        <module>notebook-engine</module>
         <module>crossdata</module>
         <module>spark</module>
         <module>markdown</module>
         <module>shell</module>
-        <module>zeppelin-web</module>
-        <module>zeppelin-server</module>
+        <module>notebook-web</module>
+        <module>notebook-server</module>
         <module>dist</module>
         <module>doc</module>
         <module>streaming</module>

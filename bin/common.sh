@@ -48,18 +48,18 @@ if [ "x$NOTEBOOK_PID_DIR" == "x" ]; then
 fi
 
 if [ "x$NOTEBOOK_WAR" == "x" ]; then
-    if [ -d "${NOTEBOOK_HOME}/zeppelin-web/src/main/webapp" ]; then
-	    export NOTEBOOK_WAR="${NOTEBOOK_HOME}/zeppelin-web/src/main/webapp"
+    if [ -d "${NOTEBOOK_HOME}/notebook-web/src/main/webapp" ]; then
+	    export NOTEBOOK_WAR="${NOTEBOOK_HOME}/notebook-web/src/main/webapp"
     else
-        export NOTEBOOK_WAR=`find ${NOTEBOOK_HOME} -name "zeppelin-web*.war"`
+        export NOTEBOOK_WAR=`find ${NOTEBOOK_HOME} -name "notebook-web*.war"`
     fi
 fi
 
 if [ "x$NOTEBOOK_API_WAR" == "x" ]; then
-    if [ -d "${NOTEBOOK_HOME}/zeppelin-docs/src/main/swagger" ]; then
-	    export NOTEBOOK_API_WAR="${NOTEBOOK_HOME}/zeppelin-docs/src/main/swagger"
+    if [ -d "${NOTEBOOK_HOME}/doc/src/main/swagger" ]; then
+	    export NOTEBOOK_API_WAR="${NOTEBOOK_HOME}/doc/src/main/swagger"
     else
-        export NOTEBOOK_API_WAR=`find ${NOTEBOOK_HOME}/ -name "zeppelin-api-ui*.war"`
+        export NOTEBOOK_API_WAR=`find ${NOTEBOOK_HOME}/ -name "notebook-api-ui*.war"`
     fi
 fi
 
@@ -86,18 +86,18 @@ function addJarInDir(){
 
 addJarInDir ${NOTEBOOK_HOME}
 
-addJarInDir ${NOTEBOOK_HOME}/zeppelin-zengine/target/lib
-addJarInDir ${NOTEBOOK_HOME}/zeppelin-server/target/lib
-addJarInDir ${NOTEBOOK_HOME}/zeppelin-web/target/lib
+addJarInDir ${NOTEBOOK_HOME}/notebook-engine/target/lib
+addJarInDir ${NOTEBOOK_HOME}/notebook-server/target/lib
+addJarInDir ${NOTEBOOK_HOME}/notebook-web/target/lib
 addJarInDir $INSTALL_HOME/lib
 
 
-if [ -d "${NOTEBOOK_HOME}/zeppelin-zengine/target/classes" ]; then
-    NOTEBOOK_CLASSPATH+=":${NOTEBOOK_HOME}/zeppelin-zengine/target/classes"
+if [ -d "${NOTEBOOK_HOME}/notebook-engine/target/classes" ]; then
+    NOTEBOOK_CLASSPATH+=":${NOTEBOOK_HOME}/notebook-engine/target/classes"
 fi
 
-if [ -d "${NOTEBOOK_HOME}/zeppelin-server/target/classes" ]; then
-    NOTEBOOK_CLASSPATH+=":${NOTEBOOK_HOME}/zeppelin-server/target/classes"
+if [ -d "${NOTEBOOK_HOME}/notebook-server/target/classes" ]; then
+    NOTEBOOK_CLASSPATH+=":${NOTEBOOK_HOME}/notebook-server/target/classes"
 fi
 
 

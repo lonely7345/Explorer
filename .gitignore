@@ -13,12 +13,12 @@ conf/truststore
 conf/interpreter.json
 
 #webapp
-zeppelin-web/node_modules
-zeppelin-web/dist
-zeppelin-web/.tmp
-zeppelin-web/.sass-cache
-zeppelin-web/bower_components
-zeppelin-web/src
+notebook-web/node_modules
+notebook-web/dist
+notebook-web/.tmp
+notebook-web/.sass-cache
+notebook-web/bower_components
+notebook-web/src
 **nbproject/
 **node/
 
