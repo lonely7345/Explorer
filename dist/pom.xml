@@ -93,6 +93,9 @@
                                 <![CDATA[Stratio Notebook<idiaz@stratio.com>]]>
                             </contact>
                             <contactEmail>idiaz@stratio.com</contactEmail>
+                            <deb>
+                                <section>devel</section>
+                            </deb>
                             <rpm>
                                 <group>devel</group>
                                 <requires>bash</requires>
@@ -127,19 +130,19 @@
                                     <to>/etc/default</to>
                                 </copyDirectory>
                                 <copyDirectory>
-                                    <from>target/notebook-${project.version}/bin</from>
+                                    <from>target/parent-${project.version}/bin</from>
                                     <to>/opt/sds/notebook/bin</to>
                                 </copyDirectory>
                                 <copyDirectory>
-                                    <from>target/notebook-${project.version}/lib</from>
+                                    <from>target/parent-${project.version}/lib</from>
                                     <to>/opt/sds/notebook/lib</to>
                                 </copyDirectory>
                                 <copyDirectory>
-                                    <from>target/notebook-${project.version}/conf</from>
+                                    <from>target/parent-${project.version}/conf</from>
                                     <to>/etc/sds/notebook</to>
                                 </copyDirectory>
                                 <copyDirectory>
-                                    <from>target/notebook-${project.version}/interpreter</from>
+                                    <from>target/parent-${project.version}/interpreter</from>
                                     <to>/opt/sds/notebook/interpreter</to>
                                 </copyDirectory>
                             </assembly>
