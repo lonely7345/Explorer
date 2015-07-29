@@ -33,7 +33,7 @@ drivers/
 warehouse/
 local-repo/
 
-notebook/
+/notebook
 **/sessions/
 **/data/
 **/build/
