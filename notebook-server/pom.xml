@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>notebook</artifactId>
-        <groupId>com.stratio</groupId>
+        <artifactId>parent</artifactId>
+        <groupId>com.stratio.notebook</groupId>
         <version>0.3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>notebook-server</artifactId>
     <packaging>jar</packaging>
-    <version>0.3.0-SNAPSHOT</version>
     <name>Notebook: Server</name>
     <url>http://www.stratio.com</url>
 
