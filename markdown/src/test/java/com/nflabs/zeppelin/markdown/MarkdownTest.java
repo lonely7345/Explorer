@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.nflabs.zeppelin.interpreter.InterpreterResult;
 
-public class MarkdownUT {
+public class MarkdownTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,7 +26,7 @@ public class MarkdownUT {
 		md.open();
 		InterpreterResult result = md.interpret("This is ~~deleted~~ text");
 		assertEquals("<p>This is <s>deleted</s> text</p>\n", result.message());
-		System.out.println(MarkdownUT.class.getName());
+		System.out.println(MarkdownTest.class.getName());
 	}
 
 }

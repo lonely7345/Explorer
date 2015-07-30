@@ -4,7 +4,7 @@ import com.nflabs.zeppelin.scheduler.Job.Status;
 
 import junit.framework.TestCase;
 
-public class FIFOSchedulerUT extends TestCase{
+public class FIFOSchedulerTest extends TestCase{
 
 	private SchedulerFactory schedulerSvc;
 

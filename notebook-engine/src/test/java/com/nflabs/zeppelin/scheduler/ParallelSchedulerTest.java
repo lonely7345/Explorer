@@ -4,7 +4,7 @@ package com.nflabs.zeppelin.scheduler;
 import com.nflabs.zeppelin.scheduler.Job.Status;
 
 import junit.framework.TestCase;
-public class ParallelSchedulerUT extends TestCase {
+public class ParallelSchedulerTest extends TestCase {
 
 	private SchedulerFactory schedulerSvc;
 
