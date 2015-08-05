@@ -24,14 +24,14 @@ public class IngestionInterpreterIT {
     public void tearDown() throws Exception {
     }
 
-    @Test
-    public void interpretChannelStatus() {
-        InterpreterResult expectedResult = new InterpreterResult(InterpreterResult.Code.SUCCESS,"%text Channel "
-                + "memoryChannel:");
-        InterpreterResult result = ingestion.interpret("channel status --port 34545");
-
-        Assert.assertEquals(expectedResult.message(),result.message().substring(0,result.message().length()-6));
-        //removing the amount of channel expected
-
-    }
+//    @Test
+//    public void interpretChannelStatus() {
+//        InterpreterResult expectedResult = new InterpreterResult(InterpreterResult.Code.SUCCESS,"%text Channel "
+//                + "memoryChannel:");
+//        InterpreterResult result = ingestion.interpret("channel status --port 34545");
+//
+//        Assert.assertEquals(expectedResult.message(),result.message().substring(0,result.message().length()-6));
+//        //removing the amount of channel expected
+//
+//    }
 }
