@@ -37,11 +37,13 @@ public class IngestionSyntaxParser {
                 String filtered = matcher.group(2);
                 switch (p.getKey()) {
                 case AGENT_START:
+                    System.out.println("Syntax parser agent start");
                     return agentParse(Command.AGENT_START, filtered);
                 case AGENT_STOP:
+                    System.out.println("Syntax parser agent stop");
                     return agentParse(Command.AGENT_STOP, filtered);
                 case CHANNELS_STATUS:
-                    return new IngestionParserResult(Command.CHANNELS_STATUS);
+                    return channelStatus(filtered);
                 case LIST_PROPERTIES:
                     return new IngestionParserResult(Command.LIST_PROPERTIES);
                 case HELP:
@@ -53,11 +55,11 @@ public class IngestionSyntaxParser {
     }
 
     private IngestionParserResult agentParse(Command c, String input) throws IngestionParserException {
-        Pattern agentPattern = Pattern.compile("( --file) (([/\\w]+[-.]*[\\w]*)+.properties)( --port) ([\\d]+)");
+        Pattern agentPattern = Pattern.compile("( --file) (([/\\w]+[-.]*[\\w]*)+)( --port) ([\\d]+)");
         Matcher agentMatch = agentPattern.matcher(input);
         IngestionAgent agent = new IngestionAgent();
         if (agentMatch.find()) {
-//            System.out.println("IngestionSyntaxParser -> agent match");
+//            System.out.println("IngestionSyntaxParser -> agent match";
 //            for(int i =0; i <= agentMatch.groupCount(); i++){
 //                System.out.println("agentMatch group "+i+" "+agentMatch.group(i));
 //            }
@@ -76,13 +78,27 @@ public class IngestionSyntaxParser {
                 return new IngestionParserResult(Command.AGENT_STOP, agent);
             }
         }
+
         if (c == Command.AGENT_START) {
             throw new IngestionParserException("Invalid agent start syntax. Use the following pattern as guide: agent "
                     + "start --file /path/to/file --port 0000");
-        } else {
+        } else if(c ==Command.AGENT_STOP){
             throw new IngestionParserException("Invalid agent stop syntax. Use the following pattern as guide: agent "
                     + "stop --file /path/to/file --port 0000");
+        } else throw new IngestionParserException("Invalid command");
+    }
+
+    private IngestionParserResult channelStatus (String input) throws IngestionParserException {
+        Pattern channelPattern = Pattern.compile("( --port) ([\\d]+)");
+        Matcher channelMatch = channelPattern.matcher(input);
+        IngestionAgent agent = new IngestionAgent();
+        if (channelMatch.find()) {
+            agent.setPort((Integer.parseInt(channelMatch.group(2))));
+            return new IngestionParserResult(Command.CHANNELS_STATUS,agent);
         }
+
+        throw new IngestionParserException("Invalid channel status syntax. Use the following pattern as guide: "
+                + "channel status --port 0000 ");
     }
 
 }

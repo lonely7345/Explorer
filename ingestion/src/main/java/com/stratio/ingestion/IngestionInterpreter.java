@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ import com.stratio.ingestion.utils.IngestionUtils;
  */
 public class IngestionInterpreter extends Interpreter {
     Logger logger = LoggerFactory.getLogger(IngestionInterpreter.class);
-    int CMD_TIMEOUT = 600000;
+    int CMD_TIMEOUT = 3000;//3secs
     String ingestionHome;
     public static final String INGESTION_SETTING_HOME = "ingestion.home";
 
@@ -52,9 +53,13 @@ public class IngestionInterpreter extends Interpreter {
 
         if (ingestionHome.isEmpty()) {
             open();
-            return new InterpreterResult(InterpreterResult.Code.ERROR, "%text Ingestion is not installed correctly. "
-                    + "INGESTION_HOME Is not set");
+            if(ingestionHome.isEmpty()) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR,
+                        "%text Ingestion is not installed correctly. "
+                                + "INGESTION_HOME Is not set");
+            }
         }
+
 
         IngestionSyntaxParser parser = new IngestionSyntaxParser();
         IngestionParserResult parserResult = null;
@@ -74,19 +79,41 @@ public class IngestionInterpreter extends Interpreter {
 
             try {
                 IngestionAgent agentStart = parserResult.getAgent();
-                //                System.out.println(agentStart.toString());
+                String agentName = agentStart.getName();
+                String agentFilepath = agentStart.getFilepath();
+                int agentPort = agentStart.getPort();
+
+                System.out.println("Ingestion interpreter @ agent start $INGESTION_HOME -> " + ingestionHome);
+                System.out.println("Ingestion interpreter @ agent start agent filepath -> " + agentFilepath);
+                System.out.println("Ingestion interpreter @ agent start agent name -> " + agentName);
+                System.out.println("Ingestion interpreter @ agent start agent port -> " + agentPort);
+
                 shellCommand.append("exec \"")
                         .append(ingestionHome)
                         .append("/bin/flume-ng\" agent --conf ")
                         .append(ingestionHome).append("/conf --conf-file ")
-                        .append(agentStart.getFilepath())
+                        .append(agentFilepath)
                         .append(" --name ")
-                        .append(agentStart.getName())
+                        .append(agentName)
                         .append(" -Dflume.monitoring.type=http -Dflume.monitoring.port=")
-                        .append(String.valueOf(agentStart.getPort()))
+                        .append(String.valueOf(agentPort))
                         .append("> /dev/null & ");
 
-                bashResult = IngestionUtils.executeBash(shellCommand.toString(), 2000);
+                System.out.println("Ingestion interpreter @ agent start command -> " + shellCommand.toString());
+                DefaultExecuteResultHandler handler = IngestionUtils.executeBash(shellCommand.toString());
+                long initTime = System.currentTimeMillis();
+                while (!handler.hasResult()) {
+                    if (System.currentTimeMillis() > (initTime + CMD_TIMEOUT)) {
+                        handler.onProcessComplete(999);
+                    }
+                }
+                if (handler.getException() != null) {
+                    return new InterpreterResult(InterpreterResult.Code.ERROR, "%text " + handler.getExitValue() + " " +
+                            handler
+                                    .getException()
+                                    .getMessage());
+                }
+                bashResult = "Agent started";
                 return new InterpreterResult(InterpreterResult.Code.SUCCESS, bashResult);
             } catch (IOException e) {
                 return new InterpreterResult(InterpreterResult.Code.ERROR, "%text " + e.getMessage());
@@ -97,13 +124,12 @@ public class IngestionInterpreter extends Interpreter {
                 shellCommand.append("ps auxww | grep flume | grep ")
                         .append(agentStop.getPort())
                         .append("| awk '{ print $2 }' | xargs kill -15 ");
-//                System.out.println("Agent stop -> " + shellCommand.toString());
-                IngestionUtils.executeBash(shellCommand.toString(), CMD_TIMEOUT);
+                IngestionUtils.executeBash(shellCommand.toString());
                 return new InterpreterResult(InterpreterResult.Code.SUCCESS, interpreterResult.append("Agent "
                         + "apparently stopped ").toString());
 
             } catch (IOException e) {
-                if (e.getMessage().contains("143")) {
+                if (e.getMessage().contains("143")) { //after kill a process always 143 exit code
                     return new InterpreterResult(InterpreterResult.Code.SUCCESS, interpreterResult.append("Agent "
                             + "apparently stopped ").toString());
                 } else {
@@ -111,6 +137,21 @@ public class IngestionInterpreter extends Interpreter {
                 }
             }
         case CHANNELS_STATUS:
+            try {
+                String json = IngestionUtils.getAgentStatus(parserResult.getAgent().getPort());
+                if (json.length() > 3) {
+                    Map<String, String> channelsStatus = IngestionUtils.getChannelsStatus(json);
+                    String channelStatusResult = "";
+                    for (String channel : channelsStatus.keySet()) {
+                        channelStatusResult+=
+                                "Channel ".concat(channel).concat(": ")
+                                .concat(channelsStatus.get(channel)).concat("\n");
+                    }
+                    return new InterpreterResult(InterpreterResult.Code.SUCCESS, "%text " + channelStatusResult);
+                }
+            } catch (IOException e) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR, "%text " + e.getMessage());
+            }
             break;
         case LIST_PROPERTIES:
             List<String> files = new ArrayList<>();

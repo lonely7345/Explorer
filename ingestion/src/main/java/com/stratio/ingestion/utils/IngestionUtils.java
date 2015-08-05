@@ -5,25 +5,33 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by idiaz on 15/07/15.
  */
 public class IngestionUtils {
+    static Logger logger = LoggerFactory.getLogger(IngestionUtils.class);
 
     public static String getAgentName(String filepath) throws IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(filepath));
         String line = br.readLine();
-
         while (line != null) {
             if (!line.trim().startsWith("#")) {
                 String[] split = line.trim().split("\\.");
@@ -34,28 +42,18 @@ public class IngestionUtils {
         return null;
     }
 
-    public static int getPid(String filepath) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filepath));
-        String line = br.readLine();
-        return Integer.parseInt(line);
-    }
-
-    public static String getAgentProcessName(IngestionAgent agent) {
-        return agent.getName().concat("_").concat(String.valueOf(agent.getPort()));
-    }
-
-    public static String executeBash(String command, int timeout) throws IOException {
+    public static DefaultExecuteResultHandler executeBash(String command) throws IOException {
         CommandLine cmdLine = CommandLine.parse("bash");
         cmdLine.addArgument("-c", false);
         cmdLine.addArgument(command, false);
+
         DefaultExecutor executor = new DefaultExecutor();
         ByteArrayOutputStream outputStreamAgentStart = new ByteArrayOutputStream();
         executor.setStreamHandler(new PumpStreamHandler(outputStreamAgentStart));
+        DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
+        executor.execute(cmdLine, handler);
 
-        executor.setWatchdog(new ExecuteWatchdog(timeout));
-        executor.execute(cmdLine);
-        System.out.println(outputStreamAgentStart.toString());
-        return outputStreamAgentStart.toString();
+        return handler;
     }
 
     public static void getIngestionPropertiesFiles(List<String> files, String path) {
@@ -71,8 +69,10 @@ public class IngestionUtils {
             if (f.isDirectory()) {
                 getIngestionPropertiesFiles(files, f.getAbsolutePath());
             } else {
-                if (f.getName().contains(".properties") && !f.getName().contains("log4j") && !f.getName().contains(
-                        ".template")) {
+                String filename = f.getName();
+                String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+
+                if (extension.equals("properties")){
                     files.add(f.getAbsolutePath());
                 }
             }
@@ -97,11 +97,43 @@ public class IngestionUtils {
     }
 
     public static String getRelativeDir(String path) {
-        if (path != null && path.startsWith("/")) {
-            return path;
-        } else {
+        if (System.getenv("NOTEBOOK_HOME")!=null) {
             return System.getenv("NOTEBOOK_HOME") + "/" + path;
+        } else {
+            String rootPath = IngestionUtils.class.getResource("").getPath();
+            rootPath = rootPath.substring(0,rootPath.length()-"/ingestion/target/classes/com/stratio/ingestion/utils"
+                    .length());
+            return rootPath+ "/" + path;
         }
+    }
+
+    public static Map<String, String> getChannelsStatus(String json) {
+
+        Map<String, String> channelsStatus = new HashMap<>();
+        JSONObject agentStatusJson = new JSONObject(json);
+        for (Object key : agentStatusJson.keySet()) {
+            String stringKey = String.valueOf(key);
+            if (stringKey.contains("CHANNEL")) {
+                String[] channelKey = stringKey.split("\\.");
+                String channelName = channelKey[1]; // name is after dot
+                String channelValue = agentStatusJson.getJSONObject(stringKey).getString("ChannelFillPercentage");
+                channelsStatus.put(channelName, channelValue);
+            }
+        }
+        return channelsStatus;
+    }
+
+    public static String getAgentStatus(int port) throws IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:".concat(String.valueOf(port)).concat("/metrics"));
+        HttpResponse response = client.execute(request);
+        BufferedReader rd = new BufferedReader (new InputStreamReader(response.getEntity().getContent()));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        return sb.toString();
     }
 
     public static String help() {

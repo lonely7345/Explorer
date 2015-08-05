@@ -32,4 +32,27 @@ public class IngestionParserResult {
     public void setAgent(IngestionAgent agent) {
         this.agent = agent;
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        IngestionParserResult that = (IngestionParserResult) o;
+
+        if (command != that.command) {
+            return false;
+        }
+        return !(agent != null ? !agent.equals(that.agent) : that.agent != null);
+
+    }
+
+    @Override public int hashCode() {
+        int result = command.hashCode();
+        result = 31 * result + (agent != null ? agent.hashCode() : 0);
+        return result;
+    }
 }

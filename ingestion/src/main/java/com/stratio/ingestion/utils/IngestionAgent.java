@@ -47,4 +47,31 @@ public class IngestionAgent {
                 ", port=" + port +
                 '}';
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        IngestionAgent that = (IngestionAgent) o;
+
+        if (port != that.port) {
+            return false;
+        }
+        if (!name.equals(that.name)) {
+            return false;
+        }
+        return filepath.equals(that.filepath);
+
+    }
+
+    @Override public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + filepath.hashCode();
+        result = 31 * result + port;
+        return result;
+    }
 }
