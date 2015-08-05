@@ -60,8 +60,8 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             $scope.lastData = {};
         }
         if ($scope.getResultType() === 'TABLE') {
-            $scope.lastData.settings = jQuery.extend(true, {}, $scope.paragraph.settings);
-            $scope.lastData.config = jQuery.extend(true, {}, $scope.paragraph.config);
+            $scope.lastData.settings=angular.copy($scope.paragraph.settings);
+            $scope.lastData.config=angular.copy($scope.paragraph.config);
             $scope.loadTableData($scope.paragraph.result);
             $scope.setGraphMode($scope.getGraphMode(), false, false);
         } else if ($scope.getResultType() === 'HTML') {
@@ -83,35 +83,36 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
         $timeout(retryRenderer);
     };
     var initializeDefault = function() {
-            if (!$scope.paragraph.config.interpreter) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+        var paragraphConfig = $scope.paragraph.config;
+            if (!paragraphConfig.interpreter) {
+                paragraphConfig.interpreter = $scope.editorModeMap[editorMode.crossdata];
             }
-            if (!$scope.paragraph.config.looknfeel) {
-                $scope.paragraph.config.looknfeel = 'default';
+            if (!paragraphConfig.looknfeel) {
+                paragraphConfig.looknfeel = 'default';
             }
-            if (!$scope.paragraph.config.colWidth) {
-                $scope.paragraph.config.colWidth = 12;
+            if (!paragraphConfig.colWidth) {
+                paragraphConfig.colWidth = 12;
             }
-            if (!$scope.paragraph.config.graph) {
-                $scope.paragraph.config.graph = {};
+            if (!paragraphConfig.graph) {
+                paragraphConfig.graph = {};
             }
-            if (!$scope.paragraph.config.graph.mode) {
-                $scope.paragraph.config.graph.mode = 'table';
+            if (!paragraphConfig.graph.mode) {
+                paragraphConfig.graph.mode = 'table';
             }
-            if (!$scope.paragraph.config.graph.height) {
-                $scope.paragraph.config.graph.height = 300;
+            if (!paragraphConfig.graph.height) {
+                paragraphConfig.graph.height = 300;
             }
-            if (!$scope.paragraph.config.graph.optionOpen) {
-                $scope.paragraph.config.graph.optionOpen = false;
+            if (!paragraphConfig.graph.optionOpen) {
+                paragraphConfig.graph.optionOpen = false;
             }
-            if (!$scope.paragraph.config.graph.keys) {
-                $scope.paragraph.config.graph.keys = [];
+            if (!paragraphConfig.graph.keys) {
+                paragraphConfig.graph.keys = [];
             }
-            if (!$scope.paragraph.config.graph.values) {
-                $scope.paragraph.config.graph.values = [];
+            if (!paragraphConfig.graph.values) {
+                paragraphConfig.graph.values = [];
             }
-            if (!$scope.paragraph.config.graph.groups) {
-                $scope.paragraph.config.graph.groups = [];
+            if (!paragraphConfig.graph.groups) {
+                paragraphConfig.graph.groups = [];
             }
         };
     $scope.getIframeDimensions = function() {
@@ -132,18 +133,28 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     });
     // TODO: this may have impact on performance when there are many paragraphs in a note.
     $rootScope.$on('updateParagraph', function(event, data) {
-        //    if (data.paragraph.id === $scope.paragraph.id && data.paragraph.status !== $scope.paragraph.status){
         if (data.paragraph.id === $scope.paragraph.id && (
-        data.paragraph.dateCreated !== $scope.paragraph.dateCreated || data.paragraph.dateFinished !== $scope.paragraph.dateFinished || data.paragraph.dateStarted !== $scope.paragraph.dateStarted || data.paragraph.status !== $scope.paragraph.status || data.paragraph.jobName !== $scope.paragraph.jobName || data.paragraph.title !== $scope.paragraph.title || data.paragraph.errorMessage !== $scope.paragraph.errorMessage || !angular.equals(data.paragraph.settings, $scope.lastData.settings) || !angular.equals(data.paragraph.config, $scope.lastData.config))) {
-            // store original data for comparison
-            $scope.lastData.settings = jQuery.extend(true, {}, data.paragraph.settings);
-            $scope.lastData.config = jQuery.extend(true, {}, data.paragraph.config);
+        data.paragraph.dateCreated !== $scope.paragraph.dateCreated ||
+        data.paragraph.dateFinished !== $scope.paragraph.dateFinished ||
+        data.paragraph.dateStarted !== $scope.paragraph.dateStarted ||
+        data.paragraph.status !== $scope.paragraph.status ||
+        data.paragraph.jobName !== $scope.paragraph.jobName ||
+        data.paragraph.title !== $scope.paragraph.title ||
+        data.paragraph.errorMessage !== $scope.paragraph.errorMessage ||
+        !angular.equals(data.paragraph.settings, $scope.lastData.settings) ||
+        !angular.equals(data.paragraph.config, $scope.lastData.config))) {
+
+            $scope.lastData.config = angular.copy($scope.paragraph.config);
+            $scope.lastData.settings = angular.copy($scope.paragraph.settings);
+
             var oldType = $scope.getResultType();
             var newType = $scope.getResultType(data.paragraph);
             var oldGraphMode = $scope.getGraphMode();
             var newGraphMode = $scope.getGraphMode(data.paragraph);
             var resultRefreshed = (data.paragraph.dateFinished !== $scope.paragraph.dateFinished);
+
             //      console.log("updateParagraph oldData %o, newData %o. type %o -> %o, mode %o -> %o", $scope.paragraph, data, oldType, newType, oldGraphMode, newGraphMode);
+
             if ($scope.paragraph.text !== data.paragraph.text) {
                 if ($scope.dirtyText) { // check if editor has local update
                     if ($scope.dirtyText === data.paragraph.text) { // when local update is the same from remote, clear local update
@@ -156,6 +167,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
                     $scope.paragraph.text = data.paragraph.text;
                 }
             }
+
             /** push the rest */
             $scope.paragraph.aborted = data.paragraph.aborted;
             $scope.paragraph.dateCreated = data.paragraph.dateCreated;
@@ -169,6 +181,7 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             } else $scope.paragraph.status = data.paragraph.status;
             $scope.paragraph.result = data.paragraph.result;
             $scope.paragraph.settings = data.paragraph.settings;
+
             if (!$scope.asIframe) {
                 $scope.paragraph.config = data.paragraph.config;
                 initializeDefault();
@@ -222,7 +235,6 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
         };
         $rootScope.$emit('sendNewEvent', data);
     };
-
     $scope.runParagraph = function(data) {
         //console.log('send new paragraph: %o with %o', $scope.paragraph.id, data);
         var code = $scope.editor.getSession().getValue();
@@ -246,13 +258,6 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
             };
             $rootScope.$emit('lastParagraphRunId', $scope.paragraph.id);
             $($scope.paragraph.id)
-            //        $scope.editor.focus();
-            //        $('.note-workspace').scrollTo('#' + $scope.paragraph.id + '_editor', 300, {
-            //            offset: 360
-            //        });
-            //        console.log("focusParagraph");
-            //        $rootScope.scrollTop=$(".note-workspace").scrollTop();
-            //        console.log($rootScope.scrollTop);
             $rootScope.$emit('sendNewEvent', paragraphData);
         }
     };
@@ -301,68 +306,68 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     };
     $scope.closeEditor = function() {
         console.log('close the note');
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.editorHide = true;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.openEditor = function() {
         console.log('open the note');
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.editorHide = false;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.closeTable = function() {
         console.log('close the output');
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.tableHide = true;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.openTable = function() {
         console.log('open the output');
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.tableHide = false;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.showTitle = function() {
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.title = true;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.hideTitle = function() {
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.title = false;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.setTitle = function() {
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.changeColWidth = function() {
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.toggleGraphOption = function() {
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newConfig = angular.copy($scope.paragraph.config);
         if (newConfig.graph.optionOpen) {
             newConfig.graph.optionOpen = false;
         } else {
             newConfig.graph.optionOpen = true;
         }
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
+        var newParams = angular.copy($scope.paragraph.settings.params);
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.toggleOutput = function() {
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.tableHide = !newConfig.tableHide;
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
+        var newParams = angular.copy($scope.paragraph.settings.params);
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
     $scope.loadForm = function(formulaire, params) {
@@ -677,8 +682,8 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
         }
     };
     var setNewMode = function(newMode) {
-            var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
-            var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
+            var newConfig = angular.copy($scope.paragraph.config);
+            var newParams = angular.copy($scope.paragraph.settings.params);
             // graph options
             newConfig.graph.mode = newMode;
             commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
@@ -1189,8 +1194,8 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
         };
     $scope.setGraphHeight = function() {
         var height = $('#p' + $scope.paragraph.id + '_graph').height();
-        var newParams = jQuery.extend(true, {}, $scope.paragraph.settings.params);
-        var newConfig = jQuery.extend(true, {}, $scope.paragraph.config);
+        var newParams = angular.copy($scope.paragraph.settings.params);
+        var newConfig = angular.copy($scope.paragraph.config);
         newConfig.graph.height = height;
         commitParagraph($scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
     };
