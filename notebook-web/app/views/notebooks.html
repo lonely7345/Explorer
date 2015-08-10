@@ -20,7 +20,7 @@ limitations under the License.
             <input type="text" class="form-control2" placeholder="{{note.name || 'Notebook ' + note.id}}"
                    style="width:200px;"
                    ng-show="showEditor" ng-model="note.name" ng-enter="sendNewName()" ng-delete="showEditor = false"
-                   />
+                    />
 
             <p class="form-control-static2" ng-click="showEditor = true" ng-show="!showEditor">{{note.name || 'Notebook
                 ' +
@@ -70,10 +70,10 @@ limitations under the License.
                         </input>
                         <button type="button"
                                 style="padding:2px 6px;"
-                        class="btn btn-default btn-file"
-                        ng-click="exportNote(note.id)"
-                        tooltip-placement="top" tooltip="Export the notebook to file">
-                        Export
+                                class="btn btn-default btn-file"
+                                ng-click="exportNote(note.id)"
+                                tooltip-placement="top" tooltip="Export the notebook to file">
+                            Export
                         </button>
                     </div>
                 </div>
@@ -146,6 +146,21 @@ limitations under the License.
                 </ul>
             </div>
       </span>
+            <!--Default interpreter selector -->
+        <span class="btn-group interpreter-selector">
+        <button type="button"
+                class="btn btn-default btn-xs dropdown-toggle"
+                data-toggle="dropdown">
+            {{settings.interpreter}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="interpreter in settings.interpreters">
+                <a style="cursor:pointer"
+                   ng-click="changeDefaultInterpreter(interpreter)">{{interpreter}}</a>
+                <!--setDefaultInterpreter(interpreter)-->
+            </li>
+        </ul>
+        </span>
 
             <div class="btn-group navbar-right"
                  style="top:8px; right: 15px;">

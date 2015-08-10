@@ -26,6 +26,9 @@
 angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $http, $route, $routeParams, $location,
 $rootScope) {
     $scope.note = null;
+    $scope.settings = {};
+    $scope.settings.interpreter="crossdata";
+    $scope.settings.interpreters=["crossdata","ingestion", "spark","spark-sql","markdown","streaming","shell"];
     $scope.active = 'none';
     $scope.showEditor = false;
     $scope.editorToggled = true;
@@ -447,5 +450,9 @@ $rootScope) {
                     }
                 }
             }
+        };
+        $scope.changeDefaultInterpreter= function(interpreter){
+            $scope.settings.interpreter=interpreter;
+            $rootScope.$emit('changeDefaultInterpreter', interpreter);
         };
 });

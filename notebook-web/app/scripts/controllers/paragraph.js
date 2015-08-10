@@ -589,6 +589,49 @@ angular.module('zeppelinWebApp').controller('ParagraphCtrl', function($scope, $r
     $rootScope.$on('closeTable', function(event) {
         $scope.closeTable();
     });
+
+    $rootScope.$on('changeDefaultInterpreter', function(event,data){
+        $scope.changeDefaultInterpreter(data);
+    });
+
+    $scope.changeDefaultInterpreter = function (interpreter){
+        var newInterpreter=editorMode.crossdata;
+
+        switch(interpreter){
+            case "crossdata":
+            newInterpreter=editorMode.crossdata;
+            break;
+
+            case "markdown":
+            newInterpreter=editorMode.markdown;
+            break;
+
+            case "ingestion":
+            newInterpreter=editorMode.ingestion;
+            break;
+
+            case "streaming":
+            newInterpreter=editorMode.streaming;
+            break;
+
+            case "spark":
+            newInterpreter=editorMode.scala;
+            break;
+
+            case "spark-sql":
+            newInterpreter=editorMode.sql;
+            break;
+
+            case "shell":
+            newInterpreter=editorMode.shell;
+            break;
+
+            default:
+            newInterpreter=editorMode.crossdata;
+        }
+        $scope.paragraph.config.interpreter = $scope.editorModeMap[newInterpreter];
+    };
+
     $scope.getResultType = function(paragraph) {
         var pdata = (paragraph) ? paragraph : $scope.paragraph;
         if (pdata.result && pdata.result.type) {
