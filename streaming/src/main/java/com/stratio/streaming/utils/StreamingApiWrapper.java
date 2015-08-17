@@ -29,38 +29,47 @@ public class StreamingApiWrapper {
     }
 
     public String indexStop(String stream) throws StratioStreamingException {
+        api.stopIndexStream(stream);
         return "%text Stream ".concat(stream).concat(" unindexed correctly");
     }
 
     public String saveCassandraStart(String stream) throws StratioStreamingException {
+        api.saveToCassandra(stream);
         return "%text Stream ".concat(stream).concat(" attached to cassandra correctly");
     }
 
     public String saveCassandraStop(String stream) throws StratioStreamingException {
+        api.stopSaveToCassandra(stream);
         return "%text Stream ".concat(stream).concat(" de-attached from cassandra correctly");
     }
 
     public String saveMongoStart(String stream) throws StratioStreamingException {
+        api.saveToMongo(stream);
         return "%text Stream ".concat(stream).concat(" attached to mongo correctly");
     }
 
     public String saveMongoStop(String stream) throws StratioStreamingException {
+        api.stopSaveToMongo(stream);
         return "%text Stream ".concat(stream).concat(" de-attached from mongo correctly");
     }
 
     public String saveSolrStart(String stream) throws StratioStreamingException {
+        api.saveToSolr(stream);
         return "%text Stream ".concat(stream).concat(" attached to mongo correctly");
     }
 
     public String saveSolrStop(String stream) throws StratioStreamingException {
+        api.stopSaveToSolr(stream);
         return "%text Stream ".concat(stream).concat(" de-attached from mongo correctly");
     }
 
     public String listenStart(String stream) throws StratioStreamingException {
+        api.listenStream(stream);
         return "%text Stream ".concat(stream).concat(" listened correctly");
     }
 
     public String listenStop(String stream) throws StratioStreamingException {
+        api.stopListenStream(stream);
         return "%text Stream ".concat(stream).concat("listener removed");
     }
 
