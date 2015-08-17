@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.stratio.streaming</groupId>
             <artifactId>streaming-api</artifactId>
-            <version>0.6.2</version>
+            <version>0.7.1</version>
         </dependency>
     </dependencies>
     <build>

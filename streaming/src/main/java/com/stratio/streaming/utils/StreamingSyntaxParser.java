@@ -34,6 +34,8 @@ public class StreamingSyntaxParser {
         SAVE_CASSANDRA_STOP,
         SAVE_MONGO_START,
         SAVE_MONGO_STOP,
+        SAVE_SOLR_START,
+        SAVE_SOLR_STOP,
         HELP
     }
 
@@ -59,6 +61,8 @@ public class StreamingSyntaxParser {
                 .put(Command.SAVE_CASSANDRA_STOP, Pattern.compile("(save cassandra stop)(.*)")); //save cassandra stop
         commandPatterns.put(Command.SAVE_MONGO_START, Pattern.compile("(save mongo start)(.*)")); //save mongo start
         commandPatterns.put(Command.SAVE_MONGO_STOP, Pattern.compile("(save mongo stop)(.*)")); //save mongo stop
+        commandPatterns.put(Command.SAVE_SOLR_START, Pattern.compile("(save solr start)(.*)")); //save solr start
+        commandPatterns.put(Command.SAVE_SOLR_STOP, Pattern.compile("(save solr stop)(.*)")); //save solr stop
         commandPatterns.put(Command.HELP, Pattern.compile("(help)(.*)")); //help
 
         for (Map.Entry<Command, Pattern> p : commandPatterns.entrySet()) {
@@ -98,6 +102,10 @@ public class StreamingSyntaxParser {
                     return saveMongoStart(filtered);
                 case SAVE_MONGO_STOP:
                     return saveMongoStop(filtered);
+                case SAVE_SOLR_START:
+                    return saveSolrStart(filtered);
+                case SAVE_SOLR_STOP:
+                    return saveSolrStop(filtered);
                 case HELP:
                     return help();
                 default:
@@ -239,6 +247,28 @@ public class StreamingSyntaxParser {
                 + "--stream your_stream_name ";
     }
 
+    private String saveSolrStart(String input) throws StratioStreamingException {
+
+        Pattern saveSolrStart = Pattern.compile("( --stream) ([\\w]+)");
+        Matcher saveSolrStartMatch = saveSolrStart.matcher(input);
+        if (saveSolrStartMatch.find()) {
+            return api.saveSolrStart(saveSolrStartMatch.group(2));
+        }
+        return "%text invalid save mongo start syntax. Use the following pattern as guide: save mongo start "
+                + "--stream your_stream_name ";
+    }
+
+    private String saveSolrStop(String input) throws StratioStreamingException {
+
+        Pattern saveSolrStop = Pattern.compile("( --stream) ([\\w]+)");
+        Matcher saveSolrStopMatch = saveSolrStop.matcher(input);
+        if (saveSolrStopMatch.find()) {
+            return api.saveSolrStop(saveSolrStopMatch.group(2));
+        }
+        return "%text invalid save mongo stop syntax. Use the following pattern as guide: save mongo stop "
+                + "--stream your_stream_name ";
+    }
+
     private String create(String input) throws StratioStreamingException {
 
         Pattern create = Pattern.compile("( --stream) ([\\w]+) (--definition) ([\\w *'=().,]+)");
@@ -291,7 +321,9 @@ public class StreamingSyntaxParser {
                 + "* save cassandra start - start save to cassandra action\n"
                 + "* save cassandra stop - stop save to cassandra action\n"
                 + "* save mongo start - start save to mongo action\n"
-                + "* save mongo stop - stop save to mongo action\n";
+                + "* save mongo stop - stop save to mongo action\n"
+                + "* save solr start - start save to solr action\n"
+                + "* save solr stop - stop save to solr action\n";
     }
 
 }

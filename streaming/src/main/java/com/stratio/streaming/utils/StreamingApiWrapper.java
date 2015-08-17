@@ -48,6 +48,14 @@ public class StreamingApiWrapper {
         return "%text Stream ".concat(stream).concat(" de-attached from mongo correctly");
     }
 
+    public String saveSolrStart(String stream) throws StratioStreamingException {
+        return "%text Stream ".concat(stream).concat(" attached to mongo correctly");
+    }
+
+    public String saveSolrStop(String stream) throws StratioStreamingException {
+        return "%text Stream ".concat(stream).concat(" de-attached from mongo correctly");
+    }
+
     public String listenStart(String stream) throws StratioStreamingException {
         return "%text Stream ".concat(stream).concat(" listened correctly");
     }
