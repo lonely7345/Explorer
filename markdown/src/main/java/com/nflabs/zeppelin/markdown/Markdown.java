@@ -45,7 +45,6 @@ public class Markdown extends Interpreter {
 		} catch (IOException e) {
 			return new InterpreterResult(Code.ERROR, e.getMessage());
 		}
-		System.out.println(html);
 		return new InterpreterResult(Code.SUCCESS, "%html "+html);
 	}
 
