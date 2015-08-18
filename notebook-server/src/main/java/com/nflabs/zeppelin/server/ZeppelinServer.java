@@ -134,7 +134,7 @@ public class ZeppelinServer extends Application {
         WebAppContext webApp = new WebAppContext();
         File webapp = new File(conf.getString(ConfVars.NOTEBOOK_WAR));
         if (webapp.isDirectory()) { // Development mode, read from FS
-            //webApp.setDescriptor(webapp+"/WEB-INF/web.xml");
+            webApp.setDescriptor(webapp+"/WEB-INF/web.xml");
             webApp.setResourceBase(webapp.getPath());
             webApp.setContextPath("/");
             webApp.setParentLoaderPriority(true);
@@ -142,7 +142,9 @@ public class ZeppelinServer extends Application {
             webApp.setWar(webapp.getAbsolutePath());
         }
         // Explicit bind to root
-        webApp.addServlet(new ServletHolder(new DefaultServlet()), "/*");
+        ServletHolder servletHolder = new ServletHolder(new DefaultServlet());
+        servletHolder.setInitParameter("cacheControl","max-age=3600,public");
+        webApp.addServlet(servletHolder, "/*");
         return webApp;
     }
 
