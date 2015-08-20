@@ -382,7 +382,7 @@
             </activation>
             <properties>
                 <notebook.daemon.package.base>
-                    ../notebook-distribution/target/notebook-${project.version}/notebook-${project.version}/bin
+                    ../dist/target/parent-${project.version}/bin
                 </notebook.daemon.package.base>
             </properties>
         </profile>
