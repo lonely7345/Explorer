@@ -100,6 +100,15 @@
                                 <group>devel</group>
                                 <requires>bash</requires>
                             </rpm>
+                            <excludeDirectoryAttributes>
+                                <dir>/etc</dir>
+                                <dir>/etc/init.d</dir>
+                                <dir>/etc/default</dir>
+                                <dir>/var</dir>
+                                <dir>/opt</dir>
+                                <dir>/usr</dir>
+                                <dir>/bin</dir>
+                            </excludeDirectoryAttributes>
                             <architecture>noarch</architecture>
                             <defaults>
                                 <fileAttributes>
@@ -195,108 +204,6 @@
                 </plugins>
             </build>
         </profile>
-        <!--<profile>-->
-        <!--<id>package-deb</id>-->
-        <!--<build>-->
-
-        <!--<plugins>-->
-        <!--<plugin>-->
-        <!--<artifactId>maven-assembly-plugin</artifactId>-->
-        <!--<executions>-->
-        <!--<execution>-->
-        <!--<id>make-assembly</id>-->
-        <!--<phase>package</phase>-->
-        <!--<goals>-->
-        <!--<goal>single</goal>-->
-        <!--</goals>-->
-        <!--</execution>-->
-        <!--</executions>-->
-        <!--</plugin>-->
-        <!--<plugin>-->
-        <!--<groupId>com.stratio.mojo.unix</groupId>-->
-        <!--<artifactId>unix-maven-plugin</artifactId>-->
-        <!--<version>1.1.3</version>-->
-        <!--<extensions>true</extensions>-->
-        <!--<inherited>false</inherited>-->
-        <!--<configuration>-->
-        <!--<contact>-->
-        <!--<![CDATA[Stratio Notebook<idiaz@stratio.com>]]>-->
-        <!--</contact>-->
-        <!--<contactEmail>idiaz@stratio.com</contactEmail>-->
-        <!--<deb>-->
-        <!--<section>devel</section>-->
-        <!--</deb>-->
-        <!--<architecture>all</architecture>-->
-        <!--<defaults>-->
-        <!--<fileAttributes>-->
-        <!--<user>stratio</user>-->
-        <!--<group>stratio</group>-->
-        <!--<mode>0755</mode>-->
-        <!--</fileAttributes>-->
-        <!--</defaults>-->
-
-        <!--<outputFileName>stratio-notebook</outputFileName>-->
-
-        <!--</configuration>-->
-        <!--<executions>-->
-        <!--<execution>-->
-        <!--<id>notebook</id>-->
-        <!--<phase>package</phase>-->
-        <!--<configuration>-->
-        <!--<name>Notebook</name>-->
-        <!--<assembly>-->
-        <!--<mkdirs>-->
-        <!--<path>/var/log/sds/notebook</path>-->
-        <!--<attributes>-->
-        <!--<user>stratio</user>-->
-        <!--<group>stratio</group>-->
-        <!--</attributes>-->
-        <!--</mkdirs>-->
-
-        <!--<mkdirs>-->
-        <!--<path>/var/run/sds</path>-->
-        <!--<attributes>-->
-        <!--<user>stratio</user>-->
-        <!--<group>stratio</group>-->
-        <!--</attributes>-->
-        <!--</mkdirs>-->
-        <!--<copyDirectory>-->
-        <!--<from>dist-commons</from>-->
-        <!--<to>/etc/default</to>-->
-        <!--</copyDirectory>-->
-        <!--<copyDirectory>-->
-        <!--<from>target/notebook-${project.version}/bin</from>-->
-        <!--<to>/opt/sds/notebook/bin</to>-->
-        <!--</copyDirectory>-->
-        <!--<copyDirectory>-->
-        <!--<from>target/notebook-${project.version}/lib</from>-->
-        <!--<to>/opt/sds/notebook/lib</to>-->
-        <!--</copyDirectory>-->
-        <!--<copyDirectory>-->
-        <!--<from>target/notebook-${project.version}/conf</from>-->
-        <!--<to>/etc/sds/notebook</to>-->
-        <!--</copyDirectory>-->
-        <!--<copyDirectory>-->
-        <!--<from>target/notebook-${project.version}/interpreter</from>-->
-        <!--<to>/opt/sds/notebook/interpreter</to>-->
-        <!--</copyDirectory>-->
-
-        <!--<copyFile>-->
-        <!--<path>notebook-deb.sh</path>-->
-        <!--<toFile>/etc/init.d/notebook</toFile>-->
-        <!--</copyFile>-->
-        <!--</assembly>-->
-        <!--</configuration>-->
-        <!--<goals>-->
-        <!--<goal>package-deb</goal>-->
-        <!--</goals>-->
-        <!--</execution>-->
-        <!--</executions>-->
-        <!--</plugin>-->
-
-        <!--</plugins>-->
-        <!--</build>-->
-        <!--</profile>-->
     </profiles>
 
 </project>
