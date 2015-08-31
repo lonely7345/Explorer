@@ -95,8 +95,8 @@ or
 Since there is no real auth system yet, you have to use dummy credentials to enter:
 
 ```
-username : test
-password : test
+username : Stratio
+password : Stratio
 ```
 
 ###Stop
