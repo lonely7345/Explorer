@@ -10,8 +10,8 @@ import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.nflabs.zeppelin.interpreter.Interpreter;
-import com.nflabs.zeppelin.interpreter.InterpreterResult;
+import com.stratio.notebook.interpreter.Interpreter;
+import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.ingestion.utils.IngestionAgent;
 import com.stratio.ingestion.utils.IngestionParserException;
 import com.stratio.ingestion.utils.IngestionParserResult;

@@ -2,12 +2,8 @@ import java.util.Properties;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
-import com.nflabs.zeppelin.interpreter.InterpreterResult;
 import com.stratio.ingestion.IngestionInterpreter;
-
-import junit.framework.Assert;
 
 /**
  * Created by idiaz on 4/08/15.

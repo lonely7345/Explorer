@@ -3,8 +3,8 @@ package com.stratio.streaming;
 import java.util.List;
 import java.util.Properties;
 
-import com.nflabs.zeppelin.interpreter.Interpreter;
-import com.nflabs.zeppelin.interpreter.InterpreterResult;
+import com.stratio.notebook.interpreter.Interpreter;
+import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.streaming.api.StratioStreamingAPI;
 import com.stratio.streaming.commons.exceptions.StratioStreamingException;
 import com.stratio.streaming.utils.StreamingApiWrapper;

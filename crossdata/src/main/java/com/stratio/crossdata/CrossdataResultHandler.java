@@ -1,9 +1,9 @@
 package com.stratio.crossdata;
 
-import com.nflabs.zeppelin.interpreter.InterpreterResult;
-import com.nflabs.zeppelin.interpreter.ResultHandler;
-import com.nflabs.zeppelin.notebook.Paragraph;
-import com.nflabs.zeppelin.scheduler.Job;
+import com.stratio.notebook.interpreter.InterpreterResult;
+import com.stratio.notebook.interpreter.ResultHandler;
+import com.stratio.notebook.notebook.Paragraph;
+import com.stratio.notebook.scheduler.Job;
 import com.stratio.crossdata.common.result.ErrorResult;
 import com.stratio.crossdata.common.result.IDriverResultHandler;
 import com.stratio.crossdata.common.result.QueryResult;
