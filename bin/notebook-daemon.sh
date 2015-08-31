@@ -58,7 +58,7 @@ if [ "${NOTEBOOK_NICENESS}" = "" ]; then
     export NOTEBOOK_NICENESS=0
 fi
 
-NOTEBOOK_MAIN=com.nflabs.zeppelin.server.ZeppelinServer
+NOTEBOOK_MAIN=com.stratio.notebook.server.ZeppelinServer
 
 JAVA_OPTS+=" -Dnotebook.log.file=$NOTEBOOK_LOGFILE"
 

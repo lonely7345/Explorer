@@ -35,7 +35,7 @@ NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
 echo NOTEBOOK_HOME $NOTEBOOK_HOME
 echo NOTEBOOK_LOGFILE $NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
 
-NOTEBOOK_SERVER=com.nflabs.zeppelin.server.ZeppelinServer
+NOTEBOOK_SERVER=com.stratio.notebook.server.ZeppelinServer
 JAVA_OPTS+=" -Dnotebook.log.file=$NOTEBOOK_LOGFILE"
 
 if [[ ! -d "$NOTEBOOK_LOG_DIR" ]]; then
