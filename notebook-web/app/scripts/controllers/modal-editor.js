@@ -17,47 +17,45 @@
 
  * based on NFlabs Zeppelin originaly forked on Nov'14
  */
-
-(function (){
+//(function() {
     'use strict';
-
     angular
         .module('notebookWebApp')
-        .controller('modalSettingsCtrl', modalSettingsCtrl);
-
+        .controller('ModalEditorCtrl', function( $modalInstance, properties, resolvePath, $http) {
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:modalSettingsCtrl
+     * @name notebookWebApp.controller:ModalEditorCtrl
      * @description
-     * # modalSettingsCtrl
-     * Controller of left side notebook's navigation
+     * # ModalEditorCtrl
+     * Controller of modal window for file edition
      *
      * @author ivdiaz
      *
      */
-     modalSettingsCtrl.$inject =['$scope', '$modalInstance', 'properties', 'resolvePath', '$http'];
-     function($scope, $modalInstance, properties, resolvePath, $http) {
-         $scope.file = {};
-         $scope.file.text = properties.data.body;
-         $scope.saveEditorSettings = function() {
-             var message = resolvePath + "~" + $scope.file.text;
-             console.log("saveEditorSettings");
-             $http.put(getRestApiBase() + '/interpreter/settings/editor', message).
-             success(function(data, status, headers, config) {
-                 alert('Editor settings saved');
-                 console.log('Settings saved');
-             }).
-             error(function(data, status, headers, config) {
-                 alert('Error ' + status + " " + data.message);
-                 console.log('Error %o %o', status, data.message);
-             });
-         };
-         $scope.ok = function() {
-             $modalInstance.close();
-         };
-         $scope.cancel = function() {
-             $modalInstance.dismiss('cancel');
-         };
-     }
 
-})()
+//    ModalEditorCtrl.$inject = ['$scope', '$modalInstance', 'properties', 'resolvePath', '$http'];
+//    function ModalEditorCtrl($scope, $modalInstance, properties, resolvePath, $http) {
+
+        $scope.file = {};
+        $scope.file.text = properties.data.body;
+        $scope.saveEditorSettings = function() {
+            var message = resolvePath + "~" + $scope.file.text;
+            console.log("saveEditorSettings");
+            $http.put(getRestApiBase() + '/interpreter/settings/editor', message).
+            success(function(data, status, headers, config) {
+                alert('Editor settings saved');
+                console.log('Settings saved');
+            }).
+            error(function(data, status, headers, config) {
+                alert('Error ' + status + " " + data.message);
+                console.log('Error %o %o', status, data.message);
+            });
+        };
+        $scope.ok = function() {
+            $modalInstance.close();
+        };
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+//})()

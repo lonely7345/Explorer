@@ -1,6 +1,6 @@
-<div class="wrap fill" ng-controller="NavCtrl">
+<div class="wrap fill" >
     <!-- top menu -->
-    <div class="note-top-bar">
+    <div class="note-top-bar" ng-controller="TopBarCtrl" >
         <header class="navbar navbar-inverse navbar-fixed-top ">
             <div class="navbar-header ">
                 <a href="#" class="navbar-brand">
@@ -30,8 +30,8 @@
     </div>
     <section class="fill">
         <!-- notebook main content -->
-        <section id="main-container">
-            <aside id="note-list" class="note-list" ng-if="!asIframe">
+        <section id="main-container" ng-controller="NotebookSelectorCtrl">
+            <aside id="note-list" class="note-list" ng-if="!asIframe" >
 
                 <section>
                     <header class="header note-list-header clearfix">
@@ -58,7 +58,7 @@
                                                                         class="form-control "
                                                                         id="search-note" placeholder="search"></div>
                     </header>
-                    <section>
+                    <section >
                         <div class="note-list-items"> <!-- note list -->
                             <ul id="note-items" class="list-group ">
                                 <li class="list-group-item note-list-item "

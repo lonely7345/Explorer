@@ -17,47 +17,99 @@
 
  * based on NFlabs Zeppelin originaly forked on Nov'14
  */
-
-(function (){
+//(function() {
     'use strict';
-
     angular
         .module('notebookWebApp')
-        .controller('modalEditorCtrl', modalEditorCtrl);
-
+        .controller('ModalSettingsCtrl',function($scope, $modalInstance, $http, baseUrlSrv) {
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:modalEditorCtrl
+     * @name notebookWebApp.controller:ModalSettingsCtrl
      * @description
-     * # modalEditorCtrl
-     * Controller of left side notebook's navigation
+     * # ModalSettingsCtrl
+     * Controller of modal window for settings
      *
      * @author ivdiaz
      *
      */
-     modalEditorCtrl.$inject =['$scope', '$modalInstance', 'properties', 'resolvePath', '$http'];
-     function($scope, $modalInstance, properties, resolvePath, $http) {
-         $scope.file = {};
-         $scope.file.text = properties.data.body;
-         $scope.saveEditorSettings = function() {
-             var message = resolvePath + "~" + $scope.file.text;
-             console.log("saveEditorSettings");
-             $http.put(getRestApiBase() + '/interpreter/settings/editor', message).
-             success(function(data, status, headers, config) {
-                 alert('Editor settings saved');
-                 console.log('Settings saved');
-             }).
-             error(function(data, status, headers, config) {
-                 alert('Error ' + status + " " + data.message);
-                 console.log('Error %o %o', status, data.message);
-             });
-         };
-         $scope.ok = function() {
-             $modalInstance.close();
-         };
-         $scope.cancel = function() {
-             $modalInstance.dismiss('cancel');
-         };
-     }
 
-})()
+//    ModalSettingsCtrl.$inject = ['$scope', '$modalInstance', '$http', 'baseUrlSrv'];
+//    function ModalSettingsCtrl($scope, $modalInstance, $http, baseUrlSrv) {
+
+        $scope.showCrossdataProperties = false;
+        $scope.showIngestionProperties = false;
+        $scope.interpreterSettings = "";
+        $scope.getCrossdataInterpreterSettings = function() {
+            if (!$scope.showCrossdataProperties) {
+                $scope.showCrossdataProperties = true;
+                $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata').
+                success(function(data, status, headers, config) {
+                    var receivedData = data.body;
+                    $scope.interpreterSettings = receivedData;
+                }).
+                error(function(data, status, headers, config) {
+                    console.log('Error %o %o', status, data.message);
+                });
+            } else $scope.showCrossdataProperties = false;
+        };
+        $scope.getIngestionInterpreterSettings = function() {
+            if (!$scope.showIngestionProperties) {
+                $scope.showIngestionProperties = true;
+                $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion').
+                success(function(data, status, headers, config) {
+                    var receivedData = data.body;
+                    $scope.interpreterSettings = receivedData;
+                }).
+                error(function(data, status, headers, config) {
+                    console.log('Error %o %o', status, data.message);
+                });
+            } else $scope.showIngestionProperties = false;
+        };
+        $scope.saveCrossdataInterpreterSettings = function() {
+            console.log("saveCrossdataIntepreterSettings");
+            $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata', $scope.interpreterSettings).
+            success(function(data, status, headers, config) {
+                //            console.log($scope.interpreterSettings);
+                alert('Crossdata settings saved');
+                console.log('Settings saved');
+            }).
+            error(function(data, status, headers, config) {
+                alert('Error ' + status + " " + data.message);
+                console.log('Error %o %o', status, data.message);
+            });
+        };
+        $scope.saveIngestionInterpreterSettings = function() {
+            console.log("saveIngestionIntepreterSettings");
+            $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion', $scope.interpreterSettings).
+            success(function(data, status, headers, config) {
+                //            console.log($scope.interpreterSettings);
+                alert('Ingestion settings saved');
+                console.log('Settings saved');
+            }).
+            error(function(data, status, headers, config) {
+                alert('Error ' + status + " " + data.message);
+                console.log('Error %o %o', status, data.message);
+            });
+        };
+        $scope.restartInterpreterConnection = function() {
+            console.log("restartInterpreterConnection");
+        };
+        $scope.resetToDefault = function() {
+            console.log("reset to default settings");
+            $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/reset', true).
+            success(function(data, status, headers, config) {
+                console.log('Settings restored to default');
+                $scope.getInterpreterSettings();
+            }).
+            error(function(data, status, headers, config) {
+                console.log('Error %o %o', status, data.message);
+            });
+        };
+        $scope.ok = function() {
+            $modalInstance.close();
+        };
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+//})()

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zeppelinWebApp').directive('resizable', function () {
+angular.module('notebookWebApp').directive('resizable', function () {
     var resizableConfig = {
         autoHide: true,
         handles: 'se',

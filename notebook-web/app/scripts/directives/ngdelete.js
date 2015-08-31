@@ -6,7 +6,7 @@
  * @description
  * # ngDelete
  */
-angular.module('zeppelinWebApp').directive('ngDelete', function() {
+angular.module('notebookWebApp').directive('ngDelete', function() {
   return function(scope, element, attrs) {
     element.bind('keydown keypress', function(event) {
       if (event.which === 27 || event.which === 46) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zeppelinWebApp').directive('dropdownInput', function () {
+angular.module('notebookWebApp').directive('dropdownInput', function () {
     return {
         restrict: 'A',
         link: function (scope, element) {
