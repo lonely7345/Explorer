@@ -1,9 +1,11 @@
 package com.stratio.notebook.server;
 
 import java.io.File;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.DispatcherType;
 import javax.ws.rs.core.Application;
 
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
@@ -13,6 +15,7 @@ import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -102,6 +105,8 @@ public class ZeppelinServer extends Application {
         cxfContext.setSessionHandler(new SessionHandler());
         cxfContext.setContextPath("/api");
         cxfContext.addServlet(cxfServletHolder, "/*");
+        cxfContext.addFilter(new FilterHolder(CorsFilter.class), "/*",
+                EnumSet.allOf(DispatcherType.class));
         return cxfContext;
     }
 
@@ -124,7 +129,8 @@ public class ZeppelinServer extends Application {
         handler.setSessionHandler(new SessionHandler());
         // Bind Swagger-core to the url HOST/api-docs
         handler.addServlet(SwaggerServlet, "/api-docs/*");
-
+//        handler.addFilter(new FilterHolder(CorsFilter.class), "/*",
+//                EnumSet.allOf(DispatcherType.class));
         // And we are done
         return handler;
     }
@@ -143,7 +149,8 @@ public class ZeppelinServer extends Application {
         // Explicit bind to root
         ServletHolder servletHolder = new ServletHolder(new DefaultServlet());
         // Cache-control settings
-        servletHolder.setInitParameter("cacheControl","max-age=3600,public");
+//        servletHolder.setInitParameter("cacheControl","max-age=3600,public");
+        servletHolder.setInitParameter("cacheControl","private, max-age=0, must-revalidate");
         webApp.addServlet(servletHolder, "/*");
         return webApp;
     }

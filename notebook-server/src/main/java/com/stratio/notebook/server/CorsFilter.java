@@ -1,4 +1,5 @@
-package com.stratio.notebook.server;/*
+package com.stratio.notebook.server;
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,9 +16,7 @@ package com.stratio.notebook.server;/*
  * limitations under the License.
  */
 
-
 import java.io.IOException;
-import java.net.URI;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -61,7 +60,7 @@ public class CorsFilter implements Filter {
     }
 
     private void addCorsHeaders(HttpServletResponse response, String origin) {
-        response.addHeader("Access-Control-Allow-Origin", origin);
+        response.addHeader("Access-Control-Allow-Origin", origin + ", *");
         response.addHeader("Access-Control-Allow-Credentials", "true");
         response.addHeader("Access-Control-Allow-Headers", "authorization,Content-Type");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, HEAD, DELETE");
