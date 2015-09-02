@@ -49,7 +49,8 @@
             streaming: 'ace/mode/streaming',
             scala: 'ace/mode/scala',
             sql: 'ace/mode/sql',
-            markdown: 'ace/mode/markdown'
+            markdown: 'ace/mode/markdown',
+            cassandra :'ace/mode/lucene'
         };
         $scope.editorModeMap = {};
         $scope.editorModeMap[editorMode.ingestion] = 'ingestion';
@@ -59,6 +60,7 @@
         $scope.editorModeMap[editorMode.sql] = 'spark-sql';
         $scope.editorModeMap[editorMode.scala] = 'spark';
         $scope.editorModeMap[editorMode.markdown] = 'markdown';
+        $scope.editorModeMap[editorMode.cassandra] = 'cassandra';
         $scope.forms = {};
         // Controller init
         $scope.init = function(newParagraph, noteId) {
@@ -409,6 +411,9 @@
                 console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%xdql ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
+            } else if (String(code).startsWith('%cql ')){
+                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.cassandra];
                 console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             }
         };
