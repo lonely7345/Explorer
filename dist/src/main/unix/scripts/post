@@ -1,5 +1,49 @@
-#!/bin/bash
+#!/bin/sh
 
+#RPM
+
+set -e
+
+GROUP='stratio'
+USER='stratio'
+DIR_INSTALL='/opt/sds/notebook'
+DIR_CONF='/etc/sds/notebook'
+DIR_LOG='/var/log/sds/notebook'
+
+
+chmod 755 /etc/init.d/notebook
+chmod 755 /opt/sds/notebook/bin
 chmod +x /opt/sds/notebook/bin/*
-chmod +x /etc/rc.d/init.d/notebook
+chmod +x /etc/default/notebook-functions
+chmod +x /etc/default/notebook-variables
+
+
+  # Add stratio group if it doesn't already exists
+  if ! getent group $GROUP >/dev/null 2>&1; then
+    groupadd ${GROUP}
+  fi
+
+  # Add stratio user if it doesn't already exists
+  if ! getent passwd $USER >/dev/null 2>&1; then
+    [ -d /opt ] || mkdir /opt
+    useradd -M -d /opt/sds -g ${GROUP} -s /bin/bash ${USER}
+  else
+    usermod -G $GROUP $USER
+  fi
+
+  if [ ! -d "$DIR_LOG" ]; then
+    mkdir $DIR_LOG
+  fi
+
+  chown root:root /etc/init.d/notebook
+
+  chown -R ${USER}:${GROUP} $DIR_INSTALL
+  chown -R ${USER}:${GROUP} $DIR_CONF
+  chown -R ${USER}:${GROUP} $DIR_LOG
+  chmod -R 775 $DIR_INSTALL
+  chmod 775 $DIR_LOG
+
+
 /sbin/chkconfig --add notebook
+
+exit 0

@@ -111,6 +111,11 @@
                             </excludeDirectoryAttributes>
                             <architecture>noarch</architecture>
                             <defaults>
+                                <directoryAttributes>
+                                    <user>stratio</user>
+                                    <group>stratio</group>
+                                    <mode>0755</mode>
+                                </directoryAttributes>
                                 <fileAttributes>
                                     <user>stratio</user>
                                     <group>stratio</group>
@@ -169,6 +174,11 @@
                                         <copyFile>
                                             <path>notebook-deb.sh</path>
                                             <toFile>/etc/init.d/notebook</toFile>
+                                            <attributes>
+                                                <user>root</user>
+                                                <group>root</group>
+                                                <mode>755</mode>
+                                            </attributes>
                                         </copyFile>
                                         <copyFile>
                                             <path>../LICENSE</path>
@@ -194,6 +204,11 @@
                                         <copyFile>
                                             <path>notebook-rpm.sh</path>
                                             <toFile>/etc/init.d/notebook</toFile>
+                                            <attributes>
+                                                <user>root</user>
+                                                <group>root</group>
+                                                <mode>755</mode>
+                                            </attributes>
                                         </copyFile>
                                     </assembly>
                                 </configuration>
