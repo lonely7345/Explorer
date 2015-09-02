@@ -82,6 +82,7 @@
         <module>doc</module>
         <module>streaming</module>
         <module>ingestion</module>
+        <module>cassandra</module>
     </modules>
     <properties>
         <spark.version>1.4.0</spark.version>
