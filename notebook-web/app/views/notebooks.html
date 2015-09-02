@@ -30,36 +30,36 @@ limitations under the License.
                     class="btn btn-default btn-xs"
                     ng-click="runNote()"
                     ng-if="!isNoteRunning()"
-                    tooltip-placement="top" tooltip="Run all the note"><i class="icon-control-play"></i>
+                    tooltip-placement="top" tooltip="Run all the note"><i class="glyphicon glyphicon-play"></i>
             </button>
 
             <button type="button"
                     class="btn btn-default btn-xs"
                     ng-click="toggleAllEditor()"
                     tooltip-placement="top" tooltip="Show/hide the code"><i
-                    ng-class="editorToggled ? 'fa icon-size-actual' : 'fa icon-size-fullscreen'"></i>
+                    ng-class="editorToggled ? 'glyphicon glyphicon-resize-small' : 'glyphicon glyphicon-resize-full'"></i>
             </button>
 
            <button type="button"
                    class="btn btn-default btn-xs"
                    ng-click="toggleAllTable()"
                    tooltip-placement="top" tooltip="Show/hide the output"><i
-                   ng-class="tableToggled ? 'fa icon-notebook' : 'fa icon-book-open'"></i>
+                   ng-class="tableToggled ? 'glyphicon glyphicon-unchecked' : 'glyphicon glyphicon-sound-stereo'"></i>
            </button>
 
             <button type="button"
                     class="btn btn-default btn-xs"
                     ng-click="removeNote(note.id)"
-                    tooltip-placement="top" tooltip="Remove the notebook"><i class="icon-trash"></i>
+                    tooltip-placement="top" tooltip="Remove the notebook"><i class="glyphicon glyphicon-trash"></i>
             </button>
       </span>
 
-            <span>
-            <div class="labelBtn btn-group">
+      <span class="labelBtn btn-group">
+            <div class="btn-group" style="padding-bottom: .1em;">
                 <div class="btn btn-default btn-xs dropdown-toggle"
                      type="button"
                      data-toggle="dropdown">
-                    <span class="fa icon-note"></span>
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
                 </div>
                 <div class="dropdown-menu" role="menu" style="width:340px; color: black;">
                     <div style="padding:10px 20px 10px 20px;font-weight:normal;word-wrap:break-word">
@@ -70,7 +70,7 @@ limitations under the License.
                         </input>
                         <button type="button"
                                 style="padding:2px 6px;"
-                                class="btn btn-default btn-file"
+                                class="btn btn-default btn-file-o"
                                 ng-click="exportNote(note.id)"
                                 tooltip-placement="top" tooltip="Export the notebook to file">
                             Export
@@ -78,11 +78,11 @@ limitations under the License.
                     </div>
                 </div>
             </div>
-            <div class="labelBtn btn-group">
+            <div class=" btn-group" style="padding-bottom: .1em;">
                 <div class="btn btn-default btn-xs dropdown-toggle"
                      type="button"
                      data-toggle="dropdown">
-                    <span class="fa icon-folder"></span>
+                    <span class="glyphicon glyphicon-folder-open"></span>
                 </div>
                 <div class="dropdown-menu" role="menu" style="width:340px; color: black;">
                     <div style="padding:10px 20px 10px 20px;font-weight:normal;word-wrap:break-word">
@@ -101,7 +101,22 @@ limitations under the License.
                     </div>
                 </div>
             </div>
-            </span>
+
+      </span>
+      <span class="labelBtn btn-group">
+          <button type="button"
+                  class="btn btn-default btn-xs"
+                  ng-click="saveNotebookStatus()"
+                  tooltip-placement="top" tooltip="Save current Notebook status"><i
+                  class="glyphicon glyphicon-ok-circle"></i>
+          </button>
+          <button type="button"
+                  class="btn btn-default btn-xs"
+                  ng-click="removeNotebookResults()"
+                  tooltip-placement="top" tooltip="Removes all paragraphs results"><i
+                  class="glyphicon glyphicon-remove-circle"></i>
+          </button>
+      </span>
 
       <span>
             <div class="labelBtn btn-group">

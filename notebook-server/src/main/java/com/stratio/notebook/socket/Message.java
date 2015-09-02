@@ -63,13 +63,14 @@ public class Message {
 		                    // @param buf current code
 		                    // @param cursor cursor position in code
 
-        SEND_TO_DATAVIS,    // [c-s] check Datavis connection and send query if available
-                            // @param paragraphid to set Datavis response
-                            // @param query
+        SAVE_NOTE,          // [c-s] saves current notebook status
+                            // @param Map containing paragraph id and paragraph text
 
 		COMPLETION_LIST,    // [s-c] send back completion candidates list
 		                    // @param id
 		                    // @param completions list of string
+
+		RESET_RESULTS,      // [s-c] reset notebook paragraph's results
 
 		LIST_NOTES,    // [c-s] ask list of note
 		
@@ -81,7 +82,7 @@ public class Message {
 
 		IMPORT_INFO,    // [s-c] list of note infos
                  		// @param notes serialized List<NoteInfo> object
-		PARAGRAPH_REMOVE,
+		PARAGRAPH_REMOVE
 	}	
 	public OP op;
 	public Map<String, Object> data = new HashMap<String, Object>();

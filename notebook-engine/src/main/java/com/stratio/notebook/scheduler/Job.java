@@ -249,6 +249,13 @@ public abstract class Job {
         aborted = jobAbort();
     }
 
+    public void resetResult(){
+        this.status=Status.READY;
+        this.result=null;
+        this.dateStarted = null;
+        this.dateFinished = null;
+    }
+
     public boolean isAborted() {
         return aborted;
     }

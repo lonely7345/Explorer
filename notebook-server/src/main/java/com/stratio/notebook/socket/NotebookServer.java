@@ -127,8 +127,11 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
             case NOTE_UPDATE:
                 updateNote(conn, notebook, messagereceived);
                 break;
-            case SEND_TO_DATAVIS:
-                sendToDatavis(conn, notebook, messagereceived);
+            case SAVE_NOTE:
+                saveNote(conn, notebook, messagereceived);
+                break;
+            case RESET_RESULTS:
+                resetResults(conn, notebook, messagereceived);
                 break;
             case COMPLETION:
                 completion(conn, notebook, messagereceived);
@@ -384,6 +387,16 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         note.persist();
         broadcast(note.id(), new Message(Message.OP.PARAGRAPH).put("paragraph", p));
     }
+    private void saveNote(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
+        final Note note = notebook.getNote(getOpenNoteId(conn));
+        Map<String, String> paragraphsText = (Map<String, String>) fromMessage.get("paragraphsText");
+        for (String key : paragraphsText.keySet()){
+            Paragraph p = note.getParagraph(key);
+            p.setText(paragraphsText.get(key));
+        }
+        note.persist();
+        broadcastNote(note);
+    }
 
     private void removeParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
         final String paragraphId = (String) fromMessage.get("id");
@@ -470,6 +483,15 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         final Note note = notebook.getNote(getOpenNoteId(conn));
         Paragraph p = note.getParagraph(paragraphId);
         p.abort();
+    }
+
+    private void resetResults(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
+        final Note note = notebook.getNote(getOpenNoteId(conn));
+        for(Paragraph p : note.getParagraphs()){
+            p.resetResult();
+        }
+        note.persist();
+        broadcastNote(note);
     }
 
     private void runParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {

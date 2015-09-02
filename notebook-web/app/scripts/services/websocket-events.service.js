@@ -42,7 +42,9 @@
             importNote: importNote,
             removeParagraph: removeParagraph,
             commitParagraph: commitParagraph,
-            isConnected: isConnected
+            isConnected: isConnected,
+            saveNote: saveNote,
+            resetResults: resetResults
         };
         return service;
 
@@ -170,6 +172,20 @@
         }
         function isConnected() {
             return websocketEvents.isConnected();
+        }
+
+        function saveNote(paragraphMap) {
+            websocketEvents.sendNewEvent({
+                op: 'SAVE_NOTE',
+                data: {
+                    paragraphsText: paragraphMap
+                }
+            });
+        }
+        function resetResults(paragraphMap) {
+            websocketEvents.sendNewEvent({
+                op: 'RESET_RESULTS'
+            });
         }
     });
 //})();

@@ -214,7 +214,7 @@
             };
         var cleanParagraphExcept = function(paragraphId, note) {
                 var noteCopy = {};
-                console.log(note.id);
+//                console.log(note.id);
                 noteCopy.id = note.id;
                 noteCopy.name = note.name;
                 noteCopy.config = note.config;
@@ -327,6 +327,17 @@
                 }
             }
         });
+        $scope.removeNotebookResults = function(){
+            console.log('removeNotebookResults');
+            websocketMsgSrv.resetResults();
+        };
+        $scope.saveNotebookStatus = function(){
+            var paragraphMap ={};
+                 _.forEach($scope.note.paragraphs, function(n, key) {
+                        paragraphMap[n.id]=n.text;
+                    });
+                 websocketMsgSrv.saveNote(paragraphMap);
+                };
         var updateNote = function(note) {
                 /** update Note name */
                 //    console.log('Note updated --- ' + JSON.stringify(note));

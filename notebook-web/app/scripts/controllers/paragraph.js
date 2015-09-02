@@ -169,7 +169,7 @@
             !angular.equals(data.paragraph.settings, $scope.lastData.settings) ||
             !angular.equals(data.paragraph.config, $scope.lastData.config)
             )){
-                console.log('updateParagraph');
+//                console.log('updateParagraph');
 
                 var oldType = $scope.getResultType();
                 var newType = $scope.getResultType(data.paragraph);
@@ -325,25 +325,25 @@
             }
         };
         $scope.closeTable = function() {
-            console.log('close the output');
+//            console.log('close the output');
             var newParams = angular.copy($scope.paragraph.settings.params);
             var newConfig = angular.copy($scope.paragraph.config);
-            console.log('old config');
-            console.log($scope.paragraph.config);
-            console.log('new config');
+//            console.log('old config');
+//            console.log($scope.paragraph.config);
+//            console.log('new config');
             newConfig.tableHide = true;
-            console.log(newConfig);
+//            console.log(newConfig);
             websocketMsgSrv.commitParagraph($scope.paragraph.id,$scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
         };
         $scope.openTable = function() {
-            console.log('open the output');
+//            console.log('open the output');
             var newParams = angular.copy($scope.paragraph.settings.params);
             var newConfig = angular.copy($scope.paragraph.config);
-            console.log('old config');
-            console.log($scope.paragraph.config);
-            console.log('new config');
+//            console.log('old config');
+//            console.log($scope.paragraph.config);
+//            console.log('new config');
             newConfig.tableHide = false;
-            console.log(newConfig);
+//            console.log(newConfig);
             websocketMsgSrv.commitParagraph($scope.paragraph.id,$scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
         };
         $scope.showTitle = function() {
