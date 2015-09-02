@@ -17,6 +17,10 @@ public abstract class Interpreter {
 	static Logger logger = LoggerFactory.getLogger(Interpreter.class);
 
 	private Properties property;
+
+	public Interpreter(){
+
+	}
 	
 	public Interpreter(Properties property){
 		this.property = property;
