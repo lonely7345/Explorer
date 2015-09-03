@@ -51,7 +51,7 @@ public class StreamingSyntaxParser {
         commandPatterns.put(Command.INDEX_START, Pattern.compile("(index start)(.*)")); //index start
         commandPatterns.put(Command.INDEX_STOP, Pattern.compile("(index stop)(.*)")); //index stop
         commandPatterns.put(Command.INSERT, Pattern.compile("(^insert)(.*)")); //insert
-        commandPatterns.put(Command.LIST, Pattern.compile("(list )(.*)")); //list
+        commandPatterns.put(Command.LIST, Pattern.compile("(list)")); //list
         commandPatterns.put(Command.LISTEN_START, Pattern.compile("(listen start)(.*)")); //listen start
         commandPatterns.put(Command.LISTEN_STOP, Pattern.compile("(listen stop)(.*)")); //listen stop
         commandPatterns.put(Command.REMOVE_QUERY, Pattern.compile("(remove query)(.*)")); //remove query
