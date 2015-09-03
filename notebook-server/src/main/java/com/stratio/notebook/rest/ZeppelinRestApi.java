@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import com.stratio.notebook.notebook.Note;
 import com.stratio.notebook.notebook.Paragraph;
 import com.stratio.notebook.server.ZeppelinServer;
+import com.stratio.notebook.socket.ConnectionManager;
 import com.stratio.notebook.socket.NotebookServer;
 import com.wordnik.swagger.annotations.Api;
 
@@ -76,7 +77,7 @@ public class ZeppelinRestApi {
                         .build();
             }
 
-            notebookServer.broadcastNote(note);
+            ConnectionManager.getInstance().broadcastNote(note);
         } catch (Exception e) {
             return Response.status(400)
                     .entity("Notebook name or id not valid")
@@ -122,8 +123,8 @@ public class ZeppelinRestApi {
                     .entity("Could not persist the changes: " + e.getMessage())
                     .build();
         }
-        notebookServer.broadcastNote(note);
-        notebookServer.broadcastNoteList();
+        ConnectionManager.getInstance().broadcastNote(note);
+        ConnectionManager.getInstance().broadcastNoteList();
 
 
 
