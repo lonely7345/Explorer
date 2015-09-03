@@ -52,8 +52,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     }
 
     Gson gson = new Gson();
-    Map<String, List<WebSocket>> noteSocketMap = new HashMap<String, List<WebSocket>>();
-    List<WebSocket> connectedSockets = new LinkedList<WebSocket>();
+
 
     public NotebookServer() {
         super(new InetSocketAddress(DEFAULT_PORT));
@@ -73,9 +72,8 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         LOG.info("New connection from {} : {}", conn.getRemoteSocketAddress().getHostName(), conn
                 .getRemoteSocketAddress().getPort());
-        synchronized (connectedSockets) {
-            connectedSockets.add(conn);
-        }
+        ConnectionManager.getInstance().add(conn);
+
     }
 
     @Override
@@ -94,18 +92,18 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         LOG.info("Closed connection to {} : {}", conn.getRemoteSocketAddress().getHostName(),
                 conn.getRemoteSocketAddress().getPort());
-        ConnectionManager.getInstance().removeConnectionFromAllNote(conn);
-        synchronized (connectedSockets) {
-            connectedSockets.remove(conn);
-        }
+        ConnectionManager conectorManager = ConnectionManager.getInstance();
+        conectorManager.removeConnectionFromAllNote(conn);
+        conectorManager.remove(conn);
+
     }
 
     @Override
     public void onError(WebSocket conn, Exception message) {
-        ConnectionManager.getInstance().removeConnectionFromAllNote(conn);
-        synchronized (connectedSockets) {
-            connectedSockets.remove(conn);
-        }
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.removeConnectionFromAllNote(conn);
+        connectionManager.remove(conn);
+
     }
 
     private Message deserializeMessage(String msg) {

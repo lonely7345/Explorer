@@ -150,6 +150,18 @@ public class ConnectionManager {
         }
         broadcastAll(new Message(Message.OP.NOTES_INFO).put("notes", notesInfo));
     }
+
+    public void add(WebSocket conn) {
+        synchronized (connectedSockets) {
+            connectedSockets.add(conn);
+        }
+    }
+
+    public void remove(WebSocket conn) {
+        synchronized (connectedSockets) {
+            connectedSockets.remove(conn);
+        }
+    }
 }
 
 
