@@ -1,6 +1,5 @@
 package com.stratio.notebook.socket;
 
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.stratio.notebook.notebook.JobListenerFactory;
 import com.stratio.notebook.notebook.Note;
@@ -9,8 +8,6 @@ import com.stratio.notebook.notebook.Paragraph;
 import com.stratio.notebook.scheduler.Job;
 import com.stratio.notebook.scheduler.JobListener;
 import com.stratio.notebook.server.ZeppelinServer;
-
-import com.stratio.notebook.socket.notebookOperations.BroadcastNoteListOperation;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,7 +20,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,11 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Zeppelin websocket service.
