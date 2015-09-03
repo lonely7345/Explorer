@@ -92,6 +92,11 @@ or
 ```
 ./bin/notebook-daemon.sh start -> to launch the service
 ```  
+
+The default URL is:
+```
+http:\\<server>:8084
+```
 Since there is no real auth system yet, you have to use dummy credentials to enter:
 
 ```
