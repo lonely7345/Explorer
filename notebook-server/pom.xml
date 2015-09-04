@@ -6,7 +6,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.stratio.notebook</groupId>
-        <version>0.3.0-RC1</version>
+        <version>0.3.0-RC2-SNAPSHOT</version>
     </parent>
 
     <artifactId>notebook-server</artifactId>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>notebook-engine</artifactId>
-            <version>0.3.0-RC1</version>
+            <version>0.3.0-RC2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
