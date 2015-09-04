@@ -28,7 +28,7 @@
     <groupId>com.stratio.notebook</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.3.0</version>
+    <version>0.3.1-RC1-SNAPSHOT</version>
     <name>Stratio Notebook</name>
     <description>Web shell for Stratio platform</description>
     <url>http://www.stratio.com</url>
