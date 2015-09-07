@@ -63,17 +63,21 @@ public class SparkSqlInterpreterIT {
 
 	@Test
 	public void test_null_value_in_row() {
+		InterpreterResult ret = null;
 		repl.interpret("import org.apache.spark.sql._");
 		repl.interpret("def toInt(s:String): Any = {try { s.trim().toInt} catch {case e:Exception => null}}");
 		repl.interpret("import org.apache.spark.sql.types");
 		repl.interpret("import org.apache.spark.sql.types._");
-		repl.interpret("val schema = StructType(Seq(StructField(\"name\", StringType, false),StructField(\"age\" , IntegerType, true),StructField(\"other\" , StringType, false)))");
-		repl.interpret("val csv = sc.parallelize(Seq((\"jobs, 51, apple\"), (\"gates, , microsoft\")))");
-		repl.interpret("val raw = csv.map(_.split(\",\")).map(p => Row(p(0),toInt(p(1)),p(2)))");
-		repl.interpret("val people = z.sqlContext.applySchema(raw, schema)");
-		repl.interpret("people.registerTempTable(\"people\")");
+		repl.interpret(
+				"val schema = StructType(Seq(StructField(\"name\", StringType, false),StructField(\"age\" , IntegerType, true),StructField(\"other\" , StringType, false)))");
+	     ret = repl.interpret(
+				"val csv = sc.parallelize(Seq((\"jobs, 51, apple\"), (\"gates, , microsoft\")))");
+		ret = repl.interpret("val raw = csv.map(_.split(\",\")).map(p => Row(p(0),toInt(p(1)),p(2)))");
+		ret = repl.interpret("val people = sqlContext.createDataFrame(raw,schema) ");
+		ret = repl.interpret(
+				"people.registerTempTable(\"people\")");
 
-		InterpreterResult ret = sql.interpret("select name, age from people where name = 'gates'");
+		ret = sql.interpret("select name, age from people where name = 'gates'");
 		System.err.println("RET=" + ret.message());
 		assertEquals(InterpreterResult.Code.SUCCESS, ret.code());
 		assertEquals(Type.TABLE, ret.type());
