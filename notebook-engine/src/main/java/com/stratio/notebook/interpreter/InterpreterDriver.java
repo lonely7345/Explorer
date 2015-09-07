@@ -1,6 +1,7 @@
 package com.stratio.notebook.interpreter;
 
 
+<<<<<<< HEAD
 
 public interface InterpreterDriver<T> {
 
@@ -8,4 +9,11 @@ public interface InterpreterDriver<T> {
 
     T executeCommand(String st);
 
+=======
+public interface InterpreterDriver {
+
+    void connect();
+
+    Object executeCommand(String st);
+>>>>>>> a
 }
