@@ -115,6 +115,7 @@
         <scalatest.version>2.2.1</scalatest.version>
         <codehaus.jackson.version>1.8.8</codehaus.jackson.version>
         <fasterxml.jackson.version>2.4.4</fasterxml.jackson.version>
+        <junit.version>4.12</junit.version>
 
 
         <PermGen>64m</PermGen>
@@ -840,8 +841,23 @@
                 <version>2.2.6</version>
             </dependency>
 
+
+
+
         </dependencies>
+
+
+
     </dependencyManagement>
+    <dependencies>
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -911,5 +927,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
     </build>
 </project>

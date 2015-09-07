@@ -1,6 +1,5 @@
 package com.stratio.notebook.socket;
 
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.stratio.notebook.notebook.JobListenerFactory;
 import com.stratio.notebook.notebook.Note;
@@ -9,7 +8,6 @@ import com.stratio.notebook.notebook.Paragraph;
 import com.stratio.notebook.scheduler.Job;
 import com.stratio.notebook.scheduler.JobListener;
 import com.stratio.notebook.server.ZeppelinServer;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,7 +20,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Zeppelin websocket service.
@@ -51,8 +44,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     }
 
     Gson gson = new Gson();
-    Map<String, List<WebSocket>> noteSocketMap = new HashMap<String, List<WebSocket>>();
-    List<WebSocket> connectedSockets = new LinkedList<WebSocket>();
+
 
     public NotebookServer() {
         super(new InetSocketAddress(DEFAULT_PORT));
@@ -72,76 +64,19 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         LOG.info("New connection from {} : {}", conn.getRemoteSocketAddress().getHostName(), conn
                 .getRemoteSocketAddress().getPort());
-        synchronized (connectedSockets) {
-            connectedSockets.add(conn);
-        }
+        ConnectionManager.getInstance().add(conn);
+
     }
 
     @Override
     public void onMessage(WebSocket conn, String msg) {
-        Notebook notebook = notebook();
-        try {
+         try {
             Message messagereceived = deserializeMessage(msg);
             LOG.info("RECEIVE << " + messagereceived.op);
-            /** Lets be elegant here */
-            switch (messagereceived.op) {
-            case LIST_NOTES:
-                broadcastNoteList();
-                break;
-            case GET_NOTE:
-                sendNote(conn, notebook, messagereceived);
-                break;
-            case IMPORT_NOTE:
-                importNote(notebook, messagereceived);
-                break;
-            case EXPORT_NOTE:
-                exportNote(notebook, messagereceived);
-                break;
-            case NEW_NOTE:
-                createNote(conn, notebook);
-                break;
-            case DEL_NOTE:
-                removeNote(conn, notebook, messagereceived);
-                break;
-            case COMMIT_PARAGRAPH:
-                updateParagraph(conn, notebook, messagereceived);
-                break;
-            case RUN_PARAGRAPH:
-                runParagraph(conn, notebook, messagereceived);
-                break;
-            case CANCEL_PARAGRAPH:
-                cancelParagraph(conn, notebook, messagereceived);
-                break;
-            case MOVE_PARAGRAPH:
-                moveParagraph(conn, notebook, messagereceived);
-                break;
-            case SPLIT_INTO_PARAGRAPHS:
-                splitIntoParagraphs(conn, notebook, messagereceived);
-                break;
-            case INSERT_PARAGRAPH:
-                insertParagraph(conn, notebook, messagereceived);
-                break;
-            case PARAGRAPH_REMOVE:
-                removeParagraph(conn, notebook, messagereceived);
-                break;
-            case NOTE_UPDATE:
-                updateNote(conn, notebook, messagereceived);
-                break;
-            case SAVE_NOTE:
-                saveNote(conn, notebook, messagereceived);
-                break;
-            case RESET_RESULTS:
-                resetResults(conn, notebook, messagereceived);
-                break;
-            case COMPLETION:
-                completion(conn, notebook, messagereceived);
-                break;
-            default:
-                broadcastNoteList();
-                break;
-            }
-        } catch (Exception e) {
-            LOG.error("Can't handle message", e);
+            NotebookOperationFactory.getOperation(messagereceived.op).execute(conn,notebook(),messagereceived);
+        } catch (NotebookOperationException e) {
+             //TODO why we don't do anithing with this exception.
+            LOG.error("Can't handle message.", e);
         }
     }
 
@@ -149,18 +84,18 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         LOG.info("Closed connection to {} : {}", conn.getRemoteSocketAddress().getHostName(),
                 conn.getRemoteSocketAddress().getPort());
-        removeConnectionFromAllNote(conn);
-        synchronized (connectedSockets) {
-            connectedSockets.remove(conn);
-        }
+        ConnectionManager conectorManager = ConnectionManager.getInstance();
+        conectorManager.removeConnectionFromAllNote(conn);
+        conectorManager.remove(conn);
+
     }
 
     @Override
     public void onError(WebSocket conn, Exception message) {
-        removeConnectionFromAllNote(conn);
-        synchronized (connectedSockets) {
-            connectedSockets.remove(conn);
-        }
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.removeConnectionFromAllNote(conn);
+        connectionManager.remove(conn);
+
     }
 
     private Message deserializeMessage(String msg) {
@@ -168,358 +103,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         return m;
     }
 
-    private String serializeMessage(Message m) {
-        return gson.toJson(m);
-    }
 
-    private void addConnectionToNote(String noteId, WebSocket socket) {
-        synchronized (noteSocketMap) {
-            removeConnectionFromAllNote(socket); // make sure a socket relates only a single note.
-            List<WebSocket> socketList = noteSocketMap.get(noteId);
-            if (socketList == null) {
-                socketList = new LinkedList<WebSocket>();
-                noteSocketMap.put(noteId, socketList);
-            }
-
-            if (socketList.contains(socket) == false) {
-                socketList.add(socket);
-            }
-        }
-    }
-
-    private void removeConnectionFromNote(String noteId, WebSocket socket) {
-        synchronized (noteSocketMap) {
-            List<WebSocket> socketList = noteSocketMap.get(noteId);
-            if (socketList != null) {
-                socketList.remove(socket);
-            }
-        }
-    }
-
-    private void removeNote(String noteId) {
-        synchronized (noteSocketMap) {
-            List<WebSocket> socketList = noteSocketMap.remove(noteId);
-        }
-    }
-
-    private void removeConnectionFromAllNote(WebSocket socket) {
-        synchronized (noteSocketMap) {
-            Set<String> keys = noteSocketMap.keySet();
-            for (String noteId : keys) {
-                removeConnectionFromNote(noteId, socket);
-            }
-        }
-    }
-
-    private String getOpenNoteId(WebSocket socket) {
-        String id = null;
-        synchronized (noteSocketMap) {
-            Set<String> keys = noteSocketMap.keySet();
-            for (String noteId : keys) {
-                List<WebSocket> sockets = noteSocketMap.get(noteId);
-                if (sockets.contains(socket)) {
-                    id = noteId;
-                }
-            }
-        }
-        return id;
-    }
-
-    private void importNote(Notebook notebook, Message fromMessage)  {
-        String path = (String) fromMessage.get("path");
-        String[] filePath = path.split("/");
-        String filename = filePath[filePath.length-1];
-        System.out.println("##### filename " + filename);
-        Note note = null;
-        try {
-            note = notebook.importFromFile(filename, path);
-            System.out.println("##### Noteid " + note.id());
-            for(Paragraph p : note.getParagraphs()){
-                System.out.println("##### Paragraph: "+p.getText());
-            }
-            note.persist();
-            broadcastNote(note);
-            broadcastNoteList();
-            broadcastAll(new Message(Message.OP.IMPORT_INFO).put("info","Imported successfully"));
-        } catch (Throwable e) {
-            e.printStackTrace();
-            broadcastAll(new Message(Message.OP.IMPORT_INFO).put("info", e.getMessage()));
-        }
-    }
-
-    private void exportNote(Notebook notebook, Message fromMessage)  {
-        String filename = (String) fromMessage.get("filename");
-        String path = "export";
-        String id = (String) fromMessage.get("id");
-        Note note = notebook.getNote(id);
-        System.out.println("export Note "+ filename + " "+ id );
-        try {
-            note.exportToFile(path, filename);
-            broadcastAll(new Message(Message.OP.EXPORT_INFO).put("info", "Exported successfully in "+path ));
-        } catch (IOException e) {
-            broadcastAll(new Message(Message.OP.EXPORT_INFO).put("info", "Could not load the file"));
-        }
-    }
-
-    private void broadcast(String noteId, Message m) {
-        LOG.info("SEND >> " + m.op);
-        synchronized (noteSocketMap) {
-            List<WebSocket> socketLists = noteSocketMap.get(noteId);
-            if (socketLists == null || socketLists.size() == 0) {
-                return;
-            }
-            for (WebSocket conn : socketLists) {
-                conn.send(serializeMessage(m));
-            }
-        }
-    }
-
-    private void broadcastAll(Message m) {
-        synchronized (connectedSockets) {
-            for (WebSocket conn : connectedSockets) {
-                conn.send(serializeMessage(m));
-            }
-        }
-    }
-
-    public void broadcastNote(Note note) {
-        broadcast(note.id(), new Message(Message.OP.NOTE).put("note", note));
-    }
-
-    public void broadcastNoteList() {
-        Notebook notebook = notebook();
-        List<Note> notes = notebook.getAllNotes();
-        List<Map<String, String>> notesInfo = new LinkedList<Map<String, String>>();
-        for (Note note : notes) {
-            Map<String, String> info = new HashMap<String, String>();
-            info.put("id", note.id());
-            info.put("name", note.getName());
-            info.put("date", note.getCreationDate());
-            notesInfo.add(info);
-        }
-        broadcastAll(new Message(Message.OP.NOTES_INFO).put("notes", notesInfo));
-    }
-
-    private void sendNote(WebSocket conn, Notebook notebook, Message fromMessage) {
-        String noteId = (String) fromMessage.get("id");
-        if (noteId == null) {
-            return;
-        }
-        Note note = notebook.getNote(noteId);
-        if (note != null) {
-            addConnectionToNote(note.id(), conn);
-            conn.send(serializeMessage(new Message(Message.OP.NOTE).put("note", note)));
-        }
-    }
-
-    private void updateNote(WebSocket conn, Notebook notebook, Message fromMessage) throws SchedulerException {
-        String noteId = (String) fromMessage.get("id");
-        String name = (String) fromMessage.get("name");
-        Map<String, Object> config = (Map<String, Object>) fromMessage.get("config");
-        if (noteId == null) {
-            return;
-        }
-        if (config == null) {
-            return;
-        }
-        Note note = notebook.getNote(noteId);
-        if (note != null) {
-            boolean cronUpdated = isCronUpdated(config, note.getConfig());
-            note.setName(name);
-            note.setConfig(config);
-
-            if (cronUpdated) {
-                notebook.refreshCron(note.id());
-            }
-
-            broadcastNote(note);
-            broadcastNoteList();
-        }
-    }
-
-    private boolean isCronUpdated(Map<String, Object> configA,
-            Map<String, Object> configB) {
-        boolean cronUpdated = false;
-        if (configA.get("cron") != null && configB.get("cron") != null
-                && configA.get("cron").equals(configB.get("cron"))) {
-            cronUpdated = true;
-        } else if (configA.get("cron") == null && configB.get("cron") == null) {
-            cronUpdated = false;
-        } else if (configA.get("cron") != null || configB.get("cron") != null) {
-            cronUpdated = true;
-        }
-        return cronUpdated;
-    }
-
-    private void createNote(WebSocket conn, Notebook notebook) throws IOException {
-        Note note = notebook.createNote();
-        note.addParagraph(); // it's an empty note. so add one paragraph
-        note.persist();
-        broadcastNote(note);
-        broadcastNoteList();
-    }
-
-    private void removeNote(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        String noteId = (String) fromMessage.get("id");
-        if (noteId == null) {
-            return;
-        }
-        Note note = notebook.getNote(noteId);
-        note.unpersist();
-        notebook.removeNote(noteId);
-        removeNote(noteId);
-        broadcastNoteList();
-    }
-
-    private void updateParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        String paragraphId = (String) fromMessage.get("id");
-        if (paragraphId == null) {
-            return;
-        }
-        Map<String, Object> params = (Map<String, Object>) fromMessage.get("params");
-        Map<String, Object> config = (Map<String, Object>) fromMessage.get("config");
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        Paragraph p = note.getParagraph(paragraphId);
-        p.settings.setParams(params);
-        p.setConfig(config);
-        p.setTitle((String) fromMessage.get("title"));
-        p.setText((String) fromMessage.get("paragraph"));
-        note.persist();
-        broadcast(note.id(), new Message(Message.OP.PARAGRAPH).put("paragraph", p));
-    }
-    private void saveNote(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        Map<String, String> paragraphsText = (Map<String, String>) fromMessage.get("paragraphsText");
-        for (String key : paragraphsText.keySet()){
-            Paragraph p = note.getParagraph(key);
-            p.setText(paragraphsText.get(key));
-        }
-        note.persist();
-        broadcastNote(note);
-    }
-
-    private void removeParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final String paragraphId = (String) fromMessage.get("id");
-        if (paragraphId == null) {
-            return;
-        }
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        /** We dont want to remove the last paragraph */
-        if (!note.isLastParagraph(paragraphId)) {
-            note.removeParagraph(paragraphId);
-            note.persist();
-            broadcastNote(note);
-        }
-    }
-
-    private void completion(WebSocket conn, Notebook notebook, Message fromMessage) {
-        String paragraphId = (String) fromMessage.get("id");
-        String buffer = (String) fromMessage.get("buf");
-        int cursor = (int) Double.parseDouble(fromMessage.get("cursor").toString());
-        Message resp = new Message(Message.OP.COMPLETION_LIST).put("id", paragraphId);
-
-        if (paragraphId == null) {
-            conn.send(serializeMessage(resp));
-            return;
-        }
-
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        Paragraph p = note.getParagraph(paragraphId);
-        List<String> candidates = p.completion(buffer, cursor);
-        resp.put("completions", candidates);
-        conn.send(serializeMessage(resp));
-    }
-
-    private void moveParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final String paragraphId = (String) fromMessage.get("id");
-        if (paragraphId == null) {
-            return;
-        }
-
-        final int newIndex = (int) Double.parseDouble(fromMessage.get("index").toString());
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        note.moveParagraph(paragraphId, newIndex);
-        note.persist();
-        broadcastNote(note);
-    }
-
-    private void insertParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final int index = (int) Double.parseDouble(fromMessage.get("index").toString());
-
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        note.insertParagraph(index);
-        note.persist();
-        broadcastNote(note);
-
-    }
-
-    private void splitIntoParagraphs(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final int index = (int) Double.parseDouble(fromMessage.get("index").toString());
-        final String script = fromMessage.get("paragraph").toString();
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-
-        String[] paragraphs = script.split(";");
-
-        note.removeParagraph(String.class.cast(fromMessage.get("id")));
-        note.persist();
-        broadcastNote(note);
-
-        for (int i = 0; i < paragraphs.length; i++) {
-            note.insertParagraph(index + i - 1,
-                    paragraphs[i].replaceAll("(\\r|\\n)", "").concat(";"));
-            note.persist();
-            broadcastNote(note);
-
-        }
-
-    }
-
-    private void cancelParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final String paragraphId = (String) fromMessage.get("id");
-        if (paragraphId == null) {
-            return;
-        }
-
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        Paragraph p = note.getParagraph(paragraphId);
-        p.abort();
-    }
-
-    private void resetResults(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        for(Paragraph p : note.getParagraphs()){
-            p.resetResult();
-        }
-        note.persist();
-        broadcastNote(note);
-    }
-
-    private void runParagraph(WebSocket conn, Notebook notebook, Message fromMessage) throws IOException {
-        final String paragraphId = (String) fromMessage.get("id");
-        if (paragraphId == null) {
-            return;
-        }
-        final Note note = notebook.getNote(getOpenNoteId(conn));
-        Paragraph p = note.getParagraph(paragraphId);
-        String text = (String) fromMessage.get("paragraph");
-        p.setText(text);
-        p.setTitle((String) fromMessage.get("title"));
-        Map<String, Object> params = (Map<String, Object>) fromMessage.get("params");
-        p.settings.setParams(params);
-        Map<String, Object> config = (Map<String, Object>) fromMessage.get("config");
-        config.put("tableHide",false);
-        p.setConfig(config);
-
-        // if it's the last paragraph, let's add a new one
-        boolean isTheLastParagraph = note.getLastParagraph().getId().equals(p.getId());
-        if (!Strings.isNullOrEmpty(text) && isTheLastParagraph) {
-            note.addParagraph();
-        }
-        note.persist();
-        broadcastNote(note);
-
-        note.run(paragraphId);
-    }
 
     private String postQueryDatavis(String query) throws IOException {
         HttpClient httpclient = HttpClients.createDefault();
@@ -553,14 +137,14 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
         if (paragraphId == null) {
             return;
         }
-        final Note note = notebook.getNote(getOpenNoteId(conn));
+        final Note note = notebook.getNote(ConnectionManager.getInstance().getOpenNoteId(conn));
         Paragraph p = note.getParagraph(paragraphId);
         String query = (String) fromMessage.get("paragraph");
 
         //check datavis connection
         //post through datavis api endpoint -> careful about CORS header
         p.setReturn(postQueryDatavis(query));
-        broadcast(note.id(), new Message(Message.OP.PARAGRAPH).put("paragraph", p));
+        ConnectionManager.getInstance().broadcast(note.id(), new Message(Message.OP.PARAGRAPH).put("paragraph", p));
 
     }
 
@@ -575,7 +159,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
 
         @Override
         public void onProgressUpdate(Job job, int progress) {
-            notebookServer.broadcast(note.id(),
+            ConnectionManager.getInstance().broadcast(note.id(),
                     new Message(Message.OP.PROGRESS).put("id", job.getId()).put("progress", job.progress()));
 
         }
@@ -604,9 +188,9 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
                 }
                 if (Paragraph.class.isInstance(job)) {
                     Paragraph p = Paragraph.class.cast(job);
-                    notebookServer.broadcast(note.id(), new Message(Message.OP.PARAGRAPH).put("paragraph", p));
+                    ConnectionManager.getInstance().broadcast(note.id(), new Message(Message.OP.PARAGRAPH).put("paragraph", p));
                 } else {
-                    notebookServer.broadcastNote(note);
+                    ConnectionManager.getInstance().broadcastNote(note);
                 }
             }
         }
