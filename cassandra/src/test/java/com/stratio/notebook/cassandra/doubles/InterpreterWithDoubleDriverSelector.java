@@ -1,8 +1,9 @@
-package com.stratio.notebook.notebook.cassandra.doubles;
+package com.stratio.notebook.cassandra.doubles;
 
+import com.stratio.notebook.cassandra.CassandraInterpreter;
 import com.stratio.notebook.interpreter.Interpreter;
-import com.stratio.notebook.notebook.cassandra.CassandraInterpreter;
 
+//TENGO QUE VER LO QUE QUIERO QUE ME DEVUELVA EL INSERT
 public class InterpreterWithDoubleDriverSelector {
 
     private boolean connectionIsEnabled=true;

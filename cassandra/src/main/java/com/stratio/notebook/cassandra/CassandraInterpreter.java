@@ -1,12 +1,12 @@
-package com.stratio.notebook.notebook.cassandra;
+package com.stratio.notebook.cassandra;
 
+
+import com.stratio.notebook.cassandra.drivers.CassandraDriver;
+import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
+import com.stratio.notebook.cassandra.exceptions.ConnectionException;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 import com.stratio.notebook.interpreter.InterpreterResult;
-import com.stratio.notebook.notebook.cassandra.exceptions.CassandraInterpreterException;
-
-import com.stratio.notebook.notebook.cassandra.operations.CQLOperation;
-import com.stratio.notebook.notebook.cassandra.operations.OperationFactory;
 
 import java.util.List;
 
@@ -18,12 +18,12 @@ public class CassandraInterpreter extends Interpreter {
         Interpreter.register("cql", CassandraInterpreter.class.getName());
     }
 
-    private OperationFactory operationFactory ;
-
+    private InterpreterDriver driver;
 
     public CassandraInterpreter(InterpreterDriver driver){
-        operationFactory = new OperationFactory(driver);
+        this.driver = driver;
     }
+
 
     @Override public void open() {
 
@@ -38,13 +38,18 @@ public class CassandraInterpreter extends Interpreter {
     }
 
     @Override public InterpreterResult interpret(String st) {
-        String first = st.split(" ")[0];
-        CQLOperation cqlOperation = operationFactory.operation(first);
         try {
-            return new InterpreterResult(InterpreterResult.Code.SUCCESS,cqlOperation.execute(st));
+            driver.connect();
+            driver.executeCommand(st);
+            return new InterpreterResult(InterpreterResult.Code.ERROR);
+
+        }catch (ConnectionException e){
+            return new InterpreterResult(InterpreterResult.Code.ERROR,e.getErrorMessage());
+
         }catch (CassandraInterpreterException e){
-            return new InterpreterResult(InterpreterResult.Code.ERROR, e.getErrorMessage());
+            return new InterpreterResult(InterpreterResult.Code.ERROR,e.getErrorMessage());
         }
+
     }
 
     @Override public void cancel() {
