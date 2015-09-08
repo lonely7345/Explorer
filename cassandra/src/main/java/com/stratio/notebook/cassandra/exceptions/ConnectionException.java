@@ -7,7 +7,7 @@ public class ConnectionException extends RuntimeException{
         super(errorMessage);
     }
 
-    public String getErrorMessage(){
+    public String getMessage(){
 
         return super.getMessage();
     }
