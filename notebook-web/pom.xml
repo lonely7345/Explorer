@@ -14,6 +14,7 @@
 
   <properties>
 		<sonar.sources>.</sonar.sources>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
     <build>
@@ -98,9 +99,5 @@
             </build>
         </profile>
     </profiles>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
 </project>
 
