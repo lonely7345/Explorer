@@ -12,6 +12,10 @@
     <packaging>war</packaging>
     <name>Notebook: web Application</name>
 
+  <properties>
+		<sonar.sources>.</sonar.sources>
+	</properties>
+	
     <build>
         <plugins>
             <plugin>
