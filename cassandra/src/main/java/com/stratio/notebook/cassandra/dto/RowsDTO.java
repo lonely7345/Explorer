@@ -21,7 +21,7 @@ public class RowsDTO {
         List<String>  list = new ArrayList<>();
         for (RowData row:rows)
             list.add(cellDto(row.cells()));
-        return StringUtils.join(list, "\n");
+        return StringUtils.join(list, System.getProperty("line.separator"));
     }
 
     private String cellDto(List<CellData> cells){
