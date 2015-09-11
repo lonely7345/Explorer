@@ -60,9 +60,11 @@ public class Paragraph extends Job implements Serializable {
         this.title = title;
     }
 
+    //TODO why don'r we refactor this method with a factory or enum in oreder to don't add a new case to each interpreter
     public String getRequiredReplName() {
         if (config.get("interpreter") != null) {
             String replNameRaw = ((String) config.get("interpreter"));
+            System.out.println("---> "+replNameRaw);
             switch (replNameRaw) {
             case "ingestion":
                 replName = "ing";
@@ -84,13 +86,20 @@ public class Paragraph extends Job implements Serializable {
                 break;
             case "streaming":
                 replName = "str";
-                break;
+            break;
+                case "mongodb":
+                    replName="mdb"
+                    ;break;
             }
         }
+        String returnValue;
         if (replName != null) {
-            return replName;
+            returnValue =  replName;
+        }else{
+            returnValue = getRequiredReplName(text);
         }
-        return getRequiredReplName(text);
+        System.out.println("<<<<"+returnValue);
+        return returnValue;
     }
 
     public static String getRequiredReplName(String text) {

@@ -18,8 +18,16 @@ import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.driver.BasicDriver;
 import com.stratio.crossdata.driver.DriverConnection;
 import com.stratio.crossdata.utils.CrossdataUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CrossdataInterpreter extends Interpreter {
+
+
+    /**
+     * The Log.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(CrossdataInterpreter.class);
 
     private BasicDriver xdDriver;
     private DriverConnection xdConnection;
@@ -48,10 +56,10 @@ public class CrossdataInterpreter extends Interpreter {
         }
         try {
             connect();
-            System.out.println("Crossdata's driver connected");
+            LOG.info("Crossdata's driver connected");
             driverConnected =true;
         } catch (ConnectionException e) {
-            System.out.println(e.getMessage());
+            LOG.info(e.getMessage());
             driverConnected =false;
         }
 
@@ -86,7 +94,7 @@ public class CrossdataInterpreter extends Interpreter {
                     result = xdConnection.executeRawQuery(normalized);
 
                     sb.append(CrossdataUtils.resultToString(result)).append(
-                            System.getProperty("line.separator")).append(System.getProperty("line.separator"));
+                            System.lineSeparator()).append(System.lineSeparator());
                 } catch (Exception e) {
                     return new InterpreterResult(InterpreterResult.Code.ERROR, e.getLocalizedMessage());
                 }

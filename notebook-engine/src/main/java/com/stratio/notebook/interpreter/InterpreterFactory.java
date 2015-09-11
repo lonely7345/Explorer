@@ -13,11 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -40,7 +36,6 @@ public class InterpreterFactory {
         this.conf = conf;
         String replsConf = conf.getString(ConfVars.NOTEBOOK_INTERPRETERS);
         interpreterClassList = replsConf.split(",");
-
         init();
     }
 
@@ -60,6 +55,7 @@ public class InterpreterFactory {
                 URLClassLoader ccl = new URLClassLoader(urls, oldcl);
 
                 for (String className : interpreterClassList) {
+                    logger.debug(" Notebook is finding class [" + className + "]");
                     try {
                         Class.forName(className, true, ccl);
                         Set<String> keys = Interpreter.registeredInterpreters.keySet();
@@ -75,6 +71,8 @@ public class InterpreterFactory {
                         }
                     } catch (ClassNotFoundException e) {
                         // nothing to do
+                        logger.error(" Class note Found"+ e);
+
                     }
                 }
             }
@@ -134,19 +132,7 @@ public class InterpreterFactory {
             property.put("share", share);
             property.put("classloaderUrls", ccl.getURLs());
             return new ClassloaderInterpreter(repl, cl, property);
-        } catch (SecurityException e) {
-            throw new InterpreterException(e);
-        } catch (NoSuchMethodException e) {
-            throw new InterpreterException(e);
-        } catch (IllegalArgumentException e) {
-            throw new InterpreterException(e);
-        } catch (InstantiationException e) {
-            throw new InterpreterException(e);
-        } catch (IllegalAccessException e) {
-            throw new InterpreterException(e);
-        } catch (InvocationTargetException e) {
-            throw new InterpreterException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | InstantiationException|  IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
             throw new InterpreterException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(oldcl);

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.stratio.notebook.scheduler.Scheduler;
 import com.stratio.notebook.scheduler.SchedulerFactory;
 
-
+//TODO try to refactor to use SOLID principles "Interface segregation principle". This class has a lot of method which are not implement to the concrete clas (they are void)
 public abstract class Interpreter {
 	static Logger logger = LoggerFactory.getLogger(Interpreter.class);
 
@@ -36,11 +36,20 @@ public abstract class Interpreter {
 	public static Map<String, String> registeredInterpreters = Collections.synchronizedMap(new HashMap<String, String>());
 	
 	public static void register(String name, String className) {
+		logger.debug(String.format("Register [ %s ] with [%s]",name,className));
 		registeredInterpreters.put(name, className);
 	}
-	
+
+
+	/**
+	 * This method must open the interpreter connection with the system which interact.
+	 */
 	public abstract void open();
+	/**
+	 * This method must close the interpreter connection with the system which interact.
+	 */
 	public abstract void close();
+	//TODO comment this methods.
 	public abstract Object getValue(String name);
 	public abstract InterpreterResult interpret(String st);
 	public abstract void cancel();

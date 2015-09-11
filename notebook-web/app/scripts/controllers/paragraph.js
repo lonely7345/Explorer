@@ -49,7 +49,8 @@
             streaming: 'ace/mode/streaming',
             scala: 'ace/mode/scala',
             sql: 'ace/mode/sql',
-            markdown: 'ace/mode/markdown'
+            markdown: 'ace/mode/markdown',
+            mongodb: 'ace/mode/mongodb'
         };
         $scope.editorModeMap = {};
         $scope.editorModeMap[editorMode.ingestion] = 'ingestion';
@@ -59,6 +60,7 @@
         $scope.editorModeMap[editorMode.sql] = 'spark-sql';
         $scope.editorModeMap[editorMode.scala] = 'spark';
         $scope.editorModeMap[editorMode.markdown] = 'markdown';
+        $scope.editorModeMap[editorMode.mongodb] = 'mongodb';
         $scope.forms = {};
         // Controller init
         $scope.init = function(newParagraph, noteId) {
@@ -391,26 +393,23 @@
             var code = $scope.editor.getSession().getValue();
             if (String(code).startsWith('%sql ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.sql];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%ing ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.ingestion];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%sh ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.shell];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%md ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.markdown];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%s ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%str ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.streaming];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%xdql ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
-                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
+            }if (String(code).startsWith('%mdb ')) {
+                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.mongodb];
             }
+            console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
+
         };
         $scope.aceLoaded = function(_editor) {
             var langTools = ace.require('ace/ext/language_tools');
@@ -631,6 +630,9 @@
             case 'shell':
                 newInterpreter = editorMode.shell;
                 break;
+            case 'mongodb':
+                  newInterpreter = editorMode.mongodb;
+                  break;
             default:
                 newInterpreter = editorMode.crossdata;
             }

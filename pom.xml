@@ -46,6 +46,18 @@
             <id>ivdiaz</id>
             <name>Ivan Diaz</name>
             <organization>Stratio</organization>
+            <organizationUrl></organizationUrl>
+        </developer>
+        <developer>
+            <id>jmgomez</id>
+            <name>Jose Manuel Gomez</name>
+            <organization>Stratio</organization>
+            <organizationUrl>http://www.stratio.com</organizationUrl>
+        </developer>
+        <developer>
+            <id>afidalgo</id>
+            <name>Alvaro Fidalgo</name>
+            <organization>Stratio</organization>
             <organizationUrl>http://www.stratio.com</organizationUrl>
         </developer>
         <developer>
@@ -66,6 +78,7 @@
             <organization>NFLabs</organization>
             <organizationUrl>http://www.nflabs.com</organizationUrl>
         </developer>
+
     </developers>
 
     <inceptionYear>2013</inceptionYear>
@@ -82,6 +95,7 @@
         <module>doc</module>
         <module>streaming</module>
         <module>ingestion</module>
+        <module>mongodb</module>
     </modules>
     <properties>
         <spark.version>1.4.0</spark.version>
@@ -115,7 +129,9 @@
         <scalatest.version>2.2.1</scalatest.version>
         <codehaus.jackson.version>1.8.8</codehaus.jackson.version>
         <fasterxml.jackson.version>2.4.4</fasterxml.jackson.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.11</junit.version>
+        <powermock.version>1.5.5</powermock.version>
+
 
 
         <PermGen>64m</PermGen>
@@ -857,6 +873,31 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.8</version>
+        </dependency>
+
+
+
+
+
     </dependencies>
 
     <build>
@@ -865,6 +906,13 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-XX:-UseSplitVerifier</argLine>
+                </configuration>
             </plugin>
            
 

@@ -27,7 +27,8 @@ public class InterpreterResult implements Serializable{
 		this.msg = null;
 		this.type = Type.TEXT;
 	}
-	
+
+
 	public InterpreterResult(Code code, String msg) {
 		this.code = code;
 		this.msg = getData(msg);
@@ -92,4 +93,28 @@ public class InterpreterResult implements Serializable{
 		this.type = type;
 		return this;
 	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		InterpreterResult that = (InterpreterResult) o;
+
+		if (code != that.code) return false;
+		if (type != that.type) return false;
+		return !(msg != null ? !msg.equals(that.msg) : that.msg != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = code != null ? code.hashCode() : 0;
+		result = 31 * result + (type != null ? type.hashCode() : 0);
+		result = 31 * result + (msg != null ? msg.hashCode() : 0);
+		return result;
+	}
+
+
 }

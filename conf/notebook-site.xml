@@ -43,10 +43,10 @@
   <value>share</value>
   <description>Interpreter mode. separate or share. 'separate' for separate interpreter for each notebook. 'share' for share single interpreter for all notebook</description>
 </property>
-
+<!--TODO study if we can change this to use convention over configuration, for example all class under com.stratio.<module>.interpreter.<module>Interpreter will be configure like an interpreter -->
 <property>
   <name>zeppelin.interpreters</name>
-  <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.notebook.spark.SparkInterpreter,com.stratio.notebook.spark.SparkSqlInterpreter,com.stratio.notebook.markdown.Markdown,com.stratio.notebook.shell.ShellInterpreter</value>
+  <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.notebook.spark.SparkInterpreter,com.stratio.notebook.spark.SparkSqlInterpreter,com.stratio.notebook.markdown.Markdown,com.stratio.notebook.mongodb.MongoDBInterpreter,com.stratio.notebook.shell.ShellInterpreter</value>
   <description>Comma separated interpreter configurations. First interpreter become a default</description>
 </property>
 

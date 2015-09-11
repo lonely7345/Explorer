@@ -36,6 +36,9 @@ import java.util.List;
  */
 public class NotebookServer extends WebSocketServer implements JobListenerFactory {
 
+    /**
+     * The Log.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(NotebookServer.class);
     private static final int DEFAULT_PORT = 8282;
 
