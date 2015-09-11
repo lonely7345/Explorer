@@ -1,31 +1,43 @@
 package com.stratio.notebook.cassandra;
 
-import com.stratio.notebook.cassandra.dto.DataTableDTO;
+import com.stratio.notebook.cassandra.constants.StringConstants;
+import com.stratio.notebook.cassandra.dto.TableDTO;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
+import com.stratio.notebook.cassandra.gateways.CassandraDriver;
+import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.notebook.cassandra.operations.CQLExecutor;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 
 public class CassandraInterpreter extends Interpreter {
 
-
+    Logger logger = LoggerFactory.getLogger(Interpreter.class);
     static {
         Interpreter.register("cql", CassandraInterpreter.class.getName());
     }
 
-    public CassandraInterpreter(){
+    public CassandraInterpreter(Properties properties){
 
-        super(null); //TODO : DEBERÉ DE ELIMINAR ESTE DE AQUÍ
+        super(properties);
+
+        Properties properties1 = new Properties();
+        properties1.setProperty(StringConstants.HOST, "127.0.0.1");
+        properties1.setProperty(StringConstants.PORT, "9042");
+        CassandraInterpreterGateways.commandDriver = new CassandraDriver(properties1);
 
     }
 
 
     @Override public void open() {
-
+       // CassandraInterpreterGateways.commandDriver.connect();
     }
 
     @Override public void close() {
@@ -39,17 +51,16 @@ public class CassandraInterpreter extends Interpreter {
 
     @Override public InterpreterResult interpret(String st) {
         InterpreterResult.Code code = InterpreterResult.Code.SUCCESS;
-        String message;
+        String message="";
         try {
             CQLExecutor executor = new CQLExecutor();
-            message = new DataTableDTO().toDTO(executor.execute(st));
+            message += new TableDTO().toDTO(executor.execute(st));
 
         }catch (ConnectionException | CassandraInterpreterException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }
         return new InterpreterResult(code,message);
-
     }
 
     @Override public void cancel() {
@@ -61,7 +72,7 @@ public class CassandraInterpreter extends Interpreter {
     }
 
     @Override public FormType getFormType() {
-        return null;
+        return FormType.SIMPLE;
     }
 
     @Override public int getProgress() {
@@ -69,6 +80,6 @@ public class CassandraInterpreter extends Interpreter {
     }
 
     @Override public List<String> completion(String buf, int cursor) {
-        return null;
+        return new ArrayList<>();
     }
 }
