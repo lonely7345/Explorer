@@ -9,9 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <cassandra.host>127.0.0.1</cassandra.host>
+        <cassandra.port>9042</cassandra.port>
+    </properties>
+
     <artifactId>cassandra-interpreter</artifactId>
     <name>Notebook: Cassandra Interpreter</name>
     <description>Interpreter for Cassandra</description>
+
+
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -63,6 +71,8 @@
 
 
     <build>
+
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

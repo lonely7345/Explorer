@@ -11,6 +11,8 @@ import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.CellData;
 import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.InterpreterDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.Iterator;
@@ -21,23 +23,25 @@ import java.util.Properties;
 
 public class CassandraDriver implements InterpreterDriver<Table> {
 
-
+     Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
     private Session session;
     private int port ;
     private String host;
 
     public CassandraDriver(Properties properties){
+
         host = properties.getProperty(StringConstants.HOST);
         port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
     }
 
-    @Override public void connect() {
+    @Override public  void connect() {
         try {
-            if(session==null){
+            if (session == null){
                 Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
                 session = cluster.connect();
             }
         }catch (NoHostAvailableException e){
+            logger.error("  Cassandra database is not avalaible ");
             throw new ConnectionException(e.getMessage());
         }
     }
@@ -51,7 +55,7 @@ public class CassandraDriver implements InterpreterDriver<Table> {
                 table.addRow(createRow(iterator.next(),table.header()));
             return table;
         }catch (SyntaxError | InvalidQueryException e){
-            //AQUÍ ES DONDDE METERÉ EL LOOGER
+            logger.error("  Query to execute in cassandra database is not correct ");
             throw new CassandraInterpreterException(e.getMessage());
         }
     }

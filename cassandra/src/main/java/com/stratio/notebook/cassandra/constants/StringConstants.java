@@ -4,8 +4,8 @@ package com.stratio.notebook.cassandra.constants;
 public interface StringConstants {
 
 
-      String HOST ="host";
-      String PORT = "port";
+      String HOST ="cassandra.host";
+      String PORT = "cassandra.port";
       String TYPE_TABLE ="%table ";
       String TYPE_TEXT ="%text ";
 
