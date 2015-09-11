@@ -1,14 +1,15 @@
 package com.stratio.notebook.cassandra.operations;
 
 import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
-import com.stratio.notebook.cassandra.models.DataTable;
+import com.stratio.notebook.cassandra.models.RowData;
+import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 
 public class CQLExecutor {
 
-    private InterpreterDriver<DataTable> driver = CassandraInterpreterGateways.commandDriver;
+    private InterpreterDriver<Table> driver = CassandraInterpreterGateways.commandDriver;
 
-    public DataTable execute(String command) {
+    public Table execute(String command) {
          driver.connect();
          return driver.executeCommand(command);
     }

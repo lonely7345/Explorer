@@ -46,7 +46,7 @@
 
 <property>
   <name>zeppelin.interpreters</name>
-  <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.notebook.spark.SparkInterpreter,com.stratio.notebook.spark.SparkSqlInterpreter,com.stratio.notebook.markdown.Markdown,com.stratio.notebook.shell.ShellInterpreter,CassandraInterpreter</value>
+  <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.notebook.spark.SparkInterpreter,com.stratio.notebook.spark.SparkSqlInterpreter,com.stratio.notebook.markdown.Markdown,com.stratio.notebook.shell.ShellInterpreter,com.stratio.notebook.cassandra.CassandraInterpreter</value>
   <description>Comma separated interpreter configurations. First interpreter become a default</description>
 </property>
 

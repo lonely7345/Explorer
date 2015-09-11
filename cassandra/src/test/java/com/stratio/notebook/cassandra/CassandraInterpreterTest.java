@@ -2,42 +2,37 @@ package com.stratio.notebook.cassandra;
 
 
 import com.stratio.notebook.cassandra.constants.StringConstants;
-import com.stratio.notebook.cassandra.dto.DataTableDTO;
-import com.stratio.notebook.cassandra.dto.JsonResultBuilder;
-import com.stratio.notebook.cassandra.dto.TableRowDoublesBuilder;
+import com.stratio.notebook.cassandra.doubles.DoubleDriversBuilder;
 import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
-import com.stratio.notebook.cassandra.models.DataTable;
-import com.stratio.notebook.cassandra.models.TableRow;
+import com.stratio.notebook.cassandra.models.CellData;
+import com.stratio.notebook.cassandra.models.RowData;
+import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
-import com.stratio.notebook.cassandra.doubles.DoubleDriversBuilder;
 import org.hamcrest.Matchers;
-import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class CassandraInterpreterTest {
 
 
     private DoubleDriversBuilder selector;
-    private DataTable initialDataInStore;
+    private Table initialDataInStore;
     private Interpreter interpreter;
-    private JsonResultBuilder jsonResultBuilder;
-    private TableRowDoublesBuilder tableRowBuilder;
+
+    private final String NAME="name";
+    private final String VALUE="value";
 
 
     @Before public void setUp(){
-        initialDataInStore = new DataTable();
+        initialDataInStore = new Table();
         selector = new DoubleDriversBuilder();
-        interpreter = new CassandraInterpreter();
-        jsonResultBuilder = new JsonResultBuilder();
-        tableRowBuilder = new TableRowDoublesBuilder();
+        interpreter = new CassandraInterpreter(null);
     }
 
     @After public void teardown(){
@@ -45,14 +40,11 @@ public class CassandraInterpreterTest {
         initialDataInStore =null;
         CassandraInterpreterGateways.commandDriver = null;
         selector = null;
-        jsonResultBuilder = null;
-        tableRowBuilder = null;
-
     }
 
     @Test public void whenCassandraDataBAseIsShutDownThenResultError(){
         selector.driverWithConnectionShutDown(initialDataInStore);
-        InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name");
+        InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
         Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.ERROR));
         Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
     }
@@ -64,32 +56,36 @@ public class CassandraInterpreterTest {
         Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
     }
 
-    @Test public void whenCQLIsCorrectAndNoReturnResultsResultShouldBeAndObjectWithEmptyRows(){
+    @Test public void whenCQLIsCorrectAndReturnOneResult(){
+        initialDataInStore.addRow(buildRowData(new CellData(VALUE)));
+        initialDataInStore.addHeaderParameter(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
-        InterpreterResult result =interpreter.interpret("INSERT INTO keyspace_name.table_name");
-        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat(result.message(),Matchers.is(new DataTableDTO().toDTO(initialDataInStore)));
+        InterpreterResult result =interpreter.interpret("select * from demo.users");
+        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat(result.message(),Matchers.is(NAME+"\n"+VALUE));
     }
 
-    @Test public void whenCQLIsCorrectAndReturnSimplesDataResultShouldBeObjectWithSimpleRows(){
-
-        TableRow row = tableRowBuilder.rowTypeSimple();
-        initialDataInStore.addRow(row);
+    @Test public void whenCQULISCorrectAndHaveMoreResults(){
+        initialDataInStore.addRow(buildRowData(new CellData(VALUE)));
+        initialDataInStore.addRow(buildRowData(new CellData(VALUE)));
+        initialDataInStore.addHeaderParameter(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
-        InterpreterResult result =interpreter.interpret("SELECT *  keyspace_name.table_name");
-        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat(result.message(),Matchers.is(tableDataJson(initialDataInStore)));
-
+        InterpreterResult result =interpreter.interpret("select * from demo.users");
+        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat(result.message(), Matchers.is(NAME + "\n" + VALUE + "\n" + VALUE));
     }
 
-    private String tableDataJson(DataTable initialDataInStore){
-        List<TableRow> rows = initialDataInStore.rows();
-        List<JSONObject> listJson = new ArrayList<>();
-        JSONObject json = new JSONObject();
-        for (TableRow row:rows) {
-            listJson.add(jsonResultBuilder.buildSimple(row));
-        }
-        json.put(StringConstants.ROWS,listJson);
-        return json.toString();
+    @Test public void whenCqlIsCorrectAndNotHaceReturnedData(){
+        InterpreterResult result =interpreter.interpret("USE DEMO");
+        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat(result.message(), Matchers.is(StringConstants.OPERATION_OK));
     }
+
+    private RowData buildRowData(CellData... cells){
+        RowData row = new RowData();
+        for (CellData cell : cells)
+            row.addCell(cell);
+        return row;
+    }
+
 }

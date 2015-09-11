@@ -171,7 +171,7 @@
             !angular.equals(data.paragraph.settings, $scope.lastData.settings) ||
             !angular.equals(data.paragraph.config, $scope.lastData.config)
             )){
-//                console.log('updateParagraph');
+  //              console.log('updateParagraph');
 
                 var oldType = $scope.getResultType();
                 var newType = $scope.getResultType(data.paragraph);
@@ -218,6 +218,7 @@
                     data.paragraph.config.tableHide = false;
                     $scope.paragraph.config = data.paragraph.config;
                 }
+                console.log(newType);
                 if (newType === 'TABLE') {
                     $scope.loadTableData($scope.paragraph.result);
                     if (oldType !== 'TABLE' || resultRefreshed) {
