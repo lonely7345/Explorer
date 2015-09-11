@@ -99,6 +99,12 @@
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeScope>runtime</includeScope>
+                            <systemPropertyVariables>
+                                <propertyName>host</propertyName>
+                                <buildDirectory>${project.build.directory}</buildDirectory>
+                                [...]
+                            </systemPropertyVariables>
+
                         </configuration>
                     </execution>
                     <execution>

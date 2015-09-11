@@ -1,5 +1,6 @@
 package com.stratio.notebook.cassandra.gateways;
 
+
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
 import com.datastax.driver.core.exceptions.NoHostAvailableException;
@@ -7,23 +8,21 @@ import com.datastax.driver.core.exceptions.SyntaxError;
 import com.stratio.notebook.cassandra.constants.StringConstants;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
-import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.CellData;
+import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-
-
 public class CassandraDriver implements InterpreterDriver<Table> {
 
      Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
+
     private Session session;
     private int port ;
     private String host;
@@ -33,6 +32,7 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         host = properties.getProperty(StringConstants.HOST);
         port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
     }
+
 
     @Override public  void connect() {
         try {
@@ -45,6 +45,7 @@ public class CassandraDriver implements InterpreterDriver<Table> {
             throw new ConnectionException(e.getMessage());
         }
     }
+
 
     @Override public Table executeCommand(String command) {
         try {
@@ -75,4 +76,5 @@ public class CassandraDriver implements InterpreterDriver<Table> {
             rowData.addCell(new CellData(cassandraRow.getObject(headerRowName)));
         return rowData;
     }
+
 }

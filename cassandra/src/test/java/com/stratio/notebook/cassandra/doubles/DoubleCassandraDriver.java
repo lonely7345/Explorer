@@ -27,7 +27,7 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
     @Override public Table executeCommand(String command) {
         if (!correctSyntax)
-           throw new CassandraInterpreterException("exception");
+            throw new CassandraInterpreterException("exception");
         return initialDataInStore;
     }
 }
