@@ -1,6 +1,5 @@
 package com.stratio.notebook.cassandra.gateways;
 
-import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 

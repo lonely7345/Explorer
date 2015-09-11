@@ -1,6 +1,5 @@
 package com.stratio.notebook.cassandra;
 
-import com.stratio.notebook.cassandra.constants.StringConstants;
 import com.stratio.notebook.cassandra.dto.TableDTO;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
@@ -9,8 +8,6 @@ import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.notebook.cassandra.operations.CQLExecutor;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,7 @@ import java.util.Properties;
 
 public class CassandraInterpreter extends Interpreter {
 
-    Logger logger = LoggerFactory.getLogger(Interpreter.class);
+
     static {
         Interpreter.register("cql", CassandraInterpreter.class.getName());
     }
@@ -28,16 +25,13 @@ public class CassandraInterpreter extends Interpreter {
 
         super(properties);
 
-        Properties properties1 = new Properties();
-        properties1.setProperty(StringConstants.HOST, "127.0.0.1");
-        properties1.setProperty(StringConstants.PORT, "9042");
-        CassandraInterpreterGateways.commandDriver = new CassandraDriver(properties1);
+        CassandraInterpreterGateways.commandDriver = new CassandraDriver(LoadProperties.load());
 
     }
 
 
     @Override public void open() {
-       // CassandraInterpreterGateways.commandDriver.connect();
+        CassandraInterpreterGateways.commandDriver.connect();
     }
 
     @Override public void close() {
