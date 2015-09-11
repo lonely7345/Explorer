@@ -8,6 +8,7 @@ public interface StringConstants {
       String PORT = "cassandra.port";
       String TYPE_TABLE ="%table ";
       String TYPE_TEXT ="%text ";
+      String TABULATOR ="\t";
 
       String OPERATION_OK ="operation is successfully";
 
