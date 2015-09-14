@@ -2,6 +2,15 @@
 
 
 ## 0.4.0 (incoming)
+** Add cassandra Interpreter
+
+## 0.3.2 (September 2015)
+
+* fix pom typo
+
+## 0.3.1 (September 2015)
+
+* Adapt to Crossdata 0.4.2
 
 ## 0.3.0 (September 2015)
 
