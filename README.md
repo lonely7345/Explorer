@@ -58,7 +58,7 @@ If you wish to configure Zeppelin options (like port number), configure the foll
 ```
 Mesos
 
-    # ./conf/zeppelin-env.sh
+    # ./conf/notebook-env.sh
     export MASTER=mesos://...
     export NOTEBOOK_JAVA_OPTS="-Dspark.executor.uri=/path/to/spark-*.tgz" or SPARK_HOME="/path/to/spark_home"
     export MESOS_NATIVE_LIBRARY=/path/to/libmesos.so
