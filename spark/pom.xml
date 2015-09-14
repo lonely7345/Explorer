@@ -7,7 +7,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.stratio.notebook</groupId>
-        <version>0.3.2-RC1-SNAPSHOT</version>
+        <version>0.3.2</version>
     </parent>
 
     <artifactId>notebook-spark</artifactId>
