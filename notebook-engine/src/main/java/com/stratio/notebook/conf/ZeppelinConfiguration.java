@@ -1,5 +1,6 @@
 package com.stratio.notebook.conf;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 
@@ -224,14 +225,36 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 			return getString(ConfVars.NOTEBOOK_HOME)+"/"+path;
 		}
 	}
+
+	//TODO review how to recovered this variables better.
+	/**
+	 * The Notebook conf dir.
+	 */
+	private static final String NOTEBOOK_CONF_DIR = System.getenv().get("NOTEBOOK_CONF_DIR");
+	/**
+	 * The Crossdata settings path.
+	 */
+	private static String CROSSDATA_SETTINGS_PATH = NOTEBOOK_CONF_DIR+ File.separator+"driver-application.conf";
+	/**
+	 * The Default Crossdata settings path.
+	 */
+	private static String CROSSDATA_DEFAULT_SETTINGS_PATH = NOTEBOOK_CONF_DIR + File.separator+"driver-application-default.conf";
+
+	/**
+	 * The ingestion settings path.
+	 */
+	private static String INGESTION_SETTINGS_PATH = NOTEBOOK_CONF_DIR + File.separator+"ingestion.conf";
+
 	public String getCrossdataSettingsPath() {
-		return getRelativeDir("conf/crossdata/driver-application.conf");
+		System.out.println(CROSSDATA_SETTINGS_PATH);
+		return CROSSDATA_SETTINGS_PATH;
 	}
+
 	public String getCrossdataDefaultSettingsPath() {
-		return getRelativeDir("conf/crossdata/driver-settings-default.conf");
+		return CROSSDATA_DEFAULT_SETTINGS_PATH;
 	}
 	public String getIngestionSettingsPath() {
-		return getRelativeDir("conf/ingestion/ingestion.conf");
+		return INGESTION_SETTINGS_PATH;
 	}
 
 	public static enum ConfVars {

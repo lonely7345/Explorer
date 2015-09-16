@@ -86,7 +86,7 @@ public class CrossdataInterpreter extends Interpreter {
                     result = xdConnection.executeRawQuery(normalized);
 
                     sb.append(CrossdataUtils.resultToString(result)).append(
-                            System.getProperty("line.separator")).append(System.getProperty("line.separator"));
+                            System.lineSeparator()).append(System.lineSeparator());
                 } catch (Exception e) {
                     return new InterpreterResult(InterpreterResult.Code.ERROR, e.getLocalizedMessage());
                 }

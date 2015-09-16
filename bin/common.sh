@@ -22,32 +22,35 @@
 
 FWDIR="$(cd `dirname $0`; pwd)"
 INSTALL_HOME="/opt/sds/notebook/"
+LOG="TRUE"
 
-if [ "x$NOTEBOOK_HOME" == "x" ] ; then
+if [ "x$NOTEBOOK_HOME" = "x" ] ; then
     export NOTEBOOK_HOME=$FWDIR/..
 fi
 
-if [ "x$NOTEBOOK_CONF_DIR" == "x" ] ; then
+if [ "x$NOTEBOOK_CONF_DIR" = "x" ] ; then
     export NOTEBOOK_CONF_DIR="$NOTEBOOK_HOME/conf"
 fi
+
 
 if [ -d "$INSTALL_HOME" ]; then
     export NOTEBOOK_CONF_DIR="/etc/sds/notebook"
 fi
 
-if [ "x$NOTEBOOK_LOG_DIR" == "x" ]; then
+if [ "x$NOTEBOOK_LOG_DIR" = "x" ]; then
     export NOTEBOOK_LOG_DIR="$NOTEBOOK_HOME/logs"
 fi
 
-if [ "x$NOTEBOOK_NOTEBOOK_DIR" == "x" ]; then
+
+if [ "x$NOTEBOOK_NOTEBOOK_DIR" = "x" ]; then
     export NOTEBOOK_NOTEBOOK_DIR="$NOTEBOOK_HOME/notebook"
 fi
 
-if [ "x$NOTEBOOK_PID_DIR" == "x" ]; then
+if [ "x$NOTEBOOK_PID_DIR" = "x" ]; then
     export NOTEBOOK_PID_DIR="$NOTEBOOK_HOME/run"
 fi
 
-if [ "x$NOTEBOOK_WAR" == "x" ]; then
+if [ "x$NOTEBOOK_WAR" = "x" ]; then
     if [ -d "${NOTEBOOK_HOME}/notebook-web/src/main/webapp" ]; then
 	    export NOTEBOOK_WAR="${NOTEBOOK_HOME}/notebook-web/src/main/webapp"
     else
@@ -55,7 +58,7 @@ if [ "x$NOTEBOOK_WAR" == "x" ]; then
     fi
 fi
 
-if [ "x$NOTEBOOK_API_WAR" == "x" ]; then
+if [ "x$NOTEBOOK_API_WAR" = "x" ]; then
     if [ -d "${NOTEBOOK_HOME}/doc/src/main/swagger" ]; then
 	    export NOTEBOOK_API_WAR="${NOTEBOOK_HOME}/doc/src/main/swagger"
     else
@@ -63,7 +66,7 @@ if [ "x$NOTEBOOK_API_WAR" == "x" ]; then
     fi
 fi
 
-if [ "x$NOTEBOOK_INTERPRETER_DIR" == "x" ]; then
+if [ "x$NOTEBOOK_INTERPRETER_DIR" = "x" ]; then
     export NOTEBOOK_INTERPRETER_DIR="$NOTEBOOK_HOME/interpreter"
 fi
 
@@ -117,11 +120,11 @@ export CLASSPATH+=${NOTEBOOK_CLASSPATH}
 # Text encoding for
 # read/write job into files,
 # receiving/displaying query/result.
-if [ "x$NOTEBOOK_ENCODING" == "x" ]; then
+if [ "x$NOTEBOOK_ENCODING" = "x" ]; then
   export NOTEBOOK_ENCODING="UTF-8"
 fi
 
-if [ "x$NOTEBOOK_MEM" == "x" ]; then
+if [ "x$NOTEBOOK_MEM" = "x" ]; then
   export NOTEBOOK_MEM="-Xmx2048m -XX:MaxPermSize=1024m"
 fi
 
@@ -150,4 +153,18 @@ fi
 
 if [ "x$DEBUG" == "x" ] ; then
     export DEBUG=0
+fi
+
+
+if (LOG="TRUE") then
+	echo NOTEBOOK_HOME:            ${NOTEBOOK_HOME}
+	echo NOTEBOOK_CONF_DIR:        ${NOTEBOOK_CONF_DIR}
+	echo NOTEBOOK_LOG_DIR:         ${NOTEBOOK_LOG_DIR}
+	echo NOTEBOOK_PID_DIR:         ${NOTEBOOK_PID_DIR}
+	echo NOTEBOOK_WAR:             ${NOTEBOOK_WAR}
+	echo NOTEBOOK_API_WAR:         ${NOTEBOOK_API_WAR}
+	echo NOTEBOOK_INTERPRETER_DIR: ${NOTEBOOK_INTERPRETER_DIR}
+	echo NOTEBOOK_CLASSPATH:       ${NOTEBOOK_CLASSPATH}
+        echo NOTEBOOK_ENCODING:        ${NOTEBOOK_ENCODING}
+        echo NOTEBOOK_MEM:             ${NOTEBOOK_MEM}
 fi
