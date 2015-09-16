@@ -3,10 +3,13 @@
 
 ## 0.4.0 (incoming)
 ** Add cassandra Interpreter
+## 0.3.3 (September 2015)
+
+* Bug fixing at Streaming interpreter.
 
 ## 0.3.2 (September 2015)
 
-* fix pom typo
+* Fix pom typo
 
 ## 0.3.1 (September 2015)
 
