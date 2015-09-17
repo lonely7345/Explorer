@@ -6,7 +6,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.stratio.notebook</groupId>
-        <version>0.3.3</version>
+        <version>0.3.4-RC1-SNAPSHOT</version>
     </parent>
 
     <artifactId>crossdata-interpreter</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>notebook-engine</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.4-RC1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
