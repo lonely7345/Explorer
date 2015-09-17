@@ -50,10 +50,6 @@
     <fileSet>
       <directory>../conf</directory>
       <includes>
-        <include>configuration.xsl</include>
-        <include>log4j.properties</include>
-        <include>notebook-env.sh.template</include>
-        <include>notebook-site.xml.template</include>
       </includes>
     </fileSet>
     <fileSet>

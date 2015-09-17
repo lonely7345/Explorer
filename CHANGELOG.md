@@ -7,6 +7,7 @@
  +## 0.3.3 (September 2015)
 
 * Bug fixing at Streaming interpreter.
+* Resolve path config bug.
  
 ## 0.3.2 (September 2015)
 

@@ -38,9 +38,15 @@ public class StreamingSyntaxParser {
         SAVE_SOLR_STOP,
         HELP
     }
-
+     /**
+      * This method must parse the streaming sentence.
+      * @param input the streaming sentence.
+      * @output the sentence parsed.
+      *
+      * @throws StratioStreamingException if any error happens.
+      **/
     public String parse(String input) throws StratioStreamingException {
-
+         //TODO review this method
         Map<Command, Pattern> commandPatterns = new HashMap<>();
         commandPatterns.put(Command.ADD_QUERY, Pattern.compile("(add query)(.*)")); //add query
         commandPatterns.put(Command.ALTER, Pattern.compile("(alter)(.*)")); //alter
