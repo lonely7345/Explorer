@@ -1,10 +1,7 @@
 # Changelog
 
 
-## 0.4.0 (incoming)
-** Add cassandra Interpreter
-
- +## 0.3.3 (September 2015)
+## 0.3.3 (September 2015)
 
 * Bug fixing at Streaming interpreter.
 * Resolve path config bug.
