@@ -16,15 +16,14 @@ public class LoadProperties {
     public  static Properties load() {
         try {
 
-
-
             Properties prop = new Properties();
-            InputStream input = LoadProperties.class.getResourceAsStream("application.properties");
+            InputStream input = LoadProperties.class.getClassLoader().getResourceAsStream("application.properties");
             prop.load(input);
             return prop;
         }catch(IOException e){
-            logger.error("File properties not loaded ");
-            throw new RuntimeException(e);
+            String msg = "File properties not loaded. ";
+            logger.error(msg);
+            throw new RuntimeException(msg,e); //TODO why a runtime Exception?¿
         }
 
 
