@@ -85,9 +85,13 @@ public class Paragraph extends Job implements Serializable {
             case "streaming":
                 replName = "str";
                 break;
+            case "cassandra":
+                replName = "cql";
+                break;
             }
+
         }
-        if (replName != null) {
+       if (replName != null) {
             return replName;
         }
         return getRequiredReplName(text);

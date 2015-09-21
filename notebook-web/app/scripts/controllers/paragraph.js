@@ -49,7 +49,8 @@
             streaming: 'ace/mode/streaming',
             scala: 'ace/mode/scala',
             sql: 'ace/mode/sql',
-            markdown: 'ace/mode/markdown'
+            markdown: 'ace/mode/markdown',
+            cassandra :'ace/mode/lucene'
         };
         $scope.editorModeMap = {};
         $scope.editorModeMap[editorMode.ingestion] = 'ingestion';
@@ -59,6 +60,7 @@
         $scope.editorModeMap[editorMode.sql] = 'spark-sql';
         $scope.editorModeMap[editorMode.scala] = 'spark';
         $scope.editorModeMap[editorMode.markdown] = 'markdown';
+        $scope.editorModeMap[editorMode.cassandra] = 'cassandra';
         $scope.forms = {};
         // Controller init
         $scope.init = function(newParagraph, noteId) {
@@ -169,7 +171,7 @@
             !angular.equals(data.paragraph.settings, $scope.lastData.settings) ||
             !angular.equals(data.paragraph.config, $scope.lastData.config)
             )){
-//                console.log('updateParagraph');
+  //              console.log('updateParagraph');
 
                 var oldType = $scope.getResultType();
                 var newType = $scope.getResultType(data.paragraph);
@@ -216,6 +218,7 @@
                     data.paragraph.config.tableHide = false;
                     $scope.paragraph.config = data.paragraph.config;
                 }
+                console.log(newType);
                 if (newType === 'TABLE') {
                     $scope.loadTableData($scope.paragraph.result);
                     if (oldType !== 'TABLE' || resultRefreshed) {
@@ -409,6 +412,9 @@
                 console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%xdql ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
+                console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
+            } else if (String(code).startsWith('%cql ')){
+                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.cassandra];
                 console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             }
         };
@@ -748,22 +754,7 @@
                         }
                     };
                 var formatTableContent = function(d) {
-                        if (isNaN(d)) {
-                            var f = getTableContentFormat(d);
-                            if (f !== '') {
-                                return d.substring(f.length + 2);
-                            } else {
-                                return d;
-                            }
-                        } else {
-                            var dStr = d.toString();
-                            var splitted = dStr.split('.');
-                            var formatted = splitted[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-                            if (splitted.length > 1) {
-                                formatted += '.' + splitted[1];
-                            }
-                            return formatted;
-                        }
+                        return d;
                     };
                 var renderTable = function() {
                         var html = '';
