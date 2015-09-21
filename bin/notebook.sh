@@ -62,5 +62,5 @@ fi
 #  exec $NOTEBOOK_NICENESS $NOTEBOOK_RUNNER --class $NOTEBOOK_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options
 # -Dnotebook.log.file=$NOTEBOOK_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
 #else
-  exec $NOTEBOOK_RUNNER $JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -cp $CLASSPATH $NOTEBOOK_SERVER "$@"
+  exec $NOTEBOOK_RUNNER $JAVA_OPTS -cp $CLASSPATH $NOTEBOOK_SERVER "$@"
 #fi
