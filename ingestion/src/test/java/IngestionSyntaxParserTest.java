@@ -20,7 +20,7 @@ import com.stratio.ingestion.utils.IngestionAgent;
 import com.stratio.ingestion.utils.IngestionParserException;
 import com.stratio.ingestion.utils.IngestionParserResult;
 import com.stratio.ingestion.utils.IngestionSyntaxParser;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
