@@ -41,8 +41,9 @@ public class CassandraDriver implements InterpreterDriver<Table> {
                 session = cluster.connect();
             }
         }catch (NoHostAvailableException e){
-            logger.error("  Cassandra database is not avalaible ");
-            throw new ConnectionException(e.getMessage());
+            String errorMessage ="  Cassandra database is not avalaible ";
+            logger.error(errorMessage);
+            throw new ConnectionException(e,errorMessage);
         }
     }
 
@@ -56,8 +57,9 @@ public class CassandraDriver implements InterpreterDriver<Table> {
                 table.addRow(createRow(iterator.next(),table.header()));
             return table;
         }catch (SyntaxError | InvalidQueryException e){
-            logger.error("  Query to execute in cassandra database is not correct ");
-            throw new CassandraInterpreterException(e.getMessage());
+            String errorMessage = "  Query to execute in cassandra database is not correct ";
+            logger.error(errorMessage);
+            throw new CassandraInterpreterException(e,errorMessage);
         }
     }
 
