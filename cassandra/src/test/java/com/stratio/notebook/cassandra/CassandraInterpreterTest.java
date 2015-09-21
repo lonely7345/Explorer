@@ -79,6 +79,7 @@ public class CassandraInterpreterTest {
     }
 
     @Test public void whenCqlIsCorrectAndNotHaceReturnedData(){
+        selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("USE DEMO");
         Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
         Assert.assertThat(result.message(), Matchers.is(StringConstants.OPERATION_OK));
