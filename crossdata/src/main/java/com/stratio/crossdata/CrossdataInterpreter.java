@@ -1,16 +1,23 @@
+/*
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ * See the NOTICE file distributed with this work for additional information
+ * regarding copyright ownership.  The STRATIO (C) licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package com.stratio.crossdata;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-
-import com.stratio.notebook.interpreter.AsyncInterpreterResult;
-import com.stratio.notebook.interpreter.Interpreter;
-import com.stratio.notebook.interpreter.InterpreterResult;
-import com.stratio.notebook.notebook.Paragraph;
-import com.stratio.notebook.scheduler.Job;
-import com.stratio.notebook.scheduler.Scheduler;
-import com.stratio.notebook.scheduler.SchedulerFactory;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
 import com.stratio.crossdata.common.result.ErrorResult;
 import com.stratio.crossdata.common.result.InProgressResult;
@@ -18,8 +25,23 @@ import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.driver.BasicDriver;
 import com.stratio.crossdata.driver.DriverConnection;
 import com.stratio.crossdata.utils.CrossdataUtils;
+import com.stratio.notebook.interpreter.AsyncInterpreterResult;
+import com.stratio.notebook.interpreter.Interpreter;
+import com.stratio.notebook.interpreter.InterpreterResult;
+import com.stratio.notebook.notebook.Paragraph;
+import com.stratio.notebook.scheduler.Job;
+import com.stratio.notebook.scheduler.Scheduler;
+import com.stratio.notebook.scheduler.SchedulerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
 
 public class CrossdataInterpreter extends Interpreter {
+
+    static {
+        Interpreter.register("xdql", CrossdataInterpreter.class.getName());
+    }
 
     private BasicDriver xdDriver;
     private DriverConnection xdConnection;
@@ -28,51 +50,51 @@ public class CrossdataInterpreter extends Interpreter {
     private HashMap<String, String> queryIds;
     private boolean driverConnected;
 
-    static {
-        Interpreter.register("xdql", CrossdataInterpreter.class.getName());
-    }
-
     public CrossdataInterpreter(Properties property) {
         super(property);
         //Driver that connects to the CROSSDATA servers.
         xdDriver = new BasicDriver();
         xdDriver.setUserName("USER");
-        queryIds= new HashMap<String,String>();
-        driverConnected =false;
+        queryIds = new HashMap<String, String>();
+        driverConnected = false;
     }
 
-    @Override public void open() {
-        if(xdDriver == null){
+    @Override
+    public void open() {
+        if (xdDriver == null) {
             xdDriver = new BasicDriver();
             xdDriver.setUserName("USER");
         }
         try {
             connect();
             System.out.println("Crossdata's driver connected");
-            driverConnected =true;
+            driverConnected = true;
         } catch (ConnectionException e) {
             System.out.println(e.getMessage());
-            driverConnected =false;
+            driverConnected = false;
         }
 
     }
 
-    @Override public void close() {
+    @Override
+    public void close() {
         xdDriver.close();
         xdDriver = null;
     }
 
-    @Override public Object getValue(String name) {
+    @Override
+    public Object getValue(String name) {
         return null;
     }
 
-    @Override public InterpreterResult interpret(String st) {
+    @Override
+    public InterpreterResult interpret(String st) {
         Result result;
         String[] commands = st.split(";");
-        sessionId="sessionId";
-        if(!driverConnected){
+        sessionId = "sessionId";
+        if (!driverConnected) {
             open();
-            if(!driverConnected) return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't connect to "
+            if (!driverConnected) return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't connect to "
                     + "Crossdata's server. Not found answer");
         }
 
@@ -81,8 +103,8 @@ public class CrossdataInterpreter extends Interpreter {
 
             for (String i : commands) {
                 try {
-                    String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim()+";";
-                    System.out.println("*****[CrossdataInterpreter]interpret multiline query -> "+normalized);
+                    String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim() + ";";
+                    System.out.println("*****[CrossdataInterpreter]interpret multiline query -> " + normalized);
                     result = xdConnection.executeRawQuery(normalized);
 
                     sb.append(CrossdataUtils.resultToString(result)).append(
@@ -119,8 +141,9 @@ public class CrossdataInterpreter extends Interpreter {
         xdConnection.removeResultHandler(queryId);
     }
 
-    @Override public void cancel() {
-        assert paragraph.getResult() != null: paragraph;
+    @Override
+    public void cancel() {
+        assert paragraph.getResult() != null : paragraph;
         String queryId = queryIds.get(paragraph.getId());
         xdConnection.stopProcess(queryId);
         paragraph.setStatus(Job.Status.ABORT);
@@ -128,17 +151,20 @@ public class CrossdataInterpreter extends Interpreter {
         paragraph = null;
     }
 
-    @Override public void bindValue(String name, Object o) {
+    @Override
+    public void bindValue(String name, Object o) {
         if (name.equals("paragraph") && Paragraph.class.isInstance(o)) {
             this.paragraph = Paragraph.class.cast(o);
         }
     }
 
-    @Override public FormType getFormType() {
+    @Override
+    public FormType getFormType() {
         return FormType.SIMPLE;
     }
 
-    @Override public int getProgress() {
+    @Override
+    public int getProgress() {
         return 0;
     }
 
@@ -147,7 +173,8 @@ public class CrossdataInterpreter extends Interpreter {
         return SchedulerFactory.singleton().createOrGetParallelScheduler("interpreter_" + this.hashCode(), 100);
     }
 
-    @Override public List<String> completion(String buf, int cursor) {
+    @Override
+    public List<String> completion(String buf, int cursor) {
         return null;
     }
 
@@ -157,7 +184,7 @@ public class CrossdataInterpreter extends Interpreter {
      * @return Whether the connection has been successfully established.
      */
     public void connect() throws ConnectionException {
-       xdConnection = xdDriver.connect(xdDriver.getUserName(), "PASSWORD"); //TODO: get user password from front
+        xdConnection = xdDriver.connect(xdDriver.getUserName(), "PASSWORD"); //TODO: get user password from front
     }
 
 }
