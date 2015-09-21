@@ -30,10 +30,9 @@ public class CassandraInterpreterTest {
 
 
     @Before public void setUp(){
-        Properties properties = new Properties();
-
-        properties.setProperty(StringConstants.HOST, "127.0.0.1");
-        properties.setProperty(StringConstants.PORT, "9042");
+      /*  Properties properties = new Properties();*/
+        System.setProperty(StringConstants.HOST, "127.0.0.1");
+        System.setProperty(StringConstants.PORT, "9042");
         initialDataInStore = new Table();
         selector = new DoubleDriversBuilder();
         interpreter = new CassandraInterpreter(null);
@@ -66,7 +65,7 @@ public class CassandraInterpreterTest {
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
         Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat(result.message(),Matchers.is(NAME+"\n"+VALUE));
+        Assert.assertThat(result.message(),Matchers.is(NAME + "\n" + VALUE));
     }
 
     @Test public void whenCQULISCorrectAndHaveMoreResults(){

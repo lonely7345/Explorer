@@ -6,4 +6,6 @@ public interface InterpreterDriver<T> {
     void connect();
 
     T executeCommand(String st);
+
 }
+

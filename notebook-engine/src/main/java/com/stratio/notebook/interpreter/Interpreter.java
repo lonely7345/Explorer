@@ -18,7 +18,6 @@ public abstract class Interpreter {
 
 	private Properties property;
 
-
 	
 	public Interpreter(Properties property){
 		this.property = property;
