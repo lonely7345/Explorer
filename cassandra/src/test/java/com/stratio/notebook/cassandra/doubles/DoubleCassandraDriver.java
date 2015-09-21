@@ -21,13 +21,13 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
     @Override public void connect() {
         if (!isUpService)
-            throw new ConnectionException("exception");
+            throw new ConnectionException(new Exception(),"exception");
     }
 
 
     @Override public Table executeCommand(String command) {
         if (!correctSyntax)
-            throw new CassandraInterpreterException("exception");
+            throw new CassandraInterpreterException(new Exception(),"exception");
         return initialDataInStore;
     }
 }
