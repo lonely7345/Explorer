@@ -107,7 +107,7 @@ public class IngestionUtils {
                 line = br.readLine();
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+           logger.error(e.getMessage()); //TODO why we don't manage the exception.
         }
 
         return settings;

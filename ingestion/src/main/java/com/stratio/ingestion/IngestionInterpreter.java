@@ -40,7 +40,6 @@ public class IngestionInterpreter extends Interpreter {
         Interpreter.register("ing", IngestionInterpreter.class.getName());
     }
 
-    Logger logger = LoggerFactory.getLogger(IngestionInterpreter.class);
     int CMD_TIMEOUT = 3000;//3secs
     String ingestionHome;
 
