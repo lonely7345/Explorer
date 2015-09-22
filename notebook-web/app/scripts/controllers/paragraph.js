@@ -19,9 +19,6 @@
 
  * based on NFlabs Zeppelin originaly forked on Nov'14
  */
-//(function() {
-    'use strict';
-//    angular.module('notebookWebApp').controller('ParagraphCtrl', ParagraphCtrl);
     /**
      * @ngdoc function
      * @name notebookWebApp.controller:ParagraphCtrl
@@ -33,10 +30,6 @@
      * @author ivdiaz
      *
      */
-//    ParagraphCtrl.$inject = ['$scope', '$rootScope', '$route', '$window', '$http', '$modal', '$element',
-//    '$routeParams', '$location', '$timeout', 'websocketMsgSrv'];
-//    function ParagraphCtrl($scope, $rootScope, $route, $window, $http, $modal, $element, $routeParams, $location,
-//    $timeout, websocketMsgSrv) {
 
     angular.module('notebookWebApp').controller('ParagraphCtrl', function ($scope, $rootScope, $route, $window,
     $http, $modal, $routeParams, $location,$timeout, websocketMsgSrv){
