@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4 (September 2015)
+
+* Adapt to Crossdata 0.4.3
+* Change name to Stratio Explorer
 
 ## 0.3.3 (September 2015)
 
