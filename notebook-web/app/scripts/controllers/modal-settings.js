@@ -17,7 +17,7 @@
 
  * based on NFlabs Zeppelin originaly forked on Nov'14
  */
-//(function() {
+
     'use strict';
     angular
         .module('notebookWebApp')
@@ -33,12 +33,10 @@
      *
      */
 
-//    ModalSettingsCtrl.$inject = ['$scope', '$modalInstance', '$http', 'baseUrlSrv'];
-//    function ModalSettingsCtrl($scope, $modalInstance, $http, baseUrlSrv) {
-
         $scope.showCrossdataProperties = false;
         $scope.showIngestionProperties = false;
-        $scope.interpreterSettings = "";
+        $scope.showCassandraProperties = false;
+        $scope.interpreterSettings = '';
         $scope.getCrossdataInterpreterSettings = function() {
             if (!$scope.showCrossdataProperties) {
                 $scope.showCrossdataProperties = true;
@@ -50,8 +48,11 @@
                 error(function(data, status, headers, config) {
                     console.log('Error %o %o', status, data.message);
                 });
-            } else $scope.showCrossdataProperties = false;
+            } else{
+              $scope.showCrossdataProperties = false;
+            }
         };
+
         $scope.getIngestionInterpreterSettings = function() {
             if (!$scope.showIngestionProperties) {
                 $scope.showIngestionProperties = true;
@@ -65,19 +66,43 @@
                 });
             } else $scope.showIngestionProperties = false;
         };
+
+
+
         $scope.saveCrossdataInterpreterSettings = function() {
-            console.log("saveCrossdataIntepreterSettings");
             $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata', $scope.interpreterSettings).
             success(function(data, status, headers, config) {
-                //            console.log($scope.interpreterSettings);
                 alert('Crossdata settings saved');
-                console.log('Settings saved');
             }).
             error(function(data, status, headers, config) {
                 alert('Error ' + status + " " + data.message);
-                console.log('Error %o %o', status, data.message);
             });
         };
+
+
+
+        $scope.getCassandraInterpreterSettings = function(){
+            if (!$scope.showCassandraProperties) {
+                $scope.showCassandraProperties = true;
+                $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata').
+                success(function(data, status, headers, config) {
+                    var receivedData = data.body;
+                    $scope.interpreterSettings = receivedData;
+                }).
+                error(function(data, status, headers, config) {
+                    console.log('Error %o %o', status, data.message);
+                });
+            } else{
+              $scope.showCassandraProperties = false;
+            }
+
+        };
+
+
+        $scope.saveCassandraInterpreterSettings = function(){
+
+        };
+
         $scope.saveIngestionInterpreterSettings = function() {
             console.log("saveIngestionIntepreterSettings");
             $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion', $scope.interpreterSettings).
@@ -112,4 +137,3 @@
             $modalInstance.dismiss('cancel');
         };
     });
-//})()

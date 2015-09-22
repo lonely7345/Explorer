@@ -25,8 +25,6 @@
         Crossdata</span></div>
     <a class="btn btn-dark" ng-click="getCrossdataInterpreterSettings()">+</a>
     <a class="btn btn-dark" ng-click="saveCrossdataInterpreterSettings()">Save</a>
-    <!--<a class="btn btn-dark" ng-click="restartInterpreterConnection()">Refresh</a>-->
-    <!--<a class="btn btn-dark" ng-click="resetToDefault()">Restore</a>-->
     <textarea class="settings-interpreter-textarea " ng-model="interpreterSettings"
               ng-show="showCrossdataProperties"></textarea>
   </div>
@@ -38,6 +36,15 @@
     <a class="btn btn-dark" ng-click="saveIngestionInterpreterSettings()">Save</a>
     <textarea class="settings-interpreter-textarea " ng-model="interpreterSettings"
               ng-show="showIngestionProperties"></textarea>
+  </div>
+
+  <div class="settings-interpreter">
+    <div class="settings-interpreter-name"><span class="settings-interpreter-title">
+        Ingestion</span></div>
+    <a class="btn btn-dark" ng-click="getCassandraInterpreterSettings()">+</a>
+    <a class="btn btn-dark" ng-click="saveCassandraInterpreterSettings()">Save</a>
+    <textarea class="settings-interpreter-textarea " ng-model="interpreterSettings"
+              ng-show="showCassandraProperties"></textarea>
   </div>
 </div>
 
