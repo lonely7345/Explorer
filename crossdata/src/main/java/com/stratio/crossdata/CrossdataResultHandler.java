@@ -24,8 +24,15 @@ import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.notebook.interpreter.ResultHandler;
 import com.stratio.notebook.notebook.Paragraph;
 import com.stratio.notebook.scheduler.Job;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CrossdataResultHandler extends ResultHandler implements IDriverResultHandler {
+
+    /**
+     * The Log.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(CrossdataResultHandler.class);
 
     public CrossdataInterpreter interpreter;
 
@@ -40,8 +47,7 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
 
     @Override
     public void processError(Result errorResult) {
-        System.out.println(
-                "*****[CrossdataResultHandler]ErrorResult ->" + ErrorResult.class.cast(errorResult).getErrorMessage());
+        LOG.info("Viewer is processing a error" + ErrorResult.class.cast(errorResult).getErrorMessage());
         paragraph.setReturn(new InterpreterResult(InterpreterResult.Code.SUCCESS,
                 ErrorResult.class.cast(errorResult).getErrorMessage()));
         isLastResult = true;
@@ -51,14 +57,18 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
     public void processResult(Result result) {
         StringBuilder sb = new StringBuilder();
         sb.append(CrossdataUtils.resultToString(result));
-        System.out.println("*****[CrossdataResultHandler]ProcessResult " + result.getClass());
-        System.out.println("*****[CrossdataResultHandler]ProcessResult ->" + sb.toString());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("The result class is " + result.getClass());
+            LOG.debug("The return is" + sb.toString());
+        }
         paragraph.setReturn(new InterpreterResult(InterpreterResult.Code.SUCCESS, sb.toString()));
         if (QueryResult.class.isInstance(result)) {
             QueryResult qr = QueryResult.class.cast(result);
-            System.out.println("*****[CrossdataResultHandler]ProcessResult -> isLastResult = " + qr.isLastResultSet());
+            if (LOG.isDebugEnabled()) {
+               LOG.debug("is it the Last Result?" + qr.isLastResultSet());
+            }
             isLastResult = qr.isLastResultSet();
-            //ñapa hasta que en crossdata venga bien el lastresultset
+            //TODO work around, waiting to crossdata send lastresult correctly
             if (!paragraph.getText().contains("WINDOW")) {
                 isLastResult = true;
             }
