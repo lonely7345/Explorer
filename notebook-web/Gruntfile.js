@@ -17,13 +17,6 @@
  */
 // Generated on 2014-08-29 using generator-angular 0.9.5
 'use strict';
-
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to recursively match all subfolders:
-// 'test/spec/**/*.js'
-
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -38,7 +31,6 @@ module.exports = function (grunt) {
     dist: 'src/main/webapp'
   };
 
-  // Define the configuration for all the tasks
   grunt.initConfig({
 
     // Project settings
@@ -126,8 +118,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
-    // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -146,8 +136,6 @@ module.exports = function (grunt) {
         src: ['test/spec/{,*/}*.js']
       }
     },
-
-    // Empties folders to start fresh
     clean: {
       dist: {
         files: [{
@@ -187,8 +175,6 @@ module.exports = function (grunt) {
         ignorePath:  /\.\.\//
       }
     },
-
-    // Renames files for browser caching purposes
     filerev: {
       dist: {
         src: [
@@ -199,10 +185,6 @@ module.exports = function (grunt) {
         ]
       }
     },
-
-    // Reads HTML for usemin blocks to enable smart builds that automatically
-    // concat, minify and revision files. Creates configurations in memory so
-    // additional tasks can operate on them
     useminPrepare: {
       html: '<%= yeoman.app %>/index.html',
       options: {
@@ -227,33 +209,6 @@ module.exports = function (grunt) {
         assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
       }
     },
-
-    // The following *-min tasks will produce minified files in the dist folder
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
-
     svgmin: {
       dist: {
         files: [{
@@ -400,6 +355,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'karma',
     'clean:dist',
     'wiredep',
     'useminPrepare',
@@ -410,19 +366,12 @@ module.exports = function (grunt) {
     'copy:dist',
     'cssmin',
     'uglify',
-    /*'filerev',*/
     'usemin',
     'htmlmin'
   ]);
 
   grunt.registerTask('default', [
     'newer:jshint',
-    /*
-     * Since we dont have test (or up to date) there is no reason to keep this task
-     * I am commented this, but can be changed in the future (if someone want to implement front tests).
-    'test',
-    */
     'build'
   ]);
 };
-

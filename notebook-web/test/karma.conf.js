@@ -31,11 +31,15 @@ module.exports = function(config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha'],
+    frameworks: ['mocha','expect'],
 
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
+      'bower_components/angular-websocket/angular-websocket.js',
+      'bower_components/angular-ui-ace/ui-ace.js',
+      'bower_components/angular-bootstrap/ui-bootstrap.js',
+      'bower_components/angular-dragdrop/src/angular-dragdrop.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
@@ -67,8 +71,9 @@ module.exports = function(config) {
 
     // Which plugins to enable
     plugins: [
-      'karma-phantomjs-launcher'//,
-      'karma-mocha'
+      'karma-phantomjs-launcher',
+      'karma-mocha',
+      'karma-expect'
     ],
 
     // Continuous Integration mode

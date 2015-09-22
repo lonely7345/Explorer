@@ -39,7 +39,7 @@
 //    $timeout, websocketMsgSrv) {
 
     angular.module('notebookWebApp').controller('ParagraphCtrl', function ($scope, $rootScope, $route, $window,
-    $http, $modal, $element, $routeParams, $location,$timeout, websocketMsgSrv){
+    $http, $modal, $routeParams, $location,$timeout, websocketMsgSrv){
         $scope.paragraph = null;
         $scope.editor = null;
         var editorMode = {
