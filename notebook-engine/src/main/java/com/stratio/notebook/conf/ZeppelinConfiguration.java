@@ -22,6 +22,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import java.io.File;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.tree.ConfigurationNode;
@@ -244,7 +245,9 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		}
 	}
 
+
 	//TODO review how to recovered this variables better.
+
 	/**
 	 * The Notebook conf dir.
 	 */

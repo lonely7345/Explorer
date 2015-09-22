@@ -57,15 +57,15 @@ public class StreamingSyntaxParser {
         HELP
     }
 
-    /**
-     * This method must parse the streaming sentence.
-     *  @param input the streaming sentence.
-     *  @output the sentence parsed.
-     *
-     *  @throws StratioStreamingException if any error happens.
-    **/
+     /**
+      * This method must parse the streaming sentence.
+      * @param input the streaming sentence.
+      * @output the sentence parsed.
+      *
+      * @throws StratioStreamingException if any error happens.
+      **/
     public String parse(String input) throws StratioStreamingException {
-        //TODO review this method
+         //TODO review this method
 
         Map<Command, Pattern> commandPatterns = new HashMap<>();
         commandPatterns.put(Command.ADD_QUERY, Pattern.compile("(add query)(.*)")); //add query
@@ -94,10 +94,10 @@ public class StreamingSyntaxParser {
         for (Map.Entry<Command, Pattern> p : commandPatterns.entrySet()) {
             Matcher matcher = p.getValue().matcher(inputNormalized);
             if (matcher.find()) {
-                String filtered  = "";
-                if (matcher.groupCount()>1){
-                    filtered = matcher.group(2);
-                }
+                String filtered = "";
+                 if (matcher.groupCount()>1){
+                     filtered = matcher.group(2);
+                   }
                 switch (p.getKey()) {
                 case ADD_QUERY:
                     return addQuery(filtered);

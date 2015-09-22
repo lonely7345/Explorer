@@ -1,3 +1,4 @@
+
 <!--
   ~ Licensed to STRATIO (C) under one or more contributor license agreements.
   ~ See the NOTICE file distributed with this work for additional information
@@ -16,41 +17,40 @@
   ~ under the License.
   -->
 
-<div class="wrap fill">
-  <!-- top menu -->
-  <div class="note-top-bar" ng-controller="TopBarCtrl">
-    <header class="navbar navbar-inverse navbar-fixed-top ">
-      <div class="navbar-header ">
-        <a href="#" class="navbar-brand">
-          <img src="images/stratioNotebookLogo.png" alt="Stratio Notebook logo" width="150">
-        </a>
-      </div>
-      <ul class="nav navbar-nav navbar-right ">
-        <li class="server-status">
-          <i class="fa fa-circle"
-             ng-class="{'server-connected':connected, 'server-disconnected':!connected }"></i>
-        </li>
-        <li class="note-usr dropdown"><a href="#" class="dropdown-toggle"> <span
-          class="avatar pull-left"> <img src="images/zepLogo.png" width="30"> </span>
-          {{globals.currentUser.username}} <b
-            class="caret"></b> </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li><span ng-click="openSettings()">Settings</span></li>
-            <!--<li><a href="profile.html">Profile</a></li>-->
-            <!--<li><a href="#"> <span class="badge bg-danger pull-right">3</span> Notifications </a></li>-->
-            <li><span ng-click="openHelp()">Help</span></li>
-            <li class="divider"></li>
-            <li><a href="/" ng-click="logout()">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </header>
-  </div>
-  <section class="fill">
-    <!-- notebook main content -->
-    <section id="main-container" ng-controller="NotebookSelectorCtrl">
-      <aside id="note-list" class="note-list" ng-if="!asIframe">
-
+<div class="wrap fill" >
+    <!-- top menu -->
+    <div class="note-top-bar" ng-controller="TopBarCtrl" >
+        <header class="navbar navbar-inverse navbar-fixed-top ">
+            <div class="navbar-header ">
+                <a href="#" class="navbar-brand">
+                    <img src="images/stratioExplorerLogo.png" alt="Stratio Explorer logo" width="150">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right ">
+                <li class="server-status">
+                    <i class="fa fa-circle"
+                       ng-class="{'server-connected':connected, 'server-disconnected':!connected }"></i>
+                </li>
+                <li class="note-usr dropdown"><a href="#" class="dropdown-toggle"> <span
+                        class="avatar pull-left"> <img src="images/stratioLogo.png" width="30"> </span>
+                    {{globals.currentUser.username}} <b
+                            class="caret"></b> </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><span ng-click="openSettings()">Settings</span></li>
+                        <!--<li><a href="profile.html">Profile</a></li>-->
+                        <!--<li><a href="#"> <span class="badge bg-danger pull-right">3</span> Notifications </a></li>-->
+                        <li><span ng-click="openHelp()">Help</span></li>
+                        <li class="divider"></li>
+                        <li><a href="/" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <section class="fill">
+        <!-- notebook main content -->
+        <section id="main-container" ng-controller="NotebookSelectorCtrl">
+            <aside id="note-list" class="note-list" ng-if="!asIframe" >
         <section>
           <header class="header note-list-header clearfix">
                         <span class="pull-right">
