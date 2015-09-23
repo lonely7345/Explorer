@@ -18,6 +18,7 @@
 package com.stratio.notebook.rest;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -25,7 +26,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-
 
 import com.stratio.notebook.converters.PropertiesToStringConverter;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
@@ -70,46 +70,6 @@ public class InterpreterRestApi {
         String path;
         String body;
     }
-
-    /**
-     * List all interpreter settings
-     *
-     * @return
-     */
-    @GET
-    @Path("settings/crossdata")
-    @ApiOperation(httpMethod = "GET", value = "List all interpreter setting")
-    @ApiResponses(value = { @ApiResponse(code = 500, message = "When something goes wrong") })
-    public Response listCrossdataSettings() {
-        String interpreterSettings = "";
-        interpreterSettings = interpreterFactory.loadCrossdataSettings();
-        return new JsonResponse(Response.Status.OK, "", interpreterSettings).build();
-    }
-
-    /**
-     * Add new interpreter setting
-     *
-     * @param message
-     * @return
-     * @throws IOException
-     * @throws InterpreterException
-     */
-    @PUT
-    @Path("settings/crossdata")
-    public Response updateCrossdataSettings(String message) {
-        logger.info("Update interpreterSettings {}", message);
-
-        try {
-            interpreterFactory.saveCrossdataSettings(message);
-        } catch (InterpreterException e) {
-            return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
-        } catch (IOException e) {
-            return new JsonResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage(), e).build();
-        }
-        return new JsonResponse(Response.Status.OK, "", message).build();
-    }
-
-
 
 
 
@@ -158,6 +118,7 @@ public class InterpreterRestApi {
      * @throws IOException
      * @throws InterpreterException
      */
+    //TODO : REFACTOR THIS METHOD
     @PUT
     @Path("reset")
     public Response resetSettings(String message) {
@@ -167,8 +128,6 @@ public class InterpreterRestApi {
             interpreterFactory.loadCrossdataDefaultSettings();
         } catch (InterpreterException e) {
             return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
-        } catch (IOException e) {
-            return new JsonResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage(), e).build();
         }
         return new JsonResponse(Response.Status.OK, "", message).build();
     }
@@ -188,6 +147,7 @@ public class InterpreterRestApi {
         try {
             PropertiesFileUpdater updater = new PropertiesFileUpdater();
             updater.updateFileWithProperties("cassandra", newProperties);
+
         } catch (FolderNotFoundException e) {
             return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
         }
@@ -242,4 +202,44 @@ public class InterpreterRestApi {
         }
         return new JsonResponse(Response.Status.OK, "", newProperties).build();
     }
+
+
+    /**
+     * List all interpreter settings
+     *
+     * @return
+     */
+    @GET
+    @Path("settings/crossdata")
+    @ApiOperation(httpMethod = "GET", value = "List all interpreter setting")
+    @ApiResponses(value = { @ApiResponse(code = 500, message = "When something goes wrong") })
+    public Response listCrossdataSettings() {
+        PropertiesToStringConverter converter = new PropertiesToStringConverter(System.lineSeparator());
+        return new JsonResponse(Response.Status.OK, "", converter.transform(new PropertiesReader().readConfigFrom("crossdata"))).build();
+    }
+
+    /**
+     * Add new interpreter setting
+     *
+     * @param newProperties
+     * @return
+     * @throws IOException
+     * @throws InterpreterException
+     */
+    @PUT
+    @Path("settings/crossdata")
+    public Response updateCrossdataSettings(String newProperties) {
+        logger.info("Update interpreterSettings {}", newProperties);
+
+        try {
+            PropertiesFileUpdater updater = new PropertiesFileUpdater();
+            updater.updateFileWithProperties("crossdata", newProperties);
+        } catch (FolderNotFoundException e) {
+            return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
+        }
+        return new JsonResponse(Response.Status.OK, "", newProperties).build();
+    }
+
+
+
 }
