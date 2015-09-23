@@ -26,6 +26,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import com.stratio.notebook.exceptions.FolderNotFoundException;
+import com.stratio.notebook.writer.PropertiesFileUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -220,23 +222,21 @@ public class InterpreterRestApi {
     /**
      * Add new interpreter setting
      *
-     * @param message
+     * @param newProperties
      * @return
      * @throws IOException
      * @throws InterpreterException
      */
     @PUT
     @Path("settings/cassandra")
-    public Response updateCassandraSettings(String message) {
-        logger.info("Update interpreterSettings {}", message);
-        System.out.println("EL MENSAGE QUE RECIBE ES :"+message);
+    public Response updateCassandraSettings(String newProperties) {
+        logger.info("Update interpreterSettings {}", newProperties);
         try {
-            interpreterFactory.saveCassandraSettings(message);
-        } catch (InterpreterException e) {
+            PropertiesFileUpdater updater = new PropertiesFileUpdater();
+            updater.updateFileWithProperties("cassandra", newProperties);
+        } catch (FolderNotFoundException e) {
             return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
-        } catch (IOException e) {
-            return new JsonResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage(), e).build();
         }
-        return new JsonResponse(Response.Status.OK, "", message).build();
+        return new JsonResponse(Response.Status.OK, "", newProperties).build();
     }
 }

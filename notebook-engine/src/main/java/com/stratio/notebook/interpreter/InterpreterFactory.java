@@ -187,12 +187,6 @@ public class InterpreterFactory {
         saveToFile(file, conf.getCrossdataSettingsPath());
     }
 
-    public void saveCassandraSettings(String file) throws IOException {
-        PropertiesFileUpdater updater = new PropertiesFileUpdater();
-        updater.updateFileWithProperties("cassandra",file);
-     //   saveToFile(file, conf.getCassandraSettings());
-    }
-
     public void loadCrossdataDefaultSettings() throws IOException {
         saveToFile(loadFromFile(conf.getCrossdataDefaultSettingsPath()), conf.getCrossdataSettingsPath());
     }

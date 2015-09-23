@@ -265,19 +265,10 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	 */
 	private static String INGESTION_SETTINGS_PATH = NOTEBOOK_CONF_DIR + File.separator+"ingestion.conf";
 
-	/***
-	 * The cassandra settings path
-	 */
-	private static String CASSANDRA_SETTINGS_PATH =NOTEBOOK_CONF_DIR + File.separator+"cassandra.properties";
 
 	public String getCrossdataSettingsPath() {
 		System.out.println(CROSSDATA_SETTINGS_PATH);
 		return CROSSDATA_SETTINGS_PATH;
-	}
-
-
-	public String getCassandraSettings() {
-		return CASSANDRA_SETTINGS_PATH;
 	}
 
 	public String getCrossdataDefaultSettingsPath() {
