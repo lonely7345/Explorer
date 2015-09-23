@@ -26,9 +26,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+
 import com.stratio.notebook.converters.PropertiesToStringConverter;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
 import com.stratio.notebook.reader.PropertiesReader;
+
+
 import com.stratio.notebook.writer.PropertiesFileUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
