@@ -16,25 +16,41 @@
  * under the License.
  */
 
-package com.stratio.notebook.conf;
+package com.stratio.notebook.util;
+
+import com.stratio.notebook.conf.ConstantsFolder;
+import com.stratio.notebook.exceptions.FolderNotFoundException;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
+
+public class FolderFinderTest {
 
 
-public class ConstantsFolder {
+    private FolderFinder finder;
 
 
-    /**
-     * Name of project root folder
-     */
-    public static String CT_NAME_PROJECT_FOLDER ="stratio-notebook";
+    @Before
+    public void setUp(){
+        finder = new FolderFinder();
+    }
 
-    /**
-     * folder  that contain all file configuratiosn
-     */
-    public static String CT_FOLDER_CONFIGURATION ="conf/";
 
-    /**
-     * Extension to configuration filess
-     */
-    public static String CT_EXTENSION_FILE_PROPERTIES =".properties";
+    @Test
+    public void parentFolderWillBeCalculated(){
+        assertTrue(finder.parentProjectFolder().endsWith("/" + ConstantsFolder.CT_NAME_PROJECT_FOLDER + "/"));
+    }
+
+
+    @Test(expected = FolderNotFoundException.class)
+    public void whenFolderNotExistThenPathShouldBeSlash(){
+        ConstantsFolder.CT_NAME_PROJECT_FOLDER = "not_exist_file";
+        finder.parentProjectFolder();
+    }
+
+
+
+
 
 }

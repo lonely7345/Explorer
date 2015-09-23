@@ -110,7 +110,6 @@ public class InterpreterRestApi {
 
 
 
-
     /**
      * List all interpreter settings
      *

@@ -1,6 +1,7 @@
 'use strict';
 
 
+
 describe(' Modal settings expects ',function(){
 
    beforeEach(module('notebookWebApp'));
