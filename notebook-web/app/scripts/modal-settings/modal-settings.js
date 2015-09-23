@@ -45,7 +45,7 @@
                           $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata').
                           success(function(data) {
                               var receivedData = data.body;
-                              $scope.interpreterSettings = receivedData;
+                              $scope.interpreterSettingsCrossdata = receivedData;
                           }).
                           error(function(data, status) {
                               console.log('Error %o %o', status, data.message);
@@ -55,7 +55,7 @@
                       }
                   },
                   saveCrossdataInterpreterSettings:function() {
-                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata', $scope.interpreterSettings).
+                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata', $scope.interpreterSettingsCrossdata).
                               success(function(data) {
                                   alert('Crossdata settings saved');
                               }).
@@ -69,7 +69,7 @@
                                   $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion').
                                   success(function(data) {
                                       var receivedData = data.body;
-                                      $scope.interpreterSettings = receivedData;
+                                      $scope.interpreterSettingsIngestion = receivedData;
                                   }).
                                   error(function(data, status) {
                                       console.log('Error %o %o', status, data.message);
@@ -82,7 +82,7 @@
                                   $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/cassandra').
                                   success(function(data) {
                                       var receivedData = data.body;
-                                      $scope.interpreterSettings = receivedData;
+                                      $scope.interpreterSettingsCassandra = receivedData;
                                   }).
                                   error(function(data, status) {
                                       console.log('Error %o %o', status, data.message);
@@ -94,7 +94,7 @@
                           },
                   saveIngestionInterpreterSettings:function() {
                               console.log("saveIngestionIntepreterSettings");
-                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion', $scope.interpreterSettings).
+                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion', $scope.interpreterSettingsIngestion).
                               success(function(data, status, headers, config) {
                                   alert('Ingestion settings saved');
                                   console.log('Settings saved');
@@ -125,7 +125,7 @@
                               $modal.dismiss('cancel');
                           },
                   saveCassandraInterpreterSettings:function(){
-                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/cassandra', $scope.interpreterSettings).
+                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/cassandra', $scope.interpreterSettingsCassandra).
                               success(function(data) {
                                   alert('Crossdata settings saved');
                               }).

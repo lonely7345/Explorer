@@ -173,32 +173,7 @@ public class InterpreterFactory {
         }
     }
 
-    public String loadCrossdataSettings(){
-        return loadFromFile(conf.getCrossdataSettingsPath());
-    }
 
-    public String loadCassandraSettings(){
-        PropertiesToStringConverter converter = new PropertiesToStringConverter(System.lineSeparator());
-        return converter.transform(new PropertiesReader().readConfigFrom("cassandra"));
-    }
-
-    public void saveCrossdataSettings(String file) throws IOException {
-
-        saveToFile(file, conf.getCrossdataSettingsPath());
-    }
-
-    public void loadCrossdataDefaultSettings() throws IOException {
-        saveToFile(loadFromFile(conf.getCrossdataDefaultSettingsPath()), conf.getCrossdataSettingsPath());
-    }
-    public String loadIngestionSettings(){
-        if (conf.getIngestionSettingsPath()== null){
-        return "Ingestion settings file not found";
-        }
-        return loadFromFile(conf.getIngestionSettingsPath());
-    }
-    public void saveIngestionSettings(String file) throws IOException {
-        saveToFile(file, conf.getIngestionSettingsPath());
-    }
     public void saveEditorSettings(String body,String path ) throws IOException {
         saveToFile(body,path);
     }
@@ -207,6 +182,7 @@ public class InterpreterFactory {
     }
 
 
+    //TODO : THIS METHOD WILL BE REMOVED
     private String loadFromFile(String path) {
 
         File fileToRead = new File(path);
@@ -237,6 +213,7 @@ public class InterpreterFactory {
 
     }
 
+    //TODO : THIS METHOD WILL BE REMOVED
     private void saveToFile(String file, String path) throws IOException {
         File settingFile = new File(path);
         if (!settingFile.exists()) {
