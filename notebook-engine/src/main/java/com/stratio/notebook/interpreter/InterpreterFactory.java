@@ -171,7 +171,15 @@ public class InterpreterFactory {
         }
     }
 
+    public String loadCrossdataSettings(){
+        return loadFromFile(conf.getCrossdataSettingsPath());
+    }
 
+
+    public void saveCrossdataSettings(String file) throws IOException {
+        
+        saveToFile(file, conf.getCrossdataSettingsPath());
+    }
 
     public void loadCrossdataDefaultSettings() throws IOException {
         saveToFile(loadFromFile(conf.getCrossdataDefaultSettingsPath()), conf.getCrossdataSettingsPath());
