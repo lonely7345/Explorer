@@ -271,6 +271,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 		return CROSSDATA_SETTINGS_PATH;
 	}
 
+
 	public String getCassandraSettings() {
 		return CASSANDRA_SETTINGS_PATH;
 	}

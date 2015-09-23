@@ -16,10 +16,8 @@
  * under the License.
  */
 
+
 package com.stratio.notebook.socket;
-
-
-
 
 import com.stratio.notebook.socket.notebookOperations.*;
 import org.junit.Test;

@@ -51,7 +51,6 @@ public class PropertiesFileUpdaterTest {
     @After public void tearDown(){
         updater.updateFileWithProperties(CT_FILE,"prop1=prop1");
         commons.tearDown();
-
     }
 
     @Test public void whenFileContainsPropertyThenActualizeValue() throws IOException {

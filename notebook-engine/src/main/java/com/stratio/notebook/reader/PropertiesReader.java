@@ -19,10 +19,9 @@
 package com.stratio.notebook.reader;
 
 
-import com.stratio.notebook.conf.ConstantsFolder;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,19 +31,16 @@ public class PropertiesReader {
 
     static Logger Logger = LoggerFactory.getLogger(FolderFinder.class);
 
-    private static FolderFinder rootFolderFinder = new FolderFinder();
-
     /**
      * Read configuration file from file
      * @param nameFile name file configuration without extension
      * @return Map with key values
      */
-    public static Properties readConfigFrom(String nameFile) {
+    public Properties readConfigFrom(String nameFile) {
 
        Properties prop = new Properties();
         try {
-            nameFile = rootFolderFinder.parentProjectFolder()+ ConstantsFolder.CT_FOLDER_CONFIGURATION+nameFile+ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES;
-            prop.load(new FileInputStream(nameFile));
+            prop.load(new FileInputStream(new PathFileCalculator().getPath(nameFile)));
         }catch(IOException e){
             String msg = "File properties not loaded. ";
             Logger.error(msg);
