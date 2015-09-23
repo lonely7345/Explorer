@@ -16,42 +16,48 @@
  * under the License.
  */
 
-package com.stratio.notebook.util;
+package com.stratio.notebook.reader;
 
 import com.stratio.notebook.conf.ConstantsFolder;
+import com.stratio.notebook.exceptions.FolderNotFoundException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Properties;
+import static org.junit.Assert.assertTrue;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-
-public class PropertiesReaderTest {
+public class FolderFinderTest {
 
 
-    private static final String NOT_EXIST_PATH ="not_exit";
-    private static final String EXIST_FILE_WITH_DATA ="src/test/test_resources/WithData.properties";
-    private Properties result ;
-    private PropertiesReader reader;
+    private FolderFinder finder;
+    private String oldValueFolder = ConstantsFolder.CT_NAME_PROJECT_FOLDER;
+
 
     @Before
     public void setUp(){
-        result = new Properties();
-        reader = new PropertiesReader();
-        ConstantsFolder.CT_FOLDER_CONFIGURATION ="notebook-engine/";
+        finder = new FolderFinder();
+    }
+
+    @After
+    public void tearDown(){
+        ConstantsFolder.CT_NAME_PROJECT_FOLDER =  oldValueFolder;
     }
 
 
     @Test
-    public void whenNotExistPath(){
-      assertThat(reader.readConfigFrom(NOT_EXIST_PATH), is(result));
+    public void parentFolderWillBeCalculated(){
+        assertTrue(finder.parentProjectFolder().endsWith("/" + ConstantsFolder.CT_NAME_PROJECT_FOLDER + "/"));
     }
 
 
-    @Test public void whenExistFileAndContainsData(){
-        result.put("host","1");
-        assertThat(reader.readConfigFrom(EXIST_FILE_WITH_DATA), is(result));
+    @Test(expected = FolderNotFoundException.class)
+    public void whenFolderNotExistThenPathShouldBeSlash(){
+        ConstantsFolder.CT_NAME_PROJECT_FOLDER = "not_exist_file";
+        finder.parentProjectFolder();
     }
+
+
+
+
+
 }

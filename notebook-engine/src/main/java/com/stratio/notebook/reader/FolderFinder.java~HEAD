@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package com.stratio.notebook.util;
+package com.stratio.notebook.reader;
 
 
 import com.stratio.notebook.conf.ConstantsFolder;
@@ -24,7 +24,9 @@ import com.stratio.notebook.exceptions.FolderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -41,9 +43,10 @@ public class FolderFinder {
 
 
     private Path calculateRootFolder(){
-        Path path =  null;
+        Path path =null;
         try {
-            path = Paths.get(PropertiesReader.class.getResource(".").toURI());
+            URL url = getClass().getClassLoader().getResource(".");
+            path = Paths.get(url.toURI());
             while(path!=null &&
                   !path.endsWith(ConstantsFolder.CT_NAME_PROJECT_FOLDER)){
                 path = path.getParent();
@@ -58,9 +61,8 @@ public class FolderFinder {
     }
 
     private String buildRootPathString(Path path){
-       StringBuilder  rootPath = new StringBuilder();
-       if (path==null)
+        if (path==null)
            throw new FolderNotFoundException("Folder "+ConstantsFolder.CT_NAME_PROJECT_FOLDER +" not exist ");
-        return rootPath.append(path.toString()).append("/").toString();
+        return path.toString() + "/";
     }
 }

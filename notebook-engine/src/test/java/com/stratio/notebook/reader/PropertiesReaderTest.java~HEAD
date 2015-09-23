@@ -18,7 +18,7 @@
 
 package com.stratio.notebook.reader;
 
-import com.stratio.notebook.conf.ConstantsFolder;
+import com.stratio.notebook.Commons;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,33 +34,36 @@ public class PropertiesReaderTest {
 
     private static final String NOT_EXIST_PATH ="not_exit";
     private static final String EXIST_FILE_WITH_DATA ="WithData";
-    private String oldValueFolderConfiguration ;
     private Properties result ;
+    private Commons commons;
+    private PropertiesReader reader;
 
 
 
     @Before
     public void setUp(){
         result = new Properties();
-        oldValueFolderConfiguration = ConstantsFolder.CT_FOLDER_CONFIGURATION;
-        ConstantsFolder.CT_FOLDER_CONFIGURATION ="notebook-engine/src/test/test_resources/";
+        commons = new Commons();
+        commons.initialize();
+        reader = new PropertiesReader();
 
     }
 
+
     @After
     public void tearDown(){
-        ConstantsFolder.CT_FOLDER_CONFIGURATION = oldValueFolderConfiguration;
+        commons.tearDown();
     }
 
 
     @Test
     public void whenNotExistPath(){
-      assertThat(PropertiesReader.readConfigFrom(NOT_EXIST_PATH), is(result));
+      assertThat(reader.readConfigFrom(NOT_EXIST_PATH), is(result));
     }
 
 
     @Test public void whenExistFileAndContainsData(){
         result.put("host","1");
-        assertThat(PropertiesReader.readConfigFrom(EXIST_FILE_WITH_DATA), is(result));
+        assertThat(reader.readConfigFrom(EXIST_FILE_WITH_DATA), is(result));
     }
 }
