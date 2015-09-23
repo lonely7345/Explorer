@@ -102,6 +102,9 @@ public class InterpreterRestApi {
         return new JsonResponse(Response.Status.OK, "", message).build();
     }
 
+
+
+
     /**
      * List all interpreter settings
      *
@@ -199,4 +202,41 @@ public class InterpreterRestApi {
         return new JsonResponse(Response.Status.OK, "", message).build();
     }
 
+    /**
+     * List all interpreter settings
+     *
+     * @return
+     */
+    @GET
+    @Path("settings/cassandra")
+    @ApiOperation(httpMethod = "GET", value = "List all interpreter setting")
+    @ApiResponses(value = { @ApiResponse(code = 500, message = "When something goes wrong") })
+    public Response listCassandraSettings() {
+        String interpreterSettings = "";
+        interpreterSettings = interpreterFactory.loadCassandraSettings();
+        return new JsonResponse(Response.Status.OK, "", interpreterSettings).build();
+    }
+
+    /**
+     * Add new interpreter setting
+     *
+     * @param message
+     * @return
+     * @throws IOException
+     * @throws InterpreterException
+     */
+    @PUT
+    @Path("settings/cassandra")
+    public Response updateCassandraSettings(String message) {
+        logger.info("Update interpreterSettings {}", message);
+
+        try {
+            interpreterFactory.saveCassandraSettings(message);
+        } catch (InterpreterException e) {
+            return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
+        } catch (IOException e) {
+            return new JsonResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage(), e).build();
+        }
+        return new JsonResponse(Response.Status.OK, "", message).build();
+    }
 }

@@ -174,9 +174,18 @@ public class InterpreterFactory {
         return loadFromFile(conf.getCrossdataSettingsPath());
     }
 
+    public String loadCassandraSettings(){
+        return loadFromFile(conf.getCassandraSettings());
+    }
+
     public void saveCrossdataSettings(String file) throws IOException {
         saveToFile(file, conf.getCrossdataSettingsPath());
     }
+
+    public void saveCassandraSettings(String file) throws IOException {
+        saveToFile(file, conf.getCassandraSettings());
+    }
+
     public void loadCrossdataDefaultSettings() throws IOException {
         saveToFile(loadFromFile(conf.getCrossdataDefaultSettingsPath()), conf.getCrossdataSettingsPath());
     }

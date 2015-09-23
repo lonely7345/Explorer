@@ -19,12 +19,13 @@
 <div class="modal-header">
   <h3 class="modal-title">Settings</h3>
 </div>
-<div class="modal-body" style="overflow:hidden;">
-  <div class="settings-interpreter">
+<div class="modal-body" style="overflow:hidden;" ng-controller ="ModalSettingsCtrl as controller">
+
+  <div class="settings-interpreter" >
     <div class="settings-interpreter-name"><span class="settings-interpreter-title">
         Crossdata</span></div>
-    <a class="btn btn-dark" ng-click="getCrossdataInterpreterSettings()">+</a>
-    <a class="btn btn-dark" ng-click="saveCrossdataInterpreterSettings()">Save</a>
+    <a class="btn btn-dark" ng-click="controller.getCrossdataInterpreterSettings()">+</a>
+    <a class="btn btn-dark" ng-click="controller.saveCrossdataInterpreterSettings()">Save</a>
     <textarea class="settings-interpreter-textarea " ng-model="interpreterSettings"
               ng-show="showCrossdataProperties"></textarea>
   </div>
@@ -32,17 +33,17 @@
   <div class="settings-interpreter">
     <div class="settings-interpreter-name"><span class="settings-interpreter-title">
         Ingestion</span></div>
-    <a class="btn btn-dark" ng-click="getIngestionInterpreterSettings()">+</a>
-    <a class="btn btn-dark" ng-click="saveIngestionInterpreterSettings()">Save</a>
+    <a class="btn btn-dark" ng-click="controller.getIngestionInterpreterSettings()">+</a>
+    <a class="btn btn-dark" ng-click="controller.saveIngestionInterpreterSettings()">Save</a>
     <textarea class="settings-interpreter-textarea " ng-model="interpreterSettings"
               ng-show="showIngestionProperties"></textarea>
   </div>
 
   <div class="settings-interpreter">
     <div class="settings-interpreter-name"><span class="settings-interpreter-title">
-        Ingestion</span></div>
-    <a class="btn btn-dark" ng-click="getCassandraInterpreterSettings()">+</a>
-    <a class="btn btn-dark" ng-click="saveCassandraInterpreterSettings()">Save</a>
+        Cassandra</span></div>
+    <a class="btn btn-dark" ng-click="controller.getCassandraInterpreterSettings()">+</a>
+    <a class="btn btn-dark" ng-click="controller.saveCassandraInterpreterSettings()">Save</a>
     <textarea class="settings-interpreter-textarea " ng-model="interpreterSettings"
               ng-show="showCassandraProperties"></textarea>
   </div>

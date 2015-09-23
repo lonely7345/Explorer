@@ -32,8 +32,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Properties;
-
 
 public class CassandraInterpreterTest {
 
@@ -47,7 +45,6 @@ public class CassandraInterpreterTest {
 
 
     @Before public void setUp(){
-      /*  Properties properties = new Properties();*/
         System.setProperty(StringConstants.HOST, "127.0.0.1");
         System.setProperty(StringConstants.PORT, "9042");
         initialDataInStore = new Table();
