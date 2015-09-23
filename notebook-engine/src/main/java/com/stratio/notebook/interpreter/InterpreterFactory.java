@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.stratio.notebook.reader.PropertiesReader;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,6 +178,10 @@ public class InterpreterFactory {
     public String loadCassandraSettings(){
         return loadFromFile(conf.getCassandraSettings());
     }
+
+    /*private String loadFromFileCassandra(String nameFile){
+         return PropertiesReader.readConfigFrom(nameFile);
+    }*/
 
     public void saveCrossdataSettings(String file) throws IOException {
         saveToFile(file, conf.getCrossdataSettingsPath());

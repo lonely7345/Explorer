@@ -268,7 +268,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	/***
 	 * The cassandra settings path
 	 */
-	private static String CASSANDRA_SETTINGS_PATH =NOTEBOOK_CONF_DIR + File.separator+"cassandra.conf";
+	private static String CASSANDRA_SETTINGS_PATH =NOTEBOOK_CONF_DIR + File.separator+"cassandra.properties";
 
 	public String getCrossdataSettingsPath() {
 		System.out.println(CROSSDATA_SETTINGS_PATH);
