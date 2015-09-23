@@ -1,4 +1,4 @@
-/*
+/**
  * Licensed to STRATIO (C) under one or more contributor license agreements.
  * See the NOTICE file distributed with this work for additional information
  * regarding copyright ownership.  The STRATIO (C) licenses this file
@@ -6,7 +6,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -15,7 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package com.stratio.streaming.utils;
 
 import java.util.HashMap;
@@ -57,15 +56,15 @@ public class StreamingSyntaxParser {
         HELP
     }
 
-    /**
-     * This method must parse the streaming sentence.
-     *  @param input the streaming sentence.
-     *  @output the sentence parsed.
-     *
-     *  @throws StratioStreamingException if any error happens.
-    **/
+     /**
+      * This method must parse the streaming sentence.
+      * @param input the streaming sentence.
+      * @output the sentence parsed.
+      *
+      * @throws StratioStreamingException if any error happens.
+      **/
     public String parse(String input) throws StratioStreamingException {
-        //TODO review this method
+         //TODO review this method
 
         Map<Command, Pattern> commandPatterns = new HashMap<>();
         commandPatterns.put(Command.ADD_QUERY, Pattern.compile("(add query)(.*)")); //add query
@@ -94,10 +93,10 @@ public class StreamingSyntaxParser {
         for (Map.Entry<Command, Pattern> p : commandPatterns.entrySet()) {
             Matcher matcher = p.getValue().matcher(inputNormalized);
             if (matcher.find()) {
-                String filtered  = "";
-                if (matcher.groupCount()>1){
-                    filtered = matcher.group(2);
-                }
+                String filtered = "";
+                 if (matcher.groupCount()>1){
+                     filtered = matcher.group(2);
+                   }
                 switch (p.getKey()) {
                 case ADD_QUERY:
                     return addQuery(filtered);
