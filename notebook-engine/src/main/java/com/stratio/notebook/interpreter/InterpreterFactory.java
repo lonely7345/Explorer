@@ -36,7 +36,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.stratio.notebook.converters.PropertiesToStringConverter;
 import com.stratio.notebook.reader.PropertiesReader;
+import com.stratio.notebook.writer.PropertiesFileUpdater;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,19 +178,19 @@ public class InterpreterFactory {
     }
 
     public String loadCassandraSettings(){
-        return loadFromFile(conf.getCassandraSettings());
+        PropertiesToStringConverter converter = new PropertiesToStringConverter(System.lineSeparator());
+        return converter.transform(new PropertiesReader().readConfigFrom("cassandra"));
     }
 
-    /*private String loadFromFileCassandra(String nameFile){
-         return PropertiesReader.readConfigFrom(nameFile);
-    }*/
-
     public void saveCrossdataSettings(String file) throws IOException {
+
         saveToFile(file, conf.getCrossdataSettingsPath());
     }
 
     public void saveCassandraSettings(String file) throws IOException {
-        saveToFile(file, conf.getCassandraSettings());
+        PropertiesFileUpdater updater = new PropertiesFileUpdater();
+        updater.updateFileWithProperties("cassandra",file);
+     //   saveToFile(file, conf.getCassandraSettings());
     }
 
     public void loadCrossdataDefaultSettings() throws IOException {

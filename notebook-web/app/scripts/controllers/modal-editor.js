@@ -40,7 +40,6 @@
             $http.put(getRestApiBase() + '/interpreter/settings/editor', message).
             success(function(data, status, headers, config) {
                 alert('Editor settings saved');
-                console.log('Settings saved');
             }).
             error(function(data, status, headers, config) {
                 alert('Error ' + status + " " + data.message);

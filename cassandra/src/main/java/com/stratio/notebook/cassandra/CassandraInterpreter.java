@@ -43,7 +43,7 @@ public class CassandraInterpreter extends Interpreter {
 
         super(properties);
 
-        CassandraInterpreterGateways.commandDriver = new CassandraDriver(PropertiesReader.readConfigFrom("cassandra"));
+        CassandraInterpreterGateways.commandDriver = new CassandraDriver(new PropertiesReader().readConfigFrom("cassandra"));
 
     }
 

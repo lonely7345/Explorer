@@ -229,7 +229,7 @@ public class InterpreterRestApi {
     @Path("settings/cassandra")
     public Response updateCassandraSettings(String message) {
         logger.info("Update interpreterSettings {}", message);
-
+        System.out.println("EL MENSAGE QUE RECIBE ES :"+message);
         try {
             interpreterFactory.saveCassandraSettings(message);
         } catch (InterpreterException e) {

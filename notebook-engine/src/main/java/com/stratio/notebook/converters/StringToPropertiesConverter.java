@@ -16,37 +16,32 @@
  * under the License.
  */
 
-package com.stratio.notebook.reader;
+package com.stratio.notebook.converters;
 
 
-import com.stratio.notebook.exceptions.FolderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.Properties;
 
-public class PropertiesReader {
 
-    static Logger Logger = LoggerFactory.getLogger(FolderFinder.class);
+public class StringToPropertiesConverter {
 
+    Logger Logger = LoggerFactory.getLogger(StringToPropertiesConverter.class);
     /**
-     * Read configuration file from file
-     * @param nameFile name file configuration without extension
-     * @return Map with key values
+     * Convert String in Properties Object
+     * @param propertiesString
+     * @return properties Object
      */
-    public Properties readConfigFrom(String nameFile) {
-
-       Properties prop = new Properties();
+    public Properties transform(String propertiesString) {
+        Properties properties = new Properties();
         try {
-            prop.load(new FileInputStream(new PathFileCalculator().getPath(nameFile)));
-        }catch(IOException e){
-            String msg = "File properties not loaded. ";
-            Logger.error(msg);
-        }catch (FolderNotFoundException e){
-            Logger.error(e.getMessage());
+            properties.load(new StringReader(propertiesString));
+        }catch (IOException e){
+            Logger.error("Error to load properties from String ");
         }
-        return prop;
+        return properties;
     }
 }
