@@ -50,8 +50,4 @@ public class PropertiesToStringConverterTest {
         String result = CT_KEY_VALUE_1 +"=" + CT_KEY_VALUE_1 + CT_LINE_SEPARATOR + CT_KEY_VALUE_2 +"=" + CT_KEY_VALUE_2 ;
         assertThat(converter.transform(properties),is(result));
     }
-
-
-
-
 }

@@ -36,9 +36,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import com.stratio.notebook.converters.PropertiesToStringConverter;
-import com.stratio.notebook.reader.PropertiesReader;
-import com.stratio.notebook.writer.PropertiesFileUpdater;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,6 +174,7 @@ public class InterpreterFactory {
     public String loadCrossdataSettings(){
         return loadFromFile(conf.getCrossdataSettingsPath());
     }
+
 
     public void saveCrossdataSettings(String file) throws IOException {
         
