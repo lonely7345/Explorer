@@ -20,7 +20,6 @@ package com.stratio.notebook.reader;
 
 import com.stratio.notebook.conf.ConstantsFolder;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
-import com.stratio.notebook.reader.FolderFinder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

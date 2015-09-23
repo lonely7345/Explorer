@@ -74,7 +74,7 @@ public class CassandraInterpreterTest {
     }
 
     @Test public void whenCQLIsCorrectAndReturnOneResult(){
-        initialDataInStore.addRow(buildRowData(new CellData(VALUE)));
+        initialDataInStore.addRow(buildRowData(new CellData<>(VALUE)));
         initialDataInStore.addHeaderParameter(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
@@ -83,8 +83,8 @@ public class CassandraInterpreterTest {
     }
 
     @Test public void whenCQULISCorrectAndHaveMoreResults(){
-        initialDataInStore.addRow(buildRowData(new CellData(VALUE)));
-        initialDataInStore.addRow(buildRowData(new CellData(VALUE)));
+        initialDataInStore.addRow(buildRowData(new CellData<>(VALUE)));
+        initialDataInStore.addRow(buildRowData(new CellData<>(VALUE)));
         initialDataInStore.addHeaderParameter(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
