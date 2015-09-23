@@ -31,4 +31,6 @@ public class ConstantsFolder {
      * folder  that contain all file configuratiosn
      */
     public static String CT_FOLDER_CONFIGURATION ="conf/";
+
+    public static String CT_EXTENSION_FILE_PROPERTIES =".properties";
 }

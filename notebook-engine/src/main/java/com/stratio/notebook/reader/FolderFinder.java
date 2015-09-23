@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package com.stratio.notebook.util;
+package com.stratio.notebook.reader;
 
 
 import com.stratio.notebook.conf.ConstantsFolder;
@@ -58,9 +58,8 @@ public class FolderFinder {
     }
 
     private String buildRootPathString(Path path){
-       StringBuilder  rootPath = new StringBuilder();
-       if (path==null)
+        if (path==null)
            throw new FolderNotFoundException("Folder "+ConstantsFolder.CT_NAME_PROJECT_FOLDER +" not exist ");
-        return rootPath.append(path.toString()).append("/").toString();
+        return path.toString() + "/";
     }
 }

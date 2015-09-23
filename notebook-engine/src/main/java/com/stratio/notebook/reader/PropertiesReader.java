@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package com.stratio.notebook.util;
+package com.stratio.notebook.reader;
 
 
 import com.stratio.notebook.conf.ConstantsFolder;
@@ -32,19 +32,19 @@ public class PropertiesReader {
 
     static Logger Logger = LoggerFactory.getLogger(FolderFinder.class);
 
-    private FolderFinder rootFolderFinder = new FolderFinder();
+    private static FolderFinder rootFolderFinder = new FolderFinder();
 
     /**
-     * Read configuration file from path
-     * @param path with configuration file
+     * Read configuration file from file
+     * @param nameFile name file configuration without extension
      * @return Map with key values
      */
-    public Properties readConfigFrom(String path) {
+    public static Properties readConfigFrom(String nameFile) {
 
-        Properties prop = new Properties();
+       Properties prop = new Properties();
         try {
-            path = rootFolderFinder.parentProjectFolder()+ ConstantsFolder.CT_FOLDER_CONFIGURATION+path;
-            prop.load(new FileInputStream(path));
+            nameFile = rootFolderFinder.parentProjectFolder()+ ConstantsFolder.CT_FOLDER_CONFIGURATION+nameFile+ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES;
+            prop.load(new FileInputStream(nameFile));
         }catch(IOException e){
             String msg = "File properties not loaded. ";
             Logger.error(msg);
