@@ -918,15 +918,6 @@
 			<exclude>**/target/**</exclude>
                     </excludes>
                 </configuration>
-               <executions>
-                    <execution>
-                        <id>add-license</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                     </execution>
-                </executions>
             </plugin>
 
 
