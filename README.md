@@ -19,7 +19,7 @@
 -Add Cassandra interpreter
 -Add Stratio Ingestion Interpreter
 -Add Stratio Ingestion configurable settings (in view)
--Add Stratio Cassandra configurable settings (in view)  
+-Add Stratio Cassandra configurable settings (in view)      
     
 --------------------------------------------------------
 
