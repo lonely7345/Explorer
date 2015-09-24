@@ -177,7 +177,7 @@ public class InterpreterFactory {
 
 
     public void saveCrossdataSettings(String file) throws IOException {
-        
+
         saveToFile(file, conf.getCrossdataSettingsPath());
     }
 
