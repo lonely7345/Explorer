@@ -88,9 +88,9 @@ Configure to use Stratio Ingestion Interpreter
 
 If you have installed Stratio Ingestion and you want use this Interpreter you should edit file  ./conf/ingestion.conf 
 
-.. code.block:: bash
-
-  ingestion.home=/flume-ingestion/stratio-ingestion-0.5.0-SNAPSHOT
+====================================================================
+ ingestion.home = /flume-ingestion/stratio-ingestion-0.5.0-SNAPSHOT
+==================================================================== 
 
 You must fill ingestion.home with absolute path where Stratio Ingestion has been installed.
 
