@@ -31,7 +31,7 @@ fi
 
 
 if [ -d "$INSTALL_HOME" ]; then
-    export NOTEBOOK_CONF_DIR="/etc/sds/notebook"
+    export INSTALL_HOME="/etc/sds/notebook"
 fi
 
 if [ "x$NOTEBOOK_LOG_DIR" = "x" ]; then
