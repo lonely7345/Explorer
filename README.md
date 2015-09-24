@@ -15,11 +15,11 @@
 -Stratio Streaming intepreter completed  
     +Customized parser for streaming shell syntax  
     +Syntax highlighting and help command   
-    +Syntax autocomplete helper
--Add Cassandra interpreter
--Add Stratio Ingestion Interpreter
--Add Stratio Ingestion configurable settings (in view)
--Add Stratio Cassandra configurable settings (in view)      
+    +Syntax autocomplete helper 
+-Add Cassandra Interpreter   
+-Add Stratio Ingestion interpreter   
+-Add Stratio Ingestion configurable settings (in view)   
+-Add Stratio Cassandra configurable settings (in view)   
     
 --------------------------------------------------------
 
