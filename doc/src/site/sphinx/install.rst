@@ -114,7 +114,7 @@ You must also modify ./crossdata/pom.xml
     <properties> 
         <crossdata.version>HERE_YOUR_CROSSDATA'S_VERSION</crossdata.version> 
     </properties> 
-    
+
 
 Configure to use Apacha Cassandra Interpreter
 ----------------------------------------------
@@ -123,8 +123,8 @@ If you have installed Apache Cassabdra and you want to use this interpreter you 
 
 ..code-block:: bash
 
-  cassandra.host = 127.0.0.1 
-  cassandra.port = 9042 
+  cassandra.host = 127.0.0.127  
+  cassandra.port = 9042   
 
 numebr port and host must be the same numbers where cassadra is raised.  
 
