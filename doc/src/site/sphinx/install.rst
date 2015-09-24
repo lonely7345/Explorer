@@ -86,7 +86,7 @@ If Hive Server 2 installed and running on host hiveserver2Address on port 10000,
 Configure to use Stratio Ingestion Interpreter
 ----------------------------------------------
 
-If you have installed Stratio Ingestion and you want use this Interpreter you should edit file  ./conf/ingestion.conf 
+If you have installed Stratio Ingestion and you want to use this Interpreter you must edit file  ./conf/ingestion.conf 
 
 .. code-block:: bash
 
@@ -97,8 +97,19 @@ You must fill ingestion.home with absolute path where Stratio Ingestion has been
 Configure to use Stratio Crossdata Interpreter
 ----------------------------------------------
 
+
+
 Configure to use Apacha Cassandra Interpreter
 ----------------------------------------------
+
+If you have installed Apache Cassabdra and you want to use this interpreter you must edit file ./cassandra/src/main/resources/cassandra.properties
+
+..code-block:: bash
+
+  cassandra.host = 127.0.0.1
+  cassandra.port = 9042
+
+numebr port and host must be the same numbers where cassadra is raised.  
 
 Start/Stop
 ^^^^^^^^^^

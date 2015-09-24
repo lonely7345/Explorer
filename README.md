@@ -95,7 +95,7 @@ You can modify Stratio Ingestion driver's properties in:
 **Apache Cassandra configuration files**
 
 ```
-./conf/cassandra.conf
+./cassandra/src/main/resources/cassandra.properties
 ```
 ###Run
 ```
@@ -135,4 +135,4 @@ To load a Notebook from file you should indicate the full path on the system to 
 
 ###Issues and support  
 If you detect any bug or issue and need support, you can use  
-[Jira](http://crossdata.atlassian.net/)
+
