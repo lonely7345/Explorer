@@ -1,8 +1,8 @@
-#Stratio Notebook
+#Stratio Explorer
 
 
 
-**v0.2.0 Changes**
+**v0.4.0 Changes**
 
 --------------------------------------------------------
 
@@ -15,48 +15,62 @@
 -Stratio Streaming intepreter completed  
     +Customized parser for streaming shell syntax  
     +Syntax highlighting and help command   
-    +Syntax autocomplete helper     
+    +Syntax autocomplete helper
+- Add Cassandra interpreter
+- Add Stratio Ingestion Interpreter
+- Add Stratio Ingestion configurable settings (in view)
+- Add Stratio Cassandra configurable settings (in view)
     
 --------------------------------------------------------
 
 
 
-Interactive shell to manage **Crossdata** based on Zeppelin
+Interactive shell to manage **Crossdata,Spark,Spark-sql,Ingestion,MarkDown,Shell,Streaming,Cassandra** based on Zeppelin
 
 Zeppelin, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
 
 _Core feature_:
 
 + Web based notebook style editor.
-+ Crossdata interpreter
++ Stratio Crossdata interpreter
++ Apache Spark Interpreter
++ Apache Spark-SQL interpreter
++ Stratio Ingestion Interpreter
++ Markdown Interpreter
++ Shell Interpreter
++ Stratio Streaming Interpreter
++ Apache Cassandra interpreter
 + Built-in Apache Spark support
-To know more about Zeppelin, visit http://zeppelin-project.org
+To know more about Explorer , visit http://docs.stratio.com/
 
 ##Requirements
 
 Java 1.7  
 Tested on Mac OSX, CentOS 6.X, Ubuntu 14.X   
 Maven (if you want to build from the source code)  
-Node.js Package Manager   
+Node.js Package Manager
+Apache Cassandra DataBase Running(if you want to use Apache Cassandra Interpreter)
+Stratio Crossdata Running (If you want to use Stratio Crossdata Interpreter)
+Apache Spark node Running (If you want to use Apache Spark and Apache Spark-Sql interpreter)
 
 ##Getting Started
 
 
 ###Build
 
-If you want to build Zeppelin from the source, please first clone this repository. And then:
+If you want to build Explorer from the source, please first clone this repository. And then:
 ```
 mvn clean package
 ```
 
 ###Configure
 
-If you wish to configure Zeppelin options (like port number), configure the following files:
+If you wish to configure Explorer options (like port number), configure the following files:
 ```
 ./conf/notebook-env.sh
 ./conf/notebook-site.xml
 ```
-Mesos
+If you want to configure Apache Mesos you must uncomment this lines of :
 
     # ./conf/notebook-env.sh
     export MASTER=mesos://...
@@ -65,13 +79,13 @@ Mesos
     
 If you set `SPARK_HOME`, you should deploy spark binary on the same location to all worker nodes. And if you set `spark.executor.uri`, every worker can read that file on its node.
 
-**Crossdata files**
+**Stratio Crossdata configuration files**
 
-You can modify Crossdata driver's properties in:  
+You can modify Stratio Crossdata driver's properties in:
 ```
 ./conf/crossdata/driver-application.conf
 ```  
-For using another Crossdata's version modify:   
+For using another Stratio Crossdata's version modify:
 ```
 ./crossdata/pom.xml
 ```  
@@ -82,8 +96,18 @@ For using another Crossdata's version modify:
     </properties>
 ```  
 
+**Stratio Ingestion configuration files**
 
+You can modify Stratio Ingestion driver's properties in:
 
+```
+./conf/ingestions.conf
+```
+**Apache Cassandra configuration files**
+
+```
+./conf/cassandra.conf
+```
 ###Run
 ```
 ./bin/notebook.sh -> to launch a console session depending instance 
@@ -113,7 +137,7 @@ browse localhost:8084 in your browser. 8085 port should be accessible for websoc
 **For configuration details check ./conf subdirectory.**
 
 ###Save
-Stratio Notebook allows you to save and import notebooks from a file.
+Stratio Explorer allows you to save and import notebooks from a file.
 For saving a Notebook to a file you just should specify the filename and it will automatically create an "export"
 directory in the same path where Stratio Notebook resides. The file will have ".json" extension.
 To load a Notebook from file you should indicate the full path on the system to access it.
