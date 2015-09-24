@@ -97,7 +97,24 @@ You must fill ingestion.home with absolute path where Stratio Ingestion has been
 Configure to use Stratio Crossdata Interpreter
 ----------------------------------------------
 
+If you have installed Stratio Crossdata and you want to use this interperter you must edit file ./conf/driver-application.conf
 
+.. code-block:: bash
+
+  crossdata-driver.config.cluster.name = "CrossdataServerCluster"  
+  crossdata-driver.config.cluster.actor = "crossdata-server"  
+  crossdata-driver.config.cluster.hosts = ["127.0.0.1:13420"]  
+  crossdata-driver.config.retry.times = 3  
+  crossdata-driver.config.retry.duration = 120s  
+
+You must also modify ./crossdata/pom.xml
+
+.. code-block:: bash
+
+    <properties> 
+        <crossdata.version>HERE_YOUR_CROSSDATA'S_VERSION</crossdata.version> 
+    </properties> 
+    
 
 Configure to use Apacha Cassandra Interpreter
 ----------------------------------------------
@@ -106,8 +123,8 @@ If you have installed Apache Cassabdra and you want to use this interpreter you 
 
 ..code-block:: bash
 
-  cassandra.host = 127.0.0.1
-  cassandra.port = 9042
+  cassandra.host = 127.0.0.1 
+  cassandra.port = 9042 
 
 numebr port and host must be the same numbers where cassadra is raised.  
 
