@@ -5,41 +5,31 @@ Install Notebook
 Instructions
 ^^^^^^^^^^^^^
 
-Install Stratio Explorer in local mode
 
-.. code-block:: bash
 
-  # this scripts install hadoop and notebook in current directory and start notebook in local mode
-  # download and unarchive hadoop distribution package
-  curl -O http://apache.mirror.cdnetworks.com/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-bin.tar.gz
-  tar -xzf hadoop-1.2.1-bin.tar.gz
-
-  # download zeppelin and unarchive
-  curl -O https://s3-ap-northeast-1.amazonaws.com/zeppel.in/zeppelin-0.3.0.tar.gz
-  tar -xzf zeppelin-0.3.0.tar.gz
-
-  # set HADOOP_HOME
-  echo "export HADOOP_HOME=`pwd`/hadoop-1.2.1" >> notebook-0.3.0/conf/notebook-env.sh
-
-  # start Explorer
-  ./notebook-0.4.0/bin/notebook-daemon.sh start
-
-You can access Explorer with browser http://localhost:8084
+  You can access Explorer with browser http://localhost:8084
 
 Install
 ^^^^^^^
-Configuring Explorer with existing hadoop cluster, refer this section.
+Configuring Explorer with Maven
 
 Prerequisites
 -------------
 Java 1.7 or Later
-Apache Hadoop (Standalone mode)
-Download
-To get Stratio Explorer distribution, download a recent release.
+Apache Maven 
+Node.js (to use npm)
 
 Install
 -------
-Unpack the downloaded Explorer distribution.
+To install Stratio Explorer you must follow this Steps.
+
+1.- Clone or download project from https://github.com/Stratio/stratio-notebook  
+2.- From Shell move to stratio-netebook folder  
+3.- Excute maven package
+
+.. code-block::bash
+  
+  mvn clean package package 
 
 Configure
 ---------
@@ -59,29 +49,6 @@ NOTEBOOK_DRIVERS             zeppelin.drivers         hive:hive2://,exec:exec://
 NOTEBOOK_DRIVER_DIR          zeppelin.driver.dir      drivers			     Notebook driver directory.
 =========================    =======================  ============================== ===========
 
-Configuring with existing Hive
--------------------------------
-If you have hive already installed in your hadoop cluster, just run hive server and make Notebook to connect it. There're two different version of hive servers, Hive Server1, Hive Server2. Make sure you have Hive server running.
-
-And then, add connection uri in zeppelin.drivers at zeppelin-site.xml If you have Hive Server 1 installed and running on host hiveserver1Address on port 10000, configuration property can be
-
-.. code-block:: bash
- 
- <property>
-   <name>zeppelin.drivers</name>
-   <value>hive:hive://hiveserver1Address:10000/default,exec:exec://</value>
-   <description>Comma separated driver configurations uri. </description>
- </property>
-
-If Hive Server 2 installed and running on host hiveserver2Address on port 10000, configuration will be
-
-.. code-block:: bash
-
-  <property>
-   <name>zeppelin.drivers</name>
-   <value>hive:hive2://hiveserver2Address:10000/default,exec:exec://</value>
-   <description>Comma separated driver configurations uri. </description>
-  </property>
 
 Configure to use Stratio Ingestion Interpreter
 ----------------------------------------------
@@ -112,7 +79,7 @@ You must also modify ./crossdata/pom.xml
 .. code-block:: bash
 
     <properties> 
-        <crossdata.version>HERE_YOUR_CROSSDATA'S_VERSION</crossdata.version> 
+        <crossdata.version>HERE_YOUR_CROSSDATA_VERSION</crossdata.version> 
     </properties> 
 
 
@@ -124,7 +91,7 @@ If you have installed Apache Cassabdra and you want to use this interpreter you 
 ..code-block:: bash
 
   cassandra.host = 127.0.0.127  
-  cassandra.port = 9042   
+  cassandra.port = 9042    
 
 numebr port and host must be the same numbers where cassadra is raised.  
 
