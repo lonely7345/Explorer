@@ -6,16 +6,6 @@
 
 --------------------------------------------------------
 
--Run paragraph force output visualization   
--Notebook’s loading delay minimized  
-    +Font load improvement  
-    +Websocket call control  
--Update to Spark 1.4.0   
--Connection to remote Spark cluster  
--Stratio Streaming intepreter completed  
-    +Customized parser for streaming shell syntax  
-    +Syntax highlighting and help command   
-    +Syntax autocomplete helper 
 -Add Cassandra Interpreter   
 -Add Stratio Ingestion interpreter   
 -Add Stratio Ingestion configurable settings (in view)   
@@ -25,9 +15,8 @@
 
 
 
-Interactive shell to manage **Crossdata,Spark,Spark-sql,Ingestion,MarkDown,Shell,Streaming,Cassandra** based on Zeppelin
-
-Zeppelin, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
+Interactive shell to manage **Crossdata,Spark,Spark-sql,Ingestion,MarkDown,Shell,Streaming,Cassandra** based on Apache Zeppelin
+, a web-based notebook that enables interactive data analytics. You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.
 
 _Core feature_:
 
@@ -139,7 +128,7 @@ browse localhost:8084 in your browser. 8085 port should be accessible for websoc
 ###Save
 Stratio Explorer allows you to save and import notebooks from a file.
 For saving a Notebook to a file you just should specify the filename and it will automatically create an "export"
-directory in the same path where Stratio Notebook resides. The file will have ".json" extension.
+directory in the same path where Stratio Explorer resides. The file will have ".json" extension.
 To load a Notebook from file you should indicate the full path on the system to access it.
 
 *Be sure to have the right access and modify permissions for the user that is logged in the selected path*  

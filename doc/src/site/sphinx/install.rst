@@ -5,7 +5,7 @@ Install Notebook
 Instructions
 ^^^^^^^^^^^^^
 
-Install Stratio Notebook in local mode
+Install Stratio Explorer in local mode
 
 .. code-block:: bash
 
@@ -21,25 +21,25 @@ Install Stratio Notebook in local mode
   # set HADOOP_HOME
   echo "export HADOOP_HOME=`pwd`/hadoop-1.2.1" >> notebook-0.3.0/conf/notebook-env.sh
 
-  # start notebook
-  ./notebook-0.3.0/bin/notebook-daemon.sh start
+  # start Explorer
+  ./notebook-0.4.0/bin/notebook-daemon.sh start
 
-You can access Notebook with browser http://localhost:8084
+You can access Explorer with browser http://localhost:8084
 
 Install
 ^^^^^^^
-Configuring Notebook with existing hadoop cluster, refer this section.
+Configuring Explorer with existing hadoop cluster, refer this section.
 
 Prerequisites
 -------------
 Java 1.7 or Later
 Apache Hadoop (Standalone mode)
 Download
-To get Stratio Notebook distribution, download a recent release.
+To get Stratio Explorer distribution, download a recent release.
 
 Install
 -------
-Unpack the downloaded Notebook distribution.
+Unpack the downloaded Explorer distribution.
 
 Configure
 ---------
@@ -82,6 +82,23 @@ If Hive Server 2 installed and running on host hiveserver2Address on port 10000,
    <value>hive:hive2://hiveserver2Address:10000/default,exec:exec://</value>
    <description>Comma separated driver configurations uri. </description>
   </property>
+
+Configure to use Stratio Ingestion Interpreter
+----------------------------------------------
+
+If you have installed Stratio Ingestion and you want use this Interpreter you should edit file  ./conf/ingestion.conf 
+
+.. code.block:: bash
+
+  ingestion.home=/flume-ingestion/stratio-ingestion-0.5.0-SNAPSHOT
+
+You must fill ingestion.home with absolute path where Stratio Ingestion has been installed.
+
+Configure to use Stratio Crossdata Interpreter
+----------------------------------------------
+
+Configure to use Apacha Cassandra Interpreter
+----------------------------------------------
 
 Start/Stop
 ^^^^^^^^^^
