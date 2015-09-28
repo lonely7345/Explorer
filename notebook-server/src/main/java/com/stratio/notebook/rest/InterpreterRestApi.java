@@ -188,7 +188,7 @@ public class InterpreterRestApi {
     public Response updateIngestionSettings(String newProperties) {
         try {
             PropertiesFileUpdater updater = new PropertiesFileUpdater();
-            updater.updateFileWithProperties("cassandra", newProperties);
+            updater.updateFileWithProperties("ingestion", newProperties);
         } catch (FolderNotFoundException e) {
             return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
         }
@@ -223,7 +223,6 @@ public class InterpreterRestApi {
         PropertiesToStringConverter converter = new PropertiesToStringConverter(System.lineSeparator());
         return new JsonResponse(Response.Status.OK, "", converter.transform(new PropertiesReader().readConfigFrom("cassandra"))).build();
     }
-
     /**
      * Add new interpreter setting
      *

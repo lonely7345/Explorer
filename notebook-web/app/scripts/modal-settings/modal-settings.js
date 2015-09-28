@@ -127,7 +127,7 @@
                   saveCassandraInterpreterSettings:function(){
                               $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/cassandra', $scope.interpreterSettingsCassandra).
                               success(function(data) {
-                                  alert('Crossdata settings saved');
+                                  alert('cassandra settings saved');
                               }).
                               error(function(data, status) {
                                   alert('Error ' + status + " " + data.message);
