@@ -15,33 +15,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package com.stratio.notebook.reader;
 
 
-import com.stratio.notebook.conf.ConstantsFolder;
-import com.stratio.notebook.exceptions.FolderNotFoundException;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
-public class FolderFinder {
-
+public interface PathCalculator {
 
     /**
-     * Calculate relative path to rootFolder
-     * @return string with rootParentFolder
+     * Calculate Path object
+     * @return Path object
      */
-    public String parentProjectFolder() {
-
-        List<PathCalculator> pathCalculators = PathCalculatorListBuilder.build();
-        for (PathCalculator pathCalculator:pathCalculators){
-            Path path = pathCalculator.calculatePath();
-            if (Files.exists(path))
-                return path.toString()+"/";
-
-        }
-        throw new FolderNotFoundException("Folder "+ConstantsFolder.CT_NAME_PROJECT_FOLDER +" not exist ");
-    }
+    Path calculatePath();
 }

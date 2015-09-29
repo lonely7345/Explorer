@@ -20,28 +20,20 @@ package com.stratio.notebook.reader;
 
 
 import com.stratio.notebook.conf.ConstantsFolder;
-import com.stratio.notebook.exceptions.FolderNotFoundException;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
-public class FolderFinder {
-
+public class PathCalculatorListBuilder {
 
     /**
-     * Calculate relative path to rootFolder
-     * @return string with rootParentFolder
+     * Build list with all pathCalculators
+     * @return List with path Calculators
      */
-    public String parentProjectFolder() {
-
-        List<PathCalculator> pathCalculators = PathCalculatorListBuilder.build();
-        for (PathCalculator pathCalculator:pathCalculators){
-            Path path = pathCalculator.calculatePath();
-            if (Files.exists(path))
-                return path.toString()+"/";
-
-        }
-        throw new FolderNotFoundException("Folder "+ConstantsFolder.CT_NAME_PROJECT_FOLDER +" not exist ");
+    public static List<PathCalculator> build(){
+        List<PathCalculator> listCalculators = new ArrayList<>();
+        listCalculators.add(new NormalPathCalculator(ConstantsFolder.CT_NAME_PROJECT_FOLDER));
+        listCalculators.add(new EnvironmentPathCalculator(ConstantsFolder.CT_NOTEBOOK_CONF_DIR_ENV));
+        return listCalculators;
     }
 }
