@@ -26,6 +26,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
+//TODO : if class contains STRATIO-NOTEBOOK FOLLOW NORMAL FLOW
+//TODO : if class not contains STRATIO-NOTEBOOK
+//TODO : PATH TO SEAACH /etc/sds/notebook
 public class FolderFinderTest {
 
 

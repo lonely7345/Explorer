@@ -25,7 +25,7 @@ public class ConstantsFolder {
     /**
      * Name of project root folder
      */
-    public static String CT_NAME_PROJECT_FOLDER =calculateFolder() ;
+    public static String CT_NAME_PROJECT_FOLDER ="stratio-notebook" ;
 
     /**
      * folder  that contain all file configuratiosn
@@ -36,14 +36,5 @@ public class ConstantsFolder {
      * Extension to configuration filess
      */
     public static String CT_EXTENSION_FILE_PROPERTIES =".properties";
-
-
-    private static String calculateFolder(){
-        String folder = System.getenv("NOTEBOOK_HOME");
-        if (folder==null)
-            folder = "stratio-notebook";
-        return folder;
-
-    }
 
 }

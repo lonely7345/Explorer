@@ -32,7 +32,8 @@ import java.nio.file.Paths;
 
 public class FolderFinder {
 
-    static Logger Logger = LoggerFactory.getLogger(FolderFinder.class);
+    static Logger LOGGER = LoggerFactory.getLogger(FolderFinder.class);
+
     /**
      * Calculate relative path to rootFolder
      * @return string with rootParentFolder
@@ -54,7 +55,7 @@ public class FolderFinder {
 
         }catch(URISyntaxException e){
             String msg ="Error with sintax in : "+e.getMessage();
-            Logger.error(msg);
+            LOGGER.error(msg);
         }
 
         return path;
