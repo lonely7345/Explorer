@@ -34,7 +34,7 @@
   <name>Notebook: web Application</name>
 
   <properties>
-    <sonar.sources>.</sonar.sources>
+    <sonar.sources>app</sonar.sources>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
