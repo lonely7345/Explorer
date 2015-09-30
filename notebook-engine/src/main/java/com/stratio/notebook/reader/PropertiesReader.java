@@ -40,12 +40,17 @@ public class PropertiesReader {
 
        Properties prop = new Properties();
         try {
+            String path = new PathFileCalculator().getPath(nameFile);
+            System.out.println("Configurator file is :"+path);
             prop.load(new FileInputStream(new PathFileCalculator().getPath(nameFile)));
         }catch(IOException e){
             String msg = "File properties not loaded. ";
             Logger.error(msg);
+            System.out.println("File properties not loaded ");
+
         }catch (FolderNotFoundException e){
             Logger.error(e.getMessage());
+            System.out.println("Folder not found ");
         }
         return prop;
     }
