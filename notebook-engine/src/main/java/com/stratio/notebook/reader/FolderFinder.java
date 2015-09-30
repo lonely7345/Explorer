@@ -38,7 +38,7 @@ public class FolderFinder {
         for (PathCalculator pathCalculator:pathCalculators){
             Path path = pathCalculator.calculatePath();
             if (Files.exists(path)) {
-                return "/"+path.toString() + "/";
+                return path.toString() + "/";
             }
 
         }

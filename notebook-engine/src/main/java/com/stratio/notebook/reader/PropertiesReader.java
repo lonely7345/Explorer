@@ -46,11 +46,8 @@ public class PropertiesReader {
         }catch(IOException e){
             String msg = "File properties not loaded. ";
             Logger.error(msg);
-            throw new FolderNotFoundException("File properties "+path +" NOT FOUND ");
-
-        }/*catch (FolderNotFoundException e){
-            Logger.error(e.getMessage());
-        }*/
+            throw new FolderNotFoundException("File properties "+path +" NOT FOUND "+e.getMessage());
+        }
         return prop;
     }
 }
