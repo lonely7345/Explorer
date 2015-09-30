@@ -34,18 +34,17 @@ public class PropertiesReaderTest {
 
 
     private static final String NOT_EXIST_PATH ="not_exit";
-    private static final String EXIST_FILE_WITH_DATA ="WithData";
+    private static final String EXIST_FILE_WITH_DATA ="cassandra";
     private Properties result ;
     private Commons commons;
     private PropertiesReader reader;
 
 
-
     @Before
     public void setUp(){
         result = new Properties();
-        commons = new Commons();
-        commons.initialize();
+       // commons = new Commons();
+       // commons.initialize();
         reader = new PropertiesReader();
 
     }
@@ -53,7 +52,7 @@ public class PropertiesReaderTest {
 
     @After
     public void tearDown(){
-        commons.tearDown();
+     //   commons.tearDown();
     }
 
 
@@ -64,7 +63,8 @@ public class PropertiesReaderTest {
 
 
     @Test public void whenExistFileAndContainsData(){
-        result.put("host","1");
+        result.put("cassandra.host","127.0.0.1");
+        result.put("cassandra.port","9042");
         assertThat(reader.readConfigFrom(EXIST_FILE_WITH_DATA), is(result));
     }
 }

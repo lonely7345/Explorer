@@ -26,12 +26,12 @@ public class Commons {
     private String oldValueFolderConfiguration ;
 
     public void initialize(){
-        oldValueFolderConfiguration = ConstantsFolder.CT_FOLDER_CONFIGURATION;
+        oldValueFolderConfiguration = new String(ConstantsFolder.CT_FOLDER_CONFIGURATION);
         ConstantsFolder.CT_FOLDER_CONFIGURATION ="notebook-engine/src/test/test_resources/";
     }
 
 
     public void tearDown(){
-        ConstantsFolder.CT_FOLDER_CONFIGURATION = oldValueFolderConfiguration;
+        ConstantsFolder.CT_FOLDER_CONFIGURATION =new String(oldValueFolderConfiguration);
     }
 }
