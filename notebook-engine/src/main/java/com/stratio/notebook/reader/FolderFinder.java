@@ -19,7 +19,6 @@
 package com.stratio.notebook.reader;
 
 
-import com.stratio.notebook.conf.ConstantsFolder;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
 
 import java.nio.file.Files;
@@ -39,7 +38,7 @@ public class FolderFinder {
         for (PathCalculator pathCalculator:pathCalculators){
             Path path = pathCalculator.calculatePath();
             if (Files.exists(path)) {
-                return path.toString() + "/";
+                return "/"+path.toString() + "/";
             }
 
         }
