@@ -35,7 +35,7 @@ public class ConstantsFolder {
     /**
      * Extension to configuration filess
      */
-    public static String CT_EXTENSION_FILE_PROPERTIES =".properties";
+    public static String CT_EXTENSION_FILE_PROPERTIES =".conf";
 
     public static String CT_NOTEBOOK_CONF_DIR_ENV ="NOTEBOOK_CONF_DIR";
 

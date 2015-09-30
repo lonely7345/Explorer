@@ -20,11 +20,13 @@ package com.stratio.notebook.writer;
 
 
 import com.stratio.notebook.Commons;
+import com.stratio.notebook.reader.PathFileCalculator;
 import com.stratio.notebook.reader.PropertiesReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -49,7 +51,7 @@ public class PropertiesFileUpdaterTest {
 
 
     @After public void tearDown(){
-        updater.updateFileWithProperties(CT_FILE,"prop1=prop1");
+        new File(new PathFileCalculator().getPath(CT_FILE)).delete();
         commons.tearDown();
     }
 

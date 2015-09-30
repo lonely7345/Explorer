@@ -42,7 +42,7 @@
                   getCrossdataInterpreterSettings:function() {
                       if (!$scope.showCrossdataProperties) {
                           $scope.showCrossdataProperties = true;
-                          $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata').
+                          $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/list?nameFile=driver-application').
                           success(function(data) {
                               var receivedData = data.body;
                               $scope.interpreterSettingsCrossdata = receivedData;
@@ -55,7 +55,7 @@
                       }
                   },
                   saveCrossdataInterpreterSettings:function() {
-                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata', $scope.interpreterSettingsCrossdata).
+                              $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/crossdata'+$scope.interpreterSettingsCrossdata ).
                               success(function(data) {
                                   alert('Crossdata settings saved');
                               }).
@@ -63,10 +63,11 @@
                                   alert('Error ' + status + " " + data.message);
                               });
                           },
+
                   getIngestionInterpreterSettings:function() {
                               if (!$scope.showIngestionProperties) {
                                   $scope.showIngestionProperties = true;
-                                  $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion').
+                                  $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/list?nameFile=ingestion').
                                   success(function(data) {
                                       var receivedData = data.body;
                                       $scope.interpreterSettingsIngestion = receivedData;
@@ -79,7 +80,7 @@
                   getCassandraInterpreterSettings:function(){
                               if (!$scope.showCassandraProperties) {
                                   $scope.showCassandraProperties = true;
-                                  $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/cassandra').
+                                  $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/settings/list?nameFile=cassandra').
                                   success(function(data) {
                                       var receivedData = data.body;
                                       $scope.interpreterSettingsCassandra = receivedData;
@@ -95,11 +96,11 @@
                   saveIngestionInterpreterSettings:function() {
                               console.log("saveIngestionIntepreterSettings");
                               $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/settings/ingestion', $scope.interpreterSettingsIngestion).
-                              success(function(data, status, headers, config) {
+                              success(function() {
                                   alert('Ingestion settings saved');
                                   console.log('Settings saved');
                               }).
-                              error(function(data, status, headers, config) {
+                              error(function(data, status) {
                                   alert('Error ' + status + " " + data.message);
                                   console.log('Error %o %o', status, data.message);
                               });
@@ -110,11 +111,11 @@
                   resetToDefault:function() {
                               console.log("reset to default settings");
                               $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/reset', true).
-                              success(function(data, status, headers, config) {
+                              success(function() {
                                   console.log('Settings restored to default');
                                   $scope.getInterpreterSettings();
                               }).
-                              error(function(data, status, headers, config) {
+                              error(function(data, status) {
                                   console.log('Error %o %o', status, data.message);
                               });
                           },
