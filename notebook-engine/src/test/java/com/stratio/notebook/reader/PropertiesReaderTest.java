@@ -18,8 +18,7 @@
 
 package com.stratio.notebook.reader;
 
-import com.stratio.notebook.Commons;
-
+import com.stratio.notebook.conf.ConstantsFolder;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
 import org.junit.After;
 import org.junit.Before;
@@ -35,17 +34,14 @@ public class PropertiesReaderTest {
 
 
     private static final String NOT_EXIST_PATH ="not_exit";
-    private static final String EXIST_FILE_WITH_DATA ="WithData";
     private Properties result ;
-    private Commons commons;
     private PropertiesReader reader;
 
 
     @Before
     public void setUp(){
         result = new Properties();
-        commons = new Commons();
-        commons.initialize();
+
         reader = new PropertiesReader();
 
     }
@@ -53,7 +49,7 @@ public class PropertiesReaderTest {
 
     @After
     public void tearDown(){
-        commons.tearDown();
+        ConstantsFolder.CT_FOLDER_CONFIGURATION ="/conf";
     }
 
 
@@ -63,7 +59,8 @@ public class PropertiesReaderTest {
     }
 
     @Test public void whenExistFileAndContainsData(){
-        result.put("host","1");
-        assertThat(reader.readConfigFrom(EXIST_FILE_WITH_DATA), is(result));
+        result.put("cassandra.host","127.0.0.1");
+        result.put("cassandra.port","9042");
+        assertThat(reader.readConfigFrom("cassandra"), is(result));
     }
 }

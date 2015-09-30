@@ -18,6 +18,7 @@
 
 package com.stratio.notebook.reader;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,26 +31,25 @@ public class NormalPathCalculator implements PathCalculator {
 
     static Logger LOGGER = LoggerFactory.getLogger(FolderFinder.class);
 
-    private final String NOT_POSSIBLE_FOLDER ="¿?";
-    private String stringFolder;
+    private String configureFolder;
 
-    public NormalPathCalculator(String stringFolder){
-        this.stringFolder = stringFolder;
+    public NormalPathCalculator(String configureFolder){
+        this.configureFolder = configureFolder;
     }
 
     /**+
      * Calculate path from stringFolder
-     * @return Path from Stringfolder
+     * @return Path from configureFile
      */
     @Override
     public Path calculatePath(){
-        Path path =null;
+        PathOperations pathOperations = null;
         try {
             URL url = getClass().getClassLoader().getResource(".");
-            path = Paths.get(url.toURI());
-            while(path!=null &&
-                    !path.endsWith(stringFolder)){
-                path = path.getParent();
+             pathOperations = new PathOperations(Paths.get(Paths.get(url.toURI()).toString(),configureFolder));
+            while(pathOperations.noFinishFolder()&&pathOperations.notFileExist()){
+               pathOperations.goParent();
+               pathOperations.appendFolderToPath(configureFolder);
             }
 
         }catch(URISyntaxException e){
@@ -57,12 +57,7 @@ public class NormalPathCalculator implements PathCalculator {
             LOGGER.error(msg);
         }
 
-        return generatePath(path);
-    }
+        return pathOperations.getPath();
 
-    private Path generatePath(Path path){
-        if (path==null)
-            path = Paths.get(NOT_POSSIBLE_FOLDER);
-        return path;
     }
 }

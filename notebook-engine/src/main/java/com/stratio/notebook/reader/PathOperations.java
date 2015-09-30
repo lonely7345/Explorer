@@ -16,22 +16,46 @@
  * under the License.
  */
 
-package com.stratio.notebook;
+package com.stratio.notebook.reader;
 
 
 import com.stratio.notebook.conf.ConstantsFolder;
 
-public class Commons {
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-    private String oldValueFolderConfiguration ;
+public class PathOperations {
 
-    public void initialize(){
-        oldValueFolderConfiguration = new String(ConstantsFolder.CT_FOLDER_CONFIGURATION);
-        ConstantsFolder.CT_FOLDER_CONFIGURATION ="notebook-engine/src/test/test_resources/";
+    private Path path;
+
+    public PathOperations(Path path){
+        this.path = path;
     }
 
 
-    public void tearDown(){
-        ConstantsFolder.CT_FOLDER_CONFIGURATION =new String(oldValueFolderConfiguration);
+    public boolean noFinishFolder(){
+        return !ConstantsFolder.CT_NOT_EXIST_FOLDER.equals(path.toString());
+    }
+
+    public boolean notFileExist(){
+        return Files.notExists(path);
+    }
+
+    public  void appendFolderToPath(String folder){
+
+        if (path==null) {
+            path = Paths.get(ConstantsFolder.CT_NOT_EXIST_FOLDER);
+        }else {
+            path = Paths.get(path.toString(), folder);
+        }
+    }
+
+    public void goParent(){
+        path = path.getParent().getParent();
+    }
+
+    public Path getPath(){
+        return path;
     }
 }

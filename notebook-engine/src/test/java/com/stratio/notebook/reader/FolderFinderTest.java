@@ -42,21 +42,25 @@ public class FolderFinderTest {
 
     private FolderFinder finder;
     private String oldValueFolder = ConstantsFolder.CT_NAME_PROJECT_FOLDER;
+    private String oldConf ;
 
     @Before
     public void setUp(){
+        oldConf =  ConstantsFolder.CT_FOLDER_CONFIGURATION;
         finder = new FolderFinder();
     }
 
     @After
     public void tearDown(){
+        ConstantsFolder.CT_FOLDER_CONFIGURATION = oldConf;
         ConstantsFolder.CT_NAME_PROJECT_FOLDER =  oldValueFolder;
     }
 
 
     @Test
     public void parentFolderWillBeCalculated(){
-        assertTrue(finder.parentProjectFolder().endsWith("/" + ConstantsFolder.CT_NAME_PROJECT_FOLDER +"/"));
+
+        assertTrue(finder.parentProjectFolder().endsWith( ConstantsFolder.CT_FOLDER_CONFIGURATION +"/"));
     }
 
 
@@ -73,7 +77,7 @@ public class FolderFinderTest {
 
     @Test (expected = FolderNotFoundException.class)
     public void whenParentFolderNotExistAndEnvironmentFolderExist(){
-        ConstantsFolder.CT_NAME_PROJECT_FOLDER = "not_exist_file";
+        ConstantsFolder.CT_FOLDER_CONFIGURATION = "not_exist_file";
         mockStatic(System.class);
         final String key = ConstantsFolder.CT_NOTEBOOK_CONF_DIR_ENV;
         final String expected = "not_exist";
@@ -81,6 +85,4 @@ public class FolderFinderTest {
         replayAll();
         finder.parentProjectFolder();
     }
-
-
 }

@@ -19,7 +19,6 @@
 package com.stratio.notebook.writer;
 
 
-import com.stratio.notebook.Commons;
 import com.stratio.notebook.reader.PathFileCalculator;
 import com.stratio.notebook.reader.PropertiesReader;
 import org.junit.After;
@@ -37,22 +36,18 @@ public class PropertiesFileUpdaterTest {
 
 
     private Properties result;
-    private Commons commons;
     private static final String CT_FILE="changer";
     private PropertiesFileUpdater updater;
 
 
     @Before public void setUp(){
         result = new Properties();
-        commons = new Commons();
-        commons.initialize();
         updater = new PropertiesFileUpdater();
     }
 
 
     @After public void tearDown(){
         new File(new PathFileCalculator().getPath(CT_FILE)).delete();
-        commons.tearDown();
     }
 
     @Test public void whenFileContainsPropertyThenActualizeValue() throws IOException {

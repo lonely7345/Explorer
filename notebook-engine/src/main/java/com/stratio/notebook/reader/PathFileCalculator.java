@@ -34,7 +34,9 @@ public class PathFileCalculator {
      * @return complete path
      */
     public String getPath(String nameFile){
-        return rootFolderFinder.parentProjectFolder()+ ConstantsFolder.CT_FOLDER_CONFIGURATION+nameFile+ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES;
+
+
+        return rootFolderFinder.parentProjectFolder() +nameFile+ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES;
     }
 
 }
