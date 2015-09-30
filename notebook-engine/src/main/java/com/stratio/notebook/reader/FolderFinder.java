@@ -38,10 +38,11 @@ public class FolderFinder {
         List<PathCalculator> pathCalculators = PathCalculatorListBuilder.build();
         for (PathCalculator pathCalculator:pathCalculators){
             Path path = pathCalculator.calculatePath();
-            if (Files.exists(path))
-                return path.toString()+"/";
+            if (Files.exists(path)) {
+                return path.toString() + "/";
+            }
 
         }
-        throw new FolderNotFoundException("Folder "+ConstantsFolder.CT_NAME_PROJECT_FOLDER +" not exist ");
+        throw new FolderNotFoundException("Folder not exist ");
     }
 }

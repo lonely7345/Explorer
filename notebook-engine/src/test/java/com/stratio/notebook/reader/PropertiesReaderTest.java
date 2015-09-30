@@ -20,6 +20,7 @@ package com.stratio.notebook.reader;
 
 import com.stratio.notebook.Commons;
 
+import com.stratio.notebook.exceptions.FolderNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class PropertiesReaderTest {
 
 
     private static final String NOT_EXIST_PATH ="not_exit";
-    private static final String EXIST_FILE_WITH_DATA ="withData";
+    private static final String EXIST_FILE_WITH_DATA ="WithData";
     private Properties result ;
     private Commons commons;
     private PropertiesReader reader;
@@ -56,9 +57,9 @@ public class PropertiesReaderTest {
     }
 
 
-    @Test
+    @Test(expected = FolderNotFoundException.class)
     public void whenNotExistPath(){
-      assertThat(reader.readConfigFrom(NOT_EXIST_PATH), is(result));
+        reader.readConfigFrom(NOT_EXIST_PATH);
     }
 
     @Test public void whenExistFileAndContainsData(){

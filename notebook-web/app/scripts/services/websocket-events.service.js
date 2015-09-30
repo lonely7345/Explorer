@@ -50,7 +50,7 @@
 
         function createNotebook() {
             websocketEvents.sendNewEvent({
-                op: 'NEW_NOTE',
+                op: 'NEW_NOTE'
             });
         }
         function deleteNotebook(noteId) {

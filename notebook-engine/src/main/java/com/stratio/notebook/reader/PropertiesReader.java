@@ -39,19 +39,18 @@ public class PropertiesReader {
     public Properties readConfigFrom(String nameFile) {
 
        Properties prop = new Properties();
+        String path = "";
         try {
-            String path = new PathFileCalculator().getPath(nameFile);
-            System.out.println("Configurator file is :"+path);
-            prop.load(new FileInputStream(new PathFileCalculator().getPath(nameFile)));
+            path = new PathFileCalculator().getPath(nameFile);
+            prop.load(new FileInputStream(path));
         }catch(IOException e){
             String msg = "File properties not loaded. ";
             Logger.error(msg);
-            System.out.println("File properties not loaded ");
+            throw new FolderNotFoundException("File properties "+path +" NOT FOUND ");
 
-        }catch (FolderNotFoundException e){
+        }/*catch (FolderNotFoundException e){
             Logger.error(e.getMessage());
-            System.out.println("Folder not found ");
-        }
+        }*/
         return prop;
     }
 }
