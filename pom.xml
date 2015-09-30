@@ -35,6 +35,13 @@
     <description>Web shell for Stratio platform</description>
     <url>http://www.stratio.com</url>
 
+    <scm>
+    	<url>https://github.com/Stratio/Explorer</url>
+    	<connection>scm:git:git@github.com:Stratio/Explorer.git</connection>
+    	<developerConnection>scm:git:git@github.com:Stratio/Explorer.git
+            </developerConnection>
+   	</scm>
+   	
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
