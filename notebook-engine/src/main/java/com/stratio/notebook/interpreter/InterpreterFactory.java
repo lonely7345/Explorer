@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,21 +175,16 @@ public class InterpreterFactory {
         return loadFromFile(conf.getCrossdataSettingsPath());
     }
 
+
     public void saveCrossdataSettings(String file) throws IOException {
+
         saveToFile(file, conf.getCrossdataSettingsPath());
     }
+
     public void loadCrossdataDefaultSettings() throws IOException {
         saveToFile(loadFromFile(conf.getCrossdataDefaultSettingsPath()), conf.getCrossdataSettingsPath());
     }
-    public String loadIngestionSettings(){
-        if (conf.getIngestionSettingsPath()== null){
-        return "Ingestion settings file not found";
-        }
-        return loadFromFile(conf.getIngestionSettingsPath());
-    }
-    public void saveIngestionSettings(String file) throws IOException {
-        saveToFile(file, conf.getIngestionSettingsPath());
-    }
+
     public void saveEditorSettings(String body,String path ) throws IOException {
         saveToFile(body,path);
     }
@@ -197,6 +193,7 @@ public class InterpreterFactory {
     }
 
 
+    //TODO : THIS METHOD WILL BE REMOVED
     private String loadFromFile(String path) {
 
         File fileToRead = new File(path);
@@ -227,6 +224,7 @@ public class InterpreterFactory {
 
     }
 
+    //TODO : THIS METHOD WILL BE REMOVED
     private void saveToFile(String file, String path) throws IOException {
         File settingFile = new File(path);
         if (!settingFile.exists()) {

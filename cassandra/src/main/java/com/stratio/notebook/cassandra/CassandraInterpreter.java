@@ -25,6 +25,7 @@ import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.notebook.cassandra.operations.CQLExecutor;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
+import com.stratio.notebook.reader.PropertiesReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class CassandraInterpreter extends Interpreter {
 
         super(properties);
 
-        CassandraInterpreterGateways.commandDriver = new CassandraDriver(LoadProperties.load());
+        CassandraInterpreterGateways.commandDriver = new CassandraDriver(new PropertiesReader().readConfigFrom("cassandra"));
 
     }
 

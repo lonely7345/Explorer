@@ -6,7 +6,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -15,23 +15,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-'use strict';
+package com.stratio.notebook.reader;
 
-describe('Directive: ngEnter', function () {
 
-  // load the directive's module
-  beforeEach(module('notebookWebApp'));
+import java.nio.file.Path;
 
-  var element,
-    scope;
+public interface PathCalculator {
 
-  beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
-  }));
-
-  it('should make hidden element visible', inject(function ($compile) {
-  //  element = angular.element('<ng-enter></ng-enter>');
-  //  element = $compile(element)(scope);
-  //  expect(element.text()).toBe('this is the ngEnter directive');
-  }));
-});
+    /**
+     * Calculate Path object
+     * @return Path object
+     */
+    Path calculatePath();
+}

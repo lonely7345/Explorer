@@ -32,10 +32,6 @@
      * @author ivdiaz
      *
      */
-
-//    ModalEditorCtrl.$inject = ['$scope', '$modalInstance', 'properties', 'resolvePath', '$http'];
-//    function ModalEditorCtrl($scope, $modalInstance, properties, resolvePath, $http) {
-
         $scope.file = {};
         $scope.file.text = properties.data.body;
         $scope.saveEditorSettings = function() {
@@ -44,7 +40,6 @@
             $http.put(getRestApiBase() + '/interpreter/settings/editor', message).
             success(function(data, status, headers, config) {
                 alert('Editor settings saved');
-                console.log('Settings saved');
             }).
             error(function(data, status, headers, config) {
                 alert('Error ' + status + " " + data.message);
@@ -58,4 +53,3 @@
             $modalInstance.dismiss('cancel');
         };
     });
-//})()

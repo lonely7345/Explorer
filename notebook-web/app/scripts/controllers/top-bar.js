@@ -18,8 +18,6 @@
  * based on NFlabs Zeppelin originaly forked on Nov'14
  */
 
-
-// (function() {
     'use strict';
     /**
      * @ngdoc function
@@ -32,9 +30,6 @@
      * @author ivdiaz
      *
      */
-//    angular.module('notebookWebApp').controller('TopBarCtrl', TopBarCtrl);
-//    TopBarCtrl.$inject = ['$scope', '$rootScope', 'AuthenticationService', '$modal', '$http', 'baseUrlSrv'];
-//    function TopBarCtrl($scope, $rootScope, AuthenticationService, $modal, $http, baseUrlSrv) {
 
     angular.module('notebookWebApp').controller('TopBarCtrl', function($scope, $rootScope, AuthenticationService,
     $modal, $http, baseUrlSrv){
@@ -53,7 +48,6 @@
         $scope.openSettings = function() {
             var modalInstance = $modal.open({
                 animation: true,
-                controller: 'ModalSettingsCtrl',
                 templateUrl: '/views/modal-settings.html',
                 windowClass: 'center-modal'
             });
@@ -85,4 +79,3 @@
             });
         };
     });
-//})()

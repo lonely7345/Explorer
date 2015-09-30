@@ -6,7 +6,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -15,23 +15,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-'use strict';
 
-describe('Directive: ngEnter', function () {
+package com.stratio.notebook;
 
-  // load the directive's module
-  beforeEach(module('notebookWebApp'));
 
-  var element,
-    scope;
+import com.stratio.notebook.conf.ConstantsFolder;
 
-  beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
-  }));
+public class Commons {
 
-  it('should make hidden element visible', inject(function ($compile) {
-  //  element = angular.element('<ng-enter></ng-enter>');
-  //  element = $compile(element)(scope);
-  //  expect(element.text()).toBe('this is the ngEnter directive');
-  }));
-});
+    private String oldValueFolderConfiguration ;
+
+    public void initialize(){
+        oldValueFolderConfiguration = ConstantsFolder.CT_FOLDER_CONFIGURATION;
+        ConstantsFolder.CT_FOLDER_CONFIGURATION ="notebook-engine/src/test/test_resources/";
+    }
+
+
+    public void tearDown(){
+        ConstantsFolder.CT_FOLDER_CONFIGURATION = oldValueFolderConfiguration;
+    }
+}

@@ -17,26 +17,21 @@
  */
 package com.stratio.notebook.rest;
 
-import java.io.IOException;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
+import com.stratio.notebook.converters.PropertiesToStringConverter;
+import com.stratio.notebook.exceptions.FolderNotFoundException;
 import com.stratio.notebook.interpreter.InterpreterException;
 import com.stratio.notebook.interpreter.InterpreterFactory;
+import com.stratio.notebook.reader.PropertiesReader;
 import com.stratio.notebook.server.JsonResponse;
+import com.stratio.notebook.writer.PropertiesFileUpdater;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
 
 /**
  * Interpreter Rest API
@@ -45,77 +40,13 @@ import com.wordnik.swagger.annotations.ApiResponses;
 @Produces("application/json")
 @Api(value = "/interpreter", description = "Notebook Interpreter REST API")
 public class InterpreterRestApi {
-    Logger logger = LoggerFactory.getLogger(InterpreterRestApi.class);
 
     private InterpreterFactory interpreterFactory;
-
-    Gson gson = new Gson();
-
-    public InterpreterRestApi() {
-
-    }
 
     public InterpreterRestApi(InterpreterFactory interpreterFactory) {
         this.interpreterFactory = interpreterFactory;
     }
 
-    public static class File {
-        String path;
-        String body;
-    }
-
-    /**
-     * List all interpreter settings
-     *
-     * @return
-     */
-    @GET
-    @Path("settings/crossdata")
-    @ApiOperation(httpMethod = "GET", value = "List all interpreter setting")
-    @ApiResponses(value = { @ApiResponse(code = 500, message = "When something goes wrong") })
-    public Response listCrossdataSettings() {
-        String interpreterSettings = "";
-        interpreterSettings = interpreterFactory.loadCrossdataSettings();
-        return new JsonResponse(Response.Status.OK, "", interpreterSettings).build();
-    }
-
-    /**
-     * Add new interpreter setting
-     *
-     * @param message
-     * @return
-     * @throws IOException
-     * @throws InterpreterException
-     */
-    @PUT
-    @Path("settings/crossdata")
-    public Response updateCrossdataSettings(String message) {
-        logger.info("Update interpreterSettings {}", message);
-
-        try {
-            interpreterFactory.saveCrossdataSettings(message);
-        } catch (InterpreterException e) {
-            return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
-        } catch (IOException e) {
-            return new JsonResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage(), e).build();
-        }
-        return new JsonResponse(Response.Status.OK, "", message).build();
-    }
-
-    /**
-     * List all interpreter settings
-     *
-     * @return
-     */
-    @GET
-    @Path("settings/ingestion")
-    @ApiOperation(httpMethod = "GET", value = "List all interpreter setting")
-    @ApiResponses(value = { @ApiResponse(code = 500, message = "When something goes wrong") })
-    public Response listIngestionSettings() {
-        String interpreterSettings = "";
-        interpreterSettings = interpreterFactory.loadIngestionSettings();
-        return new JsonResponse(Response.Status.OK, "", interpreterSettings).build();
-    }
 
     /**
      * List all interpreter settings
@@ -153,28 +84,6 @@ public class InterpreterRestApi {
         return new JsonResponse(Response.Status.OK, "", file).build();
     }
 
-    /**
-     * Add new interpreter setting
-     *
-     * @param message
-     * @return
-     * @throws IOException
-     * @throws InterpreterException
-     */
-    @PUT
-    @Path("settings/ingestion")
-    public Response updateIngestionSettings(String message) {
-        logger.info("Update interpreterSettings {}", message);
-
-        try {
-            interpreterFactory.saveIngestionSettings(message);
-        } catch (InterpreterException e) {
-            return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
-        } catch (IOException e) {
-            return new JsonResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage(), e).build();
-        }
-        return new JsonResponse(Response.Status.OK, "", message).build();
-    }
 
     /**
      * Reset settings to default
@@ -187,8 +96,6 @@ public class InterpreterRestApi {
     @PUT
     @Path("reset")
     public Response resetSettings(String message) {
-        logger.info("Update interpreterSettings {}", message);
-
         try {
             interpreterFactory.loadCrossdataDefaultSettings();
         } catch (InterpreterException e) {
@@ -199,4 +106,86 @@ public class InterpreterRestApi {
         return new JsonResponse(Response.Status.OK, "", message).build();
     }
 
+
+    /**
+     * Add new interpreter setting
+     *
+     * @param newProperties
+     * @return
+     * @throws IOException
+     * @throws InterpreterException
+     */
+    @PUT
+    @Path("settings/ingestion")
+    public Response updateIngestionSettings(String newProperties) {
+        Response response= new JsonResponse(Response.Status.OK, "", newProperties).build();
+        try {
+            PropertiesFileUpdater updater = new PropertiesFileUpdater();
+            updater.updateFileWithProperties("ingestion", newProperties);
+        } catch (FolderNotFoundException e) {
+            response = new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
+        }
+        return response;
+    }
+
+
+
+
+
+    /**
+     * Add new interpreter setting
+     *
+     * @param newProperties
+     * @return
+     * @throws IOException
+     * @throws InterpreterException
+     */
+    @PUT
+    @Path("settings/cassandra")
+    public Response updateCassandraSettings(String newProperties) {
+        try {
+            PropertiesFileUpdater updater = new PropertiesFileUpdater();
+            updater.updateFileWithProperties("cassandra", newProperties);
+        } catch (FolderNotFoundException e) {
+            return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
+        }
+        return new JsonResponse(Response.Status.OK, "", newProperties).build();
+    }
+
+    /**
+     * Add new interpreter setting
+     *
+     * @param newProperties
+     * @return
+     * @throws IOException
+     * @throws InterpreterException
+     */
+    @PUT
+    @Path("settings/crossdata")
+    public Response updateCrossdataSettings(String newProperties) {
+
+        Response response= new JsonResponse(Response.Status.OK, "", newProperties).build();
+        try {
+            PropertiesFileUpdater updater = new PropertiesFileUpdater();
+            updater.updateFileWithProperties("driver-application", newProperties);
+        } catch (FolderNotFoundException e) {
+            response = new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
+        }
+        return response;
+    }
+
+
+    /**
+     * List all properties from file with name file
+     * @param nameFile nameFile without extension
+     * @return Empty JsonResponse
+     */
+    @GET
+    @Path("settings/list")
+    @ApiOperation(httpMethod = "GET", value = "List all interpreter setting")
+    @ApiResponses(value = { @ApiResponse(code = 500, message = "When something goes wrong") })
+    public Response listPropertiesFrom(@QueryParam("nameFile") String nameFile) {
+        PropertiesToStringConverter converter = new PropertiesToStringConverter(System.lineSeparator());
+        return new JsonResponse(Response.Status.OK, "", converter.transform(new PropertiesReader().readConfigFrom(nameFile))).build();
+    }
 }

@@ -260,10 +260,6 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	 */
 	private static String CROSSDATA_DEFAULT_SETTINGS_PATH = NOTEBOOK_CONF_DIR + File.separator+"driver-application-default.conf";
 
-	/**
-	 * The ingestion settings path.
-	 */
-	private static String INGESTION_SETTINGS_PATH = NOTEBOOK_CONF_DIR + File.separator+"ingestion.conf";
 
 	public String getCrossdataSettingsPath() {
 		System.out.println(CROSSDATA_SETTINGS_PATH);
@@ -273,9 +269,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	public String getCrossdataDefaultSettingsPath() {
 		return CROSSDATA_DEFAULT_SETTINGS_PATH;
 	}
-	public String getIngestionSettingsPath() {
-		return INGESTION_SETTINGS_PATH;
-	}
+
 
 	public static enum ConfVars {
 		NOTEBOOK_HOME("zeppelin.home", "../"),

@@ -31,11 +31,16 @@ module.exports = function(config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha'],
+
+    frameworks: ['mocha','expect','sinon','sinon-chai'],
 
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
+      'bower_components/angular-websocket/angular-websocket.js',
+      'bower_components/angular-ui-ace/ui-ace.js',
+      'bower_components/angular-bootstrap/ui-bootstrap.js',
+      'bower_components/angular-dragdrop/src/angular-dragdrop.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
@@ -53,22 +58,17 @@ module.exports = function(config) {
     // web server port
     port: 8080,
 
-    // Start these browsers, currently available:
-    // - Chrome
-    // - ChromeCanary
-    // - Firefox
-    // - Opera
-    // - Safari (only Mac)
-    // - PhantomJS
-    // - IE (only Windows)
     browsers: [
       'PhantomJS'
     ],
 
     // Which plugins to enable
     plugins: [
-      'karma-phantomjs-launcher'//,
-      'karma-mocha'
+      'karma-phantomjs-launcher',
+      'karma-mocha',
+      'karma-expect',
+      'karma-sinon',
+      'karma-sinon-chai'
     ],
 
     // Continuous Integration mode
@@ -80,12 +80,5 @@ module.exports = function(config) {
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
-
-    // Uncomment the following lines if you are using grunt's server to run the tests
-    // proxies: {
-    //   '/': 'http://localhost:9000/'
-    // },
-    // URL root prevent conflicts with the site root
-    // urlRoot: '_karma_'
   });
 };
