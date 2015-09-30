@@ -36,7 +36,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-//TODO : SEE WHY TEST FAILS
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( { EnvironmentPathCalculator.class })
 public class FolderFinderTest {
