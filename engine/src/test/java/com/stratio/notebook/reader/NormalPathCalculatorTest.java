@@ -52,7 +52,7 @@ public class NormalPathCalculatorTest {
         ConstantsFolder.CT_FOLDER_CONFIGURATION = "/src";
         calculator = new NormalPathCalculator(ConstantsFolder.CT_FOLDER_CONFIGURATION);
         String folder =calculator.calculatePath().toString();
-        assertTrue(folder.endsWith("/explorer-engine/src"));
+        assertTrue(folder.endsWith("/engine/src"));
     }
 
     @Test

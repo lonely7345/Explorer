@@ -21,83 +21,83 @@ FWDIR="$(cd `dirname $0`; pwd)"
 INSTALL_HOME="/opt/sds/notebook/"
 LOG="TRUE"
 
-if [ "x$NOTEBOOK_HOME" = "x" ] ; then
-    export NOTEBOOK_HOME=$FWDIR/..
+if [ "x$EXPLORER_HOME" = "x" ] ; then
+    export EXPLORER_HOME=$FWDIR/..
 fi
 
-if [ "x$NOTEBOOK_CONF_DIR" = "x" ] ; then
-    export NOTEBOOK_CONF_DIR="$NOTEBOOK_HOME/conf"
+if [ "x$EXPLORER_CONF_DIR" = "x" ] ; then
+    export EXPLORER_CONF_DIR="$EXPLORER_HOME/conf"
 fi
 
 
 if [ -d "$INSTALL_HOME" ]; then
-    export NOTEBOOK_CONF_DIR="/etc/sds/notebook"
+    export EXPLORER_CONF_DIR="/etc/sds/notebook"
 fi
 
-if [ "x$NOTEBOOK_LOG_DIR" = "x" ]; then
-    export NOTEBOOK_LOG_DIR="$NOTEBOOK_HOME/logs"
+if [ "x$EXPLORER_LOG_DIR" = "x" ]; then
+    export EXPLORER_LOG_DIR="$EXPLORER_HOME/logs"
 fi
 
 
-if [ "x$NOTEBOOK_NOTEBOOK_DIR" = "x" ]; then
-    export NOTEBOOK_NOTEBOOK_DIR="$NOTEBOOK_HOME/notebook"
+if [ "x$EXPLORER_DIR" = "x" ]; then
+    export NOTEBOOK_DIR="$EXPLORER_HOME/explorer"
 fi
 
-if [ "x$NOTEBOOK_PID_DIR" = "x" ]; then
-    export NOTEBOOK_PID_DIR="$NOTEBOOK_HOME/run"
+if [ "x$EXPLORER_PID_DIR" = "x" ]; then
+    export EXPLORER_PID_DIR="$EXPLORER_HOME/run"
 fi
 
-if [ "x$NOTEBOOK_WAR" = "x" ]; then
-    if [ -d "${NOTEBOOK_HOME}/notebook-web/src/main/webapp" ]; then
-	    export NOTEBOOK_WAR="${NOTEBOOK_HOME}/notebook-web/src/main/webapp"
+if [ "x$EXPLORER_WAR" = "x" ]; then
+    if [ -d "${EXPLORER_HOME}/web/src/main/webapp" ]; then
+	    export EXPLORER_WAR="${EXPLORER_HOME}/web/src/main/webapp"
     else
-        export NOTEBOOK_WAR=`find ${NOTEBOOK_HOME} -name "notebook-web*.war"`
+        export EXPLORER_WAR=`find ${EXPLORER_HOME} -name "explorer-web*.war"`
     fi
 fi
 
-if [ "x$NOTEBOOK_API_WAR" = "x" ]; then
-    if [ -d "${NOTEBOOK_HOME}/doc/src/main/swagger" ]; then
-	    export NOTEBOOK_API_WAR="${NOTEBOOK_HOME}/doc/src/main/swagger"
+if [ "x$EXPLORER_API_WAR" = "x" ]; then
+    if [ -d "${EXPLORER_HOME}/doc/src/main/swagger" ]; then
+	    export EXPLORER_API_WAR="${EXPLORER_HOME}/doc/src/main/swagger"
     else
-        export NOTEBOOK_API_WAR=`find ${NOTEBOOK_HOME}/ -name "notebook-api-ui*.war"`
+        export EXPLORER_API_WAR=`find ${EXPLORER_HOME}/ -name "explorer-api-ui*.war"`
     fi
 fi
 
-if [ "x$NOTEBOOK_INTERPRETER_DIR" = "x" ]; then
-    export NOTEBOOK_INTERPRETER_DIR="$NOTEBOOK_HOME/interpreter"
+if [ "x$EXPLORER_INTERPRETER_DIR" = "x" ]; then
+    export EXPLORER_INTERPRETER_DIR="$EXPLORER_HOME/interpreter"
 fi
 
 
-if [ -f "${NOTEBOOK_CONF_DIR}/notebook-env.sh" ]; then
-    . "${NOTEBOOK_CONF_DIR}/notebook-env.sh"
+if [ -f "${EXPLORER_CONF_DIR}/explorer-env.sh" ]; then
+    . "${EXPLORER_CONF_DIR}/explorer-env.sh"
 fi
 
 
 
-NOTEBOOK_CLASSPATH+=":${NOTEBOOK_CONF_DIR}"
+EXPLORER_CLASSPATH+=":${EXPLORER_CONF_DIR}"
 
 function addJarInDir(){
     if [ -d "${1}" ]; then
 	for jar in `find ${1} -maxdepth 1 -name '*jar'`; do
-	    NOTEBOOK_CLASSPATH=$jar:$NOTEBOOK_CLASSPATH
+	    EXPLORER_CLASSPATH=$jar:$EXPLORER_CLASSPATH
 	done
     fi
 }
 
-addJarInDir ${NOTEBOOK_HOME}
+addJarInDir ${EXPLORER_HOME}
 
-addJarInDir ${NOTEBOOK_HOME}/notebook-engine/target/lib
-addJarInDir ${NOTEBOOK_HOME}/notebook-server/target/lib
-addJarInDir ${NOTEBOOK_HOME}/notebook-web/target/lib
+addJarInDir ${EXPLORER_HOME}/explorer-engine/target/lib
+addJarInDir ${EXPLORER_HOME}/explorer-server/target/lib
+addJarInDir ${EXPLORER_HOME}/explorer-web/target/lib
 addJarInDir $INSTALL_HOME/lib
 
 
-if [ -d "${NOTEBOOK_HOME}/notebook-engine/target/classes" ]; then
-    NOTEBOOK_CLASSPATH+=":${NOTEBOOK_HOME}/notebook-engine/target/classes"
+if [ -d "${EXPLORER_HOME}/explorer-engine/target/classes" ]; then
+    EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/explorer-engine/target/classes"
 fi
 
-if [ -d "${NOTEBOOK_HOME}/notebook-server/target/classes" ]; then
-    NOTEBOOK_CLASSPATH+=":${NOTEBOOK_HOME}/notebook-server/target/classes"
+if [ -d "${EXPLORER_HOME}/explorer-server/target/classes" ]; then
+    EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/explorer-server/target/classes"
 fi
 
 
@@ -109,43 +109,43 @@ if [ "x$HADOOP_HOME" != "x" ] && [ -d "${HADOOP_HOME}" ]; then
     addJarInDir "${HADOOP_HOME}"
 fi
 
-export NOTEBOOK_CLASSPATH
-#export SPARK_CLASSPATH+=${NOTEBOOK_CLASSPATH} //TODO check if there is any problem not adding notebook classes to
+export EXPLORER_CLASSPATH
+#export SPARK_CLASSPATH+=${EXPLORER_CLASSPATH} //TODO check if there is any problem not adding explorer classes to
 # spark
-export CLASSPATH+=${NOTEBOOK_CLASSPATH}
+export CLASSPATH+=${EXPLORER_CLASSPATH}
 
 # Text encoding for
 # read/write job into files,
 # receiving/displaying query/result.
-if [ "x$NOTEBOOK_ENCODING" = "x" ]; then
-  export NOTEBOOK_ENCODING="UTF-8"
+if [ "x$EXPLORER_ENCODING" = "x" ]; then
+  export EXPLORER_ENCODING="UTF-8"
 fi
 
-if [ "x$NOTEBOOK_MEM" = "x" ]; then
-  export NOTEBOOK_MEM="-Xmx2048m -XX:MaxPermSize=1024m"
+if [ "x$EXPLORER_MEM" = "x" ]; then
+  export EXPLORER_MEM="-Xmx2048m -XX:MaxPermSize=1024m"
 fi
 
 
-JAVA_OPTS+="$NOTEBOOK_JAVA_OPTS -Dfile.encoding=${NOTEBOOK_ENCODING} ${NOTEBOOK_MEM}"
+JAVA_OPTS+="$EXPLORER_JAVA_OPTS -Dfile.encoding=${EXPLORER_ENCODING} ${EXPLORER_MEM}"
 export JAVA_OPTS
 
 if [ -n "$JAVA_HOME" ]; then
-    NOTEBOOK_RUNNER="${JAVA_HOME}/bin/java"
+    EXPLORER_RUNNER="${JAVA_HOME}/bin/java"
 else
-    NOTEBOOK_RUNNER=java
+    EXPLORER_RUNNER=java
 fi
 
 export RUNNER
 
 
-if [ "x$NOTEBOOK_IDENT_STRING" == "x" ]; then
-  export NOTEBOOK_IDENT_STRING="$USER"
+if [ "x$EXPLORER_IDENT_STRING" == "x" ]; then
+  export EXPLORER_IDENT_STRING="$USER"
 fi
 
-NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+EXPLORER_LOGFILE=$EXPLORER_LOG_DIR/notebook-$EXPLORER_IDENT_STRING-$HOSTNAME.log
 
 if [ -d "$INSTALL_HOME" ]; then
-    NOTEBOOK_LOGFILE="/var/log/sds/notebook/notebook_app.log"
+    EXPLORER_LOGFILE="/var/log/sds/explorer/explorer_app.log"
 fi
 
 if [ "x$DEBUG" == "x" ] ; then
@@ -154,14 +154,14 @@ fi
 
 
 if (LOG="TRUE") then
-	echo NOTEBOOK_HOME:            ${NOTEBOOK_HOME}
-	echo NOTEBOOK_CONF_DIR:        ${NOTEBOOK_CONF_DIR}
-	echo NOTEBOOK_LOG_DIR:         ${NOTEBOOK_LOG_DIR}
-	echo NOTEBOOK_PID_DIR:         ${NOTEBOOK_PID_DIR}
-	echo NOTEBOOK_WAR:             ${NOTEBOOK_WAR}
-	echo NOTEBOOK_API_WAR:         ${NOTEBOOK_API_WAR}
-	echo NOTEBOOK_INTERPRETER_DIR: ${NOTEBOOK_INTERPRETER_DIR}
-	echo NOTEBOOK_CLASSPATH:       ${NOTEBOOK_CLASSPATH}
-    echo NOTEBOOK_ENCODING:        ${NOTEBOOK_ENCODING}
-    echo NOTEBOOK_MEM:             ${NOTEBOOK_MEM}
+	echo EXPLORER_HOME:            ${EXPLORER_HOME}
+	echo EXPLORER_CONF_DIR:        ${EXPLORER_CONF_DIR}
+	echo EXPLORER_LOG_DIR:         ${EXPLORER_LOG_DIR}
+	echo EXPLORER_PID_DIR:         ${EXPLORER_PID_DIR}
+	echo EXPLORER_WAR:             ${EXPLORER_WAR}
+	echo EXPLORER_API_WAR:         ${EXPLORER_API_WAR}
+	echo EXPLORER_INTERPRETER_DIR: ${EXPLORER_INTERPRETER_DIR}
+	echo EXPLORER_CLASSPATH:       ${EXPLORER_CLASSPATH}
+    echo EXPLORER_ENCODING:        ${EXPLORER_ENCODING}
+    echo EXPLORER_MEM:             ${EXPLORER_MEM}
 fi

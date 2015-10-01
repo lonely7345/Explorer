@@ -21,7 +21,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import java.io.File;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.tree.ConfigurationNode;
@@ -225,11 +224,11 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	}
 
 	public String getNotebookDir(){
-		return getRelativeDir(ConfVars.NOTEBOOK_NOTEBOOK_DIR);
+		return getRelativeDir(ConfVars.EXPLORER_NOTEBOOK_DIR);
 	}
 
 	public String getInterpreterDir(){
-		return getRelativeDir(ConfVars.NOTEBOOK_INTERPRETER_DIR);
+		return getRelativeDir(ConfVars.EXPLORER_INTERPRETER_DIR);
 	}
 
 	public String getRelativeDir(ConfVars c){
@@ -250,15 +249,15 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	/**
 	 * The Notebook conf dir.
 	 */
-	private static final String NOTEBOOK_CONF_DIR = System.getenv().get("NOTEBOOK_CONF_DIR");
+	private static final String EXPLORER_CONF_DIR = System.getenv().get("EXPLORER_CONF_DIR");
 	/**
 	 * The Crossdata settings path.
 	 */
-	private static String CROSSDATA_SETTINGS_PATH = NOTEBOOK_CONF_DIR+ File.separator+"driver-application.conf";
+	private static String CROSSDATA_SETTINGS_PATH = EXPLORER_CONF_DIR + File.separator+"driver-application.conf";
 	/**
 	 * The Default Crossdata settings path.
 	 */
-	private static String CROSSDATA_DEFAULT_SETTINGS_PATH = NOTEBOOK_CONF_DIR + File.separator+"driver-application-default.conf";
+	private static String CROSSDATA_DEFAULT_SETTINGS_PATH = EXPLORER_CONF_DIR + File.separator+"driver-application-default.conf";
 
 
 	public String getCrossdataSettingsPath() {
@@ -274,13 +273,13 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	public static enum ConfVars {
 		NOTEBOOK_HOME("zeppelin.home", "../"),
 		NOTEBOOK_PORT("zeppelin.server.port", 8084),
-		NOTEBOOK_WAR("zeppelin.war", "../notebook-web/src/main/webapp"),
+		NOTEBOOK_WAR("zeppelin.war", "../web/src/main/webapp"),
 	    NOTEBOOK_API_WAR("zeppelin.api.war", "../doc/src/main/swagger"),
 		NOTEBOOK_INTERPRETERS("zeppelin.interpreters", "com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter"),
-		NOTEBOOK_INTERPRETER_DIR("zeppelin.interpreter.dir", "interpreter"),
+		EXPLORER_INTERPRETER_DIR("zeppelin.interpreter.dir", "interpreter"),
 		NOTEBOOK_INTERPRETER_MODE("zeppelin.interpreter.mode", "share"),     // 'separate', 'share'
 		NOTEBOOK_ENCODING("zeppelin.encoding", "UTF-8"),
-		NOTEBOOK_NOTEBOOK_DIR("zeppelin.notebook.dir", "notebook")
+		EXPLORER_NOTEBOOK_DIR("zeppelin.notebook.dir", "explorer")
 		;
 
 		private String varName;

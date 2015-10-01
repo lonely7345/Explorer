@@ -53,7 +53,7 @@ public class NotebookUT implements JobListenerFactory{
 				+"/notebook");
 		notebookDir.mkdirs();
 
-		System.setProperty(ConfVars.NOTEBOOK_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());
+		System.setProperty(ConfVars.EXPLORER_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());
 
 		conf = ZeppelinConfiguration.create();
         

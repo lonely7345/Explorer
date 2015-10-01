@@ -24,7 +24,7 @@ public class ConstantsFolder {
     /**
      * Name of project root folder
      */
-    public static String CT_NAME_PROJECT_FOLDER ="stratio-explorer" ;
+    public static String CT_NAME_PROJECT_FOLDER ="explorer" ;
 
     /**
      * folder  that contain all file configuratiosn
