@@ -80,13 +80,13 @@
     <inceptionYear>2013</inceptionYear>
 
     <modules>
-        <module>explorer-engine</module>
+        <module>engine</module>
         <module>crossdata</module>
         <module>spark</module>
         <module>markdown</module>
         <module>shell</module>
-        <module>explorer-web</module>
-        <module>explorer-server</module>
+        <module>web</module>
+        <module>server</module>
         <module>dist</module>
         <module>doc</module>
         <module>streaming</module>
