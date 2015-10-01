@@ -49,7 +49,13 @@ import com.stratio.notebook.scheduler.Scheduler;
  * Consist of Paragraphs with independent context
  */
 public class Note implements Serializable, JobListener {
-    transient Logger logger = LoggerFactory.getLogger(Note.class);
+    /**
+     * The log.
+     */
+    transient static Logger logger = LoggerFactory.getLogger(Note.class);
+    /**
+     * A list of paragraphs.
+     */
     List<Paragraph> paragraphs = new LinkedList<Paragraph>();
     private String name;
     private String id;
@@ -74,11 +80,14 @@ public class Note implements Serializable, JobListener {
      */
     private Map<String, Object> info = new HashMap<String, Object>();
 
+    /**
+     * Constructor.
+     */
     public Note() {
     }
 
     public Note(ZeppelinConfiguration conf, NoteInterpreterLoader replLoader, JobListenerFactory jobListenerFactory,
-            org.quartz.Scheduler quartzSched) {
+            org.quartz.Scheduler quartzSched) { //TODO  quartzSched is not ussing
         this.conf = conf;
         this.replLoader = replLoader;
         this.jobListenerFactory = jobListenerFactory;
@@ -121,9 +130,8 @@ public class Note implements Serializable, JobListener {
     }
 
     /**
-     * Add paragraph last
+     * Add paragraph.
      *
-     * @param p
      */
     public Paragraph addParagraph() {
         Paragraph p = new Paragraph(this, replLoader);
@@ -133,35 +141,44 @@ public class Note implements Serializable, JobListener {
         return p;
     }
 
+    /**
+     * Add a list of paragraph.
+     * @param paragraphList the list of paragraph.
+     * @return paragraphList.
+     */
     public List<Paragraph> addParagraphs(List<Paragraph> paragraphList) {
-        for (Paragraph p : paragraphList) {
+        if (paragraphList!=null) {
             synchronized (paragraphs) {
-                paragraphs.add(p);
+                paragraphs.addAll(paragraphList);
             }
         }
-
         return paragraphList;
     }
 
     /**
      * Insert paragraph in given index
      *
-     * @param index
-     * @param p
+     * @param index the position where the paragraph will be inserted.
+     * @return  a paragraph.
      */
     public Paragraph insertParagraph(int index) {
         Paragraph p = new Paragraph(this, replLoader);
         synchronized (paragraphs) {
             paragraphs.add(index, p);
         }
-        return p;
+        return insertParagraph(index,null);
     }
 
     public Paragraph insertParagraph(int index, String text) {
-        Paragraph p = new Paragraph(this, replLoader);
-        p.setText(text);
-        synchronized (paragraphs) {
-            paragraphs.add(index, p);
+        Paragraph p = null;
+            if (index >= 0 && index < paragraphs.size()) {
+
+
+            p = new Paragraph(this, replLoader);
+            p.setText(text);
+            synchronized (paragraphs) {
+                paragraphs.add(index, p);
+            }
         }
         return p;
     }
@@ -169,8 +186,8 @@ public class Note implements Serializable, JobListener {
     /**
      * Remove paragraph by id
      *
-     * @param paragraphId
-     * @return
+     * @param paragraphId the paragraphId.
+     * @return the paragraph removed.
      */
     public Paragraph removeParagraph(String paragraphId) {
         synchronized (paragraphs) {
@@ -188,7 +205,7 @@ public class Note implements Serializable, JobListener {
     /**
      * Move paragraph into the new index (order from 0 ~ n-1)
      *
-     * @param paragraphId
+     * @param paragraphId the paragraphId
      * @param index       new index
      */
     public void moveParagraph(String paragraphId, int index) {
@@ -222,6 +239,11 @@ public class Note implements Serializable, JobListener {
         }
     }
 
+    /**
+     * Ask if the paragraph is the last.
+     * @param paragraphId the paragraphId.
+     * @return tru if the paragraph is the last. False in other case.
+     */
     public boolean isLastParagraph(String paragraphId) {
         if (!paragraphs.isEmpty()) {
             synchronized (paragraphs) {
@@ -231,10 +253,15 @@ public class Note implements Serializable, JobListener {
             }
             return false;
         }
-        /** because empty list, cannot remove nothing right? */
+        /** because empty list, cannot remove nothing right? */  //TODO It is note sense, why if the list is empty we return false. Maybe the cause is in other code piece.
         return true;
     }
 
+    /**
+     * Return a paragraph by id.
+     * @param paragraphId the paragraph id.
+     * @return the paragraph.
+     */
     public Paragraph getParagraph(String paragraphId) {
         synchronized (paragraphs) {
             for (Paragraph p : paragraphs) {
@@ -246,6 +273,10 @@ public class Note implements Serializable, JobListener {
         return null;
     }
 
+    /**
+     * Return the last paragraph.
+     * @return the last paragraph.
+     */
     public Paragraph getLastParagraph() {
         synchronized (paragraphs) {
             return paragraphs.get(paragraphs.size() - 1);
@@ -253,9 +284,8 @@ public class Note implements Serializable, JobListener {
     }
 
     /**
-     * Run all paragraphs sequentially
+     * Run all paragraphs sequentially.
      *
-     * @param jobListener
      */
     public void runAll() {
         synchronized (paragraphs) {
@@ -281,6 +311,10 @@ public class Note implements Serializable, JobListener {
         intp.getScheduler().submit(p);
     }
 
+    /**
+     * Return a new list with all the paragraph.
+     * @return a new list with all the paragraph.
+     */
     public List<Paragraph> getParagraphs() {
         synchronized (paragraphs) {
             return new LinkedList<Paragraph>(paragraphs);
@@ -300,7 +334,7 @@ public class Note implements Serializable, JobListener {
         }
 
         File file = new File(dir.getPath() + "/" + filename + ".json");
-        logger().info("Persist note {} into {}", filename, file.getAbsolutePath());
+        logger.info("Persist note {} into {}", filename, file.getAbsolutePath());
 
         String json = gson.toJson(this);
         FileOutputStream out = new FileOutputStream(file);
@@ -324,7 +358,7 @@ public class Note implements Serializable, JobListener {
         }
 
         File file = new File(conf.getNotebookDir() + "/" + id + "/note.json");
-        logger().info("Persist note {} into {}", id, file.getAbsolutePath());
+        logger.info("Persist note {} into {}", id, file.getAbsolutePath());
 
         String json = gson.toJson(this);
         FileOutputStream out = new FileOutputStream(file);
@@ -344,16 +378,16 @@ public class Note implements Serializable, JobListener {
         gsonBuilder.setPrettyPrinting();
         Gson gson = gsonBuilder.create();
         File file = new File(path);
-        logger().info("Load note {} from {}", filename, file.getAbsolutePath());
+        logger.info("Load note {} from {}", filename, file.getAbsolutePath());
 
         if (!file.isFile()) {
-            System.out.println("##### Note-> !file found");
+            logger.info("##### Note-> !file found");
             return null;
         }
 
         String[] filenameWithExtension = filename.split("\\.");
         for (String aFilenameWithExtension : filenameWithExtension) {
-            System.out.println("##### Note-> " + aFilenameWithExtension);
+            logger.info("##### Note-> " + aFilenameWithExtension);
         }
         String ext = filenameWithExtension[filenameWithExtension.length - 1];
         FileInputStream ins = new FileInputStream(file);
@@ -387,7 +421,7 @@ public class Note implements Serializable, JobListener {
         Gson gson = gsonBuilder.create();
 
         File file = new File(conf.getNotebookDir() + "/" + id + "/note.json");
-        logger().info("Load note {} from {}", id, file.getAbsolutePath());
+        logger.info("Load note {} from {}", id, file.getAbsolutePath());
 
         if (!file.isFile()) {
             return null;
@@ -441,10 +475,7 @@ public class Note implements Serializable, JobListener {
         Paragraph p = (Paragraph) job;
     }
 
-    private static Logger logger() {
-        Logger logger = LoggerFactory.getLogger(Note.class);
-        return logger;
-    }
+
 
     @Override
     public void onProgressUpdate(Job job, int progress) {
