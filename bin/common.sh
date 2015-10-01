@@ -86,18 +86,18 @@ function addJarInDir(){
 
 addJarInDir ${EXPLORER_HOME}
 
-addJarInDir ${EXPLORER_HOME}/explorer-engine/target/lib
-addJarInDir ${EXPLORER_HOME}/explorer-server/target/lib
-addJarInDir ${EXPLORER_HOME}/explorer-web/target/lib
+addJarInDir ${EXPLORER_HOME}/engine/target/lib
+addJarInDir ${EXPLORER_HOME}/server/target/lib
+addJarInDir ${EXPLORER_HOME}/web/target/lib
 addJarInDir $INSTALL_HOME/lib
 
 
 if [ -d "${EXPLORER_HOME}/explorer-engine/target/classes" ]; then
-    EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/explorer-engine/target/classes"
+    EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/engine/target/classes"
 fi
 
 if [ -d "${EXPLORER_HOME}/explorer-server/target/classes" ]; then
-    EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/explorer-server/target/classes"
+    EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/server/target/classes"
 fi
 
 
