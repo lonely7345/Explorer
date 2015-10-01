@@ -109,7 +109,7 @@
                         <inherited>false</inherited>
                         <configuration>
                             <contact>
-                                <![CDATA[Stratio Notebook<idiaz@stratio.com>]]>
+                                <![CDATA[Stratio Explorer<idiaz@stratio.com>]]>
                             </contact>
                             <contactEmail>idiaz@stratio.com</contactEmail>
                             <deb>
@@ -191,7 +191,7 @@
                                     <architecture>all</architecture>
                                     <assembly>
                                         <copyFile>
-                                            <path>notebook-deb.sh</path>
+                                            <path>explorer-deb.sh</path>
                                             <toFile>/etc/init.d/explorer</toFile>
                                             <attributes>
                                                 <user>root</user>
@@ -221,7 +221,7 @@
                                     <architecture>noarch</architecture>
                                     <assembly>
                                         <copyFile>
-                                            <path>notebook-rpm.sh</path>
+                                            <path>explorer-rpm.sh</path>
                                             <toFile>/etc/init.d/explorer</toFile>
                                             <attributes>
                                                 <user>root</user>

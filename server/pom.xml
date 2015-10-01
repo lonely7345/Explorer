@@ -334,11 +334,11 @@
                 <version>1.6</version>
                 <executions>
                     <execution>
-                        <id>start-notebook</id>
+                        <id>start-explorer</id>
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <target unless="skipTests">
-                                <exec executable="./notebook-daemon.sh" dir="${notebook.daemon.package.base}"
+                                <exec executable="./explorer-daemon.sh" dir="${notebook.daemon.package.base}"
                                       spawn="true">
                                     <arg value="start"/>
                                 </exec>
@@ -350,11 +350,11 @@
                     </execution>
 
                     <execution>
-                        <id>stop-notebook</id>
+                        <id>stop-explorer</id>
                         <phase>post-integration-test</phase>
                         <configuration>
                             <target unless="skipTests">
-                                <exec executable="./notebook-daemon.sh" dir="${notebook.daemon.package.base}"
+                                <exec executable="./explorer-daemon.sh" dir="${explorer.daemon.package.base}"
                                       spawn="false">
                                     <arg value="stop"/>
                                 </exec>
@@ -376,9 +376,9 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <notebook.daemon.package.base>
+                <explorer.daemon.package.base>
                     ../bin
-                </notebook.daemon.package.base>
+                </explorer.daemon.package.base>
             </properties>
         </profile>
 
@@ -388,9 +388,9 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <notebook.daemon.package.base>
+                <explorer.daemon.package.base>
                     ../dist/target/parent-${project.version}/bin
-                </notebook.daemon.package.base>
+                </explorer.daemon.package.base>
             </properties>
         </profile>
     </profiles>

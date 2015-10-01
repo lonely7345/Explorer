@@ -27,7 +27,7 @@
         <!-- format>zip</format -->
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
-    <!--<baseDirectory>notebook-${project.version}</baseDirectory>-->
+    <!--<baseDirectory>explorer-${project.version}</baseDirectory>-->
     <!-- -->
     <dependencySets>
         <dependencySet>
@@ -35,9 +35,9 @@
             <useAllReactorProjects>true</useAllReactorProjects> -->
             <!-- Now, select which projects to include in this module-set. -->
             <includes>
-                <include>${project.groupId}.notebook:notebook-server</include>
-                <include>${project.groupId}.notebook:notebook-web</include>
-                <include>${project.groupId}.notebook:doc</include>
+                <include>${project.groupId}.explorer:server</include>
+                <include>${project.groupId}.explorer:web</include>
+                <include>${project.groupId}.explorer:doc</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
             <useTransitiveDependencies>false</useTransitiveDependencies>
@@ -46,9 +46,9 @@
             <outputDirectory>/lib</outputDirectory>
             <useProjectArtifact>false</useProjectArtifact>
             <excludes>
-                <exclude>${project.groupId}.notebook:notebook-web</exclude>
-                <exclude>${project.groupId}.notebook:doc</exclude>
-                <exclude>${project.groupId}.notebook:notebook-server</exclude>
+                <exclude>${project.groupId}.explorer:web</exclude>
+                <exclude>${project.groupId}.explorer:doc</exclude>
+                <exclude>${project.groupId}.explorer:server</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>
