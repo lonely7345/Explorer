@@ -954,9 +954,10 @@
                         <exclude>**/app/**</exclude>
                         <exclude>**/node/**</exclude>
                         <exclude>**/test/resources/**</exclude>
-                        <exclude>**/notebook-web/**</exclude>
+                        <exclude>**/notebook-web/node*/**</exclude>
                         <exclude>**/src/main/webapp/**</exclude>
                         <exclude>**/stratio.txt</exclude>
+                        <exclude>**/.*/**</exclude>
 			<exclude>**/target/**</exclude>
                     </excludes>
                 </configuration>
