@@ -32,22 +32,8 @@
     <packaging>pom</packaging>
     <name>Explorer: Packaging distribution</name>
 
-    <!-- NOTE: These dependency declarations are only required to sort this project to the
-         end of the line in the multimodule build.
-      -->
-    <dependencies>
-        <dependency>
-            <artifactId>explorer-server</artifactId>
-            <groupId>${project.groupId}</groupId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>explorer-web</artifactId>
-            <groupId>${project.groupId}</groupId>
-            <version>${project.version}</version>
-            <type>war</type>
-        </dependency>
-    </dependencies>
+
+
 
     <build>
         <plugins>
@@ -87,6 +73,19 @@
     <profiles>
         <profile>
             <id>package</id>
+            <dependencies>
+                <dependency>
+                    <artifactId>server</artifactId>
+                    <groupId>${project.groupId}</groupId>
+                    <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                    <artifactId>web</artifactId>
+                    <groupId>${project.groupId}</groupId>
+                    <version>${project.version}</version>
+                    <type>war</type>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
