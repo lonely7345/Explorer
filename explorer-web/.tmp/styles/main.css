@@ -1,0 +1,378 @@
+/* Copyright 2014 NFLabs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* app css stylesheet */
+/* reset */
+
+@font-face {
+	font-family: 'Brandon Regular';
+	src:url('../fonts/brandon_regular.otf') format('opentype');
+	font-style: normal;
+}
+
+html, body, div, span, applet, object, iframe,
+p,
+a, abbr, acronym, address, big, cite,
+del, dfn, img, ins, q, s, samp,
+small, strike,sub, sup, tt, var,
+center,
+dl, dt, dd,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+h1,h2,h3,h4,h5,h6{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+html, body {
+    line-height: 1;
+    height: 100%;
+    min-height: 100%;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*********************/
+/******* style *******/
+/*********************/
+
+/* basics */
+
+html, body {
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    font-family: 'Brandon Regular', sans-serif;
+    font-size: 1.1em;
+}
+
+.fill {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: auto;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+/*** top bar ***/
+
+.note-top-bar .navbar-inverse {
+    background-color: #444444;
+    border: 0;
+    color: white;
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-text{
+    color: #BBB;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-text:hover{
+    color: 00c7f7;
+}
+
+#main > div > div > div > header > ul > li.note-usr.dropdown > ul > li > span{
+    color: #333;
+    padding: 4px 20px;
+    display:block;
+    cursor:pointer;
+}
+
+#main > div > div > div > header > ul > li.note-usr.dropdown > ul > li > span:hover{
+    background-color: rgba(0,0,0,.05);
+}
+
+.navbar-inverse .navbar-brand {
+    color: #BBB;
+    text-decoration: none;
+}
+
+.navbar-brand {
+    padding: 5px 15px 0 15px;
+}
+
+/* user profile */
+.note-usr {
+    margin-right: 30px;
+}
+
+.note-usr img {
+    margin-right: 20px;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>
+.open>a:hover{
+    background-color: #00c7f7;
+    color: #222;
+}
+
+.server-status {
+    color: #fff;
+    padding: 17px 15px 17px 15px;
+    background-color: #222;
+    font-size:14px;
+}
+
+.server-connected {
+    color: #54FF74;
+}
+
+.server-disconnected {
+    color: #FF4641;
+}
+/* Help modal */
+
+.keys {
+  padding-right: 10px;
+  color: #999;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.kbd-dark {
+  color: #eee;
+  background-color: #222;
+  background-image: none;
+  border: 0;
+}
+
+kbd {
+  background-color: #e7e7e7;
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  display: inline-block;
+  padding: 4px 5px;
+  line-height: 10px;
+  color: #000;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+}
+
+.modal-header{
+   text-align: center !important;
+}
+
+.center-modal{
+    /*padding: 40px 20px;*/
+    position: fixed;
+    top: 10%;
+    left: 18.5%;
+    z-index: 1050;
+    width: 80%;
+    /*height: 80%;*/
+    margin-left: -10%;
+}
+
+/*** main container ***/
+
+#main-container {
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+/* left-side note selector */
+.note-list {
+    min-width: 300px;
+    width: 300px;
+}
+#note-list {
+    min-height: 100%;
+    height: 100%;
+    display: inline-block;
+    background-color: #DDDDDD;
+    padding: 0 20px 0 20px;
+    border-right: 1px solid #BBB;
+    overflow-y:auto;
+    margin-top:25px;
+}
+
+#note-list .h3 {
+    color: #555;
+}
+
+.note-list-header {
+    margin-top: 25px;
+}
+
+.note-list-items {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.note-list-item {
+    margin: 7px 0px 7px 0px;
+    padding: 15px 10px 15px 15px;
+}
+
+.note-list-item:hover {
+    background-color: #00c7f7;
+    cursor: pointer;
+    cursor: hand;
+
+}
+
+.note-list-item:hover .note-button-date{
+    color:white;
+}
+
+.note-button-active {
+    background-color: #00c7f7;
+    font-color: white;
+
+}
+
+.note-button-date{
+    font-size:0.8em;
+    margin-top:5px;
+    text-align:right;
+    color:#AAA;
+}
+
+.note-button-active .note-button-date{
+   color:white;
+}
+
+.note-item-content{
+  position:relative;
+}
+
+.note-item-clickable{
+   width:200px;
+}
+
+.note-item-content button{
+  position: absolute;
+  top:10px;
+  right:5px;
+}
+
+#new-note {
+    margin-top: 15px;
+    background-color: #00c7f7;
+}
+#refresh-note-list{
+    margin-top:15px;
+}
+
+/* notebook shell*/
+.note-shell{
+    position:absolute;
+    right: 0;
+    left: 300px;
+}
+/* asIframe - shell*/
+.note-shell-full{
+    position:absolute;
+    right: 0;
+    left: 0px;
+    overflow-y: auto;
+}
+
+#note-shell {
+    height: 100%;
+    display: inline-block;
+    padding:0;
+
+}
+.note-date-top{
+    padding-top:65px;
+    padding: 65px 0 0 20px;
+    color: #444;
+    height:90px;
+    width:100%;
+    background-color: #DDD;
+    font-size:0.8em;
+}
+.note-tip{
+    border-left: 1px solid #F9D3D3;
+    padding-left:10px;
+    margin-left:40px;
+    padding-top:45px;
+    color:#444;
+}
+.note-workspace {
+    margin: 0 0 0 40px;
+    position: absolute;
+    border-left: 1px solid #F9D3D3;
+    left: 0;
+    right: 0;
+    top: 90px;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+/* settings */
+.settings-interpreter{
+    margin: 30px 0 30px 50px;
+}
+.settings-interpreter-name{
+    display:inline-block;
+    width:360px;
+}
+.settings-interpreter-title{
+    font-size:1.5em;
+}
+.settings-interpreter-textarea{
+    width:450px;
+    height:250px;
+}
+
+/* edit */
+.edit-save{
+    margin-left:530px;
+}
+.edit-textarea{
+    width:570px;
+    height:250px;
+}
+
+
+
+
+

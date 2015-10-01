@@ -23,7 +23,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.stratio.notebook</groupId>
+        <groupId>com.stratio.explorer</groupId>
 
 
         <version>0.4.0-SNAPSHOT</version>
@@ -33,12 +33,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ingestion-interpreter</artifactId>
-    <name>Notebook: Ingestion Interpreter</name>
+    <name>Explorer: Ingestion Interpreter</name>
     <description>Interpreter for Stratio Ingestion</description>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>notebook-engine</artifactId>
+            <artifactId>explorer-engine</artifactId>
             <version>0.4.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>

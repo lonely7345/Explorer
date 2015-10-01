@@ -25,20 +25,20 @@
 
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.stratio.notebook</groupId>
+        <groupId>com.stratio.explorer</groupId>
 
         <version>0.4.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>notebook-markdown</artifactId>
+    <artifactId>explorer-markdown</artifactId>
     <packaging>jar</packaging>
-    <name>Notebook: Markdown interpreter</name>
+    <name>Explorer: Markdown interpreter</name>
     <url>http://www.stratio.com</url>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>notebook-engine</artifactId>
+            <artifactId>explorer-engine</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

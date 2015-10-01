@@ -27,11 +27,11 @@
         <artifactId>parent</artifactId>
         <version>0.4.0</version>
     </parent>
-    <groupId>com.stratio.notebook</groupId>
+    <groupId>com.stratio.explorer</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>0.4.0-SNAPSHOT</version>
-    <name>Stratio Notebook</name>
+    <name>Stratio Explorer</name>
     <description>Web shell for Stratio platform</description>
     <url>http://www.stratio.com</url>
 
@@ -80,13 +80,13 @@
     <inceptionYear>2013</inceptionYear>
 
     <modules>
-        <module>notebook-engine</module>
+        <module>explorer-engine</module>
         <module>crossdata</module>
         <module>spark</module>
         <module>markdown</module>
         <module>shell</module>
-        <module>notebook-web</module>
-        <module>notebook-server</module>
+        <module>explorer-web</module>
+        <module>explorer-server</module>
         <module>dist</module>
         <module>doc</module>
         <module>streaming</module>

@@ -23,18 +23,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.stratio.notebook</groupId>
+        <groupId>com.stratio.explorer</groupId>
         <version>0.4.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>streaming-interpreter</artifactId>
-    <name>Notebook: Streaming Interpreter</name>
+    <name>Explorer: Streaming Interpreter</name>
     <description>Interpreter for Stratio Streaming</description>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>notebook-engine</artifactId>
+            <artifactId>explorer-engine</artifactId>
 
             <version>0.4.0-SNAPSHOT</version>
 

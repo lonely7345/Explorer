@@ -24,25 +24,25 @@
 
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.stratio.notebook</groupId>
+        <groupId>com.stratio.explorer</groupId>
         <version>0.4.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>dist</artifactId>
     <packaging>pom</packaging>
-    <name>Notebook: Packaging distribution</name>
+    <name>Explorer: Packaging distribution</name>
 
     <!-- NOTE: These dependency declarations are only required to sort this project to the
          end of the line in the multimodule build.
       -->
     <dependencies>
         <dependency>
-            <artifactId>notebook-server</artifactId>
+            <artifactId>explorer-server</artifactId>
             <groupId>${project.groupId}</groupId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <artifactId>notebook-web</artifactId>
+            <artifactId>explorer-web</artifactId>
             <groupId>${project.groupId}</groupId>
             <version>${project.version}</version>
             <type>war</type>
@@ -142,10 +142,10 @@
                                 </fileAttributes>
                             </defaults>
 
-                            <outputFileName>stratio-notebook</outputFileName>
+                            <outputFileName>stratio-explorer</outputFileName>
                             <assembly>
                                 <mkdirs>
-                                    <path>/var/log/sds/notebook</path>
+                                    <path>/var/log/sds/explorer</path>
                                     <attributes>
                                         <user>stratio</user>
                                         <group>stratio</group>
@@ -164,19 +164,19 @@
                                 </copyDirectory>
                                 <copyDirectory>
                                     <from>target/parent-${project.version}/bin</from>
-                                    <to>/opt/sds/notebook/bin</to>
+                                    <to>/opt/sds/explorer/bin</to>
                                 </copyDirectory>
                                 <copyDirectory>
                                     <from>target/parent-${project.version}/lib</from>
-                                    <to>/opt/sds/notebook/lib</to>
+                                    <to>/opt/sds/explorer/lib</to>
                                 </copyDirectory>
                                 <copyDirectory>
                                     <from>target/parent-${project.version}/conf</from>
-                                    <to>/etc/sds/notebook</to>
+                                    <to>/etc/sds/explorer</to>
                                 </copyDirectory>
                                 <copyDirectory>
                                     <from>target/parent-${project.version}/interpreter</from>
-                                    <to>/opt/sds/notebook/interpreter</to>
+                                    <to>/opt/sds/explorer/interpreter</to>
                                 </copyDirectory>
                             </assembly>
                         </configuration>
@@ -192,7 +192,7 @@
                                     <assembly>
                                         <copyFile>
                                             <path>notebook-deb.sh</path>
-                                            <toFile>/etc/init.d/notebook</toFile>
+                                            <toFile>/etc/init.d/explorer</toFile>
                                             <attributes>
                                                 <user>root</user>
                                                 <group>root</group>
@@ -201,7 +201,7 @@
                                         </copyFile>
                                         <copyFile>
                                             <path>../LICENSE</path>
-                                            <toFile>/DEBIAN/StratioNotebookLicense</toFile>
+                                            <toFile>/DEBIAN/StratioExplorerLicense</toFile>
                                             <attributes>
                                                 <user>root</user>
                                                 <group>root</group>
@@ -222,7 +222,7 @@
                                     <assembly>
                                         <copyFile>
                                             <path>notebook-rpm.sh</path>
-                                            <toFile>/etc/init.d/notebook</toFile>
+                                            <toFile>/etc/init.d/explorer</toFile>
                                             <attributes>
                                                 <user>root</user>
                                                 <group>root</group>
