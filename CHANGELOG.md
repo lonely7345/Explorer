@@ -3,6 +3,7 @@
 ## 0.4.0 (incoming)
 
 * Add cassandra Interpreter
+* Notebook becomes Explorer
 
 ## 0.3.4 (September 2015)
 
