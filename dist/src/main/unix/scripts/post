@@ -6,16 +6,16 @@ set -e
 
 GROUP='stratio'
 USER='stratio'
-DIR_INSTALL='/opt/sds/notebook'
-DIR_CONF='/etc/sds/notebook'
-DIR_LOG='/var/log/sds/notebook'
+DIR_INSTALL='/opt/sds/explorer'
+DIR_CONF='/etc/sds/explorer'
+DIR_LOG='/var/log/sds/explorer'
 
 
-chmod 755 /etc/init.d/notebook
-chmod 755 /opt/sds/notebook/bin
-chmod +x /opt/sds/notebook/bin/*
-chmod +x /etc/default/notebook-functions
-chmod +x /etc/default/notebook-variables
+chmod 755 /etc/init.d/explorer
+chmod 755 /opt/sds/explorer/bin
+chmod +x /opt/sds/explorer/bin/*
+chmod +x /etc/default/explorer-functions
+chmod +x /etc/default/explorer-variables
 
 
   # Add stratio group if it doesn't already exists
