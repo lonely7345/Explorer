@@ -14,8 +14,8 @@ DIR_LOG='/var/log/sds/explorer'
 chmod 755 /etc/init.d/explorer
 chmod 755 /opt/sds/explorer/bin
 chmod +x /opt/sds/explorer/bin/*
-chmod +x /etc/default/explorer-functions
-chmod +x /etc/default/explorer-variables
+#chmod +x /etc/default/explorer-functions
+#chmod +x /etc/default/explorer-variables
 
 
   # Add stratio group if it doesn't already exists
