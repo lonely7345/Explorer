@@ -21,10 +21,10 @@
  */
 //(function() {
     'use strict';
-//    angular.module('notebookWebApp').controller('NotebookCtrl', NotebookCtrl);
+//    angular.module('explorerWebApp').controller('NotebookCtrl', NotebookCtrl);
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:NotebookCtrl
+     * @name explorerWebApp.controller:NotebookCtrl
      * @description
      * # NotebookCtrl
      * Controller of notes, manage the note (update)
@@ -38,7 +38,7 @@
 //    function NotebookCtrl($scope, $http, $route, $routeParams, $location, $rootScope, websocketMsgSrv, baseUrlSrv,
 //    $timeout) {
 
-    angular.module('notebookWebApp').controller('NotebookCtrl',function ($scope, $http, $route, $routeParams,
+    angular.module('explorerWebApp').controller('NotebookCtrl',function ($scope, $http, $route, $routeParams,
     $location,$rootScope, websocketMsgSrv, baseUrlSrv,$timeout){
 
         $scope.note = null;

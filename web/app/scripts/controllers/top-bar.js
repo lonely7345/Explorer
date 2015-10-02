@@ -21,7 +21,7 @@
     'use strict';
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:TopBarCtrl
+     * @name explorerWebApp.controller:TopBarCtrl
      * @description
      * # TopBarCtrl
      * Controller of the top navigation, mainly use for the dropdown menu

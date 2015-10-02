@@ -21,7 +21,7 @@
 
 describe(' Modal settings expects ',function(){
 
-   beforeEach(module('notebookWebApp'));
+   beforeEach(module('explorerWebApp'));
 
    describe(' When cross-data settings was selected ',function(){
 

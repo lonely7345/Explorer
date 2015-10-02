@@ -6,7 +6,7 @@
  * @description
  * # ngDelete
  */
-angular.module('notebookWebApp').directive('ngDelete', function() {
+angular.module('explorerWebApp').directive('ngDelete', function() {
   return function(scope, element, attrs) {
     element.bind('keydown keypress', function(event) {
       if (event.which === 27 || event.which === 46) {

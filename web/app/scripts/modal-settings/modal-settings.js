@@ -20,11 +20,11 @@
 
     'use strict';
     angular
-        .module('notebookWebApp')
+        .module('explorerWebApp')
         .controller('ModalSettingsCtrl',function($scope, $modal, $http, baseUrlSrv) {
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:ModalSettingsCtrl
+     * @name explorerWebApp.controller:ModalSettingsCtrl
      * @description
      * # ModalSettingsCtrl
      * Controller of modal window for settings

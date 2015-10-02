@@ -20,7 +20,7 @@
 
 'use strict';
 
-angular.module('notebookWebApp').factory('notebookListDataFactory', function() {
+angular.module('explorerWebApp').factory('notebookListDataFactory', function() {
   var notes = {};
 
   notes.list = [];

@@ -24,7 +24,7 @@
         .controller('ModalEditorCtrl', function( $modalInstance, properties, resolvePath, $http) {
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:ModalEditorCtrl
+     * @name explorerWebApp.controller:ModalEditorCtrl
      * @description
      * # ModalEditorCtrl
      * Controller of modal window for file edition

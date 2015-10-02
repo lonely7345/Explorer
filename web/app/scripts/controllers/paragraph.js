@@ -21,7 +21,7 @@
  */
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:ParagraphCtrl
+     * @name explorerWebApp.controller:ParagraphCtrl
      * @description
      * # ParagraphCtrl
      * Controller of the paragraph, manage everything related to the paragraph

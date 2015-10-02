@@ -23,7 +23,7 @@
  *
  * @author anthonycorbacho
  */
-angular.module('notebookWebApp').directive('ngEnter', function() {
+angular.module('explorerWebApp').directive('ngEnter', function() {
   return function(scope, element, attrs) {
     element.bind('keydown keypress', function(event) {
       if (event.which === 13) {

@@ -19,10 +19,10 @@
  */
 //(function() {
     'use strict';
-//    angular.module('notebookWebApp').controller('NotebookSelectorCtrl', NotebookSelectorCtrl);
+//    angular.module('explorerWebApp').controller('NotebookSelectorCtrl', NotebookSelectorCtrl);
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:NotebookSelectorCtrl
+     * @name explorerWebApp.controller:NotebookSelectorCtrl
      * @description
      * # NotebookSelectorCtrl
      * Controller of left side notebook's navigation

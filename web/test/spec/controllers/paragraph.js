@@ -20,7 +20,7 @@
 describe('Controller: ParagraphCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('notebookWebApp'));
+  beforeEach(module('explorerWebApp'));
 
   var ParagraphCtrl,
     scope;

@@ -20,7 +20,7 @@
 
 'use strict';
 
-angular.module('notebookWebApp').service('baseUrlSrv', function() {
+angular.module('explorerWebApp').service('baseUrlSrv', function() {
 
   this.getPort = function() {
     var port = Number(location.port);

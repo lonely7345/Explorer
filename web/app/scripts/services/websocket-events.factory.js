@@ -20,7 +20,7 @@
 //(function() {
     'use strict';
     angular
-        .module('notebookWebApp')
+        .module('explorerWebApp')
         .factory('websocketEvents',function($rootScope, $websocket, baseUrlSrv, $window, $routeParams) {
 
 //    websocketEvents.$inject = ['$rootScope', '$websocket' ,'baseUrlSrv', '$window', '$routeParams'];

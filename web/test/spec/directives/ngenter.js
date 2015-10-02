@@ -20,7 +20,7 @@
 describe('Directive: ngEnter', function () {
 
   // load the directive's module
-  beforeEach(module('notebookWebApp'));
+  beforeEach(module('explorerWebApp'));
 
   var element,
     scope;

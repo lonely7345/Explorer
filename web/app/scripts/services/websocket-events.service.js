@@ -20,7 +20,7 @@
 //(function() {
     'use strict';
     angular
-        .module('notebookWebApp')
+        .module('explorerWebApp')
         .service('websocketMsgSrv',function($rootScope, websocketEvents) {
 
 

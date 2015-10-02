@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('notebookWebApp').directive('resizable', function () {
+angular.module('explorerWebApp').directive('resizable', function () {
     var resizableConfig = {
         autoHide: true,
         handles: 'se',
