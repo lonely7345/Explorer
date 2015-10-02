@@ -57,7 +57,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     private static final int DEFAULT_PORT = 8282;
 
     private static void creatingwebSocketServerLog(int port) {
-        LOG.info("Create notebook websocket on port {}", port);
+        LOG.info("Create explorer websocket on port {}", port);
     }
 
     Gson gson = new Gson();

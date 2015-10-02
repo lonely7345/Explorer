@@ -226,7 +226,7 @@ public class SparkInterpreter extends Interpreter {
         SparkConf conf =
                 new SparkConf()
                         .setMaster(getMaster())
-                        .setAppName("stratio-notebook")
+                        .setAppName("stratio-explorer")
                         .setJars(jars)
                         .set("spark.repl.class.uri", classServerUri);
         if (execUri != null) {

@@ -33,12 +33,12 @@ import org.slf4j.LoggerFactory;
 
 import com.stratio.notebook.notebook.Notebook;
 
-@Path("/notebook")
+@Path("/explorer")
 /*
 @AtmosphereService(
         dispatch = false,
         interceptors = {AtmosphereResourceLifecycleInterceptor.class},
-        path = "/notebook",
+        path = "/explorer",
         servlet = "org.glassfish.jersey.servlet.ServletContainer")
         */
 @Produces("application/json")

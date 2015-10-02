@@ -11,4 +11,4 @@ while getopts "p:l:" option; do
   esac
 done
 
-$DIR/notebook.sh >>$LOGFILE 2>&1 & echo $! >$PIDFILE
+$DIR/explorer.sh >>$LOGFILE 2>&1 & echo $! >$PIDFILE

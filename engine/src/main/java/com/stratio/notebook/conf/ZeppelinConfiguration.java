@@ -247,7 +247,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	//TODO review how to recovered this variables better.
 
 	/**
-	 * The Notebook conf dir.
+	 * The Explorer conf dir.
 	 */
 	private static final String EXPLORER_CONF_DIR = System.getenv().get("EXPLORER_CONF_DIR");
 	/**

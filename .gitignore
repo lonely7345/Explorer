@@ -10,19 +10,19 @@
 *.ear
 
 # conf file
-conf/notebook-env.sh
-conf/notebook-site.xml
+conf/explorer-env.sh
+conf/explorer-site.xml
 conf/keystore
 conf/truststore
 conf/interpreter.json
 
 #webapp
-notebook-web/node_modules
-notebook-web/dist
-notebook-web/.tmp
-notebook-web/.sass-cache
-notebook-web/bower_components
-notebook-web/src
+web/node_modules
+web/dist
+web/.tmp
+web/.sass-cache
+web/bower_components
+web/src
 **nbproject/
 **node/
 
@@ -37,7 +37,7 @@ drivers/
 warehouse/
 local-repo/
 
-/notebook
+/explorer
 **/sessions/
 **/data/
 **/build/

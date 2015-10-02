@@ -2,7 +2,7 @@
 
 
 ############################ SERVICE VARIABLES ############################
-# Run Notebook as this user ID and group ID
+# Run explorer as this user ID and group ID
 USER=stratio
 GROUP=stratio
 

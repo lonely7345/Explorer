@@ -38,7 +38,7 @@ import java.io.IOException;
  */
 @Path("/interpreter")
 @Produces("application/json")
-@Api(value = "/interpreter", description = "Notebook Interpreter REST API")
+@Api(value = "/interpreter", description = "Explorer Interpreter REST API")
 public class InterpreterRestApi {
 
     private InterpreterFactory interpreterFactory;

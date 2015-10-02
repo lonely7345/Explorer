@@ -66,7 +66,7 @@ public class ZeppelinServer extends Application {
 
         //REST api
         final ServletContextHandler restApi = setupRestApiContextHandler();
-        /** NOTE: Swagger-core is included via the web.xml in notebook-web
+        /** NOTE: Swagger-core is included via the web.xml in web
          * But the rest of swagger is configured here
          */
         final ServletContextHandler swagger = setupSwaggerContextHandler(port);
@@ -80,13 +80,13 @@ public class ZeppelinServer extends Application {
         server.setHandler(contexts);
 
         websocket.start();
-        LOG.info("Start notebook server");
+        LOG.info("Start explorer server");
         server.start();
         LOG.info("Started");
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override public void run() {
-                LOG.info("Shutting down notebook Server ... ");
+                LOG.info("Shutting down explorer Server ... ");
                 try {
                     server.stop();
                     websocket.stop();

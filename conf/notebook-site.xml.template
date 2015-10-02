@@ -27,9 +27,9 @@
 </property>
 
 <property>
-  <name>zeppelin.notebook.dir</name>
-  <value>notebook</value>
-  <description>notebook persist</description>
+  <name>zeppelin.explorer.dir</name>
+  <value>explorer</value>
+  <description>explorer persist</description>
 </property>
 
 <property>
