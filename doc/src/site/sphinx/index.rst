@@ -1,5 +1,4 @@
-
-Notebook documentation
+Explorer documentation
 ====================================
 
 .. toctree::
