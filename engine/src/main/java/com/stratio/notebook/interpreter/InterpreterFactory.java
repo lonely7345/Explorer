@@ -56,7 +56,7 @@ public class InterpreterFactory {
 
     public InterpreterFactory(ZeppelinConfiguration conf) {
         this.conf = conf;
-        String replsConf = conf.getString(ConfVars.NOTEBOOK_INTERPRETERS);
+        String replsConf = conf.getString(ConfVars.EXPLORER_INTERPRETERS);
         interpreterClassList = replsConf.split(",");
 
         init();

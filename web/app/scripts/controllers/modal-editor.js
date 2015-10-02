@@ -20,7 +20,7 @@
 //(function() {
     'use strict';
     angular
-        .module('notebookWebApp')
+        .module('ExplorerWebApp')
         .controller('ModalEditorCtrl', function( $modalInstance, properties, resolvePath, $http) {
     /**
      * @ngdoc function

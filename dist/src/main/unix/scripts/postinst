@@ -12,11 +12,11 @@ DIR_LOG='/var/log/sds/notebook'
 DIR_RUN='/var/run/sds'
 
 
-chmod 755 /etc/init.d/notebook
-chmod 755 /opt/sds/notebook/bin
-chmod +x /opt/sds/notebook/bin/*
-chmod +x /etc/default/notebook-functions
-chmod +x /etc/default/notebook-variables
+chmod 755 /etc/init.d/explorer
+chmod 755 /opt/sds/explorer/bin
+chmod +x /opt/sds/explorer/bin/*
+chmod +x /etc/default/explorer-functions
+chmod +x /etc/default/explorer-variables
 
 case "$1" in
   configure)
@@ -38,7 +38,7 @@ case "$1" in
     mkdir $DIR_LOG
   fi
 
-  chown root:root /etc/init.d/notebook
+  chown root:root /etc/init.d/explorer
 
   chown -R ${USER}:${GROUP} $DIR_INSTALL
   chown -R ${USER}:${GROUP} $DIR_CONF
@@ -47,7 +47,7 @@ case "$1" in
   chown ${USER}:${GROUP} $DIR_RUN
   chmod 775 $DIR_LOG
 
-  update-rc.d notebook defaults
+  update-rc.d explorer defaults
   ;;
 esac
 

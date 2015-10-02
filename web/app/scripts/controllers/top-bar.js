@@ -31,7 +31,7 @@
      *
      */
 
-    angular.module('notebookWebApp').controller('TopBarCtrl', function($scope, $rootScope, AuthenticationService,
+    angular.module('explorerWebApp').controller('TopBarCtrl', function($scope, $rootScope, AuthenticationService,
     $modal, $http, baseUrlSrv){
 
 

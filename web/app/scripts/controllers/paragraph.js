@@ -31,7 +31,7 @@
      *
      */
 
-    angular.module('notebookWebApp').controller('ParagraphCtrl', function ($scope, $rootScope, $route, $window,
+    angular.module('explorerkWebApp').controller('ParagraphCtrl', function ($scope, $rootScope, $route, $window,
     $http, $modal, $routeParams, $location,$timeout, websocketMsgSrv){
         $scope.paragraph = null;
         $scope.editor = null;

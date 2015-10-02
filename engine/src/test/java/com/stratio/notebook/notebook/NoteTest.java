@@ -25,6 +25,7 @@ import org.powermock.reflect.Whitebox;
 import org.quartz.Scheduler;
 
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -275,6 +276,27 @@ public class NoteTest {
     @Test
     public void testExportToFile() throws Exception {
 
+
+
+        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
+        expect(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
+        replay(conf);
+        NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
+        JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
+        Scheduler quartzShed =  mock(Scheduler.class);
+        Note note = new Note(conf,replLoader,jobListenerFactory,quartzShed);
+
+
+
+        int numberOfParagraph = 3;
+        List<Paragraph> paragraphList = createParagraphList(numberOfParagraph);
+        note.addParagraphs(paragraphList);
+        note.setName("TEST_NOTE");
+
+
+        note.exportToFile(".","Test");
+
+        File f = new Fil
     }
 
     @Test

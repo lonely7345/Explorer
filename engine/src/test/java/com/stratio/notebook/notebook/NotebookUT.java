@@ -47,10 +47,10 @@ public class NotebookUT implements JobListenerFactory{
 
 	@Before
 	public void setUp() throws Exception {
-		tmpDir = new File(System.getProperty("java.io.tmpdir")+"/NotebookLTest_"+System.currentTimeMillis());
+		tmpDir = new File(System.getProperty("java.io.tmpdir")+"/ExplorerTest_"+System.currentTimeMillis());
 		tmpDir.mkdirs();
-		notebookDir = new File(System.getProperty("java.io.tmpdir")+"/NotebookLTest_"+System.currentTimeMillis()
-				+"/notebook");
+		notebookDir = new File(System.getProperty("java.io.tmpdir")+"/ExplorerLTest_"+System.currentTimeMillis()
+				+"/explorer");
 		notebookDir.mkdirs();
 
 		System.setProperty(ConfVars.EXPLORER_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());

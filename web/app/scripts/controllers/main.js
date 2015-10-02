@@ -21,10 +21,10 @@
 
 //(function() {
     'use strict';
-//    angular.module('notebookWebApp').controller('MainCtrl', MainCtrl);
+//    angular.module('explorerWebApp').controller('MainCtrl', MainCtrl);
     /**
      * @ngdoc function
-     * @name notebookWebApp.controller:MainCtrl
+     * @name explorerWebApp.controller:MainCtrl
      * @description
      * # MainCtrl
      * Root controller of aplication
@@ -36,7 +36,7 @@
 //    MainCtrl.$inject = ['$scope', '$rootScope', '$window'];
 //    function MainCtrl($scope, $rootScope, $window) {
 
-    angular.module('notebookWebApp').controller('MainCtrl', function($scope, $rootScope, $window){
+    angular.module('explorerWebApp').controller('MainCtrl', function($scope, $rootScope, $window){
         $rootScope.connected = true;
         $scope.looknfeel = 'simple';
         $scope.lastChangedNotebookId = ''

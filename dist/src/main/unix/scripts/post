@@ -11,11 +11,11 @@ DIR_CONF='/etc/sds/notebook'
 DIR_LOG='/var/log/sds/notebook'
 
 
-chmod 755 /etc/init.d/notebook
-chmod 755 /opt/sds/notebook/bin
-chmod +x /opt/sds/notebook/bin/*
-chmod +x /etc/default/notebook-functions
-chmod +x /etc/default/notebook-variables
+chmod 755 /etc/init.d/explorer
+chmod 755 /opt/sds/explorer/bin
+chmod +x /opt/sds/explorer/bin/*
+chmod +x /etc/default/explorer-functions
+chmod +x /etc/default/explorer-variables
 
 
   # Add stratio group if it doesn't already exists
@@ -35,7 +35,7 @@ chmod +x /etc/default/notebook-variables
     mkdir $DIR_LOG
   fi
 
-  chown root:root /etc/init.d/notebook
+  chown root:root /etc/init.d/explorer
 
   chown -R ${USER}:${GROUP} $DIR_INSTALL
   chown -R ${USER}:${GROUP} $DIR_CONF
@@ -44,6 +44,6 @@ chmod +x /etc/default/notebook-variables
   chmod 775 $DIR_LOG
 
 
-/sbin/chkconfig --add notebook
+/sbin/chkconfig --add explorer
 
 exit 0

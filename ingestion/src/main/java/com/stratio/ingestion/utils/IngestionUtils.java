@@ -114,8 +114,8 @@ public class IngestionUtils {
     }
 
     public static String getRelativeDir(String path) {
-        if (System.getenv("NOTEBOOK_HOME")!=null) {
-            return System.getenv("NOTEBOOK_HOME") + "/" + path;
+        if (System.getenv("EXPLORER_HOME")!=null) {
+            return System.getenv("EXPLORER_HOME") + "/" + path;
         } else {
             String rootPath = IngestionUtils.class.getResource("").getPath();
             rootPath = rootPath.substring(0,rootPath.length()-"/ingestion/target/classes/com/stratio/ingestion/utils"

@@ -1,5 +1,5 @@
 =================
-Install Notebook
+Install Explorer
 =================
 
 Instructions
@@ -23,8 +23,8 @@ Install
 -------
 To install Stratio Explorer you must follow this Steps.
 
-1.- Clone or download project from https://github.com/Stratio/stratio-notebook  
-2.- From Shell move to stratio-netebook folder  
+1.- Clone or download project from https://github.com/Stratio/Explorer
+2.- From Shell move to Explorer folder
 3.- Excute maven package
 
 .. code-block::bash
@@ -37,16 +37,16 @@ Configuration can be done by both environment variable and java properties. If b
 used.
 
 =========================    =======================  ============================== ===========
-notebook-env.sh	             notebook-site.xml         Default value  		     Description
+explorer-env.sh	             explorer-site.xml         Default value  		     Description
 =========================    =======================  ============================== ===========
-NOTEBOOK_HOME	  		    		   	   		   	     Notebook Home directory
-NOTEBOOK_PORT         	     zeppelin.server.port     8084	   		     Notebook server port
-NOTEBOOK_JOB_DIR             zeppelin.job.dir         jobs	   		     Notebook persist/load session in this directory. Can be a path or a URI. location on HDFS supported
-NOTEBOOK_ZAN_REPO            zeppelin.zan.repo        https://github.com/NFLabs/zan  Remote ZAN repository URL
-NOTEBOOK_ZAN_LOCAL_REPO      zeppelin.zan.localrepo   zan-repo	 		     Notebook library local repository. Local filesystem path
-NOTEBOOK_ZAN_SHARED_REPO     zeppelin.zan.sharedrepo				     Notebook library shared repository. Location on HDFS. Usufull when your backend (eg. hiveserver) is not running on the sam machine and want to use zeppelin library with resource file(eg. in hive 'ADD FILE 'path'). So your backend can get resource file from shared repository.
-NOTEBOOK_DRIVERS             zeppelin.drivers         hive:hive2://,exec:exec://     Comma separated list of [Name]:[Connection URI]
-NOTEBOOK_DRIVER_DIR          zeppelin.driver.dir      drivers			     Notebook driver directory.
+EXPLORER_HOME	  		    		   	   		   	     Explorer Home directory
+EXPLORER_PORT         	     zeppelin.server.port     8084	   		     Explorer server port
+EXPLORER_JOB_DIR             zeppelin.job.dir         jobs	   		     Explorer persist/load session in this directory. Can be a path or a URI. location on HDFS supported
+EXPLORER_ZAN_REPO            zeppelin.zan.repo        https://github.com/NFLabs/zan  Remote ZAN repository URL
+EXPLORER_ZAN_LOCAL_REPO      zeppelin.zan.localrepo   zan-repo	 		     Explorer library local repository. Local filesystem path
+EXPLORER_ZAN_SHARED_REPO     zeppelin.zan.sharedrepo				     Explorer library shared repository. Location on HDFS. Usufull when your backend (eg. hiveserver) is not running on the sam machine and want to use zeppelin library with resource file(eg. in hive 'ADD FILE 'path'). So your backend can get resource file from shared repository.
+EXPLORER_DRIVERS             zeppelin.drivers         hive:hive2://,exec:exec://     Comma separated list of [Name]:[Connection URI]
+EXPLORER_DRIVER_DIR          zeppelin.driver.dir      drivers			     Explorer driver directory.
 =========================    =======================  ============================== ===========
 
 
@@ -98,17 +98,17 @@ numebr port and host must be the same numbers where cassadra is raised.
 Start/Stop
 ^^^^^^^^^^
 
-**Start Notebook**
+**Start Explorer**
 
 .. code-block:: bash
 
-  bin/notebook-daemon.sh start
+  bin/explorer-daemon.sh start
 
 After successful start, visit http://localhost:8084 with your web browser
 
-**Stop Notebook**
+**Stop Explorer**
 
 .. code-block:: bash
 
-  bin/notebook-daemon.sh stop
+  bin/explorer-daemon.sh stop
 

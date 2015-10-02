@@ -22,9 +22,9 @@
 
 /**
  * @ngdoc overview
- * @name notebookWebApp
+ * @name explorerWebApp
  * @description
- * # notebookWebApp
+ * # explorerWebApp
  *
  * Main module of the application.
  *
@@ -33,7 +33,7 @@
 
 angular.module('Authentication', []);
 var app = angular
-  .module('notebookWebApp', [
+  .module('explorerWebApp', [
     'Authentication',
     'ngAnimate',
     'ngCookies',
@@ -58,7 +58,7 @@ var app = angular
         controller: 'LoginCtrl',
         hideMenus: true
       })
-      .when('/notebook/:noteId/paragraph/:paragraphId?', {
+      .when('/explorer/:noteId/paragraph/:paragraphId?', {
         templateUrl: 'views/main.html'
       })
       .otherwise({

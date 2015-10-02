@@ -10,7 +10,7 @@ Explorer dependency graph:
 
 
 
-Notebook artifacts:
+Explorer artifacts:
 ------------------
 Explorer CLI    - Commandline UI             - executable
 Explorer Server - Web UI, server to host it  - executable

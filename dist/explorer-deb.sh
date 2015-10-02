@@ -30,7 +30,7 @@
 
 # Only configuration needed here
 NAME="explorer"
-DESC="Notebook explorer shell"
+DESC="Explorer explorer shell"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin

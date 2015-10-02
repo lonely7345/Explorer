@@ -338,7 +338,7 @@ public class Note implements Serializable, JobListener {
 
         String json = gson.toJson(this);
         FileOutputStream out = new FileOutputStream(file);
-        out.write(json.getBytes(conf.getString(ConfVars.NOTEBOOK_ENCODING)));
+        out.write(json.getBytes(conf.getString(ConfVars.EXPLORER_ENCODING)));
         out.close();
     }
 
@@ -350,24 +350,24 @@ public class Note implements Serializable, JobListener {
         if (conf == null) {
             conf = ZeppelinConfiguration.create();
         }
-        File dir = new File(conf.getNotebookDir() + "/" + id);
+        File dir = new File(conf.getExplorerDir() + "/" + id);
         if (!dir.exists()) {
             dir.mkdirs();
         } else if (dir.isFile()) {
             throw new RuntimeException("File already exists" + dir.toString());
         }
 
-        File file = new File(conf.getNotebookDir() + "/" + id + "/note.json");
+        File file = new File(conf.getExplorerDir() + "/" + id + "/note.json");
         logger.info("Persist note {} into {}", id, file.getAbsolutePath());
 
         String json = gson.toJson(this);
         FileOutputStream out = new FileOutputStream(file);
-        out.write(json.getBytes(conf.getString(ConfVars.NOTEBOOK_ENCODING)));
+        out.write(json.getBytes(conf.getString(ConfVars.EXPLORER_ENCODING)));
         out.close();
     }
 
     public void unpersist() throws IOException {
-        File dir = new File(conf.getNotebookDir() + "/" + id);
+        File dir = new File(conf.getExplorerDir() + "/" + id);
 
         FileUtils.deleteDirectory(dir);
     }
@@ -391,7 +391,7 @@ public class Note implements Serializable, JobListener {
         }
         String ext = filenameWithExtension[filenameWithExtension.length - 1];
         FileInputStream ins = new FileInputStream(file);
-        String fileString = IOUtils.toString(ins, ConfVars.NOTEBOOK_ENCODING.getStringValue());
+        String fileString = IOUtils.toString(ins, ConfVars.EXPLORER_ENCODING.getStringValue());
         if (ext.compareToIgnoreCase("json") == 0) {
             Note note = gson.fromJson(fileString, Note.class);
             n.addParagraphs(note.getParagraphs());
@@ -420,7 +420,7 @@ public class Note implements Serializable, JobListener {
         gsonBuilder.setPrettyPrinting();
         Gson gson = gsonBuilder.create();
 
-        File file = new File(conf.getNotebookDir() + "/" + id + "/note.json");
+        File file = new File(conf.getExplorerDir() + "/" + id + "/note.json");
         logger.info("Load note {} from {}", id, file.getAbsolutePath());
 
         if (!file.isFile()) {
@@ -428,7 +428,7 @@ public class Note implements Serializable, JobListener {
         }
 
         FileInputStream ins = new FileInputStream(file);
-        String json = IOUtils.toString(ins, conf.getString(ConfVars.NOTEBOOK_ENCODING));
+        String json = IOUtils.toString(ins, conf.getString(ConfVars.EXPLORER_ENCODING));
         Note note = gson.fromJson(json, Note.class);
         note.setZeppelinConfiguration(conf);
         note.setReplLoader(replLoader);

@@ -34,7 +34,7 @@
 //    NotebookSelectorCtrl.$inject = ['$scope', '$rootScope', '$http', 'websocketMsgSrv'];
 //    function NotebookSelectorCtrl ($scope, $rootScope, $http, websocketMsgSrv){
 
-    angular.module('notebookWebApp').controller('NotebookSelectorCtrl',function($scope, $rootScope, $http,
+    angular.module('explorerWebApp').controller('ExplorerSelectorCtrl',function($scope, $rootScope, $http,
     websocketMsgSrv){
         $scope.active = "none";
         $scope.activeDate = "none";

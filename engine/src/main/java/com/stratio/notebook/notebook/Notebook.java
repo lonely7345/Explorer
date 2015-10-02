@@ -80,7 +80,7 @@ public class Notebook {
     }
 
     private boolean isLoaderStatic() {
-        return "share".equals(conf.getString(ZeppelinConfiguration.ConfVars.NOTEBOOK_INTERPRETER_MODE));
+        return "share".equals(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_INTERPRETER_MODE));
     }
 
     /**
@@ -132,7 +132,7 @@ public class Notebook {
     }
 
     private void loadAllNotes() throws IOException {
-        File notebookDir = new File(conf.getNotebookDir());
+        File notebookDir = new File(conf.getExplorerDir());
         File[] dirs = notebookDir.listFiles();
         if (dirs == null) {
             return;
