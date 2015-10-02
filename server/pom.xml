@@ -338,7 +338,7 @@
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <target unless="skipTests">
-                                <exec executable="./explorer-daemon.sh" dir="${notebook.daemon.package.base}"
+                                <exec executable="./explorer-daemon.sh" dir="${explorer.daemon.package.base}"
                                       spawn="true">
                                     <arg value="start"/>
                                 </exec>
