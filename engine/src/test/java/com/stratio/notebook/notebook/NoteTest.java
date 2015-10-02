@@ -278,7 +278,7 @@ public class NoteTest {
 
 
 
-        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
+/*        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
         expect(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
         replay(conf);
         NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
@@ -296,7 +296,7 @@ public class NoteTest {
 
         note.exportToFile(".","Test");
 
-        File f = new Fil
+        //File f = new Fil*/
     }
 
     @Test
