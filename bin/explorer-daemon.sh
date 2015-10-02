@@ -42,7 +42,7 @@ shift
 
 
 HOSTNAME=`hostname`
-EXPLORER_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+EXPLORER_LOGFILE=$NOTEBOOK_LOG_DIR/explorer-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
 log=$NOTEBOOK_LOG_DIR/explorer-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
 pid=$NOTEBOOK_PID_DIR/explorer-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
 
@@ -92,6 +92,7 @@ function start(){
     if ! kill -0 $newpid >/dev/null 2>&1; then
 	echo "failed to launch Explorer:"
 	if [ "${CI}" == "true" ]; then
+	
 	    tail -1000 "$log" | sed 's/^/  /'
 	else
 	    tail -5 "$log" | sed 's/^/  /'

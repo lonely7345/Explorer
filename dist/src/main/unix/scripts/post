@@ -6,9 +6,9 @@ set -e
 
 GROUP='stratio'
 USER='stratio'
-DIR_INSTALL='/opt/sds/notebook'
-DIR_CONF='/etc/sds/notebook'
-DIR_LOG='/var/log/sds/notebook'
+DIR_INSTALL='/opt/sds/explorer'
+DIR_CONF='/etc/sds/explorer'
+DIR_LOG='/var/log/sds/explorer'
 
 
 chmod 755 /etc/init.d/explorer
