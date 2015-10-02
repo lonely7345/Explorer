@@ -20,24 +20,24 @@
 #
 #   /etc/rc.d/init.d/elasticsearch
 #
-#   Notebook service
+#   Explorer service
 #
 ### BEGIN INIT INFO
-# Provides:          Notebook
+# Provides:          Explorer
 # Required-Start:    $network $remote_fs $named
 # Required-Stop:     $network $remote_fs $named
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Starts notebook
-# Description:       Starts notebook using start-stop-daemon
+# Short-Description: Starts explorer
+# Description:       Starts explorer using start-stop-daemon
 ### END INIT INFO
 
 # Source function library.
 . /etc/init.d/functions
 
 # Only configuration needed here
-NAME="notebook"
-DESC="Notebook extended shell"
+NAME="explorer"
+DESC="Explorer extended shell"
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
 VARIABLES="/etc/default/$NAME-variables"

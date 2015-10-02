@@ -18,7 +18,7 @@
 #
 
 function usage() {
-  echo "Usage: bin/notebook.sh"
+  echo "Usage: bin/explorer.sh"
   exit 0
 }
 
@@ -28,12 +28,12 @@ bin=`cd "$bin">/dev/null; pwd`
 . $bin/common.sh
 
 HOSTNAME=`hostname`
-EXPLORER_LOGFILE=$EXPLORER_LOG_DIR/notebook-$EXPLORER_IDENT_STRING-$HOSTNAME.log
+EXPLORER_LOGFILE=$EXPLORER_LOG_DIR/explorer-$EXPLORER_IDENT_STRING-$HOSTNAME.log
 echo EXPLORER_HOME $EXPLORER_HOME
-echo EXPLORER_LOGFILE $EXPLORER_LOG_DIR/notebook-$EXPLORER_IDENT_STRING-$HOSTNAME.log
+echo EXPLORER_LOGFILE $EXPLORER_LOG_DIR/explorer-$EXPLORER_IDENT_STRING-$HOSTNAME.log
 
 EXPLORER_SERVER=com.stratio.notebook.server.ZeppelinServer
-JAVA_OPTS+=" -Dnotebook.log.file=$EXPLORER_LOGFILE"
+JAVA_OPTS+=" -Dnexplorer.log.file=$EXPLORER_LOGFILE"
 
 if [[ ! -d "$EXPLORER_LOG_DIR" ]]; then
   echo "Log dir doesn't exist, create $EXPLORER_LOG_DIR"
@@ -50,14 +50,6 @@ if [[ ! -d "$EXPLORER_PID_DIR" ]]; then
   mkdir -p "$EXPLORER_PID_DIR"
 fi
 
-#if [ "x$SPARK_HOME" != "x" ]; then
-#  source $SPARK_HOME/bin/utils.sh
-#  SUBMIT_USAGE_FUNCTION=usage
-#  gatherSparkSubmitOpts "$@"
-#  EXPLORER_RUNNER=$SPARK_HOME/bin/spark-submit
 
-#  exec $EXPLORER_NICENESS $EXPLORER_RUNNER --class $EXPLORER_SERVER "${SUBMISSION_OPTS[@]}" --driver-java-options
-# -Dnotebook.log.file=$EXPLORER_LOGFILE spark-shell "${APPLICATION_OPTS[@]}"
-#else
-  exec $EXPLORER_RUNNER $JAVA_OPTS -cp $CLASSPATH $EXPLORER_SERVER "$@"
-#fi
+exec $EXPLORER_RUNNER $JAVA_OPTS -cp $CLASSPATH $EXPLORER_SERVER "$@"
+

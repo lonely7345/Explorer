@@ -18,7 +18,7 @@
 #
 
 FWDIR="$(cd `dirname $0`; pwd)"
-INSTALL_HOME="/opt/sds/notebook/"
+INSTALL_HOME="/opt/sds/explorer/"
 LOG="TRUE"
 
 if [ "x$EXPLORER_HOME" = "x" ] ; then
@@ -31,7 +31,7 @@ fi
 
 
 if [ -d "$INSTALL_HOME" ]; then
-    export EXPLORER_CONF_DIR="/etc/sds/notebook"
+    export EXPLORER_CONF_DIR="/etc/sds/explorer"
 fi
 
 if [ "x$EXPLORER_LOG_DIR" = "x" ]; then
@@ -40,7 +40,7 @@ fi
 
 
 if [ "x$EXPLORER_DIR" = "x" ]; then
-    export NOTEBOOK_DIR="$EXPLORER_HOME/explorer"
+    export EXPLORER_DIR="$EXPLORER_HOME/explorer"
 fi
 
 if [ "x$EXPLORER_PID_DIR" = "x" ]; then
@@ -142,7 +142,7 @@ if [ "x$EXPLORER_IDENT_STRING" == "x" ]; then
   export EXPLORER_IDENT_STRING="$USER"
 fi
 
-EXPLORER_LOGFILE=$EXPLORER_LOG_DIR/notebook-$EXPLORER_IDENT_STRING-$HOSTNAME.log
+EXPLORER_LOGFILE=$EXPLORER_LOG_DIR/explorer-$EXPLORER_IDENT_STRING-$HOSTNAME.log
 
 if [ -d "$INSTALL_HOME" ]; then
     EXPLORER_LOGFILE="/var/log/sds/explorer/explorer_app.log"

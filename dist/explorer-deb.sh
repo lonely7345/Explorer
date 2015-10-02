@@ -18,19 +18,19 @@
 #
 
 ### BEGIN INIT INFO
-# Provides:          notebook
+# Provides:          explorer
 # Required-Start:    $network $remote_fs $syslog
 # Required-Stop:     $network $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Starts notebook
-# Description:       Notebook Server
+# Short-Description: Starts explorer
+# Description:       Explorer Server
 ### END INIT INFO
 
 
 # Only configuration needed here
-NAME="notebook"
-DESC="Notebook extended shell"
+NAME="explorer"
+DESC="Notebook explorer shell"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin

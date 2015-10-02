@@ -1,22 +1,22 @@
-Notebook dependency graph:
+Explorer dependency graph:
 --------------
                      hive, hadoop, ...
                        | | |
                        v v v
-  Zeppelin Server  <- Zengine -> Zeppelin CLI
+  Explorer Server  <- Eengine -> Explorer CLI
          +               |
-    zeppelin web          v
-                        ZAN
+    Explorer web          v
+                        EAN
 
 
 
 Notebook artifacts:
 ------------------
-Zeppelin CLI    - Commandline UI             - executable
-Zeppelin Server - Web UI, server to host it  - executable
-Zwppwlin Web    - Web UI, clint-side JS app  - HTML+JavaScript; war
-Zengine         - Main library               - java library
-ZAN             - 
+Explorer CLI    - Commandline UI             - executable
+Explorer Server - Web UI, server to host it  - executable
+Explorer Web    - Web UI, clint-side JS app  - HTML+JavaScript; war
+Eengine         - Main library               - java library
+EAN             - 
 
 
 
@@ -31,6 +31,6 @@ integration-test       => selenium over running zeppelin-server (from package)
 
 
 verify:
- pre-inegration-test   => start Zeppelin
+ pre-inegration-test   => start Explorer
  integration-test
- post-inegration-test  => stop Zeppelin
+ post-inegration-test  => stop Explorer

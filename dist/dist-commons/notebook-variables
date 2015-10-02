@@ -10,8 +10,8 @@ GROUP=stratio
 RUN_DIR="/var/run/sds"
 PIDFILE="$RUN_DIR/$NAME.pid"
 LOCKFILE="/var/lock/subsys/$NAME"
-LOGFILE="/var/log/sds/notebook/notebook.log"
+LOGFILE="/var/log/sds/explorer/explorer.log"
 LOCKDIR="/var/lock/subsys"
-DAEMON="/opt/sds/notebook/bin/notebook"
+DAEMON="/opt/sds/explorer/bin/explorer"
 DAEMON_OPTS=" -l $LOGFILE -p $PIDFILE"
 

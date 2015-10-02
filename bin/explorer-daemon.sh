@@ -17,7 +17,7 @@
 # under the License.
 #
 
-usage="Usage: notebook-daemon.sh [--config <conf-dir>]\
+usage="Usage: explorer-daemon.sh [--config <conf-dir>]\
  (start|stop|restart|status) \
  <args...>"
 
@@ -42,54 +42,55 @@ shift
 
 
 HOSTNAME=`hostname`
-NOTEBOOK_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
-log=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
-pid=$NOTEBOOK_PID_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
+EXPLORER_LOGFILE=$NOTEBOOK_LOG_DIR/notebook-$NOTEBOOK_IDENT_STRING-$HOSTNAME.log
+log=$NOTEBOOK_LOG_DIR/explorer-$NOTEBOOK_IDENT_STRING-$HOSTNAME.out
+pid=$NOTEBOOK_PID_DIR/explorer-$NOTEBOOK_IDENT_STRING-$HOSTNAME.pid
 
 
-if [ "${NOTEBOOK_NICENESS}" = "" ]; then
-    export NOTEBOOK_NICENESS=0
+if [ "${EXPLORER_NICENESS}" = "" ]; then
+    export EXPLORER_NICENESS=0
 fi
 
-NOTEBOOK_MAIN=com.stratio.notebook.server.ZeppelinServer
+EXPLORER_MAIN=com.stratio.notebook.server.ZeppelinServer
 
-JAVA_OPTS+=" -Dnotebook.log.file=$NOTEBOOK_LOGFILE"
+JAVA_OPTS+=" -Dnotebook.log.file=$EXPLORER_LOGFILE"
 
 function init(){
-    if [ ! -d "$NOTEBOOK_LOG_DIR" ]; then
-	echo "Log dir doesn't exist, create $NOTEBOOK_LOG_DIR"
-	mkdir -p "$NOTEBOOK_LOG_DIR"
+    if [ ! -d "$EXPLORER_LOG_DIR" ]; then
+	echo "Log dir doesn't exist, create $EXPLORER_LOG_DIR"
+	mkdir -p "$EXPLORER_LOG_DIR"
     fi
 
-    if [ ! -d "$NOTEBOOK_PID_DIR" ]; then
-	echo "Pid dir doesn't exist, create $NOTEBOOK_PID_DIR"
-	mkdir -p "$NOTEBOOK_PID_DIR"
+    if [ ! -d "$EXPLORER_PID_DIR" ]; then
+	echo "Pid dir doesn't exist, create $EXPLORER_PID_DIR"
+	mkdir -p "$EXPLORER_PID_DIR"
     fi
 
-    if [ ! -d "$NOTEBOOK_NOTEBOOK_DIR" ]; then
-	echo "Pid dir doesn't exist, create $NOTEBOOK_NOTEBOOK_DIR"
-	mkdir -p "$NOTEBOOK_NOTEBOOK_DIR"
-    fi
+	if [ ! -d "$EXPLORER_NOTEBOOK_DIR" ]; then
+		echo "Notebooks dir doesn't exist, create $EXPLORER_NOTEBOOK_DIR"
+		mkdir -p "$EXPLORER_NOTEBOOK_DIR"
+	fi
+
 }
 
 function start(){
     if [ -f "$pid" ]; then
 	if kill -0 `cat $pid` > /dev/null 2>&1; then
-	    echo notebook running as process `cat $pid`. Stop it first.
+	    echo explorer running as process `cat $pid`. Stop it first.
 	    exit 1
 	fi
     fi
     
     init
 
-    echo "Start Notebook"
-    nohup nice -n $NOTEBOOK_NICENESS $NOTEBOOK_RUNNER $JAVA_OPTS -cp $CLASSPATH $NOTEBOOK_MAIN "$@" >> "$log" 2>&1 < /dev/null &
+    echo "Start Explorer"
+    nohup nice -n $EXPLORER_NICENESS $EXPLORER_RUNNER $JAVA_OPTS -cp $CLASSPATH $EXPLORER_MAIN "$@" >> "$log" 2>&1 < /dev/null &
     newpid=$!
     echo $newpid > $pid
     sleep 2
     # Check if the process has died; in that case we'll tail the log so the user can see
     if ! kill -0 $newpid >/dev/null 2>&1; then
-	echo "failed to launch Notebook:"
+	echo "failed to launch Explorer:"
 	if [ "${CI}" == "true" ]; then
 	    tail -1000 "$log" | sed 's/^/  /'
 	else
@@ -117,7 +118,7 @@ function start(){
 function stop(){
     if [ -f $pid ]; then
 	if kill -0 `cat $pid` > /dev/null 2>&1; then
-	    echo Shutdown Notebook
+	    echo Shutdown Explorer
 
 	    COUNT=0
 	    while [ $COUNT -lt 5 ]; do
@@ -130,26 +131,26 @@ function stop(){
 		fi
 	    done
 	    if kill -0 `cat $pid` > /dev/null 2>&1; then
-		echo "failed to stop Notebook:"
+		echo "failed to stop Explorer:"
 		tail -2 "$log" | sed 's/^/  /'
 		echo "full log in $log"
 	    fi
 
 	else
-	    echo no Notebook to stop
+	    echo no Explorer to stop
 	fi
     else
-	echo no Notebook to stop
+	echo no Explorer to stop
     fi
 
 }
 
 function status(){
     if [ -f "${pid}" ] && kill -0 `cat $pid` > /dev/null 2>&1; then
-	echo "Notebook is running `cat $pid`"
+	echo "Explorer is running `cat $pid`"
 	exit 0
     else
-	echo "Notebook is not running"
+	echo "Explorer is not running"
 	exit 1
     fi
 }
