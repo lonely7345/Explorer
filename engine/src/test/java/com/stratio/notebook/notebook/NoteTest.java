@@ -20,6 +20,7 @@ package com.stratio.notebook.notebook;
 import com.stratio.notebook.conf.ZeppelinConfiguration;
 
 import com.stratio.notebook.interpreter.Interpreter;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 import org.quartz.Scheduler;
@@ -277,8 +278,12 @@ public class NoteTest {
     public void testExportToFile() throws Exception {
 
 
-
-/*        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
+        /*String basePath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
+        File f = new File(basePath + "Test.json");
+        if (f.exists()){
+            f.delete();
+        }
+        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
         expect(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
         replay(conf);
         NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
@@ -294,9 +299,11 @@ public class NoteTest {
         note.setName("TEST_NOTE");
 
 
-        note.exportToFile(".","Test");
+        note.exportToFile(basePath, "Test");
 
-        //File f = new Fil*/
+        assertTrue("The file must Exist", f.exists());
+        File fileExpected = new File(basePath+"Test_default.json");
+        assertEquals("The file must be the correct content",FileUtils.readLines(fileExpected),FileUtils.readLines(f));*/
     }
 
     @Test

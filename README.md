@@ -56,8 +56,8 @@ mvn clean package
 
 If you wish to configure Explorer options (like port number), configure the following files:
 ```
-./conf/notebook-env.sh
-./conf/notebook-site.xml
+./conf/explorer-env.sh
+./conf/explorer-site.xml
 ```
 If you want to configure Apache Mesos you must uncomment this lines of :
 

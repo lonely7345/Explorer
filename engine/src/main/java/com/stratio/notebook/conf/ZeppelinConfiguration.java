@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ZeppelinConfiguration extends XMLConfiguration {
-    private static final String EXPLORER_SITE_XML = "notebook-site.xml";
+    private static final String EXPLORER_SITE_XML = "explorer-site.xml";
 	private static final long serialVersionUID = -8830696863101855773L;
     private static final Logger LOG = LoggerFactory.getLogger(ZeppelinConfiguration.class);
 	private static ZeppelinConfiguration conf;
