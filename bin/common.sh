@@ -92,11 +92,11 @@ addJarInDir ${EXPLORER_HOME}/web/target/lib
 addJarInDir $INSTALL_HOME/lib
 
 
-if [ -d "${EXPLORER_HOME}/explorer-engine/target/classes" ]; then
+if [ -d "${EXPLORER_HOME}/engine/target/classes" ]; then
     EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/engine/target/classes"
 fi
 
-if [ -d "${EXPLORER_HOME}/explorer-server/target/classes" ]; then
+if [ -d "${EXPLORER_HOME}/server/target/classes" ]; then
     EXPLORER_CLASSPATH+=":${EXPLORER_HOME}/server/target/classes"
 fi
 
