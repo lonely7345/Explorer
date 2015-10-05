@@ -51,7 +51,7 @@ if [ "x$EXPLORER_WAR" = "x" ]; then
     if [ -d "${EXPLORER_HOME}/web/src/main/webapp" ]; then
 	    export EXPLORER_WAR="${EXPLORER_HOME}/web/src/main/webapp"
     else
-        export EXPLORER_WAR=`find ${EXPLORER_HOME} -name "explorer-web*.war"`
+        export EXPLORER_WAR=`find ${EXPLORER_HOME} -name "web*.war"`
     fi
 fi
 
