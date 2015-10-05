@@ -955,7 +955,6 @@
                         <exclude>**/stratioLicense.txt</exclude>
                         <exclude>**/src/test/assemble/**</exclude>
                         <exclude>**/src/main/unix/**</exclude>
-                        <exclude>**/app/**</exclude>
                         <exclude>**/node/**</exclude>
                         <exclude>**/test/resources/**</exclude>
                         <exclude>**/web/node*/**</exclude>
