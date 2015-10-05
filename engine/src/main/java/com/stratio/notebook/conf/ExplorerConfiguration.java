@@ -27,18 +27,18 @@ import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ZeppelinConfiguration extends XMLConfiguration {
+public class ExplorerConfiguration extends XMLConfiguration {
     private static final String EXPLORER_SITE_XML = "explorer-site.xml";
 	private static final long serialVersionUID = -8830696863101855773L;
-    private static final Logger LOG = LoggerFactory.getLogger(ZeppelinConfiguration.class);
-	private static ZeppelinConfiguration conf;
+    private static final Logger LOG = LoggerFactory.getLogger(ExplorerConfiguration.class);
+	private static ExplorerConfiguration conf;
 
-    public ZeppelinConfiguration(URL url) throws ConfigurationException {
+    public ExplorerConfiguration(URL url) throws ConfigurationException {
 		setDelimiterParsingDisabled(true);
 		load(url);
 	}
 
-	public ZeppelinConfiguration() {
+	public ExplorerConfiguration() {
 		ConfVars[] vars = ConfVars.values();
 		for(ConfVars v : vars){
 			if(v.getType()==ConfVars.VarType.BOOLEAN){
@@ -61,15 +61,15 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 	 * Load from resource
 	 * @throws ConfigurationException
 	 */
-	public static ZeppelinConfiguration create() {
+	public static ExplorerConfiguration create() {
 		if (conf != null) return conf;
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		URL url;
 
-		url = ZeppelinConfiguration.class.getResource(EXPLORER_SITE_XML);
+		url = ExplorerConfiguration.class.getResource(EXPLORER_SITE_XML);
 		if (url == null) {
-			 ClassLoader cl = ZeppelinConfiguration.class.getClassLoader();
+			 ClassLoader cl = ExplorerConfiguration.class.getClassLoader();
 			 if (cl!=null) {
 				 url = cl.getResource(EXPLORER_SITE_XML);
 			 }
@@ -80,14 +80,14 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 
 		if (url == null){
             LOG.warn("Failed to load configuration, proceeding with a default");
-		    conf =  new ZeppelinConfiguration();
+		    conf =  new ExplorerConfiguration();
 		} else {
 			try {
 				LOG.info("Load configuration from "+url);
-			    conf = new ZeppelinConfiguration(url);
+			    conf = new ExplorerConfiguration(url);
 			} catch (ConfigurationException e) {
 			    LOG.warn("Failed to load configuration from " + url + " proceeding with a default", e);
-			    conf = new ZeppelinConfiguration();
+			    conf = new ExplorerConfiguration();
 			}
 		}
 

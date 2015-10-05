@@ -30,8 +30,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.quartz.SchedulerException;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
-import com.stratio.notebook.conf.ZeppelinConfiguration.ConfVars;
+import com.stratio.notebook.conf.ExplorerConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration.ConfVars;
 import com.stratio.notebook.interpreter.mock.MockInterpreterFactory;
 import com.stratio.notebook.scheduler.Job;
 import com.stratio.notebook.scheduler.JobListener;
@@ -40,7 +40,7 @@ import com.stratio.notebook.scheduler.SchedulerFactory;
 public class NotebookUT implements JobListenerFactory{
 
 	private File tmpDir;
-	private ZeppelinConfiguration conf;
+	private ExplorerConfiguration conf;
 	private SchedulerFactory schedulerFactory;
 	private File notebookDir;
 	private Notebook notebook;
@@ -55,7 +55,7 @@ public class NotebookUT implements JobListenerFactory{
 
 		System.setProperty(ConfVars.EXPLORER_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());
 
-		conf = ZeppelinConfiguration.create();
+		conf = ExplorerConfiguration.create();
         
 		this.schedulerFactory = new SchedulerFactory();
 		

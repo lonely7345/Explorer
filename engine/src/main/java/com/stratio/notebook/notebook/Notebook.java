@@ -17,7 +17,7 @@
  */
 package com.stratio.notebook.notebook;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 import com.stratio.notebook.interpreter.InterpreterFactory;
 import com.stratio.notebook.scheduler.Scheduler;
 import com.stratio.notebook.scheduler.SchedulerFactory;
@@ -57,7 +57,7 @@ public class Notebook {
      */
     Map<String, Note> notes = new LinkedHashMap<String, Note>();
 
-    private ZeppelinConfiguration conf;
+    private ExplorerConfiguration conf;
 
     private StdSchedulerFactory quertzSchedFact;
 
@@ -65,7 +65,7 @@ public class Notebook {
 
     private JobListenerFactory jobListenerFactory;
 
-    public Notebook(ZeppelinConfiguration conf, SchedulerFactory schedulerFactory, InterpreterFactory replFactory,
+    public Notebook(ExplorerConfiguration conf, SchedulerFactory schedulerFactory, InterpreterFactory replFactory,
             JobListenerFactory jobListenerFactory) throws IOException, SchedulerException {
         this.conf = conf;
         this.schedulerFactory = schedulerFactory;
@@ -80,7 +80,7 @@ public class Notebook {
     }
 
     private boolean isLoaderStatic() {
-        return "share".equals(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_INTERPRETER_MODE));
+        return "share".equals(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_INTERPRETER_MODE));
     }
 
     /**

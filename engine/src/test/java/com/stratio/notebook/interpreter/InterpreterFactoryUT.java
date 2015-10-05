@@ -25,7 +25,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 
 public class InterpreterFactoryUT {
 
@@ -39,7 +39,7 @@ public class InterpreterFactoryUT {
 
 	@Test
 	public void testBasic() {
-		InterpreterFactory factory = new InterpreterFactory(ZeppelinConfiguration.create());
+		InterpreterFactory factory = new InterpreterFactory(ExplorerConfiguration.create());
 		Interpreter repl1 = factory.createRepl("mock", "com.nflabs.zeppelin.interpreter.mock.MockInterpreter", new Properties());
 		repl1.bindValue("a", 1);
 		
