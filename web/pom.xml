@@ -29,7 +29,7 @@
   </parent>
 
 
-  <artifactId>web</artifactId>
+  <artifactId>explorer-web</artifactId>
   <packaging>war</packaging>
   <name>Explorer: web Application</name>
 
