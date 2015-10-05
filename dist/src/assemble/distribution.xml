@@ -36,7 +36,7 @@
             <!-- Now, select which projects to include in this module-set. -->
             <includes>
                 <include>${project.groupId}.explorer:server</include>
-                <include>${project.groupId}.explorer:web</include>
+                <include>${project.groupId}.explorer:explorer-web</include>
                 <include>${project.groupId}.explorer:doc</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
