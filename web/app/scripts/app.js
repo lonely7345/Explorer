@@ -16,7 +16,6 @@
  * under the License.
  */
 
-
 'use strict';
 
 /**

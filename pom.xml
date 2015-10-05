@@ -947,6 +947,10 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.11</version>
                 <configuration>
+                    <headerDefinitions>
+                        <headerDefinition>stratioDefinition.xml</headerDefinition>
+                    </headerDefinitions>
+                    <useDefaultExcludes>true</useDefaultExcludes> 
                     <header>stratioLicense.txt</header>
                     <excludes>
                         <exclude>**/README</exclude>
