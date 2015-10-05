@@ -16,7 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 function nfact($n) {
     if ($n == 0) {
         return 1;

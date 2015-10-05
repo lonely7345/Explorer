@@ -15,7 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 ;
                 (function() {
                     window.require(["ace/ext/error_marker"], function() {});

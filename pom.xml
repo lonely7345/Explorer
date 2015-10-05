@@ -950,8 +950,7 @@
                     <headerDefinitions>
                         <headerDefinition>stratioDefinition.xml</headerDefinition>
                     </headerDefinitions>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                    <header>stratioLicense.txt</header>
+                    <useDefaultExcludes>true</useDefaultExcludes> 
                     <header>stratioLicense.txt</header>
                     <excludes>
                         <exclude>**/README</exclude>
