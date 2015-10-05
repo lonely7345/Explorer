@@ -19,13 +19,13 @@ package com.stratio.notebook.interpreter.mock;
 
 import java.util.Properties;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterFactory;
 
 public class MockInterpreterFactory extends InterpreterFactory {
 
-	public MockInterpreterFactory(ZeppelinConfiguration conf) {
+	public MockInterpreterFactory(ExplorerConfiguration conf) {
 		super(conf);
 	}
 	

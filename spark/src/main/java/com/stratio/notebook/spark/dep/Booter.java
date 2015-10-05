@@ -23,7 +23,7 @@ import org.sonatype.aether.RepositorySystemSession;
 import org.sonatype.aether.repository.LocalRepository;
 import org.sonatype.aether.repository.RemoteRepository;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 
 public class Booter {
   public static RepositorySystem newRepositorySystem() {
@@ -33,7 +33,7 @@ public class Booter {
   public static RepositorySystemSession newRepositorySystemSession(RepositorySystem system) {
     MavenRepositorySystemSession session = new MavenRepositorySystemSession();
 
-    ZeppelinConfiguration conf = ZeppelinConfiguration.create();
+    ExplorerConfiguration conf = ExplorerConfiguration.create();
     LocalRepository localRepo = new LocalRepository(conf.getRelativeDir(conf.getString("EXPLORER_DEP_LOCAL_REPO",
             "zeppelin.dep.localrepo", "local-repo")));
     session.setLocalRepositoryManager(system.newLocalRepositoryManager(localRepo));

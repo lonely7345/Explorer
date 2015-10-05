@@ -36,7 +36,7 @@ import org.apache.spark.ui.jobs.JobProgressListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.notebook.interpreter.InterpreterResult.Code;
@@ -68,7 +68,7 @@ public class SparkSqlInterpreter extends Interpreter {
     public void open() {
 //        getSparkInterpreter().open();
 //        getSparkInterpreter().interpret("");
-        ZeppelinConfiguration conf = ZeppelinConfiguration.create();
+        ExplorerConfiguration conf = ExplorerConfiguration.create();
         this.maxResult = conf.getInt("NOTEBOOK_SPARK_MAX_RESULT", "zeppelin.spark.maxResult", 10000);
     }
 

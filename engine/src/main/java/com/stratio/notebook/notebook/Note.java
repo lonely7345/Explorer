@@ -37,8 +37,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.stratio.notebook.conf.ZeppelinConfiguration;
-import com.stratio.notebook.conf.ZeppelinConfiguration.ConfVars;
+import com.stratio.notebook.conf.ExplorerConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration.ConfVars;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.notebook.utility.IdHashes;
 import com.stratio.notebook.scheduler.Job;
@@ -62,7 +62,7 @@ public class Note implements Serializable, JobListener {
     private String creationDate;
 
     private transient NoteInterpreterLoader replLoader;
-    private transient ZeppelinConfiguration conf;
+    private transient ExplorerConfiguration conf;
     private transient JobListenerFactory jobListenerFactory;
 
     /**
@@ -86,7 +86,7 @@ public class Note implements Serializable, JobListener {
     public Note() {
     }
 
-    public Note(ZeppelinConfiguration conf, NoteInterpreterLoader replLoader, JobListenerFactory jobListenerFactory,
+    public Note(ExplorerConfiguration conf, NoteInterpreterLoader replLoader, JobListenerFactory jobListenerFactory,
             org.quartz.Scheduler quartzSched) { //TODO  quartzSched is not ussing
         this.conf = conf;
         this.replLoader = replLoader;
@@ -96,8 +96,6 @@ public class Note implements Serializable, JobListener {
     }
 
     private void generateId() {
-        //id = "note_"+System.currentTimeMillis()+"_"+new Random(System.currentTimeMillis()).nextInt();
-        /** This is actually more human readable */
         id = IdHashes.encode(System.currentTimeMillis() + new Random(System.currentTimeMillis()).nextInt());
     }
 
@@ -125,7 +123,7 @@ public class Note implements Serializable, JobListener {
         this.replLoader = replLoader;
     }
 
-    public void setZeppelinConfiguration(ZeppelinConfiguration conf) {
+    public void setZeppelinConfiguration(ExplorerConfiguration conf) {
         this.conf = conf;
     }
 
@@ -348,16 +346,17 @@ public class Note implements Serializable, JobListener {
         Gson gson = gsonBuilder.create();
 
         if (conf == null) {
-            conf = ZeppelinConfiguration.create();
+            conf = ExplorerConfiguration.create();
         }
-        File dir = new File(conf.getExplorerDir() + "/" + id);
+        String explorerDir = conf.getExplorerDir();
+        File dir = new File(explorerDir + "/" + id);
         if (!dir.exists()) {
             dir.mkdirs();
         } else if (dir.isFile()) {
             throw new RuntimeException("File already exists" + dir.toString());
         }
 
-        File file = new File(conf.getExplorerDir() + "/" + id + "/note.json");
+        File file = new File(explorerDir + "/" + id + "/note.json");
         logger.info("Persist note {} into {}", id, file.getAbsolutePath());
 
         String json = gson.toJson(this);
@@ -413,7 +412,7 @@ public class Note implements Serializable, JobListener {
         return n;
     }
 
-    public static Note load(String id, ZeppelinConfiguration conf, NoteInterpreterLoader replLoader,
+    public static Note load(String id, ExplorerConfiguration conf, NoteInterpreterLoader replLoader,
             Scheduler scheduler, JobListenerFactory jobListenerFactory, org.quartz.Scheduler quartzSched)
             throws IOException {
         GsonBuilder gsonBuilder = new GsonBuilder();

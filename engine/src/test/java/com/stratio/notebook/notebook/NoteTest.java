@@ -17,16 +17,21 @@
  */
 package com.stratio.notebook.notebook;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 
 import com.stratio.notebook.interpreter.Interpreter;
+import com.stratio.notebook.scheduler.Job;
+import com.stratio.notebook.scheduler.JobListener;
 import org.apache.commons.io.FileUtils;
+import org.easymock.EasyMock;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
+
 import org.quartz.Scheduler;
 
 
 import java.io.File;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class NoteTest {
 
     @Test
     public void testNoteWithParams(){
-        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
         NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
         JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
         Scheduler quartzShed =  mock(Scheduler.class);
@@ -127,7 +132,7 @@ public class NoteTest {
         note.moveParagraph(paragraph.getId(), 2);
 
         assertSame("The paragraph remove must be correct", paragraph, note.paragraphs.get(2));
-        assertEquals("The number of paragraph is correct", numberOfParagraph+1, note.paragraphs.size());
+        assertEquals("The number of paragraph is correct", numberOfParagraph + 1, note.paragraphs.size());
 
 
 
@@ -176,7 +181,7 @@ public class NoteTest {
 
     @Test
     public void testRunAll() throws Exception {
-        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
 
         com.stratio.notebook.scheduler.Scheduler shedule = mock(com.stratio.notebook.scheduler.Scheduler.class);
         shedule.submit(anyObject(Paragraph.class));
@@ -218,7 +223,7 @@ public class NoteTest {
     @Test
     public void testRun() throws Exception {
 
-        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
 
         com.stratio.notebook.scheduler.Scheduler shedule = mock(com.stratio.notebook.scheduler.Scheduler.class);
         shedule.submit(anyObject(Paragraph.class));
@@ -267,8 +272,8 @@ public class NoteTest {
 
         List<Paragraph> returnParagraph = note.getParagraphs();
 
-        assertNotSame("The list must not be the same",paragraphList,returnParagraph);
-        assertEquals("The two list have the same size",paragraphList.size(),returnParagraph.size());
+        assertNotSame("The list must not be the same", paragraphList, returnParagraph);
+        assertEquals("The two list have the same size", paragraphList.size(), returnParagraph.size());
         for (Paragraph p: returnParagraph){
             assertTrue("The two list have the same paragraph", paragraphList.contains(p));
         }
@@ -278,66 +283,161 @@ public class NoteTest {
     public void testExportToFile() throws Exception {
 
 
-        /*String basePath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
+        String basePath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
+
         File f = new File(basePath + "Test.json");
         if (f.exists()){
             f.delete();
         }
-        ZeppelinConfiguration conf = mock(ZeppelinConfiguration.class);
-        expect(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
+
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
+        expect(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
         replay(conf);
         NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
         JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
+
         Scheduler quartzShed =  mock(Scheduler.class);
         Note note = new Note(conf,replLoader,jobListenerFactory,quartzShed);
-
-
-
-        int numberOfParagraph = 3;
-        List<Paragraph> paragraphList = createParagraphList(numberOfParagraph);
-        note.addParagraphs(paragraphList);
         note.setName("TEST_NOTE");
+        Whitebox.setInternalState(note, "id", "2AZE9X5GG");
+        Whitebox.setInternalState(note, "creationDate", "lun, 5 oct, 10:10 AM");
+
+        JobListener jobListener = mock(JobListener.class);
+        jobListener.beforeStatusChange(anyObject(Job.class), eq(com.stratio.notebook.scheduler.Job.Status.READY), eq(com.stratio.notebook.scheduler.Job.Status.FINISHED));
+        EasyMock.expectLastCall();
+        Paragraph paragraph = new Paragraph(jobListener, replLoader);
+        paragraph.setTitle("PARAGRAPH_TITLE");
+        Whitebox.setInternalState(paragraph, "dateCreated", new Date(1000000));
+        Whitebox.setInternalState(paragraph, "jobName", "paragraph_1444033271219_-1226681848");
 
 
+        List<Paragraph> paragraphList = new LinkedList<>();
+        paragraphList.add(paragraph);
+
+        note.addParagraphs(paragraphList);
+
+        Whitebox.setInternalState(paragraph, "id", "20151005-095152_2104354711");
+
+        replay(jobListener);
         note.exportToFile(basePath, "Test");
 
+
         assertTrue("The file must Exist", f.exists());
-        File fileExpected = new File(basePath+"Test_default.json");
-        assertEquals("The file must be the correct content",FileUtils.readLines(fileExpected),FileUtils.readLines(f));*/
+        File fileExpected = new File(basePath+"Test_Export_default.json");
+        assertEquals("The file must be the correct content",FileUtils.readLines(fileExpected),FileUtils.readLines(f));
+
+
+         f.delete(); //We clean the enviroment
+
+
     }
 
     @Test
     public void testPersist() throws Exception {
+        String note_id = "2AZE9X5GG";
+        String basePath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
+
+        File f = new File(basePath + File.separator+note_id +File.separator+ "note.json");
+        if (f.exists()){
+            f.delete();
+        }
+
+
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
+        expect(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
+        expect(conf.getExplorerDir()).andReturn(basePath);
+        NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
+        JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
+
+        Scheduler quartzShed =  mock(Scheduler.class);
+        Note note = new Note(conf,replLoader,jobListenerFactory,quartzShed);
+
+        Whitebox.setInternalState(note, "id", note_id);
+        Whitebox.setInternalState(note, "creationDate", "lun, 5 oct, 10:35 AM");
+
+        replay(conf);
+        note.persist();
+
+        assertTrue("The file must Exist", f.exists());
+        File fileExpected = new File(basePath+File.separator+note_id+File.separator+"note_persist_default.json");
+        assertEquals("The file must be the correct content",FileUtils.readLines(fileExpected),FileUtils.readLines(f));
+
+        f.delete(); //We clean the enviroment
 
     }
 
     @Test
     public void testUnpersist() throws Exception {
 
+        String basePath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
+        String note_id = "2AZE9X5GCC";
+
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
+        expect(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
+        expect(conf.getExplorerDir()).andReturn(basePath);
+        NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
+        JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
+
+        Scheduler quartzShed =  mock(Scheduler.class);
+        Note note = new Note(conf,replLoader,jobListenerFactory,quartzShed);
+        Whitebox.setInternalState(note, "id", note_id);
+
+        File createDirectory = new File(basePath+File.separator+note_id);
+        createDirectory.mkdir();
+
+        replay(conf);
+        note.unpersist();
+
+        assertFalse("The directory must not exits", createDirectory.exists());
     }
 
     @Test
     public void testImportFromFile() throws Exception {
+        String basePath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
+        String note_id = "2AZE9X5GCC";
+
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
+        expect(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
+        expect(conf.getExplorerDir()).andReturn(basePath);
+        NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
+        JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
+
+        Scheduler quartzShed =  mock(Scheduler.class);
+        Note note = new Note(conf,replLoader,jobListenerFactory,quartzShed);
+        Whitebox.setInternalState(note, "id", note_id);
+
+        note.importFromFile(note, "Test_Export_default.json", basePath + File.separator + "Test_Export_default.json");
+
+        assertEquals("The note name must be correct", "TEST_NOTE - copy", note.getName());
+        List<Paragraph> paragraphs = note.getParagraphs();
+        assertEquals("The paragraphNumber must be correct", 1, paragraphs.size());
+
 
     }
 
     @Test
     public void testLoad() throws Exception {
+        String basePath = "src" + File.separator + "test";
+        String note_id = "resources";
 
+        ExplorerConfiguration conf = mock(ExplorerConfiguration.class);
+        expect(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_ENCODING)).andReturn("UTF-8");
+        expect(conf.getExplorerDir()).andReturn(basePath);
+        NoteInterpreterLoader replLoader = mock(NoteInterpreterLoader.class);
+        JobListenerFactory jobListenerFactory = mock(JobListenerFactory.class);
+
+        Scheduler quartzShed =  mock(Scheduler.class);
+
+        com.stratio.notebook.scheduler.Scheduler scheduler = mock(com.stratio.notebook.scheduler.Scheduler.class);
+        replay(conf);
+        Note note = Note.load(note_id,conf,replLoader,scheduler,jobListenerFactory,quartzShed);
+
+        assertEquals("The note name must be correct", "TEST_NOTE", note.getName());
+        List<Paragraph> paragraphs = note.getParagraphs();
+        assertEquals("The paragraphNumber must be correct", 1, paragraphs.size());
     }
 
-    @Test
-    public void testonProgressUpdate(){
 
-    }
-    @Test
-    public void tefbeforeStatusChange(){
-
-    }
-    @Test
-    public void testAfterStatusChange(){
-
-    }
 
     private List<Paragraph> createParagraphList(int number) {
         List<Paragraph> paragraphList = new LinkedList();

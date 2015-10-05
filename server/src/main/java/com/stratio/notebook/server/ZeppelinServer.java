@@ -39,7 +39,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration;
 import com.stratio.notebook.interpreter.InterpreterFactory;
 import com.stratio.notebook.notebook.Notebook;
 import com.stratio.notebook.rest.InterpreterRestApi;
@@ -57,10 +57,10 @@ public class ZeppelinServer extends Application {
     private InterpreterFactory replFactory;
 
     public static void main(String[] args) throws Exception {
-        ZeppelinConfiguration conf = ZeppelinConfiguration.create();
+        ExplorerConfiguration conf = ExplorerConfiguration.create();
         conf.setProperty("args", args);
 
-        int port = conf.getInt(ZeppelinConfiguration.ConfVars.EXPLORER_PORT);
+        int port = conf.getInt(ExplorerConfiguration.ConfVars.EXPLORER_PORT);
         final Server server = setupJettyServer(port);
         websocket = new NotebookServer(port + 1);
 
@@ -152,9 +152,9 @@ public class ZeppelinServer extends Application {
         return handler;
     }
 
-    private static WebAppContext setupWebAppContext(ZeppelinConfiguration conf) {
+    private static WebAppContext setupWebAppContext(ExplorerConfiguration conf) {
         WebAppContext webApp = new WebAppContext();
-        File webapp = new File(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_WAR));
+        File webapp = new File(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_WAR));
         if (webapp.isDirectory()) { // Development mode, read from FS
             webApp.setDescriptor(webapp+"/WEB-INF/web.xml");
             webApp.setResourceBase(webapp.getPath());
@@ -177,9 +177,9 @@ public class ZeppelinServer extends Application {
      *
      * @return WebAppContext with swagger ui context
      */
-    private static WebAppContext setupWebAppSwagger(ZeppelinConfiguration conf) {
+    private static WebAppContext setupWebAppSwagger(ExplorerConfiguration conf) {
         WebAppContext webApp = new WebAppContext();
-        File webapp = new File(conf.getString(ZeppelinConfiguration.ConfVars.EXPLORER_API_WAR));
+        File webapp = new File(conf.getString(ExplorerConfiguration.ConfVars.EXPLORER_API_WAR));
 
         if (webapp.isDirectory()) {
             webApp.setResourceBase(webapp.getPath());
@@ -194,7 +194,7 @@ public class ZeppelinServer extends Application {
     }
 
     public ZeppelinServer() throws Exception {
-        ZeppelinConfiguration conf = ZeppelinConfiguration.create();
+        ExplorerConfiguration conf = ExplorerConfiguration.create();
 
         this.schedulerFactory = new SchedulerFactory();
 

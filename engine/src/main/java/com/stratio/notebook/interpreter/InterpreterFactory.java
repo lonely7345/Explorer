@@ -41,8 +41,8 @@ import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.notebook.conf.ZeppelinConfiguration;
-import com.stratio.notebook.conf.ZeppelinConfiguration.ConfVars;
+import com.stratio.notebook.conf.ExplorerConfiguration;
+import com.stratio.notebook.conf.ExplorerConfiguration.ConfVars;
 
 public class InterpreterFactory {
     Logger logger = LoggerFactory.getLogger(InterpreterFactory.class);
@@ -50,11 +50,11 @@ public class InterpreterFactory {
     private Map<String, Object> share = Collections.synchronizedMap(new HashMap<String, Object>());
     private Map<String, URLClassLoader> cleanCl = Collections.synchronizedMap(new HashMap<String, URLClassLoader>());
 
-    private ZeppelinConfiguration conf;
+    private ExplorerConfiguration conf;
     String[] interpreterClassList;
     String defaultInterpreterName;
 
-    public InterpreterFactory(ZeppelinConfiguration conf) {
+    public InterpreterFactory(ExplorerConfiguration conf) {
         this.conf = conf;
         String replsConf = conf.getString(ConfVars.EXPLORER_INTERPRETERS);
         interpreterClassList = replsConf.split(",");
