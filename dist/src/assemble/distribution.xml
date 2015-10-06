@@ -46,7 +46,7 @@
             <outputDirectory>/lib</outputDirectory>
             <useProjectArtifact>false</useProjectArtifact>
             <excludes>
-                <exclude>${project.groupId}.explorer:web</exclude>
+                <exclude>${project.groupId}.explorer:explorer-web</exclude>
                 <exclude>${project.groupId}.explorer:doc</exclude>
                 <exclude>${project.groupId}.explorer:server</exclude>
             </excludes>

@@ -80,7 +80,7 @@
                     <version>${project.version}</version>
                 </dependency>
                 <dependency>
-                    <artifactId>web</artifactId>
+                    <artifactId>explorer-web</artifactId>
                     <groupId>${project.groupId}</groupId>
                     <version>${project.version}</version>
                     <type>war</type>

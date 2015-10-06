@@ -448,9 +448,7 @@
                 $scope.editor.setOptions({
                     enableBasicAutocompletion: true,
                     enableSnippets: false,
-                    enableLiveAutocompletion: false,
-                    //          fontFamily:'sans-serif'
-                    //          fontSize:'12pt'
+                    enableLiveAutocompletion: false
                 });
                 var remoteCompleter = {
                     getCompletions: function(editor, session, pos, prefix, callback) {
