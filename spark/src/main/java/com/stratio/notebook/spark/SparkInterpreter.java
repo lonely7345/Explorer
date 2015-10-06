@@ -72,6 +72,9 @@ import scala.tools.nsc.settings.MutableSettings.BooleanSetting;
 import scala.tools.nsc.settings.MutableSettings.PathSetting;
 
 public class SparkInterpreter extends Interpreter {
+    /**
+     * The log.
+     */
     Logger logger = LoggerFactory.getLogger(SparkInterpreter.class);
 
     static {
@@ -339,8 +342,8 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
 
             NoteInterpreterLoader noteInterpreterLoader = (NoteInterpreterLoader) getProperty().get("noteIntpLoader");
             z = new ZeppelinContext(sc, sqlc, dep, noteInterpreterLoader, printStream);
-            System.out.println(z.sc.getConf().toDebugString());
-            System.out.println(z.sqlContext.getAllConfs().mkString());
+            logger.info(z.sc.getConf().toDebugString());
+            logger.info(z.sqlContext.getAllConfs().mkString());
 
             try {
                 if (sc.version().startsWith("1.1") || sc.version().startsWith("1.2")) {

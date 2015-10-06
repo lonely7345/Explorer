@@ -31,12 +31,19 @@ import com.stratio.notebook.notebook.Paragraph;
 import com.stratio.notebook.scheduler.Job;
 import com.stratio.notebook.scheduler.Scheduler;
 import com.stratio.notebook.scheduler.SchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
 public class CrossdataInterpreter extends Interpreter {
+
+    /**
+     * The Log.
+     */
+    private Logger logger = LoggerFactory.getLogger(CrossdataInterpreter.class);
 
     static {
         Interpreter.register("xdql", CrossdataInterpreter.class.getName());
@@ -66,10 +73,10 @@ public class CrossdataInterpreter extends Interpreter {
         }
         try {
             connect();
-            System.out.println("Crossdata's driver connected");
+            logger.info("Crossdata's driver connected");
             driverConnected = true;
         } catch (ConnectionException e) {
-            System.out.println(e.getMessage());
+            logger.info("A error happens when we are trying to connect to crossdata"+ e.getMessage());
             driverConnected = false;
         }
 
@@ -103,7 +110,7 @@ public class CrossdataInterpreter extends Interpreter {
             for (String i : commands) {
                 try {
                     String normalized = i.replaceAll("\\s+", " ").replaceAll("(\\r|\\n)", "").trim() + ";";
-                    System.out.println("*****[CrossdataInterpreter]interpret multiline query -> " + normalized);
+                    logger.info("*****[CrossdataInterpreter]interpret multiline query -> " + normalized);
                     result = xdConnection.executeRawQuery(normalized);
 
                     sb.append(CrossdataUtils.resultToString(result)).append(

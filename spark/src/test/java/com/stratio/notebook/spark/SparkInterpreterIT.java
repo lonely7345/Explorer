@@ -80,20 +80,12 @@ public class SparkInterpreterIT {
 				"val people = sc.parallelize(Seq(Person(\"moon\", 33), Person(\"jobs\", 51), Person(\"gates\", 51), Person(\"park\", 34)))");
 		assertEquals(Code.SUCCESS, repl.interpret("people.take(3)").code());
 
-		// create new interpreter
-//		Properties p = new Properties();
-//		p.put("share", repl.getProperty());
-//		System.out.println("***************Share context object is empty " +share.isEmpty());
-//		for(String prop : share.keySet()) {
-//			System.out.println(share.get(prop).toString());
-//		}
-//		SparkInterpreter repl2 = new SparkInterpreter(p);
-//		repl2.open();
+
 
 		repl.interpret("case class Man(name:String, age:Int)");
 		repl.interpret("val man = sc.parallelize(Seq(Man(\"moon\", 33), Man(\"jobs\", 51), Man(\"gates\", 51), Man(\"park\", 34)))");
 		assertEquals(Code.SUCCESS, repl.interpret("man.take(3)").code());
-//		repl2.getSparkContext().stop();
+
 	}
 
 	@Test
@@ -102,6 +94,6 @@ public class SparkInterpreterIT {
 				       "    if (0 <= value) \"error\"" +
                        "}");
 		assertEquals(Code.ERROR, result.code());
-		System.out.println("msg="+result.message());
+
 	}
 }

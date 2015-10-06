@@ -33,20 +33,7 @@ public class UtilsForTests {
 		return tmpDir;
 		
 	}
-	/*
-	private static final String HADOOP_DIST="http://apache.mirror.cdnetworks.com/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-bin.tar.gz";
-	//private static final String HADOOP_DIST="http://www.us.apache.org/dist/hadoop/common/hadoop-1.2.1/hadoop-1.2.1-bin.tar.gz";
-	
-	public static void getHadoop() throws MalformedURLException, IOException{
-		setEnv("HADOOP_HOME", new File("./target/hadoop-1.2.1").getAbsolutePath());
-		if(new File("./target/hadoop-1.2.1").isDirectory()) return;
-		//System.out.println("Downloading a hadoop distribution ... it will take a while");
-		//FileUtils.copyURLToFile(new URL(HADOOP_DIST), new File("/tmp/zp_test_hadoop-bin.tar.gz"));
-		System.out.println("Unarchive hadoop distribution ... ");
-		new File("./target").mkdir();
-		Runtime.getRuntime().exec("tar -xzf /tmp/zp_test_hadoop-bin.tar.gz -C ./target");		
-	}
-	*/
+
 	
 	public static void delete(File file){
 		if(file.isFile()) file.delete();
