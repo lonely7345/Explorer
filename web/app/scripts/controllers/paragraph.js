@@ -15,8 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/* global $:false, jQuery:false, ace:false, confirm:false, d3:false, nv:false*/
-/*jshint loopfunc: true, unused:false */
 
     /**
      * @ngdoc function
@@ -30,7 +28,7 @@
      *
      */
 
-    angular.module('explorerkWebApp').controller('ParagraphCtrl', function ($scope, $rootScope, $route, $window,
+    angular.module('explorerWebApp').controller('ParagraphCtrl', function ($scope, $rootScope, $route, $window,
     $http, $modal, $routeParams, $location,$timeout, websocketMsgSrv){
         $scope.paragraph = null;
         $scope.editor = null;

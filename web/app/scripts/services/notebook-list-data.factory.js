@@ -15,8 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- * based on NFlabs Zeppelin originaly forked on Nov'14
- */
+
 
 'use strict';
 

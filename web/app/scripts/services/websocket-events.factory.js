@@ -15,16 +15,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- * based on NFlabs Zeppelin originaly forked on Nov'14
- */
-//(function() {
-    'use strict';
+
+   'use strict';
     angular
         .module('explorerWebApp')
         .factory('websocketEvents',function($rootScope, $websocket, baseUrlSrv, $window, $routeParams) {
-
-//    websocketEvents.$inject = ['$rootScope', '$websocket' ,'baseUrlSrv', '$window', '$routeParams'];
-//    function websocketEvents($rootScope, $websocket, baseUrlSrv, $window, $routeParams) {
 
         var asIframe = (($window.location.href.indexOf('asIframe') > -1) ? true : false);
         var websocketCalls = {};
@@ -87,4 +82,4 @@
         });
         return websocketCalls;
     });
-//})();
+

@@ -15,12 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- * based on NFlabs Zeppelin originaly forked on Nov'14
- */
 
-//(function() {
     'use strict';
-//    angular.module('Authentication').controller('LoginCtrl', LoginCtrl);
     /**
          * @ngdoc function
          * @name Authentication.controller:LoginCtrl
@@ -31,11 +27,8 @@
          * @author ivdiaz
          *
          */
-//    LoginCtrl.$inject = ['$scope', '$rootScope', '$location', 'AuthenticationService'];
-//    function LoginCtrl($scope, $rootScope, $location, AuthenticationService) {
 
-    angular.module('Authentication').controller('LoginCtrl', function($scope, $rootScope, $location,
-    AuthenticationService){
+    angular.module('Authentication').controller('LoginCtrl', function($scope, $rootScope, $location,AuthenticationService){
         // reset login status
         AuthenticationService.ClearCredentials();
         $scope.login = function() {
@@ -51,4 +44,4 @@
             });
         };
     });
-//})()
+

@@ -15,8 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/* global confirm:false, alert:false */
-/* jshint loopfunc: true */
+
 
 //(function() {
     'use strict';

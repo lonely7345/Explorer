@@ -15,18 +15,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- * based on NFlabs Zeppelin originaly forked on Nov'14
- */
-//(function() {
+
     'use strict';
     angular
         .module('explorerWebApp')
         .service('websocketMsgSrv',function($rootScope, websocketEvents) {
-
-
-
-//    websocketMsgSrv.$inject = ['$rootScope', 'websocketEvents'];
-//    function websocketMsgSrv($rootScope, websocketEvents) {
         var service = {
             createNotebook: createNotebook,
             deleteNotebook: deleteNotebook,
@@ -157,8 +150,7 @@
             });
         }
         function commitParagraph(paragraphId, paragraphTitle, paragraphData, paragraphConfig, paragraphParams) {
-//            console.log('commitParagraph@service');
-//            console.dir(paragraphConfig);
+
             websocketEvents.sendNewEvent({
                 op: 'COMMIT_PARAGRAPH',
                 data: {
@@ -188,4 +180,4 @@
             });
         }
     });
-//})();
+

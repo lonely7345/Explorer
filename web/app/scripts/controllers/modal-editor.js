@@ -15,12 +15,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- * based on NFlabs Zeppelin originaly forked on Nov'14
- */
+
 //(function() {
     'use strict';
     angular
-        .module('ExplorerWebApp')
+        .module('explorerWebApp')
         .controller('ModalEditorCtrl', function( $modalInstance, properties, resolvePath, $http) {
     /**
      * @ngdoc function
