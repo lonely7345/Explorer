@@ -1,19 +1,19 @@
 /*
-*Licensed to STRATIO (C) under one or more contributor license agreements.
-*See the NOTICE file distributed with this work for additional information
-*regarding copyright ownership.  The STRATIO (C) licenses this file
-*to you under the Apache License, Version 2.0 (the
-*"License"); you may not use this file except in compliance
-*with the License.  You may obtain a copy of the License at
+* Licensed to STRATIO (C) under one or more contributor license agreements.
+* See the NOTICE file distributed with this work for additional information
+* regarding copyright ownership.  The STRATIO (C) licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
 *
-*  http://www.apache.org/licenses/LICENSE-2.0
+*   http://www.apache.org/licenses/LICENSE-2.0
 *
-*Unless required by applicable law or agreed to in writing,
-*software distributed under the License is distributed on an
-*"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-*KIND, either express or implied.  See the License for the
-*specific language governing permissions and limitations
-*under the License.
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
 */
 package com.stratio.streaming;
 
@@ -23,6 +23,8 @@ import com.stratio.streaming.api.StratioStreamingAPI;
 import com.stratio.streaming.commons.exceptions.StratioStreamingException;
 import com.stratio.streaming.utils.StreamingApiWrapper;
 import com.stratio.streaming.utils.StreamingSyntaxParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +34,12 @@ import java.util.Properties;
  */
 
 public class StreamingInterpreter extends Interpreter {
+    /**
+     * The Log.
+     */
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
     static {
         Interpreter.register("str", StreamingInterpreter.class.getName());
     }
@@ -60,10 +68,10 @@ public class StreamingInterpreter extends Interpreter {
         if (kafkaServer != null && kafkaPort >= 0 && zkServer != null && zkPort >= 0) { // if there is no
             // configuration set, it won't initialize
             api.initializeWithServerConfig(kafkaServer, kafkaPort, zkServer, zkPort);
-            System.out.println("Streaming connection established");
+            logger.info("Streaming connection established");
         }
         if (!api.isInit()) {
-            System.out.println("Streaming not initialized");
+            logger.info("Streaming not initialized");
         }
     }
 
