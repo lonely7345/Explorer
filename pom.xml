@@ -947,7 +947,8 @@
                          <exclude>**/stratioDefinition.xml</exclude>
                         <exclude>**/.*/**</exclude>
 			            <exclude>**/target/**</exclude>
-                         <exclude>**/*.js</exclude>
+                         <exclude>**/ace/**/*.js</exclude>
+                         <exclude>**/swagger/**/*.js</exclude>
                          <exclude>**/*.css</exclude>
                          <exclude>**/*.html</exclude>
                          <exclude>**/*.xml</exclude>
