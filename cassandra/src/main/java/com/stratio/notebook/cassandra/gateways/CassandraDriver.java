@@ -36,14 +36,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * This class is the driver to cassandra.
+ */
 public class CassandraDriver implements InterpreterDriver<Table> {
 
-    Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
+    /**
+     * The Log.
+     */
+    private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
     private int port ;
     private String host;
 
+    /**
+     * Constructor.
+     * @param properties the properties.
+     */
     public CassandraDriver(Properties properties){
 
         host = properties.getProperty(StringConstants.HOST);

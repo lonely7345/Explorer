@@ -34,6 +34,12 @@ import java.util.Properties;
  * Created by idiaz on 15/07/15.
  */
 public class IngestionInterpreter extends Interpreter {
+    /**
+     * The Log.
+     */
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
     public static final String INGESTION_SETTING_HOME = "ingestion.home";
 
     static {
@@ -99,10 +105,10 @@ public class IngestionInterpreter extends Interpreter {
                     String agentFilepath = agentStart.getFilepath();
                     int agentPort = agentStart.getPort();
 
-                    System.out.println("Ingestion interpreter @ agent start $INGESTION_HOME -> " + ingestionHome);
-                    System.out.println("Ingestion interpreter @ agent start agent filepath -> " + agentFilepath);
-                    System.out.println("Ingestion interpreter @ agent start agent name -> " + agentName);
-                    System.out.println("Ingestion interpreter @ agent start agent port -> " + agentPort);
+                    logger.info("Ingestion interpreter @ agent start $INGESTION_HOME -> " + ingestionHome);
+                    logger.info("Ingestion interpreter @ agent start agent filepath -> " + agentFilepath);
+                    logger.info("Ingestion interpreter @ agent start agent name -> " + agentName);
+                    logger.info("Ingestion interpreter @ agent start agent port -> " + agentPort);
 
                     shellCommand.append("exec \"")
                             .append(ingestionHome)
@@ -115,7 +121,7 @@ public class IngestionInterpreter extends Interpreter {
                             .append(String.valueOf(agentPort))
                             .append("> /dev/null & ");
 
-                    System.out.println("Ingestion interpreter @ agent start command -> " + shellCommand.toString());
+                    logger.info("Ingestion interpreter @ agent start command -> " + shellCommand.toString());
                     DefaultExecuteResultHandler handler = IngestionUtils.executeBash(shellCommand.toString());
                     long initTime = System.currentTimeMillis();
                     while (!handler.hasResult()) {

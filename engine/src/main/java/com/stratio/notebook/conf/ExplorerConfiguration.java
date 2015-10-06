@@ -33,6 +33,11 @@ public class ExplorerConfiguration extends XMLConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(ExplorerConfiguration.class);
 	private static ExplorerConfiguration conf;
 
+	/**
+	 * The Log.
+	 */
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public ExplorerConfiguration(URL url) throws ConfigurationException {
 		setDelimiterParsingDisabled(true);
 		load(url);
@@ -261,7 +266,7 @@ public class ExplorerConfiguration extends XMLConfiguration {
 
 
 	public String getCrossdataSettingsPath() {
-		System.out.println(CROSSDATA_SETTINGS_PATH);
+		logger.info(CROSSDATA_SETTINGS_PATH);
 		return CROSSDATA_SETTINGS_PATH;
 	}
 
