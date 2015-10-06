@@ -78,4 +78,4 @@ auto-save-list
 tramp
 .\#*
 *.swp
-
+web/bower_components/**
