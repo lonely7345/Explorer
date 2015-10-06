@@ -951,6 +951,8 @@
                          <exclude>**/*.js</exclude>
                          <exclude>**/*.css</exclude>
                          <exclude>**/*.html</exclude>
+                         <exclude>**/*.xml</exclude>
+                         <exclude>**/web/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
