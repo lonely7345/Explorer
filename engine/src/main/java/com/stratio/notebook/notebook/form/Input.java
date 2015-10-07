@@ -26,7 +26,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class 	Input implements Serializable {
+
+//TODO : WHEN FINISH TEST DELETE DEAD CODE OR CODE THAT ONLY IS CALLED BY TEST
+public class Input implements Serializable {
+
 	public static class ParamOption{
 		Object value;
 		String displayName;
