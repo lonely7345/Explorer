@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 
 
 //TODO : WHEN FINISH TEST DELETE DEAD CODE OR CODE THAT ONLY IS CALLED BY TEST
+//TODO : CHANGE STATIC METHODS, SURELY WE COULD USE COMPOSITION TO MANY OPERATIONS
 public class Input implements Serializable {
 
 	public static class ParamOption{
@@ -195,6 +196,8 @@ public class Input implements Serializable {
 		return ret;		
 	}
 
+	//TODO :  THIS METHOD HAVE MANY RESPONSABILITIES , SEPARATE IN ALL TYPES OF SCRIPTS
+	//TODO :  KNOW TYPES OF VALID SCRIPTS , REGULAR EXPRESION IS VERY GENERAL
 	public static Map<String, Input> extractSimpleQueryParam(String script){
 		Map<String, Input> params = new HashMap<String, Input>();
 		if(script==null) return params;
@@ -285,11 +288,14 @@ public class Input implements Serializable {
 		return params;	
 	}
 	
+	//TODO : CHANGE MAP<String,Object> , Object should be known type
+	//TODO :
 	public static String getSimpleQuery(Map<String, Object> params, String script) {
 		String replaced = script;
 
 		for(String key : params.keySet()){
 			Object value = params.get(key);
+			String value3 = value.toString();
 			replaced = replaced.replaceAll("[_]?[$][{]([^:]*[:])?"+key+"([(][^)]*[)])?(=[^}]*)?[}]", value.toString());
 		}
 		
@@ -320,7 +326,6 @@ public class Input implements Serializable {
 		 
 	}
 
-	
 
 	public static String [] splitPipe(String str){
 		return split(str, '|');		

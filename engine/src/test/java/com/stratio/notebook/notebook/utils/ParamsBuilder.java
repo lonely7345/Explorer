@@ -19,26 +19,20 @@
 package com.stratio.notebook.notebook.utils;
 
 
-import org.apache.commons.lang.StringUtils;
+import com.stratio.notebook.notebook.form.Input;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ScriptObjectBuilder {
+public class ParamsBuilder {
 
 
-    private String symbolSepratorKeyValue = ":";
 
-    public void changeSimbolSeparatorKeyValue(String symbolSepratorKeyValue){
-        this.symbolSepratorKeyValue = symbolSepratorKeyValue;
-    }
-
-    public String buildNotHiddenWith(KeyValue... keyValues){
-        String open = "{",close = "}";
-        List <String >listKeyValue = new ArrayList<>();
-        for (KeyValue keyValue:keyValues){
-            listKeyValue.add(keyValue.key()+symbolSepratorKeyValue+keyValue.value());
-        }
-        return open+StringUtils.join(listKeyValue,",")+close;
+    public static Map<String,Object> buildParamsByExpectedInput(InputExpectedValues expectedvalues){
+           Input input = new Input(expectedvalues.name, expectedvalues.displayName, expectedvalues.type,
+                                   expectedvalues.defaultValue, expectedvalues.options, expectedvalues.hidden);
+           Map<String,Object> params = new HashMap<>();
+           params.put(expectedvalues.name,input);
+           return params;
     }
 }

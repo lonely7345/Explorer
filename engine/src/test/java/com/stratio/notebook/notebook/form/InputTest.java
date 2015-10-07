@@ -20,6 +20,8 @@ package com.stratio.notebook.notebook.form;
 
 
 import com.stratio.notebook.notebook.utils.InputExpectedValues;
+import com.stratio.notebook.notebook.utils.KeyValue;
+import com.stratio.notebook.notebook.utils.ParamsBuilder;
 import com.stratio.notebook.notebook.utils.ScriptObjectBuilder;
 import org.junit.After;
 import org.junit.Before;
@@ -27,38 +29,37 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
-
+//TODO : WHEN TEST PASSED THEN REFACTOR
 public class InputTest {
 
 
     private final String CT_HIDDEN_CHARACTER = "_";
     private final String CT_INIT_JSON_OBJECT="$";
-    private final String CT_EMPTY_JSON = "{}";
-    private final String CT_KEY_A = "a";
-    private final String CT_VALUE_ONE ="1";
-    private final String CT_KEY_B = "b";
-    private final String CT_VALUE_TWO ="2";
-    private final String CT_SIMPLE_JSON_OBJECT = "{"+CT_KEY_A+":"+CT_VALUE_ONE+"}";
-    private final String CT_COMPLEX_JSON_OBJECT = "{"+CT_KEY_A+":"+CT_VALUE_ONE+","+CT_KEY_B+":"+CT_VALUE_TWO+"}";
+
     private InputExpectedValues expectedValues;
     private ScriptObjectBuilder scriptObjectBuilder;
+    private KeyValue keyValueOne ;
+    private KeyValue keyValueTwo ;
 
 
     @Before
     public void setUp(){
         expectedValues =  new InputExpectedValues();
         scriptObjectBuilder = new ScriptObjectBuilder();
+        keyValueOne = new KeyValue("firstAnyKey","firstAnyValue");
+        keyValueTwo = new KeyValue("secondAnyKey","secondAnyValue");
     }
 
     @After
     public void tearDown(){
         expectedValues =null;
         scriptObjectBuilder = null;
+        keyValueOne = null;
+        keyValueTwo = null;
     }
 
     @Test
@@ -102,7 +103,7 @@ public class InputTest {
 
     @Test
     public void whenCallExtractsimpleQueryParamWithDelimiterAndEmptyObject(){
-        Map<String, Input> params =Input.extractSimpleQueryParam(CT_INIT_JSON_OBJECT+"{}");
+        Map<String, Input> params =Input.extractSimpleQueryParam(CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith());
         assertThat(params.size(), is(1));
         throutghAssertsWithInput(params.get(""));
     }
@@ -110,7 +111,7 @@ public class InputTest {
 
     @Test
     public void whenCallExractSimpleQueryParamWithHiddenCharDelimiterAndEmptyObject(){
-        Map<String, Input> params =Input.extractSimpleQueryParam(CT_HIDDEN_CHARACTER+CT_INIT_JSON_OBJECT+"{}");
+        Map<String, Input> params =Input.extractSimpleQueryParam(CT_HIDDEN_CHARACTER+CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith());
         expectedValues.hidden = true;
         assertThat(params.size(), is(1));
         throutghAssertsWithInput(params.get(""));
@@ -118,46 +119,99 @@ public class InputTest {
 
     @Test
     public void whenCallExtractSimpleQueryParamsWithDelimiterAndFilledWithJsonObject(){
-        Map<String, Input> params =Input.extractSimpleQueryParam(CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith(CT_KEY_A,CT_VALUE_ONE));
+
+        String script = CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith(keyValueOne);
+        Map<String, Input> params =Input.extractSimpleQueryParam(script);
         assertThat(params.size(), is(1));
-        expectedValues.type = CT_KEY_A;
-        expectedValues.name = CT_VALUE_ONE;
+        expectedValues.type = keyValueOne.key();
+        expectedValues.name = keyValueOne.value();
         throutghAssertsWithInput(params.get(expectedValues.name));
     }
 
 
     @Test
     public void whenCallExtractSimpleQueryParamsWithDelimiterAndTwoSimpleJsonObject(){
-        Map<String, Input> params =Input.extractSimpleQueryParam(CT_INIT_JSON_OBJECT+CT_SIMPLE_JSON_OBJECT+",{anyKey : anyValue}");
+
+        String script = CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith(keyValueOne)+","+scriptObjectBuilder.buildNotHiddenWith(keyValueTwo);
+        Map<String, Input> params =Input.extractSimpleQueryParam(script);
         assertThat(params.size(), is(1));
-        expectedValues.type = CT_KEY_A;
-        expectedValues.name = CT_VALUE_ONE;
+        expectedValues.type = keyValueOne.key();
+        expectedValues.name = keyValueOne.value();
         throutghAssertsWithInput(params.get(expectedValues.name));
     }
 
 
     @Test
     public void whenCallExtractSimpleQueryParamsWithComplexJsonObject(){
-        Map<String, Input> params =Input.extractSimpleQueryParam(CT_INIT_JSON_OBJECT+CT_COMPLEX_JSON_OBJECT);
+        String script = CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith(keyValueOne,keyValueTwo);
+        Map<String, Input> params =Input.extractSimpleQueryParam(script);
         assertThat(params.size(), is(1));
-        expectedValues.type = CT_KEY_A;
-        expectedValues.name = CT_VALUE_ONE+","+CT_KEY_B+":"+CT_VALUE_TWO;
+        expectedValues.type = keyValueOne.key();
+        expectedValues.name = keyValueOne.value()+","+keyValueTwo.key()+":"+keyValueTwo.value();
         throutghAssertsWithInput(params.get(expectedValues.name ));
     }
 
 
+    @Test
+    public void whenCallExtractSimpleQueryParamsWithComplexObjectSeparateByEqualsSymbol(){
+        scriptObjectBuilder.changeSimbolSeparatorKeyValue("=");;
+        String script = CT_INIT_JSON_OBJECT+scriptObjectBuilder.buildNotHiddenWith(keyValueOne,keyValueTwo);
+        Map<String, Input> params =Input.extractSimpleQueryParam(script);
+        expectedValues.defaultValue = keyValueOne.value();
+        expectedValues.name = keyValueOne.key() ;
 
-    //TODO : SURELY THIS METHOD WILL BE MOVED INTO OTHER CLASS
+        expectedValues.options =  new Input.ParamOption[] {new Input.ParamOption(keyValueTwo.key()+"="+keyValueTwo.value(),null)};
+        throutghAssertsWithInput(params.get(expectedValues.name ));
+    }
+
+
+    @Test (expected = NullPointerException.class)
+    public void whenCallgetSimpleQueryWithNullParams(){
+        String script ="anyScrips";
+        String query =Input.getSimpleQuery(null,script);
+    }
+
+
+    @Test (expected = NullPointerException.class)
+    public void whenCallGetSimpleQueryWithNullScrips(){
+        Map<String,Object> params = ParamsBuilder.buildParamsByExpectedInput(expectedValues);
+        Input.getSimpleQuery(params,null);
+    }
+
+
+    @Test
+    public void whenCallGetSimpleQuerywithEmptyScripts(){
+        Map<String,Object> params = ParamsBuilder.buildParamsByExpectedInput(expectedValues);
+        String query = Input.getSimpleQuery(params, "");
+        assertThat(query,is(""));
+    }
+
+
+    @Test
+    public void whenCallGetSimpleQueryWithParamsAndscriptFilled(){
+
+    }
+
+
+
+
     private void throutghAssertsWithInput (Input params){
         assertThat(params.name,is(expectedValues.name));
         assertThat(params.displayName,is(expectedValues.displayName));
         assertThat(params.type,is(expectedValues.type));
         assertThat(params.defaultValue,is(expectedValues.defaultValue));
 
-        assertThat(params.options, is(expectedValues.options));
+
         assertThat(params.hidden, is(expectedValues.hidden));
+        if (params.options == null)
+            assertThat(params.options, is(expectedValues.options));
+        if (params.options != null){
+            assertEquals(params.options.length,expectedValues.options.length);
+            for (int index =0;index<params.options.length;index++){
+                assertEquals(params.options[index].getDisplayName(), expectedValues.options[index].getDisplayName());
+                assertEquals(params.options[index].getValue(), expectedValues.options[index].getValue());
+            }
+
+        }
     }
-
-
-
 }

@@ -19,26 +19,20 @@
 package com.stratio.notebook.notebook.utils;
 
 
-import org.apache.commons.lang.StringUtils;
+public class KeyValue {
 
-import java.util.ArrayList;
-import java.util.List;
+    private String key,value;
 
-public class ScriptObjectBuilder {
-
-
-    private String symbolSepratorKeyValue = ":";
-
-    public void changeSimbolSeparatorKeyValue(String symbolSepratorKeyValue){
-        this.symbolSepratorKeyValue = symbolSepratorKeyValue;
+    public KeyValue(String key,String value){
+        this.key = key;
+        this.value = value;
     }
 
-    public String buildNotHiddenWith(KeyValue... keyValues){
-        String open = "{",close = "}";
-        List <String >listKeyValue = new ArrayList<>();
-        for (KeyValue keyValue:keyValues){
-            listKeyValue.add(keyValue.key()+symbolSepratorKeyValue+keyValue.value());
-        }
-        return open+StringUtils.join(listKeyValue,",")+close;
+    public String key(){
+       return key;
+    }
+
+    public String value(){
+       return value;
     }
 }
