@@ -81,42 +81,92 @@ public class 	Input implements Serializable {
 		this.options = options.clone();
 		this.hidden = hidden;
 	}
-	
-	public boolean equals(Object o){
-		return name.equals(((Input)o).getName());
-	}
-	
+
+
+	/**
+	 * Get the name.
+	 * @return the name.
+	 */
 	public String getName() {
 		return name;
 	}
+
+	/**
+	 * Set the name.
+	 * @param name the name.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	/**
+	 * Get the display name.
+	 * @return the display name.
+	 */
 	public String getDisplayName() {
 		return displayName;
 	}
+
+	/**
+	 * Set the display name.
+	 * @param displayName the display name.
+	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+
+	/**
+	 * Get the type.
+	 * @return the type.
+	 */
 	public String getType() {
 		return type;
 	}
+
+	/**
+	 * Set the type.
+	 * @param type the type.
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	/**
+	 * Ger default value.
+	 * @return default value.
+	 */
 	public Object getDefaultValue() {
 		return defaultValue;
 	}
+
+	/**
+	 * Set default value.
+	 * @param defaultValue default value.
+	 */
 	public void setDefaultValue(Object defaultValue) {
 		this.defaultValue = defaultValue;
 	}
+
+	/**
+	 * Get options.
+	 * @return the options.
+	 */
 	public ParamOption[] getOptions() {
 		return options;
 	}
+
+	/**
+	 * Set the options.
+	 * @param options the options.
+	 */
 	public void setOptions(ParamOption[] options) {
-		this.options = options;
+		this.options = options.clone();
 	}
-	
+
+	/**
+	 * Ash if it is hidden.
+	 * @return true if is hidden false in other case.
+	 */
 	public boolean isHidden(){
 		return hidden;
 	}
@@ -266,12 +316,7 @@ public class 	Input implements Serializable {
 		return str.split(";(?=([^\"']*\"[^\"']*\")*[^\"']*$)");
 		 
 	}
-	/*
-	public static String [] splitPipe(String str){
-		//return str.split("\\|(?=([^\"']*\"[^\"']*\")*[^\"']*$)");
-		return str.split("\\|(?=([^\"']*\"[^\"']*\")*[^\"']*$)");
-	}
-	*/
+
 	
 
 	public static String [] splitPipe(String str){
@@ -433,4 +478,22 @@ public class 	Input implements Serializable {
 			return false;
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Input input = (Input) o;
+
+		if (!getName().equals(input.getName())) return false;
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return getName().hashCode();
+	}
+
 }
