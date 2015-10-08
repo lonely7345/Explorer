@@ -27,18 +27,19 @@ import java.util.List;
 public class ScriptObjectBuilder {
 
 
-    private String symbolSepratorKeyValue = ":";
+    private String simbolSeparator;
 
-    public void changeSimbolSeparatorKeyValue(String symbolSepratorKeyValue){
-        this.symbolSepratorKeyValue = symbolSepratorKeyValue;
+    public ScriptObjectBuilder(String simbolSeparator){
+        this.simbolSeparator = simbolSeparator;
     }
 
     public String buildNotHiddenWith(KeyValue... keyValues){
         String open = "{",close = "}";
         List <String >listKeyValue = new ArrayList<>();
         for (KeyValue keyValue:keyValues){
-            listKeyValue.add(keyValue.key()+symbolSepratorKeyValue+keyValue.value());
+            listKeyValue.add(keyValue.toStringSeparateBysimbol(simbolSeparator));
         }
         return open+StringUtils.join(listKeyValue,",")+close;
     }
+
 }

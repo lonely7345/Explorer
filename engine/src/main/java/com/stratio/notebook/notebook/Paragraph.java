@@ -78,6 +78,7 @@ public class Paragraph extends Job implements Serializable {
     }
 
     public String getRequiredReplName() {
+        System.out.println("HA ENTRADO EN EL GETREQUIREPPLNAME ");
         if (config.get("interpreter") != null) {
             String replNameRaw = ((String) config.get("interpreter"));
             switch (replNameRaw) {

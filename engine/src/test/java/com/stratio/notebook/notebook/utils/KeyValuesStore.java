@@ -19,24 +19,9 @@
 package com.stratio.notebook.notebook.utils;
 
 
-public class KeyValue {
+public class KeyValuesStore {
 
-    private String key,value;
 
-    public KeyValue(String key,String value){
-        this.key = key;
-        this.value = value;
-    }
-
-    public String key(){
-       return key;
-    }
-
-    public String value(){
-       return value;
-    }
-
-    public String toStringSeparateBysimbol(String simbol){
-       return key + simbol + value;
-    }
+    public static final KeyValue FIRST_KEY_VALUE = new KeyValue("firstAnyKey","firstAnyValue");
+    public static final KeyValue SECOND_KEY_VALUE = new KeyValue("secondAnyKey","secondAnyValue");
 }

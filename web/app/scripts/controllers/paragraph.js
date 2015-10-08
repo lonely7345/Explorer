@@ -252,6 +252,8 @@
                 path = String(code).replace('edit ', '');
                 $rootScope.$broadcast('openPropertiesEditor', path);
             } else {
+                console.log('ha entrado en el runParagrph');
+                console.log();
                 websocketMsgSrv.runParagraph($scope.paragraph.id, $scope.paragraph.title,
                                                  data, $scope.paragraph.config, $scope.paragraph.settings.params);
                 $scope.dirtyText = undefined;

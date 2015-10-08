@@ -24,6 +24,7 @@ import com.stratio.notebook.notebook.form.Input;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO : surely this object will be removed
 public class ParamsBuilder {
 
 

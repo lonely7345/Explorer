@@ -41,6 +41,8 @@ public class RunParagraphOperation implements com.stratio.notebook.socket.INoteb
     @Override
     public void execute(WebSocket conn, Notebook notebook, Message messagereceived) {
         System.out.println("ACABA DE ENTRAR POR AQUÍ");
+        System.out.println("EL OBJETO PARAMS TIENE LO SIGUIENTES :");
+        System.out.println(messagereceived.get("params"));
         try {
             final String paragraphId = (String) messagereceived.get("id");
             if (paragraphId != null) {

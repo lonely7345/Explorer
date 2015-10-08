@@ -42,7 +42,7 @@ public class CassandraInterpreter extends Interpreter {
     public CassandraInterpreter(Properties properties){
 
         super(properties);
-
+        System.out.println(" HA ENTRADO POR EL CASSANDRA INTERPRETER ");
         CassandraInterpreterGateways.commandDriver = new CassandraDriver(new PropertiesReader().readConfigFrom("cassandra"));
 
     }
@@ -62,6 +62,7 @@ public class CassandraInterpreter extends Interpreter {
 
 
     @Override public InterpreterResult interpret(String st) {
+
         InterpreterResult.Code code = InterpreterResult.Code.SUCCESS;
         String message="";
         try {

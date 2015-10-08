@@ -289,13 +289,11 @@ public class Input implements Serializable {
 	}
 	
 	//TODO : CHANGE MAP<String,Object> , Object should be known type
-	//TODO :
 	public static String getSimpleQuery(Map<String, Object> params, String script) {
 		String replaced = script;
 
 		for(String key : params.keySet()){
 			Object value = params.get(key);
-			String value3 = value.toString();
 			replaced = replaced.replaceAll("[_]?[$][{]([^:]*[:])?"+key+"([(][^)]*[)])?(=[^}]*)?[}]", value.toString());
 		}
 		

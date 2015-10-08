@@ -19,24 +19,13 @@
 package com.stratio.notebook.notebook.utils;
 
 
-public class KeyValue {
+import java.util.HashMap;
+import java.util.Map;
 
-    private String key,value;
+public class ScriptSelector {
 
-    public KeyValue(String key,String value){
-        this.key = key;
-        this.value = value;
-    }
 
-    public String key(){
-       return key;
-    }
+    public static final ScriptObjectBuilder WITH_EQUALS = new ScriptObjectBuilder("=");
+    public static final ScriptObjectBuilder WITH_TWO_DOTS = new ScriptObjectBuilder(":");
 
-    public String value(){
-       return value;
-    }
-
-    public String toStringSeparateBysimbol(String simbol){
-       return key + simbol + value;
-    }
 }
