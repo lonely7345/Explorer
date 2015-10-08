@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Input implements Serializable {
+public class 	Input implements Serializable {
 	public static class ParamOption{
 		Object value;
 		String displayName;
@@ -67,7 +67,7 @@ public class Input implements Serializable {
 		this.name = name;
 		this.displayName = name;
 		this.defaultValue = defaultValue;
-		this.options = options;
+		this.options = options.clone();
 	}
 	
 	
@@ -78,7 +78,7 @@ public class Input implements Serializable {
 		this.displayName = displayName;
 		this.type = type;
 		this.defaultValue = defaultValue;
-		this.options = options;
+		this.options = options.clone();
 		this.hidden = hidden;
 	}
 	
