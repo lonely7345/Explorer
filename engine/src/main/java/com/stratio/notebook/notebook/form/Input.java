@@ -82,6 +82,8 @@ public class Input implements Serializable {
 		this.displayName = displayName;
 		this.type = type;
 		this.defaultValue = defaultValue;
+		if (options==null) options = new ParamOption[]{};//TODO : CHANGE , IN CONSTRUCTOR PARAMETERS SHOULD NOT EXIST NULL VALUES
+
 		this.options = options.clone();
 		this.hidden = hidden;
 	}

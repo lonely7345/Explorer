@@ -28,7 +28,7 @@ public class InputExpectedValues {
     public String displayName = null;
     public String type = null;
     public Object defaultValue = "";
-    public Input.ParamOption[] options = null;
+    public Input.ParamOption[] options = new Input.ParamOption[]{};
     public boolean hidden = false;
 
 }

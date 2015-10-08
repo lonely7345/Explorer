@@ -42,7 +42,6 @@ public class CassandraInterpreter extends Interpreter {
     public CassandraInterpreter(Properties properties){
 
         super(properties);
-        System.out.println(" HA ENTRADO POR EL CASSANDRA INTERPRETER ");
         CassandraInterpreterGateways.commandDriver = new CassandraDriver(new PropertiesReader().readConfigFrom("cassandra"));
 
     }
