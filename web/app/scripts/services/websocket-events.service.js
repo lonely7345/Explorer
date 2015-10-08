@@ -130,6 +130,10 @@
             });
         }
         function runParagraph(paragraphId, paragraphTitle, paragraphData, paragraphConfig, paragraphParams) {
+            console.log('ha entrado en el websockets events lo params son');
+            console.log(paragraphParams);
+            console.log('los datos son websockets events');
+            console.log(paragraphData);
             websocketEvents.sendNewEvent({
                 op: 'RUN_PARAGRAPH',
                 data: {

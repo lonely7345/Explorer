@@ -26,7 +26,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class 	Input implements Serializable {
+
+//TODO : WHEN FINISH TEST DELETE DEAD CODE OR CODE THAT ONLY IS CALLED BY TEST
+//TODO : CHANGE STATIC METHODS, SURELY WE COULD USE COMPOSITION TO MANY OPERATIONS
+public class Input implements Serializable {
+
 	public static class ParamOption{
 		Object value;
 		String displayName;
@@ -78,6 +82,8 @@ public class 	Input implements Serializable {
 		this.displayName = displayName;
 		this.type = type;
 		this.defaultValue = defaultValue;
+		if (options==null) options = new ParamOption[]{};//TODO : CHANGE , IN CONSTRUCTOR PARAMETERS SHOULD NOT EXIST NULL VALUES
+
 		this.options = options.clone();
 		this.hidden = hidden;
 	}
@@ -192,6 +198,8 @@ public class 	Input implements Serializable {
 		return ret;		
 	}
 
+	//TODO :  THIS METHOD HAVE MANY RESPONSABILITIES , SEPARATE IN ALL TYPES OF SCRIPTS
+	//TODO :  KNOW TYPES OF VALID SCRIPTS , REGULAR EXPRESION IS VERY GENERAL
 	public static Map<String, Input> extractSimpleQueryParam(String script){
 		Map<String, Input> params = new HashMap<String, Input>();
 		if(script==null) return params;
@@ -282,6 +290,7 @@ public class 	Input implements Serializable {
 		return params;	
 	}
 	
+	//TODO : CHANGE MAP<String,Object> , Object should be known type
 	public static String getSimpleQuery(Map<String, Object> params, String script) {
 		String replaced = script;
 
@@ -317,7 +326,6 @@ public class 	Input implements Serializable {
 		 
 	}
 
-	
 
 	public static String [] splitPipe(String str){
 		return split(str, '|');		
