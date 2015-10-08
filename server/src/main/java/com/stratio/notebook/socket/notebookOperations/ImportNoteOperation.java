@@ -26,6 +26,8 @@ import org.java_websocket.WebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
 /**
  * Created by jmgomez on 3/09/15.
  */
@@ -52,9 +54,7 @@ public class ImportNoteOperation implements com.stratio.notebook.socket.INoteboo
             ConnectionManager.getInstance().broadcastNote(note);
             new BroadcastNoteListOperation().execute(conn, notebook, messagereceived);
             ConnectionManager.getInstance().broadcastAll(new Message(Message.OP.IMPORT_INFO).put("info", "Imported successfully"));
-
-            //TODO review this exception without log. Throwable catch all exceptions.
-        } catch (Throwable e) {
+        } catch (IOException e) {
             logger.info("We are catch a IOException when we try to import a note but we continue." + e.getMessage());
             ConnectionManager.getInstance().broadcastAll(new Message(Message.OP.IMPORT_INFO).put("info", e.getMessage()));
         }

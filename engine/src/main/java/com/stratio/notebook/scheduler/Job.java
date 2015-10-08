@@ -195,16 +195,7 @@ public abstract class Job {
             } else {
                 setStatus(Status.FINISHED);
             }
-
-        } catch (NullPointerException e) {
-            logger().error("Job failed", e);
-            progressUpdator.terminate();
-            this.exception = e;
-            result = e.getMessage();
-            errorMessage = getStack(e);
-            dateFinished = new Date();
-            setStatus(Status.ERROR);
-        } catch (Throwable e) {
+        } catch (InterruptedException e) {
             logger().error("Job failed", e);
             progressUpdator.terminate();
             this.exception = e;
@@ -258,7 +249,7 @@ public abstract class Job {
 
     public abstract Map<String, Object> info();
 
-    protected abstract Object jobRun() throws Throwable;
+    protected abstract Object jobRun();
 
     protected abstract boolean jobAbort();
 

@@ -211,7 +211,7 @@ public class Paragraph extends Job implements Serializable {
     }
 
     @Override
-    protected Object jobRun() throws Throwable {
+    protected Object jobRun(){
         String replName = getRequiredReplName();
         Interpreter repl = getRepl(replName);
         logger().info("run paragraph {} using {} " + repl, getId(), replName);
