@@ -21,10 +21,11 @@ package com.stratio.notebook.notebook.utils;
 
 import org.apache.commons.lang.StringUtils;
 
+//TODO : when finish test move KeyValues to KeyValuesStore
 public class ScriptTypes {
 
 
-    public static String [] LITS_VALUES = new String[]{"one","two","three"};
+
 
     public static final String NULL_VALUE =null;
     public static final String EMPTY ="";
@@ -50,12 +51,14 @@ public class ScriptTypes {
             DELIMITER_CHAR  + ScriptSelector.WITH_EQUALS.buildNotHiddenWith(KeyValuesStore.FIRST_KEY_VALUE);
 
     public static final String DELIMITER_WITH_KEY_VALUE_OBJETC_WITH_LIT_VALUES =
-            DELIMITER_CHAR  + ScriptSelector.WITH_EQUALS.buildNotHiddenWith(new KeyValue(KeyValuesStore.FIRST_KEY_VALUE.key(),StringUtils.join(LITS_VALUES, ",")));
+            DELIMITER_CHAR  + ScriptSelector.WITH_EQUALS.buildNotHiddenWith(KeyValuesStore.VALUE_WITH_LIST_VALUES);
 
 
     public static final String DELIMITER_WITH_KEY_VALUE_OBJECT_WITH_NESTED_OBJECT =
-            DELIMITER_CHAR  + ScriptSelector.WITH_EQUALS.buildNotHiddenWith(new KeyValue(KeyValuesStore.FIRST_KEY_VALUE.key(),"a:b,c:d"));
+            DELIMITER_CHAR  + ScriptSelector.WITH_EQUALS.buildNotHiddenWith(KeyValuesStore.VALUE_WITH_NESTED_OBJECT);
 
+    public static final String DELIMITER_WITH_KEY_VALUE_WITH_PARENTHESIS_IN_KEY =
+            DELIMITER_CHAR  + ScriptSelector.WITH_EQUALS.buildNotHiddenWith(KeyValuesStore.KEY_WITH_PARENTESIS);
 
 
 }

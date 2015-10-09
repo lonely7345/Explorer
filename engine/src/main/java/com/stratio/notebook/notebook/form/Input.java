@@ -328,7 +328,7 @@ public class Input implements Serializable {
 
 
 	public static String [] splitPipe(String str){
-		return split(str, '|');		
+		return split(str, '|');
 	}
 
 	public static String [] split(String str, char split){
@@ -345,6 +345,8 @@ public class Input implements Serializable {
 		return split(str, escapeSeq, escapeChar, blockStart, blockEnd, splitters, includeSplitter);
 		
 	}
+
+	//TODO : IF THIS METHOD ONLY USE INTO splitPipe THEN REMOVE ALL CODE THAT NOT USE
 
 	public static String [] split(
 			String str,
@@ -436,6 +438,7 @@ public class Input implements Serializable {
 				boolean splitted = false;
 				for(String splitter : splitters){				
 					// forward check for splitter
+					String string =str.substring(i, Math.min(i+splitter.length(), str.length()));
 					if(splitter.compareTo(str.substring(i, Math.min(i+splitter.length(), str.length())))==0){
 						splits.add(curString);
 						if(includeSplitter==true){

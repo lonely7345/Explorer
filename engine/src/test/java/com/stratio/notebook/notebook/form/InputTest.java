@@ -26,21 +26,26 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 
 
+//TODO : WHEN FINISHED TEST THEN INCU
 public class InputTest {
 
 
     private InputExpectedValues expectedValues;
+    private EntrySplitParameters splitParameters;
 
 
     @Before
     public void setUp(){
         expectedValues =  new InputExpectedValues();
+        splitParameters = new EntrySplitParameters();
 
     }
 
@@ -144,32 +149,42 @@ public class InputTest {
 
         Map<String, Input> params =Input.extractSimpleQueryParam(ScriptTypes.DELIMITER_WITH_OBJECT_WITH_TWO_OBJECTS_WITH_EQUALS_SEPARATOR);
 
-        throutghAssertsWithInput(params.get(expectedValues.name ));
+        throutghAssertsWithInput(params.get(expectedValues.name));
+    }
+
+    @Test
+    public void whenCallExtractSimpleQueryParamsWithParenthesisInKey(){
+        expectedValues.defaultValue = KeyValuesStore.KEY_WITH_PARENTESIS.value();
+        expectedValues.name = KeyValuesStore.VALUES_WITH_PARENTHESIS[0] ;
+        expectedValues.displayName = KeyValuesStore.VALUES_WITH_PARENTHESIS[1].substring(1, KeyValuesStore.VALUES_WITH_PARENTHESIS[1].length()-1);
+        Map<String, Input> params =Input.extractSimpleQueryParam(ScriptTypes.DELIMITER_WITH_KEY_VALUE_WITH_PARENTHESIS_IN_KEY);
+        throutghAssertsWithInput(params.get(expectedValues.name));
     }
 
 
     private void throutghAssertsWithInput (Input params){
-        assertThat(params.name,is(expectedValues.name));
-        assertThat(params.displayName,is(expectedValues.displayName));
-        assertThat(params.type,is(expectedValues.type));
-        assertThat(params.defaultValue,is(expectedValues.defaultValue));
+        assertThat("Input.params should be equals to"+expectedValues.name,params.name,is(expectedValues.name));
+        assertThat("Input displayName should be equals "+expectedValues.displayName,params.displayName, is(expectedValues.displayName));
+        assertThat("Input type should be equals "+expectedValues.type,params.type,is(expectedValues.type));
+        assertThat("Input default name should be equals "+expectedValues.defaultValue,params.defaultValue, is(expectedValues.defaultValue));
 
 
-        assertThat(params.hidden, is(expectedValues.hidden));
+        assertThat("Input hidden value should be equals "+expectedValues.hidden,params.hidden, is(expectedValues.hidden));
         if (params.options == null)
-            assertThat(params.options, is(expectedValues.options));
+            assertThat("Input optons should be equals to "+expectedValues.options,params.options, is(expectedValues.options));
         if (params.options != null){
-            assertEquals(params.options.length,expectedValues.options.length);
+            assertEquals("Input options should be equals to "+expectedValues.options.length,params.options.length,expectedValues.options.length);
             for (int index =0;index<params.options.length;index++){
-                assertEquals(params.options[index].getDisplayName(), expectedValues.options[index].getDisplayName());
-                assertEquals(params.options[index].getValue(), expectedValues.options[index].getValue());
+                assertEquals("Input param options display name should be equals to "+expectedValues.options[index].getDisplayName(),params.options[index].getDisplayName(), expectedValues.options[index].getDisplayName());
+                assertEquals("Input param options ",params.options[index].getValue(), expectedValues.options[index].getValue());
             }
 
         }
     }
 
-
+/***************************************************************************************************************************************************************************************/
     //TODO : WHEN UPPER COVERED THEN SEPARATE IN THREE CLASS TEST
+//TODO : REMOVE ALL HARDCODED NAMES
     @Test (expected = NullPointerException.class)
     public void whenCallgetSimpleQueryWithNullParams(){
         String script ="anyScrips";
@@ -188,7 +203,7 @@ public class InputTest {
     public void whenCallGetSimpleQuerywithEmptyScripts(){
         Map<String,Object> params = ParamsBuilder.buildParamsByExpectedInput(expectedValues);
         String query = Input.getSimpleQuery(params, ScriptTypes.EMPTY);
-        assertThat(query, is(""));
+        througthAsserts(query, "");
     }
 
 
@@ -202,7 +217,7 @@ public class InputTest {
 
         Object a = params.get(expectedValues.name);
         String query = Input.getSimpleQuery(params, ScriptTypes.EMPTY_OBJECT);
-        assertThat(query,is("{}"));
+        througthAsserts(query,"{}");
     }
 
 
@@ -214,8 +229,8 @@ public class InputTest {
         Map<String,Object> params = new HashMap<>();
         params.put(expectedValues.name, "{"+KeyValuesStore.FIRST_KEY_VALUE.key() +"}");
 
-        String query = Input.getSimpleQuery(params,ScriptTypes.DELIMITER_WITH_KEY_VALUE_OBJECT_WITH_EQUALS);
-        assertThat(query,is(KeyValuesStore.FIRST_KEY_VALUE.value()));
+        String query = Input.getSimpleQuery(params, ScriptTypes.DELIMITER_WITH_KEY_VALUE_OBJECT_WITH_EQUALS);
+        througthAsserts(query, KeyValuesStore.FIRST_KEY_VALUE.value());
     }
 
 
@@ -227,7 +242,7 @@ public class InputTest {
         params.put(expectedValues.name, "{" + KeyValuesStore.FIRST_KEY_VALUE.key() + "}");
 
         String query = Input.getSimpleQuery(params,ScriptTypes.DELIMITER_WITH_KEY_VALUE_OBJETC_WITH_LIT_VALUES);
-        assertThat(query, is(ScriptTypes.LITS_VALUES[0]));
+        througthAsserts(query, KeyValuesStore.LITS_VALUES[0]);
     }
 
     @Test
@@ -235,9 +250,81 @@ public class InputTest {
         expectedValues.name = "value";
 
         Map<String,Object> params = new HashMap<>();
-        params.put(expectedValues.name, "{" + KeyValuesStore.FIRST_KEY_VALUE.key() + "},"+"{" + KeyValuesStore.FIRST_KEY_VALUE.key() + "}");
+        params.put(expectedValues.name, "{" + KeyValuesStore.VALUE_WITH_NESTED_OBJECT.key() + "},"+"{" + KeyValuesStore.VALUE_WITH_NESTED_OBJECT.key() + "}");
         String query = Input.getSimpleQuery(params,ScriptTypes.DELIMITER_WITH_KEY_VALUE_OBJECT_WITH_NESTED_OBJECT);
-        assertThat(query, is("a:b"));
+        througthAsserts(query, "a:b");
     }
 
+
+    private void througthAsserts(String query,String value){
+        assertThat("Query result should be equals to " + value, query, is(value));
+    }
+
+
+    /***************************************************************************************************************************/
+    //TODO : when test ending separate in three diferen class
+    @Test
+    public void whenCallSplitMethodWithEmptyString(){
+       String [] result = Input.split("");
+        througthSplitAsserts(result, new String[]{""});
+    }
+
+    @Test
+    public void whenCallSplitMethodWithAnyStringNotMactherWithRegularexpresion(){
+        String [] result = Input.split("asassasasas");
+        througthSplitAsserts(result, new String[]{"asassasasas"});
+    }
+
+
+    @Test
+    public void whenCallSplitMethodWithAllParametersNotInitialize(){
+        String [] result =  Input.split(splitParameters.str, splitParameters.escapeSeq,
+                splitParameters.escapeChar, splitParameters.blockStart,
+                splitParameters.blockEnd, splitParameters.splitters,
+                splitParameters.includeSplitter);
+        througthSplitAsserts(result,new String[]{});
+    }
+
+
+    @Test
+    public void whenCallSplitMethodWithStrInitialized(){
+        splitParameters.str = "aaaaaa-11111";
+        String [] result =  Input.split(splitParameters.str, splitParameters.escapeSeq,
+                splitParameters.escapeChar, splitParameters.blockStart,
+                splitParameters.blockEnd, splitParameters.splitters,
+                splitParameters.includeSplitter);
+        througthSplitAsserts(result,new String[]{splitParameters.str});
+    }
+
+
+    @Test
+    public void whenCallSplitMethodWithStringThatMatcherWithRegularExpresionAndScapeChar(){
+
+        splitParameters.str = "aaaaaa-11111";
+        splitParameters.escapeChar ='-';
+        String [] result =  Input.split(splitParameters.str, splitParameters.escapeSeq,
+                                        splitParameters.escapeChar, splitParameters.blockStart,
+                                        splitParameters.blockEnd, splitParameters.splitters,
+                                        splitParameters.includeSplitter);
+        througthSplitAsserts(result,new String[]{splitParameters.str});
+    }
+
+
+    @Test
+    public void whenCallSplitMethodWithStrScapeCharAndSplitters(){
+        splitParameters.str = "aaaaaa-11111";
+        splitParameters.escapeChar ='-';
+        splitParameters.splitters = new String[]{"aa","s2","s3"};
+        boolean includeSplitter = false;
+        String [] result =  Input.split(splitParameters.str, splitParameters.escapeSeq,
+                                        splitParameters.escapeChar, splitParameters.blockStart,
+                                        splitParameters.blockEnd, splitParameters.splitters,
+                                        splitParameters.includeSplitter);
+        througthSplitAsserts(result, new String[]{"", "", "", "-11111"});
+    }
+
+
+    private void througthSplitAsserts(String [] result ,String [] expected){
+        assertThat("Result should be equals "+expected,result,is(expected));
+    }
 }
