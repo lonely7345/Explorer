@@ -109,9 +109,11 @@ public class Paragraph extends Job implements Serializable {
             }
 
         }
+
        if (replName != null) {
             return replName;
         }
+
         return getRequiredReplName(text);
     }
 

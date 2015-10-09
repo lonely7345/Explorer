@@ -1,0 +1,54 @@
+{
+  "paragraphs": [
+    {
+      "text": "use demo;",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444393142684_-437663753",
+      "id": "20151009-141902_28657925",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "operation is successfully"
+      },
+      "dateCreated": "Oct 9, 2015 2:19:02 PM",
+      "dateStarted": "Oct 9, 2015 2:21:44 PM",
+      "dateFinished": "Oct 9, 2015 2:21:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1444393153961_1082109727",
+      "id": "20151009-141913_1424053277",
+      "dateCreated": "Oct 9, 2015 2:19:13 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "id": "2B1TAFKSY",
+  "creationDate": "vie, 9 oct, 14:19 PM",
+  "config": {},
+  "info": {}
+}

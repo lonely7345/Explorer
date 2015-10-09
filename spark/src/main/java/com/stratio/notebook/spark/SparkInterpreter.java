@@ -237,7 +237,6 @@ public class SparkInterpreter extends Interpreter {
         }
         if (System.getenv("SPARK_HOME") != null) {
             conf.setSparkHome(System.getenv("SPARK_HOME"));
-            System.out.println("##### SPARK_HOME: " + System.getenv("SPARK_HOME"));
         }
         conf.set("spark.scheduler.mode", "FAIR");
 
@@ -362,7 +361,7 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
                     | IllegalArgumentException | InvocationTargetException e) {
                 logger.error(e.getMessage());//TODO
                 logger.info(e.getStackTrace().toString());
-                System.out.println(e.getStackTrace());
+
             }
 
             intp.interpret("@transient var _binder = new java.util.HashMap[String, Object]()");

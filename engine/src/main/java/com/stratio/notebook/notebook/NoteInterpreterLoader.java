@@ -51,6 +51,7 @@ public class NoteInterpreterLoader {
 	}
 	
 	public synchronized Interpreter getRepl(String replName){
+
 		String name = (replName!=null) ? replName : factory.getDefaultInterpreterName();
 		if(loadedInterpreters.containsKey(name)) {
 			return loadedInterpreters.get(name);
@@ -59,7 +60,7 @@ public class NoteInterpreterLoader {
 			p.put("noteIntpLoader", this);
 			Interpreter repl = factory.createRepl(name, p);
 			LazyOpenInterpreter lazyIntp = new LazyOpenInterpreter(repl);
-			loadedInterpreters.put(name, lazyIntp);			
+			loadedInterpreters.put(name, lazyIntp);
 			return lazyIntp;
 		}
 	}
