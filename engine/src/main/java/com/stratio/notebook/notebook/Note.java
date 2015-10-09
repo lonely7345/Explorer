@@ -302,6 +302,7 @@ public class Note implements Serializable, JobListener {
      * @param paragraphId
      */
     public void run(String paragraphId) {
+
         Paragraph p = getParagraph(paragraphId);
         p.setNoteReplLoader(replLoader);
         p.setListener(jobListenerFactory.getParagraphJobListener(this));

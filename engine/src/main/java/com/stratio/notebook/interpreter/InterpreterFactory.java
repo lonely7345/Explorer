@@ -107,6 +107,7 @@ public class InterpreterFactory {
         String className = Interpreter.registeredInterpreters.get(replName != null ? replName : defaultInterpreterName);
         logger.info("find repl class {} = {}", replName, className);
         if (className == null) {
+            logger.error("Configuration not found for " + replName);
             throw new RuntimeException("Configuration not found for " + replName);
         }
         return createRepl(replName, className, properties);
