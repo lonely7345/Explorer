@@ -72,6 +72,9 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         Properties properties = new PropertiesReader().readConfigFrom(fileName);
         host = properties.getProperty(StringConstants.HOST);
         port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
+        if (session!=null)
+          session.close();
+        session = null;
         return this;
     }
 
@@ -82,7 +85,11 @@ public class CassandraDriver implements InterpreterDriver<Table> {
                 Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
                 session = cluster.connect();
             }
-        }catch (NoHostAvailableException e){
+        }catch (NoHostAvailableException e ){
+            String errorMessage ="  Cassandra database is not avalaible ";
+            logger.error(errorMessage);
+            throw new ConnectionException(e,errorMessage);
+        }catch (RuntimeException e){
             String errorMessage ="  Cassandra database is not avalaible ";
             logger.error(errorMessage);
             throw new ConnectionException(e,errorMessage);
