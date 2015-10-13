@@ -20,6 +20,7 @@ package com.stratio.notebook.cassandra.doubles;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
 import com.stratio.notebook.cassandra.models.Table;
+import com.stratio.notebook.exceptions.FolderNotFoundException;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 
 
@@ -29,11 +30,13 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
     private boolean isUpService;
     private boolean correctSyntax;
     private Table initialDataInStore;
+    private boolean folderNotFound;
 
-    public DoubleCassandraDriver(boolean isUpService,boolean correctSyntax,Table initialDataInStore){
+    public DoubleCassandraDriver(boolean isUpService,boolean correctSyntax,Table initialDataInStore,boolean folderNotFound){
         this.isUpService = isUpService;
         this.correctSyntax = correctSyntax;
         this.initialDataInStore = initialDataInStore;
+        this.folderNotFound = folderNotFound;
     }
 
     @Override public void connect() {
@@ -43,7 +46,8 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
     @Override
     public InterpreterDriver<Table> readConfigFromFile(String fileName) {
-        //left empty deliverely
+        if (folderNotFound)
+            throw new FolderNotFoundException("message");
         return this;
     }
 

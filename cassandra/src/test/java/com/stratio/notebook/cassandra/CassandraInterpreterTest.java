@@ -32,6 +32,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CassandraInterpreterTest {
 
@@ -98,6 +101,30 @@ public class CassandraInterpreterTest {
         Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
         Assert.assertThat(result.message(), Matchers.is(StringConstants.OPERATION_OK));
     }
+
+
+    @Test public void whenCallCompletion(){
+        List<String> resultList =interpreter.completion("", 0);
+        Assert.assertTrue(resultList.isEmpty());
+    }
+
+    @Test public void whenCallFormType(){
+        Interpreter.FormType formType =interpreter.getFormType();
+        Assert.assertThat(formType, Matchers.is(Interpreter.FormType.SIMPLE));
+
+    }
+
+    @Test public void whenCallGetValue(){
+            Assert.assertEquals(interpreter.getValue("any"), null);
+
+    }
+
+    @Test public void whenFolderConfigurationNotFound(){
+        selector.driverWithNotFoundException(initialDataInStore);
+        InterpreterResult result =interpreter.interpret("USE DEMO");
+        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.ERROR));
+    }
+
 
     private RowData buildRowData(CellData... cells){
         RowData row = new RowData();
