@@ -39,7 +39,7 @@ import java.util.Properties;
 public class CassandraInterpreter extends Interpreter {
 
 
-    private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
+    private Logger logger = LoggerFactory.getLogger(CassandraInterpreter.class);
 
     static {
         Interpreter.register("cql", CassandraInterpreter.class.getName());
