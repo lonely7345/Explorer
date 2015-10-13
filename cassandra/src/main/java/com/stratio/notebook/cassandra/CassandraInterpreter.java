@@ -23,6 +23,7 @@ import com.stratio.notebook.cassandra.exceptions.ConnectionException;
 import com.stratio.notebook.cassandra.gateways.CassandraDriver;
 import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.notebook.cassandra.operations.CQLExecutor;
+import com.stratio.notebook.exceptions.FolderNotFoundException;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.notebook.reader.PropertiesReader;
@@ -42,12 +43,13 @@ public class CassandraInterpreter extends Interpreter {
     public CassandraInterpreter(Properties properties){
 
         super(properties);
-        CassandraInterpreterGateways.commandDriver = new CassandraDriver(new PropertiesReader().readConfigFrom("cassandra"));
+        CassandraInterpreterGateways.commandDriver = new CassandraDriver();
 
     }
 
 
     @Override public void open() {
+        CassandraInterpreterGateways.commandDriver.readConfigFromFile("cassandra");
         CassandraInterpreterGateways.commandDriver.connect();
     }
 
@@ -69,6 +71,9 @@ public class CassandraInterpreter extends Interpreter {
             message += new TableDTO().toDTO(executor.execute(st));
 
         }catch (ConnectionException | CassandraInterpreterException e){
+            code =InterpreterResult.Code.ERROR;
+            message = e.getMessage();
+        }catch (FolderNotFoundException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }

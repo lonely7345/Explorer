@@ -41,6 +41,12 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
             throw new ConnectionException(new Exception(),"exception");
     }
 
+    @Override
+    public InterpreterDriver<Table> readConfigFromFile(String fileName) {
+        //left empty deliverely
+        return this;
+    }
+
 
     @Override public Table executeCommand(String command) {
         if (!correctSyntax)

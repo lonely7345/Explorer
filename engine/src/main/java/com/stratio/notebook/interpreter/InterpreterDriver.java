@@ -22,6 +22,8 @@ public interface InterpreterDriver<T> {
 
     void connect();
 
+    InterpreterDriver<T> readConfigFromFile(String fileName);
+
     T executeCommand(String st);
 
 }
