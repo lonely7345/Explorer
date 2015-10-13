@@ -29,6 +29,7 @@ import com.stratio.notebook.cassandra.models.CellData;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.InterpreterDriver;
+import com.stratio.notebook.reader.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,17 +48,34 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
-    private int port ;
-    private String host;
+    private int port = 0;
+    private String host = "";
 
     /**
      * Constructor.
      * @param properties the properties.
      */
-    public CassandraDriver(Properties properties){
+    public CassandraDriver(){
 
+
+    }
+
+
+    //TODO : THIS METHOD WILL BE REMOVED , ONLY MUST READ WHEN FILE IS CHANGED
+    /**
+     *  Read configuration from fileName
+     * @param fileName name file
+     * @return this object
+     */
+    @Override
+    public InterpreterDriver<Table> readConfigFromFile(String fileName) {
+        Properties properties = new PropertiesReader().readConfigFrom(fileName);
         host = properties.getProperty(StringConstants.HOST);
         port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
+        if (session!=null)
+          session.close();
+        session = null;
+        return this;
     }
 
 
@@ -67,12 +85,17 @@ public class CassandraDriver implements InterpreterDriver<Table> {
                 Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
                 session = cluster.connect();
             }
-        }catch (NoHostAvailableException e){
+        }catch (NoHostAvailableException e ){
+            String errorMessage ="  Cassandra database is not avalaible ";
+            logger.error(errorMessage);
+            throw new ConnectionException(e,errorMessage);
+        }catch (RuntimeException e){
             String errorMessage ="  Cassandra database is not avalaible ";
             logger.error(errorMessage);
             throw new ConnectionException(e,errorMessage);
         }
     }
+
 
 
     @Override public Table executeCommand(String command) {
