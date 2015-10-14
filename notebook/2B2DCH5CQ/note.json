@@ -1,0 +1,55 @@
+{
+  "paragraphs": [
+    {
+      "text": "DROP KEYSPACE DEMO_EXPLORER;",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444745306866_-146683061",
+      "id": "20151013-160826_2099285235",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "operation is successfully"
+      },
+      "dateCreated": "Oct 13, 2015 4:08:26 PM",
+      "dateStarted": "Oct 13, 2015 6:09:56 PM",
+      "dateFinished": "Oct 13, 2015 6:09:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1444745336153_-541637935",
+      "id": "20151013-160856_662231347",
+      "dateCreated": "Oct 13, 2015 4:08:56 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DEMO_DROP",
+  "id": "2B2DCH5CQ",
+  "creationDate": "mar, 13 oct, 16:08 PM",
+  "config": {},
+  "info": {}
+}

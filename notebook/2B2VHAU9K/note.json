@@ -1,0 +1,227 @@
+{
+  "paragraphs": [
+    {
+      "text": "CREATE KEYSPACE demo_explorer\nWITH REPLICATION \u003d {\u0027class\u0027 : \u0027SimpleStrategy\u0027, \u0027replication_factor\u0027: 1};",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444743657903_362164067",
+      "id": "20151013-154057_296825356",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "operation is successfully"
+      },
+      "dateCreated": "Oct 13, 2015 3:40:57 PM",
+      "dateStarted": "Oct 13, 2015 6:09:03 PM",
+      "dateFinished": "Oct 13, 2015 6:09:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "use demo_explorer;",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444743703512_38098223",
+      "id": "20151013-154143_1703057394",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "  Cassandra database is not avalaible "
+      },
+      "dateCreated": "Oct 13, 2015 3:41:43 PM",
+      "dateStarted": "Oct 13, 2015 4:48:50 PM",
+      "dateFinished": "Oct 13, 2015 4:48:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CREATE TABLE demo_explorer.tweets (\n    id INT PRIMARY KEY,\n    user TEXT,\n    body TEXT,\n    time TIMESTAMP,\n    latitude FLOAT,\n    longitude FLOAT,\n    lucene TEXT\n);",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444743738992_552553475",
+      "id": "20151013-154218_364988595",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "operation is successfully"
+      },
+      "dateCreated": "Oct 13, 2015 3:42:18 PM",
+      "dateStarted": "Oct 13, 2015 6:09:11 PM",
+      "dateFinished": "Oct 13, 2015 6:09:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nCREATE CUSTOM INDEX tweets_index ON demo_explorer.tweets (lucene)\nUSING \u0027com.stratio.cassandra.lucene.Index\u0027\nWITH OPTIONS \u003d {\n    \u0027refresh_seconds\u0027 : \u00271\u0027,\n    \u0027schema\u0027 : \u0027{\n        fields : {\n            id    : {type : \"integer\"},\n            user  : {type : \"string\"},\n            body  : {type : \"text\", analyzer : \"english\"},\n            time  : {type : \"date\", pattern : \"yyyy/MM/dd\", sorted : true},\n            place : {type : \"geo_point\", latitude:\"latitude\", longitude:\"longitude\"}\n        }\n    }\u0027\n}",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444743766951_-1729382384",
+      "id": "20151013-154246_1644246740",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "operation is successfully"
+      },
+      "dateCreated": "Oct 13, 2015 3:42:46 PM",
+      "dateStarted": "Oct 13, 2015 6:09:17 PM",
+      "dateFinished": "Oct 13, 2015 6:09:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "SELECT * FROM demo_explorer.tweets WHERE lucene \u003d \u0027{refresh:true}\u0027;",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444743881704_-856971093",
+      "id": "20151013-154441_312330680",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "id\tbody\tlatitude\tlongitude\tlucene\ttime\tuser\n"
+      },
+      "dateCreated": "Oct 13, 2015 3:44:41 PM",
+      "dateStarted": "Oct 13, 2015 6:09:25 PM",
+      "dateFinished": "Oct 13, 2015 6:09:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "SELECT * FROM DEMO.DEPARTMENT;",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444744031200_1254713116",
+      "id": "20151013-154711_1374080418",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TABLE",
+        "msg": "id\tname\tusers\n33\tdepartment_1\t[{name:\u0027Alvaro\u0027, phones:[\u00276766666666\u0027, \u0027642345674\u0027]}]\n123\t12345\t[{name:\u0027fisrt_name\u0027, phones:[\u00271234\u0027, \u00271234\u0027]}]\n1\tdepartment_1\t[{name:\u0027fisrt_name\u0027, phones:[\u00271234\u0027, \u00271234\u0027]}]\n2\t12345\t[{name:\u0027fisrt_name\u0027, phones:[\u00271234\u0027, \u00271234\u0027]}]\n32\tdepartment_1\t[{name:\u0027Marcos\u0027, phones:[\u00276766666666\u0027, \u0027642345674\u0027]}]\n223445\t12345\t[{name:\u0027fisrt_name\u0027, phones:[\u00271234\u0027, \u00271234\u0027]}]"
+      },
+      "dateCreated": "Oct 13, 2015 3:47:11 PM",
+      "dateStarted": "Oct 13, 2015 6:09:31 PM",
+      "dateFinished": "Oct 13, 2015 6:09:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1444744083832_140357708",
+      "id": "20151013-154803_1179092692",
+      "dateCreated": "Oct 13, 2015 3:48:03 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "demo-explorer",
+  "id": "2B2VHAU9K",
+  "creationDate": "mar, 13 oct, 15:40 PM",
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}
