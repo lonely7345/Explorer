@@ -15,42 +15,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.doubles;
 
 
-import java.util.ArrayList;
-import java.util.List;
+public class TypeTestOneDouble {
 
-public class Table {
+    private  String entry;
 
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
+    public TypeTestOneDouble(String entry){
+        this.entry = entry;
     }
 
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
-
-
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+    public String entry(){
+        return entry;
     }
 }

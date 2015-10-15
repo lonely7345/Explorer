@@ -15,42 +15,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
 
 
-import java.util.ArrayList;
-import java.util.List;
+package com.stratio.notebook.doubles;
 
-public class Table {
+import com.stratio.notebook.doubles.TypeTestOneDouble;
+import com.stratio.notebook.functions.TransformFunction;
 
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class TransformFunctionDouble implements TransformFunction<String,TypeTestOneDouble> {
 
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
-    }
-
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
-
-
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+    @Override
+    public TypeTestOneDouble transform(String objetcToTransform) {
+        return new TypeTestOneDouble(objetcToTransform);
     }
 }

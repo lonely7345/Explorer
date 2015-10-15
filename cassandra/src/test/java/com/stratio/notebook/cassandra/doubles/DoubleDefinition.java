@@ -15,42 +15,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.cassandra.doubles;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Table {
-
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
-    }
-
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.mock;
+import static org.easymock.EasyMock.replay;
 
 
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+import com.datastax.driver.core.ColumnDefinitions;
+
+
+
+
+import static org.powermock.api.support.membermodification.MemberModifier.stub;
+
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class DoubleDefinition {
+
+
+    public  ColumnDefinitions.Definition buildDefinitionWithName(String nameHeader) {
+        ColumnDefinitions.Definition definition = mock(ColumnDefinitions.Definition.class);
+        expect(definition.getName()).andReturn(nameHeader);
+      //  replay(definition);
+        return definition;
     }
 }

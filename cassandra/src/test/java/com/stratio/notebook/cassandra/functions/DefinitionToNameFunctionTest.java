@@ -15,42 +15,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.cassandra.functions;
+
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+import com.stratio.notebook.cassandra.doubles.DoubleDefinition;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Table {
-
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
-    }
-
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
+/**
+ * Created by afidalgo on 14/10/15.
+ */
 
 
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+public class DefinitionToNameFunctionTest {
+
+
+
+
+    @Test public void whenCallTransformFunction(){
+        String name ="";
+        DefinitionToNameFunction function = new DefinitionToNameFunction();
+        assertThat(function.transform(new DoubleDefinition().buildDefinitionWithName(name)), is(name));
     }
 }

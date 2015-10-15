@@ -25,14 +25,18 @@ import com.datastax.driver.core.exceptions.SyntaxError;
 import com.stratio.notebook.cassandra.constants.StringConstants;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
+import com.stratio.notebook.cassandra.functions.DefinitionToNameFunction;
+import com.stratio.notebook.cassandra.functions.RowToRowDataFunction;
 import com.stratio.notebook.cassandra.models.CellData;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.interpreter.InterpreterDriver;
+import com.stratio.notebook.lists.FunctionalList;
 import com.stratio.notebook.reader.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -51,13 +55,15 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     private int port = 0;
     private String host = "";
 
-    /**
-     * Constructor.
-     * @param properties the properties.
-     */
+
+    //TODO : this constructor will be removed
     public CassandraDriver(){
 
+    }
 
+
+    public CassandraDriver(Session session){
+        this.session = session;
     }
 
 
@@ -79,6 +85,7 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     }
 
 
+    //TODO : THIS METHOD WILL BE MOVE TO OTHER CLASS
     @Override public  void connect() {
         try {
             if (session == null){
@@ -101,10 +108,13 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     @Override public Table executeCommand(String command) {
         try {
             ResultSet rs =session.execute(command);
-            Table table = createTable(rs.getColumnDefinitions());
+            List<String> header = header(rs.getColumnDefinitions());
+            List<RowData> rows = createRow(rs.all(),header);
+            Table table = new Table(header,rows);
+         /*   List<Row> rows = rs.all();
             Iterator<Row> iterator =rs.iterator();
             while (iterator.hasNext())
-                table.addRow(createRow(iterator.next(),table.header()));
+                table.addRow(createRow(iterator.next(),table.header()));*/
             return table;
         }catch (SyntaxError | InvalidQueryException e){
             String errorMessage = "  Query to execute in cassandra database is not correct ";
@@ -113,20 +123,22 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         }
     }
 
-
-    private Table createTable(ColumnDefinitions definition){
-        List<ColumnDefinitions.Definition> definitions = definition.asList();
-        Table table = new Table();
-        for (ColumnDefinitions.Definition def : definitions)
-            table.addHeaderParameter(def.getName());
-        return table;
+    private List<String> header(ColumnDefinitions definition){
+        FunctionalList<ColumnDefinitions.Definition,String> functionalList = new FunctionalList<>(definition.asList());
+        return functionalList.map(new DefinitionToNameFunction());
     }
 
-    private RowData createRow(Row cassandraRow,List<String> headerRows){
+
+    private List<RowData> createRow(List<Row> rows ,List<String> headerRows){
+        FunctionalList<Row,RowData>  functionalList = new FunctionalList<>(rows);
+        return functionalList.map(new RowToRowDataFunction(headerRows));
+    }
+
+   /* private RowData createRow(Row cassandraRow,List<String> headerRows){
         RowData rowData = new RowData();
         for (String headerRowName:headerRows)
             rowData.addCell(new CellData(cassandraRow.getObject(headerRowName)));
         return rowData;
-    }
+    }*/
 
 }

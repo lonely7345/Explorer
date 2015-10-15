@@ -15,42 +15,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.lists;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table {
+import com.stratio.notebook.functions.TransformFunction;
 
+public class FunctionalList <EntryType,OutputType>{
 
-    private List<String> header;
-    private List<RowData> rows;
+    private List<EntryType> entryList;
 
     /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
+     * Contructor
+     * @param entryList list to transform in functionalList
      */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
+    public FunctionalList(List<EntryType> entryList){
+         this.entryList = entryList;
     }
 
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
+    public List<OutputType> map(TransformFunction<EntryType,OutputType> function) {
 
-
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+        List<OutputType> resultList = new ArrayList<>();
+        for (int index = 0;index<entryList.size();index++){
+            resultList.add(function.transform(entryList.get(index)));
+        }
+        return resultList;
     }
 }

@@ -19,14 +19,85 @@
 package com.stratio.notebook.cassandra.gateways;
 
 
-import org.cassandraunit.AbstractCassandraUnit4TestCase;
-import org.cassandraunit.dataset.DataSet;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Session;
+import com.stratio.notebook.cassandra.doubles.DoubleSession;
+import com.stratio.notebook.cassandra.models.CellData;
+import com.stratio.notebook.cassandra.models.RowData;
+import com.stratio.notebook.cassandra.models.Table;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import javax.swing.text.TableView;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class CassandraDriverTest extends AbstractCassandraUnit4TestCase {
+public class CassandraDriverTest  {
 
-    @Override
-    public DataSet getDataSet() {
-        return null;
+
+
+    private Cluster cluster;
+    private Session session;
+    private CassandraDriver driver;
+
+
+
+    @Before
+    public void setUp() throws InterruptedException, IOException {
+        cluster = new Cluster.Builder().addContactPoints("10.100.0.82").withPort(9042).build();
+        session = cluster.connect();
+        session.execute("CREATE KEYSPACE myKeySpace WITH replication={'class' : 'SimpleStrategy', 'replication_factor':1}");
+        session.execute("USE myKeySpace");
+        session.execute("CREATE TABLE myTable(id varchar, value varchar, PRIMARY KEY(id));");
+        session.execute("INSERT INTO myTable(id, value) values('myKey01','myValue01');");
+
+        driver = new CassandraDriver(session);
+
     }
+
+    @After
+    public void tearDown(){
+        session.execute("DROP KEYSPACE myKeySpace");
+        session.close();
+        cluster.close();
+    }
+
+
+    @Test
+    public void headerWillBeRecovered() throws InterruptedException, IOException {
+
+        Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
+        List<String> header = new ArrayList<>();
+        header.add("id");
+        header.add("value");
+        assertThat(result.header(), is(header));
+    }
+
+
+    @Test
+    public void rowsWillBerecovered(){
+        Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
+        assertThat(result.rows().size(), is(1));
+    }
+
+
+    @Test
+    public void cellsWitllBeRecovered(){
+        Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
+        RowData rows = result.rows().get(0);
+        List<CellData> cells = rows.cells();
+        assertThat(result.rows().size(), is(2));
+
+    }
+
+
 }

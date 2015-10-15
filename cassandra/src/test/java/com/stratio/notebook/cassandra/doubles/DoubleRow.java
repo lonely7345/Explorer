@@ -15,42 +15,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.cassandra.doubles;
+
+import com.datastax.driver.core.Row;
+
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.mock;
+import static org.easymock.EasyMock.replay;
+
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class DoubleRow {
 
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class Table {
+    private String [] header;
 
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
+    public DoubleRow (String... header){
         this.header = header;
-        this.rows = rows;
     }
 
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
-
-
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+    public Row bildRow(){
+        Row row = mock(Row.class);
+        expect(row.getObject(header[0])).andStubReturn(header[0]);
+        expect(row.getObject(header[1])).andStubReturn(header[1]);
+        replay(row);
+        return row;
     }
 }

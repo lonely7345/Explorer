@@ -15,42 +15,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
 
+package com.stratio.notebook.cassandra.functions;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.datastax.driver.core.ColumnDefinitions;
+import com.stratio.notebook.functions.TransformFunction;
 
-public class Table {
-
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
-    }
-
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class DefinitionToNameFunction implements TransformFunction<ColumnDefinitions.Definition,String> {
 
 
     /**
-     *
-     * @return header of table
+     * Extract name of columndefinions
+     * @param definition Definition Objetc
+     * @return name of definition
      */
-    public List<String> header(){
-        return header;
+    @Override
+    public String transform(ColumnDefinitions.Definition definition) {
+        String name = definition.getName();
+        if (name==null)
+            name="";
+        return name;
     }
 }

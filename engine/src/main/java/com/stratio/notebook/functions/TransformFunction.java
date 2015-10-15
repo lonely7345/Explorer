@@ -15,42 +15,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.functions;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Table {
-
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
-    }
-
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
+public interface TransformFunction <EntryType,OutputType>{
 
 
     /**
-     *
-     * @return header of table
+     * Transforms entry type object in outputType object
+     * @param objetcToTransform input object
+     * @return object of EntryType
      */
-    public List<String> header(){
-        return header;
-    }
+    OutputType transform(EntryType objetcToTransform);
+
+
 }

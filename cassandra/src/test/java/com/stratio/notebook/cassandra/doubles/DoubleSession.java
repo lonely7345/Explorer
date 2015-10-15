@@ -15,42 +15,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.models;
+
+package com.stratio.notebook.cassandra.doubles;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
 
-public class Table {
-
-
-    private List<String> header;
-    private List<RowData> rows;
-
-    /**
-     * Constructor
-     * @param header header of table
-     * @param rows   row of table
-     */
-    public Table(List<String> header,List<RowData> rows){
-        this.header = header;
-        this.rows = rows;
-    }
-
-    /**
-     *
-     * @return all rows of table
-     */
-    public List<RowData> rows(){
-         return rows;
-    }
+public class DoubleSession {
 
 
-    /**
-     *
-     * @return header of table
-     */
-    public List<String> header(){
-        return header;
+    public Session buildSession(){
+        Cluster cluster = new Cluster.Builder().addContactPoints("localhost").withPort(9042).build();
+        Session session = cluster.connect();
+        session.execute("CREATE KEYSPACE ddf WITH replication={'class' : 'SimpleStrategy', 'replication_factor':1}");
+        session.execute("USE ddf");
+        session.execute("CREATE TABLE myTable(id varchar, value varchar, PRIMARY KEY(id));");
+        session.execute("INSERT INTO myTable(id, value) values('myKey01','myValue01');");
+        return session;
     }
 }
