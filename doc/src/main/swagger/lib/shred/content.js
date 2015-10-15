@@ -1,4 +1,3 @@
-
 // The purpose of the `Content` object is to abstract away the data conversions
 // to and from raw content entities as strings. For example, you want to be able
 // to pass in a Javascript object and have it be automatically converted into a

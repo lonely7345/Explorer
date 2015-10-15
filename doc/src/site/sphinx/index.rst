@@ -1,5 +1,7 @@
 
-Notebook documentation
+
+====================================
+Explorer documentation
 ====================================
 
 .. toctree::
@@ -7,6 +9,7 @@ Notebook documentation
    :numbered: 2
    :titlesonly:
 
+   about
    install
 
 Link

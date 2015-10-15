@@ -1,21 +1,21 @@
-# Zeppelin documentation
-Build Zeppelin documentation
+# Explorer documentation 
+Build Explorer documentation 
 
-## Get Sphinx-doc
- - Install [Sphinx](http://sphinx-doc.org/install.html)
+## Get Sphinx-doc 
+ - Install [Sphinx](http://sphinx-doc.org/install.html) 
 
-## Build
+## Build 
 ```mvn package```
-Or
+Or 
 ```make html```
 
-Sphinx will create the folder "targert".
+Sphinx will create the folder "targert". 
 
-### Build failed
- - make: sphinx-build: No such file or directory
+### Build failed 
+ - make: sphinx-build: No such file or directory 
 ```
-Make sure sphinx is correctly installed
-Check the sphinx app name (can be sphinx-build27, in that case make a symbolic link)
+Make sure sphinx is correctly installed 
+Check the sphinx app name (can be sphinx-build27, in that case make a symbolic link) 
 ```
  - ValueError: unknown locale: UTF-8
 ````
