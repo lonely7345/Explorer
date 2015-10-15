@@ -27,6 +27,8 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import com.stratio.notebook.cassandra.doubles.DoubleSession;
+import com.stratio.notebook.cassandra.doubles.DoubleSessionCassandra;
+import com.stratio.notebook.cassandra.doubles.MockSessionCassandra;
 import com.stratio.notebook.cassandra.models.CellData;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
@@ -50,7 +52,7 @@ public class CassandraDriverTest  {
 
     @Before
     public void setUp() throws InterruptedException, IOException {
-        driver = new CassandraDriver(new DoubleSession().mockSession());
+        driver = new CassandraDriver(new MockSessionCassandra(new DoubleSession().mockSession()));
     }
 
     @Test

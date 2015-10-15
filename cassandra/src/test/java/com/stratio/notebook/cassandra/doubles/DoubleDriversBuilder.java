@@ -23,29 +23,29 @@ import com.stratio.notebook.cassandra.models.Table;
 
 
 
-
+//TODO : when pass test then refactor
 public class DoubleDriversBuilder {
 
     private boolean connectionIsEnabled=true;
     private boolean correctSyntax = true;
 
     public void driverWithConnectionShutDown(Table dataTable){
-        CassandraInterpreterGateways.commandDriver  =  new DoubleCassandraDriver(!connectionIsEnabled,correctSyntax,dataTable,false);
+        CassandraInterpreterGateways.commandDriver  =  new DoubleCassandraDriver(new DoubleSessionCassandra(!connectionIsEnabled,false),correctSyntax,dataTable);
     }
 
     public void driverWithSyntaxError(Table dataTable){
         boolean connectionIsEnabled=true;
-        CassandraInterpreterGateways.commandDriver  = new DoubleCassandraDriver(connectionIsEnabled,!correctSyntax,dataTable,false);
+        CassandraInterpreterGateways.commandDriver  = new DoubleCassandraDriver(new DoubleSessionCassandra(connectionIsEnabled,false),!correctSyntax,dataTable);
     }
 
     public void driverWithCorrectCQL(Table dataTable){
         boolean connectionIsEnabled=true;
-        CassandraInterpreterGateways.commandDriver  = new DoubleCassandraDriver(connectionIsEnabled,correctSyntax,dataTable,false);
+        CassandraInterpreterGateways.commandDriver  = new DoubleCassandraDriver(new DoubleSessionCassandra(connectionIsEnabled,false),correctSyntax,dataTable);
     }
 
-    public void driverWithNotFoundException(Table dataTable){
+    public void driverWithNotPropertFoundException(Table dataTable){
         boolean connectionIsEnabled=true;
-        CassandraInterpreterGateways.commandDriver  = new DoubleCassandraDriver(connectionIsEnabled,correctSyntax,dataTable,true);
+        CassandraInterpreterGateways.commandDriver  = new DoubleCassandraDriver(new DoubleSessionCassandra(connectionIsEnabled,true),correctSyntax,dataTable);
     }
 
 

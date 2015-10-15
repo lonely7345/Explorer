@@ -30,6 +30,7 @@ import com.stratio.notebook.cassandra.functions.RowToRowDataFunction;
 import com.stratio.notebook.cassandra.models.CellData;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 import com.stratio.notebook.lists.FunctionalList;
 import com.stratio.notebook.reader.PropertiesReader;
@@ -51,58 +52,11 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      */
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
-    private Session session;
-    private int port = 0;
-    private String host = "";
+    private Connector<Session> cassandraSession;
 
-
-    //TODO : this constructor will be removed
-    public CassandraDriver(){
-
+    public CassandraDriver(Connector<Session>cassandraSession){
+        this.cassandraSession = cassandraSession;
     }
-
-
-    public CassandraDriver(Session session){
-        this.session = session;
-    }
-
-
-    //TODO : THIS METHOD WILL BE REMOVED , ONLY MUST READ WHEN FILE IS CHANGED
-    /**
-     *  Read configuration from fileName
-     * @param fileName name file
-     * @return this object
-     */
-    @Override
-    public InterpreterDriver<Table> readConfigFromFile(String fileName) {
-        Properties properties = new PropertiesReader().readConfigFrom(fileName);
-        host = properties.getProperty(StringConstants.HOST);
-        port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
-        if (session!=null)
-          session.close();
-        session = null;
-        return this;
-    }
-
-
-    //TODO : THIS METHOD WILL BE MOVE TO OTHER CLASS
-    @Override public  void connect() {
-        try {
-            if (session == null){
-                Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
-                session = cluster.connect();
-            }
-        }catch (NoHostAvailableException e ){
-            String errorMessage ="  Cassandra database is not avalaible ";
-            logger.error(errorMessage);
-            throw new ConnectionException(e,errorMessage);
-        }catch (RuntimeException e){
-            String errorMessage ="  Cassandra database is not avalaible ";
-            logger.error(errorMessage);
-            throw new ConnectionException(e,errorMessage);
-        }
-    }
-
 
     /**
      * Execute CQL command in Cassandra dataBase
@@ -111,11 +65,11 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      */
     @Override public Table executeCommand(String command) {
         try {
+            Session session = cassandraSession.getConnector();
             ResultSet rs =session.execute(command);
             List<String> header = header(rs.getColumnDefinitions());
-            List<RowData> rows = createRow(rs.all(),header);
-            Table table = new Table(header,rows);
-            return table;
+            List<RowData> rows = createRow(rs.all(), header);
+            return new Table(header,rows);
         }catch (SyntaxError | InvalidQueryException e){
             String errorMessage = "  Query to execute in cassandra database is not correct ";
             logger.error(errorMessage);
@@ -123,11 +77,19 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         }
     }
 
+    /**
+     *
+     * @return Connector to dataBae Cassandra
+     */
+    @Override
+    public Connector getConnector() {
+        return cassandraSession;
+    }
+
     private List<String> header(ColumnDefinitions definition){
         FunctionalList<ColumnDefinitions.Definition,String> functionalList = new FunctionalList<>(definition.asList());
         return functionalList.map(new DefinitionToNameFunction());
     }
-
 
     private List<RowData> createRow(List<Row> rows ,List<String> headerRows){
         FunctionalList<Row,RowData>  functionalList = new FunctionalList<>(rows);

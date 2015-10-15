@@ -107,6 +107,14 @@ public class CassandraInterpreterTest {
     }
 
 
+    @Test public void whenPropertyNotFoundException(){
+        selector.driverWithNotPropertFoundException(initialDataInStore);
+        InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
+        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.ERROR));
+        Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
+    }
+
+
     @Test public void whenCallCompletion(){
         List<String> resultList =interpreter.completion("", 0);
         Assert.assertTrue(resultList.isEmpty());
@@ -115,20 +123,11 @@ public class CassandraInterpreterTest {
     @Test public void whenCallFormType(){
         Interpreter.FormType formType =interpreter.getFormType();
         Assert.assertThat(formType, Matchers.is(Interpreter.FormType.SIMPLE));
-
     }
 
     @Test public void whenCallGetValue(){
             Assert.assertEquals(interpreter.getValue("any"), null);
-
     }
-
-    @Test public void whenFolderConfigurationNotFound(){
-        selector.driverWithNotFoundException(initialDataInStore);
-        InterpreterResult result =interpreter.interpret("USE DEMO");
-        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.ERROR));
-    }
-
 
     private RowData buildRowData(CellData... cells){
         List<CellData> cellsData = new ArrayList<>();

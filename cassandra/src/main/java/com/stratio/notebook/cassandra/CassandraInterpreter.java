@@ -17,14 +17,18 @@
  */
 package com.stratio.notebook.cassandra;
 
+import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.stratio.notebook.cassandra.dto.TableDTO;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
+import com.stratio.notebook.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.notebook.cassandra.gateways.CassandraDriver;
 import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
+import com.stratio.notebook.cassandra.gateways.CassandraSession;
 import com.stratio.notebook.cassandra.operations.CQLExecutor;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.notebook.reader.PropertiesReader;
@@ -36,10 +40,12 @@ import java.util.List;
 import java.util.Properties;
 
 
+//TODO : When test of coneccion was ended then change this class an test
 public class CassandraInterpreter extends Interpreter {
 
 
     private Logger logger = LoggerFactory.getLogger(CassandraInterpreter.class);
+
 
     static {
         Interpreter.register("cql", CassandraInterpreter.class.getName());
@@ -48,7 +54,7 @@ public class CassandraInterpreter extends Interpreter {
     public CassandraInterpreter(Properties properties){
 
         super(properties);
-        CassandraInterpreterGateways.commandDriver = new CassandraDriver();
+        CassandraInterpreterGateways.commandDriver = new CassandraDriver(new CassandraSession());
 
     }
 
@@ -56,11 +62,11 @@ public class CassandraInterpreter extends Interpreter {
     //TODO : Thos method only call firt time , this must be removed
     @Override public void open() {
         try {
-            CassandraInterpreterGateways.commandDriver.readConfigFromFile("cassandra").connect();
+            Connector connector = CassandraInterpreterGateways.commandDriver.getConnector();
+            connector.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
         }catch (ConnectionException e){
             logger.error("Cassandra database not avalaible " + e.getMessage());
         }
-
     }
 
     @Override public void close() {
@@ -77,7 +83,8 @@ public class CassandraInterpreter extends Interpreter {
         InterpreterResult.Code code = InterpreterResult.Code.SUCCESS;
         String message="";
         try {
-            CassandraInterpreterGateways.commandDriver.readConfigFromFile("cassandra").connect();
+            Connector connector = CassandraInterpreterGateways.commandDriver.getConnector();
+            connector.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
             CQLExecutor executor = new CQLExecutor();
             message += new TableDTO().toDTO(executor.execute(st));
 
@@ -87,7 +94,9 @@ public class CassandraInterpreter extends Interpreter {
         }catch (FolderNotFoundException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
-
+        }catch (NotPropertyFoundException e){
+            code =InterpreterResult.Code.ERROR;
+            message = e.getMessage();
         }
         return new InterpreterResult(code,message);
     }

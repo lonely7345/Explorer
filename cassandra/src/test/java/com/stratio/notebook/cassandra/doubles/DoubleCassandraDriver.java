@@ -17,44 +17,37 @@
  */
 package com.stratio.notebook.cassandra.doubles;
 
+import com.datastax.driver.core.Session;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.exceptions.ConnectionException;
 import com.stratio.notebook.cassandra.models.Table;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.InterpreterDriver;
-
 
 public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
 
-    private boolean isUpService;
+    private Connector<Session> connector;
     private boolean correctSyntax;
     private Table initialDataInStore;
-    private boolean folderNotFound;
 
-    public DoubleCassandraDriver(boolean isUpService,boolean correctSyntax,Table initialDataInStore,boolean folderNotFound){
-        this.isUpService = isUpService;
+    public DoubleCassandraDriver(Connector<Session> connector,boolean correctSyntax,Table initialDataInStore){
+
+        this.connector = connector;
         this.correctSyntax = correctSyntax;
         this.initialDataInStore = initialDataInStore;
-        this.folderNotFound = folderNotFound;
     }
-
-    @Override public void connect() {
-        if (!isUpService)
-            throw new ConnectionException(new Exception(),"exception");
-    }
-
-    @Override
-    public InterpreterDriver<Table> readConfigFromFile(String fileName) {
-        if (folderNotFound)
-            throw new FolderNotFoundException("message");
-        return this;
-    }
-
 
     @Override public Table executeCommand(String command) {
+        connector.getConnector();
         if (!correctSyntax)
             throw new CassandraInterpreterException(new Exception(),"exception");
         return initialDataInStore;
+    }
+
+    @Override
+    public Connector getConnector() {
+        return connector;
     }
 }

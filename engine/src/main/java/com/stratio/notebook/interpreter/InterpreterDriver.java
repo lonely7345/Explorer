@@ -18,13 +18,22 @@
 package com.stratio.notebook.interpreter;
 
 
+import com.stratio.notebook.gateways.Connector;
+
 public interface InterpreterDriver<T> {
 
-    void connect();
-
-    InterpreterDriver<T> readConfigFromFile(String fileName);
-
+    /**
+     *  Execute command in one interpreter
+     * @param st string to exec
+     * @return Table
+     */
     T executeCommand(String st);
+
+    /**
+     *
+     * @return connector to persistence
+     */
+    Connector getConnector();
 
 }
 
