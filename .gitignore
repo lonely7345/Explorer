@@ -17,9 +17,6 @@ conf/keystore
 conf/truststore
 conf/interpreter.json
 
-#notebooks
-notebook/
-
 
 #webapp
 web/node_modules

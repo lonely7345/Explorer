@@ -26,7 +26,7 @@ import com.stratio.notebook.cassandra.functions.DefinitionToNameFunction;
 import com.stratio.notebook.cassandra.functions.RowToRowDataFunction;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.gateways.ConnectorEngine;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 import com.stratio.notebook.lists.FunctionalList;
 import org.slf4j.Logger;
@@ -44,9 +44,9 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      */
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
-    private ConnectorEngine<Session> cassandraSession;
+    private Connector<Session> cassandraSession;
 
-    public CassandraDriver(ConnectorEngine<Session> cassandraSession){
+    public CassandraDriver(Connector<Session> cassandraSession){
         this.cassandraSession = cassandraSession;
     }
 
@@ -74,7 +74,7 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      * @return Connector to dataBae Cassandra
      */
     @Override
-    public ConnectorEngine getConnector() {
+    public Connector getConnector() {
         return cassandraSession;
     }
 

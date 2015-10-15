@@ -15,25 +15,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.interpreter;
 
+package com.stratio.notebook.cassandra.exceptions;
 
-import com.stratio.notebook.gateways.Connector;
-
-public interface InterpreterDriver<T> {
-
-    /**
-     *  Execute command in one interpreter
-     * @param st string to exec
-     * @return Table
-     */
-    T executeCommand(String st);
+/**
+ *  This exception occur when not have any property
+ */
+public class NotPropertyFoundException extends RuntimeException{
 
     /**
-     *
-     * @return connector to persistence
+     * Constructor.
+     * @param e original exception.
+     * @param errorMessage message.
      */
-    Connector getConnector();
-
+    public NotPropertyFoundException(Exception e,String errorMessage){
+        super(errorMessage,e);
+    }
 }
-

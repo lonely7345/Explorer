@@ -15,25 +15,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.interpreter;
+
+package com.stratio.notebook.gateways;
+
+import java.util.Properties;
 
 
-import com.stratio.notebook.gateways.Connector;
+/**
+ * Created by afidalgo on 15/10/15.
+ */
+public interface Connector<TypeConnector> {
 
-public interface InterpreterDriver<T> {
 
     /**
-     *  Execute command in one interpreter
-     * @param st string to exec
-     * @return Table
+     * Load configuration from Properties
+     * @param properties with configuration
+     * @return instance of Connector
      */
-    T executeCommand(String st);
+     Connector loadConfiguration(Properties properties);
 
     /**
-     *
-     * @return connector to persistence
+     * Obtain connector to any module
+     * @return connector with type
      */
-    Connector getConnector();
-
+     TypeConnector getConnector();
 }
-

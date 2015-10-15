@@ -20,17 +20,17 @@ package com.stratio.notebook.cassandra.doubles;
 import com.datastax.driver.core.Session;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.gateways.ConnectorEngine;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 
 public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
 
-    private ConnectorEngine<Session> connector;
+    private Connector<Session> connector;
     private boolean correctSyntax;
     private Table initialDataInStore;
 
-    public DoubleCassandraDriver(ConnectorEngine<Session> connector,boolean correctSyntax,Table initialDataInStore){
+    public DoubleCassandraDriver(Connector<Session> connector,boolean correctSyntax,Table initialDataInStore){
 
         this.connector = connector;
         this.correctSyntax = correctSyntax;
@@ -45,7 +45,7 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
     }
 
     @Override
-    public ConnectorEngine getConnector() {
+    public Connector getConnector() {
         return connector;
     }
 }

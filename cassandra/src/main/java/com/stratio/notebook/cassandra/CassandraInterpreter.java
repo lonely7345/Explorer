@@ -26,7 +26,7 @@ import com.stratio.notebook.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.notebook.cassandra.gateways.CassandraSession;
 import com.stratio.notebook.cassandra.operations.CQLExecutor;
 import com.stratio.notebook.exceptions.FolderNotFoundException;
-import com.stratio.notebook.gateways.ConnectorEngine;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.Interpreter;
 import com.stratio.notebook.interpreter.InterpreterResult;
 import com.stratio.notebook.reader.PropertiesReader;
@@ -60,7 +60,7 @@ public class CassandraInterpreter extends Interpreter {
     //TODO : Thos method only call firt time , this must be removed
     @Override public void open() {
         try {
-            ConnectorEngine connector = CassandraInterpreterGateways.commandDriver.getConnector();
+            Connector connector = CassandraInterpreterGateways.commandDriver.getConnector();
             connector.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
         }catch (ConnectionException e){
             logger.error("Cassandra database not avalaible " + e.getMessage());
@@ -81,7 +81,7 @@ public class CassandraInterpreter extends Interpreter {
         InterpreterResult.Code code = InterpreterResult.Code.SUCCESS;
         String message="";
         try {
-            ConnectorEngine connector = CassandraInterpreterGateways.commandDriver.getConnector();
+            Connector connector = CassandraInterpreterGateways.commandDriver.getConnector();
             connector.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
             CQLExecutor executor = new CQLExecutor();
             message += new TableDTO().toDTO(executor.execute(st));
