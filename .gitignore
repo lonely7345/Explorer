@@ -9,11 +9,16 @@
 *.war
 *.ear
 
+
+
 # conf file
 conf/explorer-env.sh
 conf/keystore
 conf/truststore
 conf/interpreter.json
+
+#notebooks
+notebook
 
 #webapp
 web/node_modules
