@@ -36,6 +36,11 @@ public class FunctionalList <EntryType,OutputType>{
          this.entryList = entryList;
     }
 
+    /**
+     * Transforma list with EntryType elements y List OutputType elements
+     * @param function transformfunction
+     * @return List with OutputType elements
+     */
     public List<OutputType> map(TransformFunction<EntryType,OutputType> function) {
 
         List<OutputType> resultList = new ArrayList<>();

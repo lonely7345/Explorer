@@ -44,47 +44,28 @@ import java.util.List;
 public class CassandraDriverTest  {
 
 
-
-    private Cluster cluster;
-    private Session session;
     private CassandraDriver driver;
 
 
 
     @Before
     public void setUp() throws InterruptedException, IOException {
-        cluster = new Cluster.Builder().addContactPoints("10.100.0.82").withPort(9042).build();
-        session = cluster.connect();
-        session.execute("CREATE KEYSPACE myKeySpace WITH replication={'class' : 'SimpleStrategy', 'replication_factor':1}");
-        session.execute("USE myKeySpace");
-        session.execute("CREATE TABLE myTable(id varchar, value varchar, PRIMARY KEY(id));");
-        session.execute("INSERT INTO myTable(id, value) values('myKey01','myValue01');");
-
-        driver = new CassandraDriver(session);
-
+        driver = new CassandraDriver(new DoubleSession().mockSession());
     }
-
-    @After
-    public void tearDown(){
-        session.execute("DROP KEYSPACE myKeySpace");
-        session.close();
-        cluster.close();
-    }
-
 
     @Test
     public void headerWillBeRecovered() throws InterruptedException, IOException {
 
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
         List<String> header = new ArrayList<>();
-        header.add("id");
-        header.add("value");
+        header.add("");
         assertThat(result.header(), is(header));
     }
 
 
     @Test
     public void rowsWillBerecovered(){
+
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
         assertThat(result.rows().size(), is(1));
     }
@@ -95,9 +76,6 @@ public class CassandraDriverTest  {
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
         RowData rows = result.rows().get(0);
         List<CellData> cells = rows.cells();
-        assertThat(result.rows().size(), is(2));
-
+        assertThat(cells.size(), is(1));
     }
-
-
 }

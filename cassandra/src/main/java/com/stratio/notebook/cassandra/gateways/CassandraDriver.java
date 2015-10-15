@@ -104,17 +104,17 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     }
 
 
-
+    /**
+     * Execute CQL command in Cassandra dataBase
+     * @param command command to execute
+     * @return Table with data
+     */
     @Override public Table executeCommand(String command) {
         try {
             ResultSet rs =session.execute(command);
             List<String> header = header(rs.getColumnDefinitions());
             List<RowData> rows = createRow(rs.all(),header);
             Table table = new Table(header,rows);
-         /*   List<Row> rows = rs.all();
-            Iterator<Row> iterator =rs.iterator();
-            while (iterator.hasNext())
-                table.addRow(createRow(iterator.next(),table.header()));*/
             return table;
         }catch (SyntaxError | InvalidQueryException e){
             String errorMessage = "  Query to execute in cassandra database is not correct ";
@@ -133,12 +133,4 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         FunctionalList<Row,RowData>  functionalList = new FunctionalList<>(rows);
         return functionalList.map(new RowToRowDataFunction(headerRows));
     }
-
-   /* private RowData createRow(Row cassandraRow,List<String> headerRows){
-        RowData rowData = new RowData();
-        for (String headerRowName:headerRows)
-            rowData.addCell(new CellData(cassandraRow.getObject(headerRowName)));
-        return rowData;
-    }*/
-
 }

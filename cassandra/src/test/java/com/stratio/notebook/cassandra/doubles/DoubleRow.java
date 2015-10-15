@@ -31,16 +31,17 @@ public class DoubleRow {
 
 
 
-    private String [] header;
+    private String [] headers;
 
     public DoubleRow (String... header){
-        this.header = header;
+        this.headers = header;
     }
 
     public Row bildRow(){
         Row row = mock(Row.class);
-        expect(row.getObject(header[0])).andStubReturn(header[0]);
-        expect(row.getObject(header[1])).andStubReturn(header[1]);
+        for (String header:headers) {
+            expect(row.getObject(header)).andStubReturn(header);
+        }
         replay(row);
         return row;
     }

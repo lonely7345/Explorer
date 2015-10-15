@@ -39,8 +39,6 @@ public class DoubleDefinition {
 
     public  ColumnDefinitions.Definition buildDefinitionWithName(String nameHeader) {
         ColumnDefinitions.Definition definition = mock(ColumnDefinitions.Definition.class);
-        expect(definition.getName()).andReturn(nameHeader);
-      //  replay(definition);
         return definition;
     }
 }
