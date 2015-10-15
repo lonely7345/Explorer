@@ -20,27 +20,19 @@ package com.stratio.notebook.cassandra.gateways;
 
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
-import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.datastax.driver.core.exceptions.SyntaxError;
-import com.stratio.notebook.cassandra.constants.StringConstants;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
-import com.stratio.notebook.cassandra.exceptions.ConnectionException;
 import com.stratio.notebook.cassandra.functions.DefinitionToNameFunction;
 import com.stratio.notebook.cassandra.functions.RowToRowDataFunction;
-import com.stratio.notebook.cassandra.models.CellData;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.notebook.gateways.ConnectorEngine;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 import com.stratio.notebook.lists.FunctionalList;
-import com.stratio.notebook.reader.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * This class is the driver to cassandra.
@@ -52,9 +44,9 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      */
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
-    private Connector<Session> cassandraSession;
+    private ConnectorEngine<Session> cassandraSession;
 
-    public CassandraDriver(Connector<Session>cassandraSession){
+    public CassandraDriver(ConnectorEngine<Session> cassandraSession){
         this.cassandraSession = cassandraSession;
     }
 
@@ -82,7 +74,7 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      * @return Connector to dataBae Cassandra
      */
     @Override
-    public Connector getConnector() {
+    public ConnectorEngine getConnector() {
         return cassandraSession;
     }
 

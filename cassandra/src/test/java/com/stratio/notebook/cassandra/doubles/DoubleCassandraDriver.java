@@ -19,20 +19,18 @@ package com.stratio.notebook.cassandra.doubles;
 
 import com.datastax.driver.core.Session;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
-import com.stratio.notebook.cassandra.exceptions.ConnectionException;
 import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.exceptions.FolderNotFoundException;
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.notebook.gateways.ConnectorEngine;
 import com.stratio.notebook.interpreter.InterpreterDriver;
 
 public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
 
-    private Connector<Session> connector;
+    private ConnectorEngine<Session> connector;
     private boolean correctSyntax;
     private Table initialDataInStore;
 
-    public DoubleCassandraDriver(Connector<Session> connector,boolean correctSyntax,Table initialDataInStore){
+    public DoubleCassandraDriver(ConnectorEngine<Session> connector,boolean correctSyntax,Table initialDataInStore){
 
         this.connector = connector;
         this.correctSyntax = correctSyntax;
@@ -47,7 +45,7 @@ public class DoubleCassandraDriver implements InterpreterDriver<Table>{
     }
 
     @Override
-    public Connector getConnector() {
+    public ConnectorEngine getConnector() {
         return connector;
     }
 }

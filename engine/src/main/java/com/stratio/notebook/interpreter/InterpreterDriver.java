@@ -18,7 +18,7 @@
 package com.stratio.notebook.interpreter;
 
 
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.notebook.gateways.ConnectorEngine;
 
 public interface InterpreterDriver<T> {
 
@@ -33,7 +33,7 @@ public interface InterpreterDriver<T> {
      *
      * @return connector to persistence
      */
-    Connector getConnector();
+    ConnectorEngine getConnector();
 
 }
 
