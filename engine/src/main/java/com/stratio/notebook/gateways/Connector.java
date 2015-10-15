@@ -36,7 +36,7 @@ public interface Connector<TypeConnector> {
 
     /**
      * Obtain connector to any module
-     * @return connector with type
+     * @return connector with typeConnector
      */
      TypeConnector getConnector();
 }
