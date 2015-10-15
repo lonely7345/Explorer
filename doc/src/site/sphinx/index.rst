@@ -11,6 +11,7 @@ Explorer documentation
 
    about
    install
+   configuration
 
 Link
 ====================================
