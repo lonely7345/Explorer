@@ -15,14 +15,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
+
+package com.stratio.notebook.functions;
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+public interface TransformFunction <EntryType,OutputType>{
 
-public class CassandraInterpreterGateways  {
 
-       public static InterpreterDriver<Table> commandDriver =null;
+    /**
+     * Transforms entry type object in outputType object
+     * @param objetcToTransform input object
+     * @return object of EntryType
+     */
+    OutputType transform(EntryType objetcToTransform);
+
 
 }

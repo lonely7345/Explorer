@@ -15,14 +15,30 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
+
+package com.stratio.notebook.cassandra.doubles;
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.mock;
+import static org.easymock.EasyMock.replay;
 
-public class CassandraInterpreterGateways  {
 
-       public static InterpreterDriver<Table> commandDriver =null;
+import com.datastax.driver.core.ColumnDefinitions;
 
+
+
+
+import static org.powermock.api.support.membermodification.MemberModifier.stub;
+
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class DoubleDefinition {
+
+
+    public  ColumnDefinitions.Definition buildDefinitionWithName(String nameHeader) {
+        ColumnDefinitions.Definition definition = mock(ColumnDefinitions.Definition.class);
+        return definition;
+    }
 }

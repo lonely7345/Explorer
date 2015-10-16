@@ -15,14 +15,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
+
+package com.stratio.notebook.gateways;
+
+import java.util.Properties;
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+/**
+ * Created by afidalgo on 15/10/15.
+ */
+public interface Connector<TypeConnector> {
 
-public class CassandraInterpreterGateways  {
 
-       public static InterpreterDriver<Table> commandDriver =null;
+    /**
+     * Load configuration from Properties
+     * @param properties with configuration
+     * @return instance of Connector
+     */
+     Connector loadConfiguration(Properties properties);
 
+    /**
+     * Obtain connector to any module
+     * @return connector with typeConnector
+     */
+     TypeConnector getConnector();
 }

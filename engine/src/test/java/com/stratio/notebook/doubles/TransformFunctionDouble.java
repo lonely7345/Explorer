@@ -15,14 +15,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+package com.stratio.notebook.doubles;
 
-public class CassandraInterpreterGateways  {
+import com.stratio.notebook.doubles.TypeTestOneDouble;
+import com.stratio.notebook.functions.TransformFunction;
 
-       public static InterpreterDriver<Table> commandDriver =null;
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class TransformFunctionDouble implements TransformFunction<String,TypeTestOneDouble> {
 
+    @Override
+    public TypeTestOneDouble transform(String objetcToTransform) {
+        return new TypeTestOneDouble(objetcToTransform);
+    }
 }

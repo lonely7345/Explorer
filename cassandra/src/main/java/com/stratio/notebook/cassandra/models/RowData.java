@@ -27,11 +27,21 @@ public class RowData {
 
     private List<CellData> cells = new ArrayList<>();
 
+
+    /**
+     * Constructor
+     * @param cells list cells of row
+     */
+    public RowData(List<CellData> cells ){
+        this.cells = cells;
+    }
+
+    /**
+     *
+     * @return cells of Row
+     */
     public List<CellData> cells(){
          return cells;
     }
 
-    public void addCell(CellData cell){
-        cells.add(cell);
-    }
 }

@@ -20,22 +20,19 @@ package com.stratio.notebook.cassandra.gateways;
 
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
-import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.datastax.driver.core.exceptions.SyntaxError;
-import com.stratio.notebook.cassandra.constants.StringConstants;
 import com.stratio.notebook.cassandra.exceptions.CassandraInterpreterException;
-import com.stratio.notebook.cassandra.exceptions.ConnectionException;
-import com.stratio.notebook.cassandra.models.CellData;
+import com.stratio.notebook.cassandra.functions.DefinitionToNameFunction;
+import com.stratio.notebook.cassandra.functions.RowToRowDataFunction;
 import com.stratio.notebook.cassandra.models.RowData;
 import com.stratio.notebook.cassandra.models.Table;
+import com.stratio.notebook.gateways.Connector;
 import com.stratio.notebook.interpreter.InterpreterDriver;
-import com.stratio.notebook.reader.PropertiesReader;
+import com.stratio.notebook.lists.FunctionalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * This class is the driver to cassandra.
@@ -47,65 +44,24 @@ public class CassandraDriver implements InterpreterDriver<Table> {
      */
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
-    private Session session;
-    private int port = 0;
-    private String host = "";
+    private Connector<Session> cassandraSession;
+
+    public CassandraDriver(Connector<Session> cassandraSession){
+        this.cassandraSession = cassandraSession;
+    }
 
     /**
-     * Constructor.
-     * @param properties the properties.
+     * Execute CQL command in Cassandra dataBase
+     * @param command command to execute
+     * @return Table with data
      */
-    public CassandraDriver(){
-
-
-    }
-
-
-    //TODO : THIS METHOD WILL BE REMOVED , ONLY MUST READ WHEN FILE IS CHANGED
-    /**
-     *  Read configuration from fileName
-     * @param fileName name file
-     * @return this object
-     */
-    @Override
-    public InterpreterDriver<Table> readConfigFromFile(String fileName) {
-        Properties properties = new PropertiesReader().readConfigFrom(fileName);
-        host = properties.getProperty(StringConstants.HOST);
-        port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
-        if (session!=null)
-          session.close();
-        session = null;
-        return this;
-    }
-
-
-    @Override public  void connect() {
-        try {
-            if (session == null){
-                Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
-                session = cluster.connect();
-            }
-        }catch (NoHostAvailableException e ){
-            String errorMessage ="  Cassandra database is not avalaible ";
-            logger.error(errorMessage);
-            throw new ConnectionException(e,errorMessage);
-        }catch (RuntimeException e){
-            String errorMessage ="  Cassandra database is not avalaible ";
-            logger.error(errorMessage);
-            throw new ConnectionException(e,errorMessage);
-        }
-    }
-
-
-
     @Override public Table executeCommand(String command) {
         try {
+            Session session = cassandraSession.getConnector();
             ResultSet rs =session.execute(command);
-            Table table = createTable(rs.getColumnDefinitions());
-            Iterator<Row> iterator =rs.iterator();
-            while (iterator.hasNext())
-                table.addRow(createRow(iterator.next(),table.header()));
-            return table;
+            List<String> header = header(rs.getColumnDefinitions());
+            List<RowData> rows = createRow(rs.all(), header);
+            return new Table(header,rows);
         }catch (SyntaxError | InvalidQueryException e){
             String errorMessage = "  Query to execute in cassandra database is not correct ";
             logger.error(errorMessage);
@@ -113,20 +69,22 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         }
     }
 
-
-    private Table createTable(ColumnDefinitions definition){
-        List<ColumnDefinitions.Definition> definitions = definition.asList();
-        Table table = new Table();
-        for (ColumnDefinitions.Definition def : definitions)
-            table.addHeaderParameter(def.getName());
-        return table;
+    /**
+     *
+     * @return Connector to dataBae Cassandra
+     */
+    @Override
+    public Connector getConnector() {
+        return cassandraSession;
     }
 
-    private RowData createRow(Row cassandraRow,List<String> headerRows){
-        RowData rowData = new RowData();
-        for (String headerRowName:headerRows)
-            rowData.addCell(new CellData(cassandraRow.getObject(headerRowName)));
-        return rowData;
+    private List<String> header(ColumnDefinitions definition){
+        FunctionalList<ColumnDefinitions.Definition,String> functionalList = new FunctionalList<>(definition.asList());
+        return functionalList.map(new DefinitionToNameFunction());
     }
 
+    private List<RowData> createRow(List<Row> rows ,List<String> headerRows){
+        FunctionalList<Row,RowData>  functionalList = new FunctionalList<>(rows);
+        return functionalList.map(new RowToRowDataFunction(headerRows));
+    }
 }

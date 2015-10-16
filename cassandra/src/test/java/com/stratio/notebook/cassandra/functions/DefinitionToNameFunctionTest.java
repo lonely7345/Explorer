@@ -15,14 +15,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
+
+package com.stratio.notebook.cassandra.functions;
+
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+import com.stratio.notebook.cassandra.doubles.DoubleDefinition;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+/**
+ * Created by afidalgo on 14/10/15.
+ */
 
-public class CassandraInterpreterGateways  {
 
-       public static InterpreterDriver<Table> commandDriver =null;
+public class DefinitionToNameFunctionTest {
 
+
+
+
+    @Test public void whenCallTransformFunction(){
+        String name ="";
+        DefinitionToNameFunction function = new DefinitionToNameFunction();
+        assertThat(function.transform(new DoubleDefinition().buildDefinitionWithName(name)), is(name));
+    }
 }

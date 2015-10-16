@@ -41,6 +41,8 @@ public class CassandraInterpreterTest {
 
     private DoubleDriversBuilder selector;
     private Table initialDataInStore;
+    private List<String> header ;
+    private List<RowData> rows;
     private Interpreter interpreter;
 
     private final String NAME="name";
@@ -50,7 +52,9 @@ public class CassandraInterpreterTest {
     @Before public void setUp(){
         System.setProperty(StringConstants.HOST, "127.0.0.1");
         System.setProperty(StringConstants.PORT, "9042");
-        initialDataInStore = new Table();
+        header = new ArrayList<>();
+        rows = new ArrayList<>();
+        initialDataInStore = new Table(header,rows);
         selector = new DoubleDriversBuilder();
         interpreter = new CassandraInterpreter(null);
     }
@@ -77,8 +81,8 @@ public class CassandraInterpreterTest {
     }
 
     @Test public void whenCQLIsCorrectAndReturnOneResult(){
-        initialDataInStore.addRow(buildRowData(new CellData<>(VALUE)));
-        initialDataInStore.addHeaderParameter(NAME);
+        rows.add(buildRowData(new CellData<>(VALUE)));
+        header.add(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
         Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
@@ -86,9 +90,9 @@ public class CassandraInterpreterTest {
     }
 
     @Test public void whenCQULISCorrectAndHaveMoreResults(){
-        initialDataInStore.addRow(buildRowData(new CellData<>(VALUE)));
-        initialDataInStore.addRow(buildRowData(new CellData<>(VALUE)));
-        initialDataInStore.addHeaderParameter(NAME);
+        rows.add(buildRowData(new CellData<>(VALUE)));
+        rows.add(buildRowData(new CellData<>(VALUE)));
+        header.add(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
         Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
@@ -103,6 +107,14 @@ public class CassandraInterpreterTest {
     }
 
 
+    @Test public void whenPropertyNotFoundException(){
+        selector.driverWithNotPropertFoundException(initialDataInStore);
+        InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
+        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.ERROR));
+        Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
+    }
+
+
     @Test public void whenCallCompletion(){
         List<String> resultList =interpreter.completion("", 0);
         Assert.assertTrue(resultList.isEmpty());
@@ -111,26 +123,17 @@ public class CassandraInterpreterTest {
     @Test public void whenCallFormType(){
         Interpreter.FormType formType =interpreter.getFormType();
         Assert.assertThat(formType, Matchers.is(Interpreter.FormType.SIMPLE));
-
     }
 
     @Test public void whenCallGetValue(){
             Assert.assertEquals(interpreter.getValue("any"), null);
-
     }
-
-    @Test public void whenFolderConfigurationNotFound(){
-        selector.driverWithNotFoundException(initialDataInStore);
-        InterpreterResult result =interpreter.interpret("USE DEMO");
-        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.ERROR));
-    }
-
 
     private RowData buildRowData(CellData... cells){
-        RowData row = new RowData();
+        List<CellData> cellsData = new ArrayList<>();
         for (CellData cell : cells)
-            row.addCell(cell);
-        return row;
+            cellsData.add(cell);
+        return new RowData(cellsData);
     }
 
 }

@@ -15,14 +15,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
+
+package com.stratio.notebook.cassandra.functions;
+
+import com.datastax.driver.core.ColumnDefinitions;
+import com.stratio.notebook.functions.TransformFunction;
+
+/**
+ * Created by afidalgo on 14/10/15.
+ */
+public class DefinitionToNameFunction implements TransformFunction<ColumnDefinitions.Definition,String> {
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
-
-public class CassandraInterpreterGateways  {
-
-       public static InterpreterDriver<Table> commandDriver =null;
-
+    /**
+     * Extract name of columndefinions
+     * @param definition Definition Objetc
+     * @return name of definition
+     */
+    @Override
+    public String transform(ColumnDefinitions.Definition definition) {
+        String name = definition.getName();
+        if (name==null)
+            name="";
+        return name;
+    }
 }

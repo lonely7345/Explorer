@@ -15,14 +15,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.notebook.cassandra.gateways;
+
+package com.stratio.notebook.doubles;
 
 
-import com.stratio.notebook.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+public class TypeTestOneDouble {
 
-public class CassandraInterpreterGateways  {
+    private  String entry;
 
-       public static InterpreterDriver<Table> commandDriver =null;
+    public TypeTestOneDouble(String entry){
+        this.entry = entry;
+    }
 
+    public String entry(){
+        return entry;
+    }
 }
