@@ -8,7 +8,7 @@
 
     <property>
         <name>zeppelin.notebook.dir</name>
-        <value>notebook</value>
+        <value>notebooks</value>
         <description>notebook persist</description>
     </property>
 
