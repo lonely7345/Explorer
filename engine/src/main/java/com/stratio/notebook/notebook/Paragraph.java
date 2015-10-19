@@ -243,7 +243,8 @@ public class Paragraph extends Job implements Serializable {
 
     @Override
     protected boolean jobAbort() {
-        Interpreter repl = getRepl(getRequiredReplName());
+        String repReplName = getRequiredReplName();
+        Interpreter repl = getRepl(repReplName);
         repl.cancel();
         return true;
     }
