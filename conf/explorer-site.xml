@@ -26,7 +26,7 @@
     <!--TODO study if we can change this to use convention over configuration, for example all class under com.stratio.<module>.interpreter.<module>Interpreter will be configure like an interpreter -->
     <property>
         <name>zeppelin.interpreters</name>
-        <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.notebook.spark.SparkInterpreter,com.stratio.notebook.spark.SparkSqlInterpreter,com.stratio.notebook.markdown.Markdown,com.stratio.notebook.cassandra.CassandraInterpreter,com.stratio.notebook.shell.ShellInterpreter</value>
+        <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.notebook.spark.SparkInterpreter,com.stratio.notebook.spark.SparkSqlInterpreter,com.stratio.notebook.markdown.Markdown,com.stratio.explorer.cassandra.CassandraInterpreter,com.stratio.notebook.shell.ShellInterpreter</value>
         <description>Comma separated interpreter configurations. First interpreter become a default</description>
 
     </property>
