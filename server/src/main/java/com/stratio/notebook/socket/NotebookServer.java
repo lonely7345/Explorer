@@ -88,7 +88,9 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     @Override
     public void onMessage(WebSocket conn, String msg) {
          try {
+            System.out.print("EL MENSAGE QUE LLEGA ES : "+msg);
             Message messagereceived = deserializeMessage(msg);
+
             LOG.info("RECEIVE << " + messagereceived.op);
             NotebookOperationFactory.getOperation(messagereceived.op).execute(conn,notebook(),messagereceived);
         } catch (NotebookOperationException e) {
