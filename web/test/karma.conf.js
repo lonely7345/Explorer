@@ -32,21 +32,32 @@ module.exports = function(config) {
 
     // testing framework to use (jasmine/mocha/qunit/...)
 
-    frameworks: ['mocha','expect','sinon','sinon-chai'],
+    frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
+
+
     files: [
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
-      'bower_components/angular-websocket/angular-websocket.js',
-      'bower_components/angular-ui-ace/ui-ace.js',
-      'bower_components/angular-bootstrap/ui-bootstrap.js',
-      'bower_components/angular-dragdrop/src/angular-dragdrop.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-animate/angular-animate.js',
+      'bower_components/json3/lib/json3.js',
+      'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/angular-cookies/angular-cookies.js',
-      'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-touch/angular-touch.js',
+      'bower_components/angular-route/angular-route.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/angular-websocket/angular-websocket.min.js',
+      'bower_components/angular-ui-ace/ui-ace.js',
+      'bower_components/jquery.scrollTo/jquery.scrollTo.js',
+      'bower_components/d3/d3.js',
+      'bower_components/nvd3/nv.d3.js',
+      'bower_components/jquery-ui/jquery-ui.js',
+      'bower_components/angular-dragdrop/src/angular-dragdrop.js',
+      'bower_components/lodash/lodash.js',
+      'bower_components/perfect-scrollbar/src/perfect-scrollbar.js',
+      'bower_components/angular-mocks/angular-mocks.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
@@ -65,10 +76,7 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-mocha',
-      'karma-expect',
-      'karma-sinon',
-      'karma-sinon-chai'
+      'karma-jasmine'
     ],
 
     // Continuous Integration mode
@@ -82,3 +90,4 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
   });
 };
+

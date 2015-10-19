@@ -32,19 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//TODO :  TEST THAT MOCKS NOST FAIL
 public class DoubleSession {
 
-
-    public Session buildSession(){
-        Cluster cluster = new Cluster.Builder().addContactPoints("localhost").withPort(9042).build();
-        Session session = cluster.connect();
-        session.execute("CREATE KEYSPACE ddf WITH replication={'class' : 'SimpleStrategy', 'replication_factor':1}");
-        session.execute("USE ddf");
-        session.execute("CREATE TABLE myTable(id varchar, value varchar, PRIMARY KEY(id));");
-        session.execute("INSERT INTO myTable(id, value) values('myKey01','myValue01');");
-        return session;
-    }
 
 
     public Session mockSession(){

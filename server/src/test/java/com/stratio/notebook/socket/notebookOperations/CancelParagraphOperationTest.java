@@ -15,7 +15,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package com.stratio.notebook.socket.notebookOperations;
+
 
 import com.stratio.notebook.notebook.Note;
 import com.stratio.notebook.notebook.Notebook;
@@ -24,28 +26,42 @@ import com.stratio.notebook.scheduler.Job;
 import com.stratio.notebook.socket.ConnectionManager;
 import com.stratio.notebook.socket.Message;
 import org.java_websocket.WebSocket;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * Created by jmgomez on 3/09/15.
- */
-public class CancelParagraphOperation implements com.stratio.notebook.socket.INotebookOperation {
-    @Override
-    public void execute(WebSocket conn, Notebook notebook, Message messagereceived) {
-        final String paragraphId = idParagraph( messagereceived);
-        if (paragraphId != null && !paragraphId.isEmpty() )  {
-           final Note note = notebook.getNote(ConnectionManager.getInstance().getOpenNoteId(conn));
-           Paragraph paragraph = note.getParagraph(paragraphId);
-           paragraph.setStatus(Job.Status.ABORT);
-           paragraph.setListener(null);
-        }
+
+import static com.stratio.notebook.socket.notebookOperations.MocksToOperations.mockSocket;
+import static com.stratio.notebook.socket.notebookOperations.MocksToOperations.mockNotebook;
+import static com.stratio.notebook.socket.notebookOperations.MocksToOperations.mockMessage;
+
+
+public class CancelParagraphOperationTest {
+
+    private CancelParagraphOperation operation;
+
+
+    @Before
+    public void setUp(){
+        operation = new CancelParagraphOperation();
     }
 
 
-    private String idParagraph(Message messagereceived){
-        String paragraphId = (String) messagereceived.get("id");
-        if (paragraphId == null) {
-            paragraphId = "";
-        }
-        return paragraphId;
+
+    @Test
+    public void whenCallExecuteAndIdIsNull(){
+        operation.execute(mockSocket(),mockNotebook(false),mockMessage(null));
     }
+
+
+    @Test
+    public void whenCallExecuteAndIdIsempty(){
+        operation.execute(mockSocket(),mockNotebook(false),mockMessage(""));
+    }
+
+
+    @Test
+    public void whenCallExecuteAndIdnotempty(){
+        operation.execute(mockSocket(),mockNotebook(true),mockMessage("anyId"));
+    }
+
 }
