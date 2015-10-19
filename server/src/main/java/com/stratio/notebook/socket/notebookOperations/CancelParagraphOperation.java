@@ -34,9 +34,9 @@ public class CancelParagraphOperation implements com.stratio.notebook.socket.INo
         final String paragraphId = idParagraph( messagereceived);
         if (paragraphId != null && !paragraphId.isEmpty() )  {
            final Note note = notebook.getNote(ConnectionManager.getInstance().getOpenNoteId(conn));
-            Paragraph paragraph = note.getParagraph(paragraphId);
-            paragraph.setStatus(Job.Status.ABORT);
-            paragraph.setListener(null);
+           Paragraph paragraph = note.getParagraph(paragraphId);
+           paragraph.setStatus(Job.Status.ABORT);
+           paragraph.setListener(null);
         }
     }
 
