@@ -39,7 +39,6 @@ drivers/
 warehouse/
 local-repo/
 
-/notebook
 /explorer
 **/sessions/
 **/data/

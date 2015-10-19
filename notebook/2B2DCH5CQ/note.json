@@ -1,0 +1,123 @@
+{
+  "paragraphs": [
+    {
+      "text": "DROP KEYSPACE DEMO_EXPLORER;",
+      "config": {
+        "interpreter": "cassandra",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "cql",
+      "jobName": "paragraph_1444745306866_-146683061",
+      "id": "20151013-160826_2099285235",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "operation is successfully"
+      },
+      "dateCreated": "Oct 13, 2015 4:08:26 PM",
+      "dateStarted": "Oct 19, 2015 9:21:58 AM",
+      "dateFinished": "Oct 19, 2015 9:21:59 AM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "ls;\n",
+      "config": {
+        "interpreter": "shell",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "sh",
+      "jobName": "paragraph_1444745336153_-541637935",
+      "id": "20151013-160856_662231347",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "common.sh\nexplorer\nexplorer-daemon.sh\nexplorer.sh\n"
+      },
+      "dateCreated": "Oct 13, 2015 4:08:56 PM",
+      "dateStarted": "Oct 17, 2015 12:44:06 PM",
+      "dateFinished": "Oct 17, 2015 12:44:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "## h1",
+      "config": {
+        "interpreter": "markdown",
+        "looknfeel": "default",
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": []
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "replName": "md",
+      "jobName": "paragraph_1445078435053_-450027582",
+      "id": "20151017-124035_1946445146",
+      "result": {
+        "code": "SUCCESS",
+        "type": "HTML",
+        "msg": "\u003ch2\u003eh1\u003c/h2\u003e\n"
+      },
+      "dateCreated": "Oct 17, 2015 12:40:35 PM",
+      "dateStarted": "Oct 17, 2015 12:46:07 PM",
+      "dateFinished": "Oct 17, 2015 12:46:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1445078767077_-1258558521",
+      "id": "20151017-124607_329078297",
+      "dateCreated": "Oct 17, 2015 12:46:07 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DEMO_DROP",
+  "id": "2B2DCH5CQ",
+  "creationDate": "mar, 13 oct, 16:08 PM",
+  "config": {},
+  "info": {}
+}
