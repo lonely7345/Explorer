@@ -43,8 +43,9 @@ public class CancelParagraphOperation implements com.stratio.notebook.socket.INo
 
     private String idParagraph(Message messagereceived){
         String paragraphId = (String) messagereceived.get("id");
-        if (paragraphId == null)
+        if (paragraphId == null) {
             paragraphId = "";
+        }
         return paragraphId;
     }
 }

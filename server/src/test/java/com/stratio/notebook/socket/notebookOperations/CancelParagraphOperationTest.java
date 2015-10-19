@@ -49,7 +49,6 @@ public class CancelParagraphOperationTest {
 
     @Test
     public void whenCallExecuteAndIdIsNull(){
-
         operation.execute(mockSocket(),mockNotebook(false),mockMessage(null));
     }
 
