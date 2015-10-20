@@ -18,6 +18,7 @@
 package com.stratio.explorer.reader;
 
 
+import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.exceptions.FolderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class PropertiesReader {
        Properties prop = new Properties();
         String path = "";
         try {
-            path = new PathFileCalculator().getPath(nameFile);
+            path = new PathFileCalculator().getPath(nameFile, ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES);
             prop.load(new FileInputStream(path));
         }catch(IOException e){
             String msg = "File properties not loaded. ";

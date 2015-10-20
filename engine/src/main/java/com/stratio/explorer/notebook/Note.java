@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.stratio.explorer.conf.ConstantsFolder;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -123,7 +124,7 @@ public class Note implements Serializable, JobListener {
         this.replLoader = replLoader;
     }
 
-    public void setZeppelinConfiguration(ExplorerConfiguration conf) {
+    public void setExplorerConfiguration(ExplorerConfiguration conf) {
         this.conf = conf;
     }
 
@@ -347,7 +348,7 @@ public class Note implements Serializable, JobListener {
         Gson gson = gsonBuilder.create();
 
         if (conf == null) {
-            conf = ExplorerConfiguration.create();
+            conf = ExplorerConfiguration.create(ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE);
         }
         String explorerDir = conf.getExplorerDir();
         File dir = new File(explorerDir + "/" + id);
@@ -430,7 +431,7 @@ public class Note implements Serializable, JobListener {
         FileInputStream ins = new FileInputStream(file);
         String json = IOUtils.toString(ins, conf.getString(ConfVars.EXPLORER_ENCODING));
         Note note = gson.fromJson(json, Note.class);
-        note.setZeppelinConfiguration(conf);
+        note.setExplorerConfiguration(conf);
         note.setReplLoader(replLoader);
         note.jobListenerFactory = jobListenerFactory;
         for (Paragraph p : note.paragraphs) {

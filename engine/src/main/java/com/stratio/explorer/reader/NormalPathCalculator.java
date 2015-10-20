@@ -44,7 +44,7 @@ public class NormalPathCalculator implements PathCalculator {
     public Path calculatePath(){
         PathOperations pathOperations = null;
         try {
-            URL url = getClass().getClassLoader().getResource(".");
+             URL url = getClass().getClassLoader().getResource(".");
              pathOperations = new PathOperations(Paths.get(Paths.get(url.toURI()).toString(),configureFolder));
             while(pathOperations.noFinishFolder()&&pathOperations.notFileExist()){
                pathOperations.goParent();

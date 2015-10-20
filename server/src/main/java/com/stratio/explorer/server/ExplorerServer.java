@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.servlet.DispatcherType;
 import javax.ws.rs.core.Application;
 
+import com.stratio.explorer.conf.ConstantsFolder;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -47,8 +48,8 @@ import com.stratio.explorer.rest.ZeppelinRestApi;
 import com.stratio.explorer.scheduler.SchedulerFactory;
 import com.stratio.explorer.socket.NotebookServer;
 
-public class ZeppelinServer extends Application {
-    private static final Logger LOG = LoggerFactory.getLogger(ZeppelinServer.class);
+public class ExplorerServer extends Application {
+    private static final Logger LOG = LoggerFactory.getLogger(ExplorerServer.class);
 
     private SchedulerFactory schedulerFactory;
     public static Notebook notebook;
@@ -57,7 +58,7 @@ public class ZeppelinServer extends Application {
     private InterpreterFactory replFactory;
 
     public static void main(String[] args) throws Exception {
-        ExplorerConfiguration conf = ExplorerConfiguration.create();
+        ExplorerConfiguration conf = ExplorerConfiguration.create(ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE);
         conf.setProperty("args", args);
 
         int port = conf.getInt(ExplorerConfiguration.ConfVars.EXPLORER_PORT);
@@ -114,7 +115,7 @@ public class ZeppelinServer extends Application {
 
     private static ServletContextHandler setupRestApiContextHandler() {
         final ServletHolder cxfServletHolder = new ServletHolder(new CXFNonSpringJaxrsServlet());
-        cxfServletHolder.setInitParameter("javax.ws.rs.Application", ZeppelinServer.class.getName());
+        cxfServletHolder.setInitParameter("javax.ws.rs.Application", ExplorerServer.class.getName());
         cxfServletHolder.setName("rest");
         cxfServletHolder.setForcedPath("rest");
 
@@ -193,8 +194,8 @@ public class ZeppelinServer extends Application {
         return webApp;
     }
 
-    public ZeppelinServer() throws Exception {
-        ExplorerConfiguration conf = ExplorerConfiguration.create();
+    public ExplorerServer() throws Exception {
+        ExplorerConfiguration conf = ExplorerConfiguration.create(ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE);
 
         this.schedulerFactory = new SchedulerFactory();
 

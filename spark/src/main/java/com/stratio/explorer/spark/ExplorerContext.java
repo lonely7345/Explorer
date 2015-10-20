@@ -31,20 +31,20 @@ import com.stratio.explorer.interpreter.InterpreterResult;
 import com.stratio.explorer.notebook.NoteInterpreterLoader;
 import com.stratio.explorer.notebook.Paragraph;
 import com.stratio.explorer.notebook.form.Setting;
-import com.stratio.explorer.spark.dep.DependencyResolver;
 import com.stratio.explorer.notebook.form.Input;
 
-public class ZeppelinContext {
-	private DependencyResolver dep;
+public class ExplorerContext {
+
 	private NoteInterpreterLoader noteInterpreterLoader;
 	private PrintStream out;
-	public ZeppelinContext(SparkContext sc, SQLContext sql, DependencyResolver dep, NoteInterpreterLoader noteInterpreterLoader, PrintStream printStream) {
+
+	public ExplorerContext(SparkContext sc, SQLContext sql, NoteInterpreterLoader noteInterpreterLoader, PrintStream printStream) {
 		this.sc = sc;
 		this.sqlContext = sql;
-		this.dep = dep;
 		this.noteInterpreterLoader = noteInterpreterLoader;
 		this.out = printStream;
 	}
+
 	public SparkContext sc;
 	public SQLContext sqlContext;
 	private Setting form;
@@ -52,36 +52,7 @@ public class ZeppelinContext {
 	public DataFrame sql(String sql) {
 		return sqlContext.sql(sql);
 	}
-	
-	/**
-	 * Load dependency for interpreter and runtime (driver) 
-	 * @param artifact "group:artifact:version"
-	 * @throws Exception 
-	 */
-	public void load(String artifact) throws Exception{
-		dep.load(artifact, false, false);
-	}
 
-	/**
-	 * Load dependency for interpreter and runtime (driver) 
-	 * @param artifact "group:artifact:version"
-	 * @throws Exception 
-	 */
-	public void load(String artifact, boolean recursive) throws Exception{
-		dep.load(artifact, recursive, false);
-	}	
-	
-	/**
-	 * Load dependency for interpreter and runtime, and then add to sparkContext
-	 * @throws Exception 
-	 */
-	public void loadAndDist(String artifact) throws Exception{
-		dep.load(artifact, false, true);
-	}
-	
-	public void loadAndDist(String artifact, boolean recursive) throws Exception{
-		dep.load(artifact, true, true);
-	}	
 	
 	/**
 	 * Load dependency only interpreter
