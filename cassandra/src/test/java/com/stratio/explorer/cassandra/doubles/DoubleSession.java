@@ -23,7 +23,6 @@ import static org.easymock.EasyMock.mock;
 import static org.easymock.EasyMock.replay;
 
 import com.datastax.driver.core.Session;
-import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.Row;

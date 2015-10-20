@@ -17,8 +17,8 @@
  */
 package com.stratio.streaming;
 
-import com.stratio.notebook.interpreter.Interpreter;
-import com.stratio.notebook.interpreter.InterpreterResult;
+import com.stratio.explorer.interpreter.Interpreter;
+import com.stratio.explorer.interpreter.InterpreterResult;
 import com.stratio.streaming.api.StratioStreamingAPI;
 import com.stratio.streaming.commons.exceptions.StratioStreamingException;
 import com.stratio.streaming.utils.StreamingApiWrapper;

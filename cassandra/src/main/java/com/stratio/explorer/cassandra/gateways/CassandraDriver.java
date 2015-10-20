@@ -26,9 +26,9 @@ import com.stratio.explorer.cassandra.models.Table;
 import com.stratio.explorer.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.explorer.cassandra.functions.RowToRowDataFunction;
 import com.stratio.explorer.cassandra.models.RowData;
-import com.stratio.notebook.gateways.Connector;
-import com.stratio.notebook.interpreter.InterpreterDriver;
-import com.stratio.notebook.lists.FunctionalList;
+import com.stratio.explorer.gateways.Connector;
+import com.stratio.explorer.interpreter.InterpreterDriver;
+import com.stratio.explorer.lists.FunctionalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

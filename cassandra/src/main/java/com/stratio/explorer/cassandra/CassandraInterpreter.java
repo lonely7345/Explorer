@@ -25,11 +25,11 @@ import com.stratio.explorer.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.operations.CQLExecutor;
-import com.stratio.notebook.exceptions.FolderNotFoundException;
-import com.stratio.notebook.gateways.Connector;
-import com.stratio.notebook.interpreter.Interpreter;
-import com.stratio.notebook.interpreter.InterpreterResult;
-import com.stratio.notebook.reader.PropertiesReader;
+import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.gateways.Connector;
+import com.stratio.explorer.interpreter.Interpreter;
+import com.stratio.explorer.interpreter.InterpreterResult;
+import com.stratio.explorer.reader.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

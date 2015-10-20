@@ -24,7 +24,7 @@ import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.stratio.explorer.cassandra.constants.StringConstants;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.explorer.gateways.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

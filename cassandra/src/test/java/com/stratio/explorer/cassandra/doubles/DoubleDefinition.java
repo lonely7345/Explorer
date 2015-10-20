@@ -19,17 +19,10 @@
 package com.stratio.explorer.cassandra.doubles;
 
 
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.mock;
-import static org.easymock.EasyMock.replay;
 
 
 import com.datastax.driver.core.ColumnDefinitions;
-
-
-
-
-import static org.powermock.api.support.membermodification.MemberModifier.stub;
 
 /**
  * Created by afidalgo on 14/10/15.

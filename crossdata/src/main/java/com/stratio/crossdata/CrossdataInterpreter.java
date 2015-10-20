@@ -24,13 +24,14 @@ import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.driver.BasicDriver;
 import com.stratio.crossdata.driver.DriverConnection;
 import com.stratio.crossdata.utils.CrossdataUtils;
-import com.stratio.notebook.interpreter.AsyncInterpreterResult;
-import com.stratio.notebook.interpreter.Interpreter;
-import com.stratio.notebook.interpreter.InterpreterResult;
-import com.stratio.notebook.notebook.Paragraph;
-import com.stratio.notebook.scheduler.Job;
-import com.stratio.notebook.scheduler.Scheduler;
-import com.stratio.notebook.scheduler.SchedulerFactory;
+import com.stratio.explorer.interpreter.AsyncInterpreterResult;
+import com.stratio.explorer.interpreter.Interpreter;
+import com.stratio.explorer.interpreter.InterpreterResult;
+import com.stratio.explorer.notebook.Paragraph;
+import com.stratio.explorer.scheduler.Job;
+import com.stratio.explorer.scheduler.Scheduler;
+import com.stratio.explorer.scheduler.SchedulerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

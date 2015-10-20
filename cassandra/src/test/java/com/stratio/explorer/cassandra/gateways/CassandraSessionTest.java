@@ -21,7 +21,7 @@ package com.stratio.explorer.cassandra.gateways;
 
 import com.stratio.explorer.cassandra.constants.StringConstants;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.explorer.gateways.Connector;
 import org.junit.Before;
 import org.junit.Test;
 

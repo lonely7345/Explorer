@@ -19,7 +19,7 @@ package com.stratio.explorer.cassandra.gateways;
 
 
 import com.stratio.explorer.cassandra.models.Table;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+import com.stratio.explorer.interpreter.InterpreterDriver;
 
 public class CassandraInterpreterGateways  {
 

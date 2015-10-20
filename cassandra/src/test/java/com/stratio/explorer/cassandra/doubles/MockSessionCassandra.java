@@ -1,7 +1,7 @@
 package com.stratio.explorer.cassandra.doubles;
 
 import com.datastax.driver.core.Session;
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.explorer.gateways.Connector;
 
 import java.util.Properties;
 

@@ -51,7 +51,7 @@ if [ "${EXPLORER_NICENESS}" = "" ]; then
     export EXPLORER_NICENESS=0
 fi
 
-EXPLORER_MAIN=com.stratio.notebook.server.ZeppelinServer
+EXPLORER_MAIN=com.stratio.explorer.server.ZeppelinServer
 
 JAVA_OPTS+=" -Dnotebook.log.file=$EXPLORER_LOGFILE"
 

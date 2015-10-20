@@ -18,8 +18,8 @@
 package com.stratio.ingestion;
 
 import com.stratio.ingestion.utils.*;
-import com.stratio.notebook.interpreter.Interpreter;
-import com.stratio.notebook.interpreter.InterpreterResult;
+import com.stratio.explorer.interpreter.Interpreter;
+import com.stratio.explorer.interpreter.InterpreterResult;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

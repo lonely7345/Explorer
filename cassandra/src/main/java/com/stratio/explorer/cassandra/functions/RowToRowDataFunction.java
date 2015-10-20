@@ -21,8 +21,8 @@ package com.stratio.explorer.cassandra.functions;
 import com.datastax.driver.core.Row;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.CellData;
-import com.stratio.notebook.functions.TransformFunction;
-import com.stratio.notebook.lists.FunctionalList;
+import com.stratio.explorer.functions.TransformFunction;
+import com.stratio.explorer.lists.FunctionalList;
 
 import java.util.List;
 

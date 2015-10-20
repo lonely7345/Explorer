@@ -19,7 +19,7 @@
 package com.stratio.explorer.cassandra.functions;
 
 import com.datastax.driver.core.ColumnDefinitions;
-import com.stratio.notebook.functions.TransformFunction;
+import com.stratio.explorer.functions.TransformFunction;
 
 /**
  * Created by afidalgo on 14/10/15.

@@ -21,7 +21,7 @@ import com.stratio.explorer.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.explorer.cassandra.models.Table;
 
 
-import com.stratio.notebook.interpreter.InterpreterDriver;
+import com.stratio.explorer.interpreter.InterpreterDriver;
 
 public class CQLExecutor {
 

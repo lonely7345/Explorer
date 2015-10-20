@@ -3,7 +3,7 @@ package com.stratio.explorer.cassandra.doubles;
 import com.datastax.driver.core.Session;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
-import com.stratio.notebook.gateways.Connector;
+import com.stratio.explorer.gateways.Connector;
 
 import java.util.Properties;
 

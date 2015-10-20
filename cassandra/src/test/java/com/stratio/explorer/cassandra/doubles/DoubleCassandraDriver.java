@@ -20,8 +20,8 @@ package com.stratio.explorer.cassandra.doubles;
 import com.datastax.driver.core.Session;
 import com.stratio.explorer.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.explorer.cassandra.models.Table;
-import com.stratio.notebook.gateways.Connector;
-import com.stratio.notebook.interpreter.InterpreterDriver;
+import com.stratio.explorer.gateways.Connector;
+import com.stratio.explorer.interpreter.InterpreterDriver;
 
 public class DoubleCassandraDriver implements InterpreterDriver<Table>{
 
