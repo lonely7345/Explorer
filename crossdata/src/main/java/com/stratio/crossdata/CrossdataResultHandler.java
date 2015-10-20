@@ -19,10 +19,11 @@ package com.stratio.crossdata;
 
 import com.stratio.crossdata.common.result.*;
 import com.stratio.crossdata.utils.CrossdataUtils;
-import com.stratio.notebook.interpreter.InterpreterResult;
-import com.stratio.notebook.interpreter.ResultHandler;
-import com.stratio.notebook.notebook.Paragraph;
-import com.stratio.notebook.scheduler.Job;
+import com.stratio.explorer.interpreter.InterpreterResult;
+import com.stratio.explorer.interpreter.ResultHandler;
+import com.stratio.explorer.notebook.Paragraph;
+import com.stratio.explorer.scheduler.Job;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
