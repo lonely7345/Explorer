@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
 
 import com.stratio.explorer.notebook.Note;
 import com.stratio.explorer.notebook.Paragraph;
-import com.stratio.explorer.server.ZeppelinServer;
+import com.stratio.explorer.server.ExplorerServer;
 import com.stratio.explorer.socket.ConnectionManager;
 import com.stratio.explorer.socket.NotebookServer;
 import com.wordnik.swagger.annotations.Api;
@@ -73,7 +73,7 @@ public class ZeppelinRestApi {
     public Response postQuery(@FormParam("notebook") String notebook, @FormParam("query") String query) {
 
         String notebookId = "";
-        List<Note> notes = ZeppelinServer.notebook.getAllNotes();
+        List<Note> notes = ExplorerServer.notebook.getAllNotes();
         for (Note n : notes) {
             if (notebook.equalsIgnoreCase(n.getName()) || notebook.equalsIgnoreCase(n.id())) {
                 notebookId = n.id();
@@ -81,7 +81,7 @@ public class ZeppelinRestApi {
             }
         }
         try {
-            final Note note = ZeppelinServer.notebook
+            final Note note = ExplorerServer.notebook
                     .getNote(notebookId); // Nullpointer if notebookId is not correct
             final int paragraphIndex = note.getParagraphs().size() - 1;
             Paragraph paragraph = note.insertParagraph(paragraphIndex);
@@ -125,7 +125,7 @@ public class ZeppelinRestApi {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response postNotebook(@FormParam("name") String name) {
 
-        Note note = ZeppelinServer.notebook.createNote();
+        Note note = ExplorerServer.notebook.createNote();
         if (!name.isEmpty()) {
             note.setName(name);
         }else{

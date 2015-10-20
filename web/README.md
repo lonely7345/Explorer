@@ -1,5 +1,5 @@
-# Zeppelin web application 2
-This is a Zeppelin web frontend project.
+# Explorer web application
+This is a Explorer web frontend project.
 
 ## Get started 
 The first thing you need to do is install Yeoman. We’re going to use the Node Package Manager to do this all at once.

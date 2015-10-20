@@ -18,6 +18,7 @@
 package com.stratio.explorer.writer;
 
 
+import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.converters.StringToPropertiesConverter;
 import com.stratio.explorer.reader.FolderFinder;
 import com.stratio.explorer.reader.PathFileCalculator;
@@ -41,7 +42,7 @@ public class PropertiesFileUpdater {
     public void updateFileWithProperties(String nameFile, String stringWithProperties) {
         try {
             Properties properties = converter.transform(stringWithProperties);
-            FileOutputStream out = new FileOutputStream(new PathFileCalculator().getPath(nameFile));
+            FileOutputStream out = new FileOutputStream(new PathFileCalculator().getPath(nameFile, ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES));
             properties.store(out, "");
             out.close();
         }catch (FileNotFoundException e){

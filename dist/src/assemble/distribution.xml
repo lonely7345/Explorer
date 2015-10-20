@@ -57,16 +57,5 @@
       <directory>../interpreter</directory>
     </fileSet>
   </fileSets>
-
-    <!--<fileSet>
-      <directory>zeppelin-cli/target</directory>
-      <outputDirectory></outputDirectory>
-      <includes>
-        <include>*.jar</include>
-        <include>lib/*.jar</include>
-      </includes>
-    </fileSet>
-  </fileSets>-->
-
 </assembly>
 

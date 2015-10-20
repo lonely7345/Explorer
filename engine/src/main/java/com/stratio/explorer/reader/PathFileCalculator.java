@@ -32,10 +32,10 @@ public class PathFileCalculator {
      * @param nameFile without extension
      * @return complete path
      */
-    public String getPath(String nameFile){
+    public String getPath(String nameFile,String extensionFile){
 
 
-        return rootFolderFinder.parentProjectFolder() +nameFile+ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES;
+        return rootFolderFinder.parentProjectFolder() +nameFile+extensionFile;
     }
 
 }

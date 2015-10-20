@@ -18,6 +18,7 @@
 package com.stratio.explorer.writer;
 
 
+import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.reader.PathFileCalculator;
 import com.stratio.explorer.reader.PropertiesReader;
 import org.junit.After;
@@ -46,7 +47,7 @@ public class PropertiesFileUpdaterTest {
 
 
     @After public void tearDown(){
-        new File(new PathFileCalculator().getPath(CT_FILE)).delete();
+        new File(new PathFileCalculator().getPath(CT_FILE, ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES)).delete();
     }
 
     @Test public void whenFileContainsPropertyThenActualizeValue() throws IOException {

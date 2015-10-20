@@ -17,16 +17,12 @@
  */
 package com.nflabs.zeppelin.spark
 
-import com.nflabs.zeppelin.repl.Repl
-import com.nflabs.zeppelin.repl.ReplResult
-import com.nflabs.zeppelin.repl.ReplResult.Code
-import com.nflabs.zeppelin.repl.Repl.FormType
+
 import java.util.Properties
 import scala.tools.nsc.{Interpreter, Settings}
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.io.PrintWriter
-import org.apache.spark.repl.SparkILoop
 import org.apache.spark.repl.SparkIMain;
 import org.apache.spark.SparkContext
 

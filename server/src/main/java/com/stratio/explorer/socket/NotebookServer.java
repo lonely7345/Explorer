@@ -24,7 +24,7 @@ import com.stratio.explorer.notebook.Notebook;
 import com.stratio.explorer.notebook.Paragraph;
 import com.stratio.explorer.scheduler.Job;
 import com.stratio.explorer.scheduler.JobListener;
-import com.stratio.explorer.server.ZeppelinServer;
+import com.stratio.explorer.server.ExplorerServer;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,26 +47,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Zeppelin websocket service.
+ * Explorer websocket service.
  *
  * @author anthonycorbacho
  */
 public class NotebookServer extends WebSocketServer implements JobListenerFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NotebookServer.class);
-    private static final int DEFAULT_PORT = 8282;
+    private static final Logger Log = LoggerFactory.getLogger(NotebookServer.class);
+
 
     private static void creatingwebSocketServerLog(int port) {
-        LOG.info("Create explorer websocket on port {}", port);
+        Log.info("Create explorer websocket on port {}", port);
     }
 
     Gson gson = new Gson();
 
-
-    public NotebookServer() {
-        super(new InetSocketAddress(DEFAULT_PORT));
-        creatingwebSocketServerLog(DEFAULT_PORT);
-    }
 
     public NotebookServer(int port) {
         super(new InetSocketAddress(port));
@@ -74,12 +69,12 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     }
 
     private Notebook notebook() {
-        return ZeppelinServer.notebook;
+        return ExplorerServer.notebook;
     }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        LOG.info("New connection from {} : {}", conn.getRemoteSocketAddress().getHostName(), conn
+        Log.info("New connection from {} : {}", conn.getRemoteSocketAddress().getHostName(), conn
                 .getRemoteSocketAddress().getPort());
         ConnectionManager.getInstance().add(conn);
 
@@ -90,17 +85,17 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
          try {
             Message messagereceived = deserializeMessage(msg);
 
-            LOG.info("RECEIVE << " + messagereceived.op);
+             Log.info("RECEIVE << " + messagereceived.op);
             NotebookOperationFactory.getOperation(messagereceived.op).execute(conn,notebook(),messagereceived);
         } catch (NotebookOperationException e) {
              //TODO why we don't do anithing with this exception.
-            LOG.error("Can't handle message.", e);
+             Log.error("Can't handle message.", e);
         }
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        LOG.info("Closed connection to {} : {}", conn.getRemoteSocketAddress().getHostName(),
+        Log.info("Closed connection to {} : {}", conn.getRemoteSocketAddress().getHostName(),
                 conn.getRemoteSocketAddress().getPort());
         ConnectionManager conectorManager = ConnectionManager.getInstance();
         conectorManager.removeConnectionFromAllNote(conn);
@@ -197,7 +192,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
                     job.getException().printStackTrace();
                 }
                 if (job.isTerminated()) {
-                    LOG.info("Job {} is finished", job.getId());
+                    Log.info("Job {} is finished", job.getId());
                     try {
                         note.persist();
                     } catch (IOException e) {
