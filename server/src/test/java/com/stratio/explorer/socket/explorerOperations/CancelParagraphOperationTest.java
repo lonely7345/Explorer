@@ -16,16 +16,16 @@
  * under the License.
  */
 
-package com.stratio.explorer.socket.notebookOperations;
+package com.stratio.explorer.socket.explorerOperations;
 
 
 import org.junit.Before;
 import org.junit.Test;
 
 
-import static com.stratio.explorer.socket.notebookOperations.MocksToOperations.mockSocket;
-import static com.stratio.explorer.socket.notebookOperations.MocksToOperations.mockNotebook;
-import static com.stratio.explorer.socket.notebookOperations.MocksToOperations.mockMessage;
+import static com.stratio.explorer.socket.explorerOperations.MocksToOperations.mockSocket;
+import static com.stratio.explorer.socket.explorerOperations.MocksToOperations.mockNotebook;
+import static com.stratio.explorer.socket.explorerOperations.MocksToOperations.mockMessage;
 
 
 public class CancelParagraphOperationTest {

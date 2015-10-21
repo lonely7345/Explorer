@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package com.stratio.explorer.socket.notebookOperations;
+package com.stratio.explorer.socket.explorerOperations;
 
 
 import com.stratio.explorer.notebook.Note;

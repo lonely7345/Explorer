@@ -15,11 +15,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.socket.notebookOperations;
+package com.stratio.explorer.socket.explorerOperations;
 
 import com.stratio.explorer.notebook.Note;
 import com.stratio.explorer.notebook.Notebook;
 import com.stratio.explorer.socket.ConnectionManager;
+import com.stratio.explorer.socket.IExplorerOperation;
 import com.stratio.explorer.socket.Message;
 import org.java_websocket.WebSocket;
 
@@ -28,7 +29,7 @@ import java.util.Map;
 /**
  * Created by jmgomez on 3/09/15.
  */
-public class UpdateNoteOperation implements com.stratio.explorer.socket.INotebookOperation {
+public class UpdateNoteOperation implements IExplorerOperation {
     @Override
     public void execute(WebSocket conn, Notebook notebook, Message messagereceived) {
         String noteId = (String) messagereceived.get("id");

@@ -67,7 +67,7 @@
         <module>server</module>
         <module>dist</module>
         <module>doc</module>
-        <module>streaming</module>
+        <module>decision</module>
         <module>ingestion</module>
         <module>cassandra</module>
     </modules>

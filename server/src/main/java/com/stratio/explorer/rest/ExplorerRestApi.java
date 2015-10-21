@@ -32,7 +32,7 @@ import com.stratio.explorer.notebook.Note;
 import com.stratio.explorer.notebook.Paragraph;
 import com.stratio.explorer.server.ExplorerServer;
 import com.stratio.explorer.socket.ConnectionManager;
-import com.stratio.explorer.socket.NotebookServer;
+import com.stratio.explorer.socket.ExplorerWebSocketServer;
 import com.wordnik.swagger.annotations.Api;
 
 /**
@@ -41,18 +41,18 @@ import com.wordnik.swagger.annotations.Api;
  */
 @Path("/")
 @Api(value = "/", description = "Zeppelin REST API root")
-public class ZeppelinRestApi {
+public class ExplorerRestApi {
 
-    private NotebookServer notebookServer;
+    private ExplorerWebSocketServer notebookServer;
 
     /**
      * Required by Swagger
      */
-    public ZeppelinRestApi() {
+    public ExplorerRestApi() {
         super();
     }
 
-    public void setNotebookServer(NotebookServer ns) {
+    public void setExplorerWebSocketServer(ExplorerWebSocketServer ns) {
         this.notebookServer = ns;
     }
 
@@ -82,7 +82,7 @@ public class ZeppelinRestApi {
         }
         try {
             final Note note = ExplorerServer.notebook
-                    .getNote(notebookId); // Nullpointer if notebookId is not correct
+                    .getNote(notebookId);
             final int paragraphIndex = note.getParagraphs().size() - 1;
             Paragraph paragraph = note.insertParagraph(paragraphIndex);
             paragraph.setText(query);

@@ -28,7 +28,7 @@ import java.nio.file.Paths;
 
 public class NormalPathCalculator implements PathCalculator {
 
-    static Logger LOGGER = LoggerFactory.getLogger(FolderFinder.class);
+    static Logger Logger = LoggerFactory.getLogger(NormalPathCalculator.class);
 
     private String configureFolder;
 
@@ -53,7 +53,7 @@ public class NormalPathCalculator implements PathCalculator {
 
         }catch(URISyntaxException e){
             String msg ="Error with sintax in : "+e.getMessage();
-            LOGGER.error(msg);
+            Logger.error(msg);
         }
 
         return pathOperations.getPath();

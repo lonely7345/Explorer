@@ -44,16 +44,16 @@ import com.stratio.explorer.conf.ExplorerConfiguration;
 import com.stratio.explorer.interpreter.InterpreterFactory;
 import com.stratio.explorer.notebook.Notebook;
 import com.stratio.explorer.rest.InterpreterRestApi;
-import com.stratio.explorer.rest.ZeppelinRestApi;
+import com.stratio.explorer.rest.ExplorerRestApi;
 import com.stratio.explorer.scheduler.SchedulerFactory;
-import com.stratio.explorer.socket.NotebookServer;
+import com.stratio.explorer.socket.ExplorerWebSocketServer;
 
 public class ExplorerServer extends Application {
     private static final Logger LOG = LoggerFactory.getLogger(ExplorerServer.class);
 
     private SchedulerFactory schedulerFactory;
     public static Notebook notebook;
-    static NotebookServer websocket;
+    static ExplorerWebSocketServer websocket;
 
     private InterpreterFactory replFactory;
 
@@ -63,7 +63,7 @@ public class ExplorerServer extends Application {
 
         int port = conf.getInt(ExplorerConfiguration.ConfVars.EXPLORER_PORT);
         final Server server = setupJettyServer(port);
-        websocket = new NotebookServer(port + 1);
+        websocket = new ExplorerWebSocketServer(port + 1);
 
         //REST api
         final ServletContextHandler restApi = setupRestApiContextHandler();
@@ -214,8 +214,8 @@ public class ExplorerServer extends Application {
         Set<Object> singletons = new HashSet<Object>();
 
         /** Rest-api root endpoint */
-        ZeppelinRestApi root = new ZeppelinRestApi();
-        root.setNotebookServer(getWebsocket());
+        ExplorerRestApi root = new ExplorerRestApi();
+        root.setExplorerWebSocketServer(getWebsocket());
         singletons.add(root);
 
         InterpreterRestApi interpreterApi = new InterpreterRestApi(replFactory);
@@ -224,7 +224,7 @@ public class ExplorerServer extends Application {
         return singletons;
     }
 
-    public static NotebookServer getWebsocket(){
+    public static ExplorerWebSocketServer getWebsocket(){
         return websocket;
     }
 

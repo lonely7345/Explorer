@@ -54,7 +54,7 @@ public class NotebookUT implements JobListenerFactory{
 				+"/explorer");
 		notebookDir.mkdirs();
 
-		System.setProperty(ConfVars.EXPLORER_NOTEBOOK_DIR.getVarName(), notebookDir.getAbsolutePath());
+		System.setProperty(ConfVars.EXPLORER_NOTEBOOKS_DIR.getVarName(), notebookDir.getAbsolutePath());
 
 		conf = ExplorerConfiguration.create(ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE);
         

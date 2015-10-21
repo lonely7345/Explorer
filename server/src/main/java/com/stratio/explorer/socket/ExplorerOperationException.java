@@ -15,32 +15,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.reader;
+package com.stratio.explorer.socket;
 
-
-import com.stratio.explorer.conf.ConstantsFolder;
-import com.stratio.explorer.exceptions.FolderNotFoundException;
-
-import java.nio.file.Path;
-import java.util.List;
-
-public class FolderFinder {
-
+/**
+ * A exception in while a notebook operation.
+ * Created by jmgomez on 3/09/15.
+ */
+public class ExplorerOperationException extends Exception{
 
     /**
-     * Calculate relative path to rootFolder
-     * @return string with rootParentFolder
+     * Constructor.
+     * @param message the message.
+     * @param exception a original excepcion.
      */
-    public String parentProjectFolder() {
-
-        List<PathCalculator> pathCalculators = PathCalculatorListBuilder.build();
-        for (PathCalculator pathCalculator:pathCalculators){
-            Path path = pathCalculator.calculatePath();
-            if (!path.toString().equals(ConstantsFolder.CT_NOT_EXIST_FOLDER)) {
-                return path.toString() + "/";
-            }
-
-        }
-        throw new FolderNotFoundException("Folder not exist ");
+    public ExplorerOperationException(String message, Exception exception){
+        super(message,exception);
     }
+
 }

@@ -51,9 +51,9 @@ import java.util.List;
  *
  * @author anthonycorbacho
  */
-public class NotebookServer extends WebSocketServer implements JobListenerFactory {
+public class ExplorerWebSocketServer extends WebSocketServer implements JobListenerFactory {
 
-    private static final Logger Log = LoggerFactory.getLogger(NotebookServer.class);
+    private static final Logger Log = LoggerFactory.getLogger(ExplorerWebSocketServer.class);
 
 
     private static void creatingwebSocketServerLog(int port) {
@@ -63,7 +63,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     Gson gson = new Gson();
 
 
-    public NotebookServer(int port) {
+    public ExplorerWebSocketServer(int port) {
         super(new InetSocketAddress(port));
         creatingwebSocketServerLog(port);
     }
@@ -87,7 +87,7 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
 
              Log.info("RECEIVE << " + messagereceived.op);
             NotebookOperationFactory.getOperation(messagereceived.op).execute(conn,notebook(),messagereceived);
-        } catch (NotebookOperationException e) {
+        } catch (ExplorerOperationException e) {
              //TODO why we don't do anithing with this exception.
              Log.error("Can't handle message.", e);
         }
@@ -162,11 +162,10 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
     }
 
     public static class ParagraphJobListener implements JobListener {
-        private NotebookServer notebookServer;
+
         private Note note;
 
-        public ParagraphJobListener(NotebookServer notebookServer, Note note) {
-            this.notebookServer = notebookServer;
+        public ParagraphJobListener(Note note) {
             this.note = note;
         }
 
@@ -211,6 +210,6 @@ public class NotebookServer extends WebSocketServer implements JobListenerFactor
 
     @Override
     public JobListener getParagraphJobListener(Note note) {
-        return new ParagraphJobListener(this, note);
+        return new ParagraphJobListener(note);
     }
 }

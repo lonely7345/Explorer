@@ -20,7 +20,6 @@ package com.stratio.explorer.writer;
 
 import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.converters.StringToPropertiesConverter;
-import com.stratio.explorer.reader.FolderFinder;
 import com.stratio.explorer.reader.PathFileCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +32,7 @@ import java.util.Properties;
 public class PropertiesFileUpdater {
 
     private  StringToPropertiesConverter converter = new StringToPropertiesConverter();
-    static   Logger Logger = LoggerFactory.getLogger(FolderFinder.class);
+    static   Logger Logger = LoggerFactory.getLogger(PropertiesFileUpdater.class);
     /**
      * Update configuration File with properties
      * @param nameFile name of file without extension

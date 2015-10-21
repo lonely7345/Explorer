@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package com.stratio.explorer.reader;
 
 import com.stratio.explorer.conf.ConstantsFolder;
@@ -26,25 +27,32 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.powermock.api.easymock.PowerMock.mockStatic;
 import static org.easymock.EasyMock.expect;
-import static org.powermock.api.easymock.PowerMock.replayAll;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.easymock.PowerMock.mockStatic;
+import static org.powermock.api.easymock.PowerMock.replayAll;
 
+/**
+ * Created by afidalgo on 21/10/15.
+ */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( { EnvironmentPathCalculator.class })
-public class FolderFinderTest {
+public class PathFileCalculatorTest {
 
-    private FolderFinder finder;
+
+
+    private final String FILE_NAME ="anyFileName";
+    private final String FILE_EXTENSION =".conf";
+    private PathFileCalculator calculator;
     private String oldValueFolder = ConstantsFolder.CT_NAME_PROJECT_FOLDER;
     private String oldConf ;
 
     @Before
     public void setUp(){
         oldConf =  ConstantsFolder.CT_FOLDER_CONFIGURATION;
-        finder = new FolderFinder();
+        calculator = new PathFileCalculator();
     }
 
     @After
@@ -57,19 +65,19 @@ public class FolderFinderTest {
     @Test
     public void parentFolderWillBeCalculated(){
 
-        assertTrue(finder.parentProjectFolder().endsWith( ConstantsFolder.CT_FOLDER_CONFIGURATION +"/"));
+        assertTrue(calculator.getPath(FILE_NAME,FILE_EXTENSION).endsWith(ConstantsFolder.CT_FOLDER_CONFIGURATION +"/"+FILE_NAME+FILE_EXTENSION));
     }
 
 
-   @Test
+    @Test
     public void whenParentFolderNotExistButEnvironmentFolderExist(){
-       final String expected = finder.parentProjectFolder();
+        final String expected = calculator.getPath(FILE_NAME, FILE_EXTENSION);
         ConstantsFolder.CT_NAME_PROJECT_FOLDER = "not_exist_file";
         mockStatic(System.class);
         final String key = ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV;
         expect(System.getenv(key)).andReturn(expected).andReturn(expected);
         replayAll();
-        assertThat(finder.parentProjectFolder(), is(expected));
+        assertThat(calculator.getPath(FILE_NAME, FILE_EXTENSION), is(expected));
     }
 
     @Test (expected = FolderNotFoundException.class)
@@ -80,6 +88,6 @@ public class FolderFinderTest {
         final String expected = "not_exist";
         expect(System.getenv(key)).andReturn(expected);
         replayAll();
-        finder.parentProjectFolder();
+        calculator.getPath(FILE_NAME, FILE_EXTENSION);;
     }
 }

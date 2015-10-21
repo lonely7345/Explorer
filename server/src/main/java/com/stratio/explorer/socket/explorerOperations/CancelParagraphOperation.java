@@ -15,40 +15,38 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.socket.notebookOperations;
+package com.stratio.explorer.socket.explorerOperations;
 
 import com.stratio.explorer.notebook.Note;
 import com.stratio.explorer.notebook.Notebook;
 import com.stratio.explorer.notebook.Paragraph;
+import com.stratio.explorer.scheduler.Job;
 import com.stratio.explorer.socket.ConnectionManager;
+import com.stratio.explorer.socket.IExplorerOperation;
 import com.stratio.explorer.socket.Message;
-import com.stratio.explorer.socket.NotebookOperationException;
 import org.java_websocket.WebSocket;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * Created by jmgomez on 3/09/15.
  */
-public class ResetResultsOperation implements com.stratio.explorer.socket.INotebookOperation {
-    private static final Logger LOG = LoggerFactory.getLogger(ResetResultsOperation.class);
-
+public class CancelParagraphOperation implements IExplorerOperation {
     @Override
-    public void execute(WebSocket conn, Notebook notebook, Message messagereceived) throws NotebookOperationException {
-       try {
-
-            final Note note = notebook.getNote(ConnectionManager.getInstance().getOpenNoteId(conn));
-            for (Paragraph p : note.getParagraphs()) {
-                p.resetResult();
-            }
-            note.persist();
-            ConnectionManager.getInstance().broadcastNote(note);
-        }catch(IOException ioe){
-            String msg = "A exception happens in when we are trying to reset result."+ioe.getMessage();
-            LOG.error(msg);
-            throw  new NotebookOperationException(msg,ioe);
+    public void execute(WebSocket conn, Notebook notebook, Message messagereceived) {
+        final String paragraphId = idParagraph( messagereceived);
+        if (paragraphId != null && !paragraphId.isEmpty() )  {
+           final Note note = notebook.getNote(ConnectionManager.getInstance().getOpenNoteId(conn));
+           Paragraph paragraph = note.getParagraph(paragraphId);
+           paragraph.setStatus(Job.Status.ABORT);
+           paragraph.setListener(null);
         }
+    }
+
+
+    private String idParagraph(Message messagereceived){
+        String paragraphId = (String) messagereceived.get("id");
+        if (paragraphId == null) {
+            paragraphId = "";
+        }
+        return paragraphId;
     }
 }

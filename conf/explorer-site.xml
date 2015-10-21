@@ -1,13 +1,7 @@
-<!-- TODO  : this file should be move to other package -->
+<!-- TODO : include all properties in this file -->
 <configuration>
 
 
-    <property>
-        <name>explorer.server.port</name>
-        <value>8084</value>
-        <description>Server port. port+1 is used for web socket.</description>
-
-    </property>
 
     <property>
         <name>explorer.server.port</name>
@@ -18,7 +12,7 @@
     <property>
         <name>explorer.notebook.dir</name>
         <value>notebooks</value>
-        <description>notebook persist</description>
+        <description>notebooks persist</description>
     </property>
 
     <property>

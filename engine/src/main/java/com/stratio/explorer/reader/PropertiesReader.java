@@ -29,7 +29,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
 
-    static Logger Logger = LoggerFactory.getLogger(FolderFinder.class);
+    static Logger Logger = LoggerFactory.getLogger(PropertiesReader.class);
 
     /**
      * Read configuration file from file
