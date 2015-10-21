@@ -124,7 +124,7 @@ html_theme = 'stratio'
 html_theme_options = {    
     'versions' : ['0.2.0'],
     'github' : 'https://github.com/Stratio/Explorer',
-    'jira': 'https://github.com/Stratio/Explorer/issues',
+    'jira': 'https://stratio.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=EXPLORER&view=planning&selectedIssue=EXPLORER-108&epics=visible',
     'module_name' : 'explorer'
 }
 
