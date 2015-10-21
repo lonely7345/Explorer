@@ -15,19 +15,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.streaming.utils;
+package com.stratio.decision.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.stratio.streaming.api.messaging.ColumnNameType;
-import com.stratio.streaming.api.messaging.ColumnNameValue;
-import com.stratio.streaming.commons.constants.ColumnType;
-import com.stratio.streaming.commons.exceptions.StratioStreamingException;
-import com.stratio.streaming.commons.messages.ColumnNameTypeValue;
-import com.stratio.streaming.commons.messages.StreamQuery;
-import com.stratio.streaming.commons.streams.StratioStream;
+import com.stratio.decision.api.messaging.ColumnNameType;
+import com.stratio.decision.api.messaging.ColumnNameValue;
+import com.stratio.decision.commons.constants.ColumnType;
+import com.stratio.decision.commons.exceptions.StratioStreamingException;
+import com.stratio.decision.commons.messages.ColumnNameTypeValue;
+import com.stratio.decision.commons.messages.StreamQuery;
+import com.stratio.decision.commons.streams.StratioStream;
 
 /**
  * Created by idiaz on 24/06/15.

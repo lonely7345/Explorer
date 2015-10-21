@@ -15,14 +15,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.streaming.utils;
+package com.stratio.decision.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.stratio.streaming.commons.exceptions.StratioStreamingException;
+import com.stratio.decision.commons.exceptions.StratioStreamingException;
 
 /**
  * Created by idiaz on 25/06/15.

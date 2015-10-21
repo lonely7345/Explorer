@@ -15,14 +15,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.streaming;
+package com.stratio.decision;
 
 import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;
-import com.stratio.streaming.api.StratioStreamingAPI;
-import com.stratio.streaming.commons.exceptions.StratioStreamingException;
-import com.stratio.streaming.utils.StreamingApiWrapper;
-import com.stratio.streaming.utils.StreamingSyntaxParser;
+import com.stratio.decision.api.StratioStreamingAPI;
+import com.stratio.decision.commons.exceptions.StratioStreamingException;
+import com.stratio.decision.utils.StreamingApiWrapper;
+import com.stratio.decision.utils.StreamingSyntaxParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
