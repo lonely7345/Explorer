@@ -59,15 +59,12 @@ public class ExplorerConfiguration extends XMLConfiguration {
 			URL url = new File(path).toURI().toURL();
 			Logger.info("Load configuration from " + url);
 			conf = new ExplorerConfiguration(url);
-		}catch(MalformedURLException e){
-			Logger.error("Failed to load configuration from file" + "Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML );
+		}catch(MalformedURLException  | ConfigurationException e){
+			Logger.error("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML );
 			throw new RuntimeException("File "+ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML + " not exist ");
 		}catch(FolderNotFoundException e){
 			Logger.info("folder configuration not exist ");
 			throw new RuntimeException("folder configuration not exist ");
-		}catch (ConfigurationException e) {
-			Logger.info("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML  );
-			throw new RuntimeException("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML );
 		}
 		return conf;
 	}
