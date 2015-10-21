@@ -2,6 +2,27 @@
 Feature guide
 =============
 
+Interactive shell to manage
+**Crossdata,Spark,Spark-sql,Ingestion,MarkDown,Shell,Streaming,Cassandra**
+based on Apache Zeppelin , a web-based notebook that enables interactive
+data analytics. You can make beautiful data-driven, interactive and
+collaborative documents with SQL, Scala and more.
+
+*Core feature*:
+
+-  Web based notebook style editor.
+-  Stratio Crossdata interpreter
+-  Apache Spark Interpreter
+-  Apache Spark-SQL interpreter
+-  Stratio Ingestion Interpreter
+-  Markdown Interpreter
+-  Shell Interpreter
+-  Stratio Streaming Interpreter
+-  Apache Cassandra interpreter
+-  Built-in Apache Spark support To know more about Explorer , visit
+   http://docs.stratio.com/
+
+
 
 - **Use a web interfact in order to interact with all Stratio Platform modules**:
    You'll can use a web interface instead of a typical black screen to execute your scripts.
