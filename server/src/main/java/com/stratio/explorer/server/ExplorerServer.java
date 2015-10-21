@@ -44,7 +44,7 @@ import com.stratio.explorer.conf.ExplorerConfiguration;
 import com.stratio.explorer.interpreter.InterpreterFactory;
 import com.stratio.explorer.notebook.Notebook;
 import com.stratio.explorer.rest.InterpreterRestApi;
-import com.stratio.explorer.rest.ExplorerRestApi;
+
 import com.stratio.explorer.scheduler.SchedulerFactory;
 import com.stratio.explorer.socket.ExplorerWebSocketServer;
 
@@ -212,12 +212,7 @@ public class ExplorerServer extends Application {
     @Override
     public java.util.Set<java.lang.Object> getSingletons() {
         Set<Object> singletons = new HashSet<Object>();
-
-        /** Rest-api root endpoint */
-        ExplorerRestApi root = new ExplorerRestApi();
-        root.setExplorerWebSocketServer(getWebsocket());
-        singletons.add(root);
-
+        
         InterpreterRestApi interpreterApi = new InterpreterRestApi(replFactory);
         singletons.add(interpreterApi);
 
