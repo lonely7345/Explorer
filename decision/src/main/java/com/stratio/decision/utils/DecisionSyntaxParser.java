@@ -27,10 +27,10 @@ import com.stratio.decision.commons.exceptions.StratioStreamingException;
 /**
  * Created by idiaz on 25/06/15.
  */
-public class StreamingSyntaxParser {
-    StreamingApiWrapper api;
+public class DecisionSyntaxParser {
+    DecisionApiWrapper api;
 
-    public StreamingSyntaxParser(StreamingApiWrapper api) {
+    public DecisionSyntaxParser(DecisionApiWrapper api) {
         this.api = api;
     }
 
@@ -302,7 +302,7 @@ public class StreamingSyntaxParser {
         Pattern create = Pattern.compile("( --stream) ([\\w]+) (--definition) ([\\w *'=().,]+)");
         Matcher createMatch = create.matcher(input);
         if (createMatch.find()) {
-            return api.create(createMatch.group(2), StreamingUtils.stringToColumnNameTypeList(createMatch.group(4)));
+            return api.create(createMatch.group(2), DecisionUtils.stringToColumnNameTypeList(createMatch.group(4)));
         }
         return "%text invalid create syntax. Use the following pattern as guide: create --stream your_stream_name "
                 + "--definition column_name.column_type,column_name2.column_type2,column_name3.column_type3";
@@ -313,7 +313,7 @@ public class StreamingSyntaxParser {
         Pattern alterStream = Pattern.compile("( --stream) ([\\w]+) (--definition) ([\\w *'=().,]+)");
         Matcher alterStreamMatch = alterStream.matcher(input);
         if (alterStreamMatch.find()) {
-            return api.alter(alterStreamMatch.group(2), StreamingUtils.stringToColumnNameTypeList(alterStreamMatch
+            return api.alter(alterStreamMatch.group(2), DecisionUtils.stringToColumnNameTypeList(alterStreamMatch
                     .group(4)));
         }
         return "%text invalid alter stream syntax. Use the following pattern as guide: create --stream your_stream_name "
@@ -325,7 +325,7 @@ public class StreamingSyntaxParser {
         Pattern insert = Pattern.compile("( --stream) ([\\w]+) (--definition) ([\\w *'=().,]+)");
         Matcher insertMatch = insert.matcher(input);
         if (insertMatch.find()) {
-            return api.insert(insertMatch.group(2), StreamingUtils.stringToColumnNameValueList(insertMatch
+            return api.insert(insertMatch.group(2), DecisionUtils.stringToColumnNameValueList(insertMatch
                     .group(4)));
         }
         return "%text invalid insert syntax. Use the following pattern as guide: insert --stream your_stream_name "

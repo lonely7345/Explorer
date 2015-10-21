@@ -21,8 +21,8 @@ import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;
 import com.stratio.decision.api.StratioStreamingAPI;
 import com.stratio.decision.commons.exceptions.StratioStreamingException;
-import com.stratio.decision.utils.StreamingApiWrapper;
-import com.stratio.decision.utils.StreamingSyntaxParser;
+import com.stratio.decision.utils.DecisionApiWrapper;
+import com.stratio.decision.utils.DecisionSyntaxParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ import java.util.Properties;
  * Created by idiaz on 23/06/15.
  */
 
-public class StreamingInterpreter extends Interpreter {
+public class DecisionInterpreter extends Interpreter {
     /**
      * The Log.
      */
@@ -41,18 +41,18 @@ public class StreamingInterpreter extends Interpreter {
 
 
     static {
-        Interpreter.register("str", StreamingInterpreter.class.getName());
+        Interpreter.register("str", DecisionInterpreter.class.getName());
     }
 
     StratioStreamingAPI api;
-    StreamingApiWrapper wrapper;
-    StreamingSyntaxParser parser;
+    DecisionApiWrapper wrapper;
+    DecisionSyntaxParser parser;
 
-    public StreamingInterpreter(Properties property) {
+    public DecisionInterpreter(Properties property) {
         super(property);
         api = new StratioStreamingAPI();
-        wrapper = new StreamingApiWrapper(api);
-        parser = new StreamingSyntaxParser(wrapper);
+        wrapper = new DecisionApiWrapper(api);
+        parser = new DecisionSyntaxParser(wrapper);
 
     }
 

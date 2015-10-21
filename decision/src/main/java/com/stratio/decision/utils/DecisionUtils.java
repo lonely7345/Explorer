@@ -32,7 +32,7 @@ import com.stratio.decision.commons.streams.StratioStream;
 /**
  * Created by idiaz on 24/06/15.
  */
-public class StreamingUtils {
+public class DecisionUtils {
 
     public static String listToString(List<StratioStream> streams) {
         StringBuilder sb = new StringBuilder();

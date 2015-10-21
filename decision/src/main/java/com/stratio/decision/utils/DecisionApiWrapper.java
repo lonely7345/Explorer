@@ -31,10 +31,10 @@ import com.stratio.decision.commons.streams.StratioStream;
 /**
  * Created by idiaz on 24/06/15.
  */
-public class StreamingApiWrapper {
+public class DecisionApiWrapper {
     private StratioStreamingAPI api;
 
-    public StreamingApiWrapper(StratioStreamingAPI api) {
+    public DecisionApiWrapper(StratioStreamingAPI api) {
         this.api = api;
     }
 
@@ -112,14 +112,14 @@ public class StreamingApiWrapper {
 
     public String list() throws StratioStreamingException {
         List<StratioStream> list = api.listStreams();
-        return "%table ".concat(StreamingUtils.listToString(list));
+        return "%table ".concat(DecisionUtils.listToString(list));
 
     }
 
     public String listQuerys(String stream) throws StratioStreamingException {
         List<ColumnNameTypeValue> columnsValues = api.columnsFromStream(stream);
 
-        return "%table ".concat(StreamingUtils.listQueriesToString(columnsValues));
+        return "%table ".concat(DecisionUtils.listQueriesToString(columnsValues));
     }
 
     public String create(String stream, List<ColumnNameType> columns) throws StratioStreamingException {
