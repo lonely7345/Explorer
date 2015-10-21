@@ -4,6 +4,7 @@
 
 * Add cassandra Interpreter
 * Notebook becomes Explorer
+* Change streaming 0.8.1 by decision 0.9.0
 
 ## 0.3.4 (September 2015)
 
