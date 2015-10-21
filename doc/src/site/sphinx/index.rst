@@ -9,6 +9,7 @@ Explorer documentation
    :numbered: 2
    :titlesonly:
 
+   00_feature_guide
    install
 
 Link
