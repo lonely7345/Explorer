@@ -10,6 +10,7 @@ Explorer documentation
    :titlesonly:
 
    00_feature_guide
+   04_how_do_i_get_started
    install
 
 Link
