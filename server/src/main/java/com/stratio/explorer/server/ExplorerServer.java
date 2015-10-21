@@ -145,11 +145,7 @@ public class ExplorerServer extends Application {
         // Setup the handler
         final ServletContextHandler handler = new ServletContextHandler();
         handler.setSessionHandler(new SessionHandler());
-        // Bind Swagger-core to the url HOST/api-docs
         handler.addServlet(SwaggerServlet, "/api-docs/*");
-//        handler.addFilter(new FilterHolder(CorsFilter.class), "/*",
-//                EnumSet.allOf(DispatcherType.class));
-        // And we are done
         return handler;
     }
 
@@ -164,10 +160,8 @@ public class ExplorerServer extends Application {
         } else { //use packaged WAR
             webApp.setWar(webapp.getAbsolutePath());
         }
-        // Explicit bind to root
+
         ServletHolder servletHolder = new ServletHolder(new DefaultServlet());
-        // Cache-control settings
-//        servletHolder.setInitParameter("cacheControl","max-age=3600,public");
         servletHolder.setInitParameter("cacheControl","private, max-age=0, must-revalidate");
         webApp.addServlet(servletHolder, "/*");
         return webApp;
@@ -212,7 +206,7 @@ public class ExplorerServer extends Application {
     @Override
     public java.util.Set<java.lang.Object> getSingletons() {
         Set<Object> singletons = new HashSet<Object>();
-        
+
         InterpreterRestApi interpreterApi = new InterpreterRestApi(replFactory);
         singletons.add(interpreterApi);
 

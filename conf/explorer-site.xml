@@ -29,7 +29,7 @@
     <!--TODO study if we can change this to use convention over configuration, for example all class under com.stratio.<module>.interpreter.<module>Interpreter will be configure like an interpreter -->
     <property>
         <name>explorer.interpreters</name>
-        <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.explorer.spark.SparkInterpreter,com.stratio.explorer.spark.SparkSqlInterpreter,com.stratio.explorer.markdown.Markdown,com.stratio.explorer.cassandra.CassandraInterpreter,com.stratio.explorer.shell.ShellInterpreter</value>
+        <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.decision.StreamingInterpreter,com.stratio.explorer.spark.SparkInterpreter,com.stratio.explorer.spark.SparkSqlInterpreter,com.stratio.explorer.markdown.Markdown,com.stratio.explorer.cassandra.CassandraInterpreter,com.stratio.explorer.shell.ShellInterpreter</value>
         <description>Comma separated interpreter configurations. First interpreter become a default</description>
 
     </property>
