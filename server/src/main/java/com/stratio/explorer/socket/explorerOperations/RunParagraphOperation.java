@@ -15,15 +15,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.socket.notebookOperations;
+package com.stratio.explorer.socket.explorerOperations;
 
 import com.google.common.base.Strings;
 import com.stratio.explorer.notebook.Note;
 import com.stratio.explorer.notebook.Notebook;
 import com.stratio.explorer.notebook.Paragraph;
 import com.stratio.explorer.socket.ConnectionManager;
+import com.stratio.explorer.socket.IExplorerOperation;
 import com.stratio.explorer.socket.Message;
-import com.stratio.explorer.socket.NotebookOperationException;
+import com.stratio.explorer.socket.ExplorerOperationException;
 import org.java_websocket.WebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ import java.util.Map;
 /**
  * Created by jmgomez on 3/09/15.
  */
-public class RunParagraphOperation implements com.stratio.explorer.socket.INotebookOperation {
+public class RunParagraphOperation implements IExplorerOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(RunParagraphOperation.class);
 
@@ -68,7 +69,7 @@ public class RunParagraphOperation implements com.stratio.explorer.socket.INoteb
         }catch(IOException ioe){
             String msg = "A exception happens in when we are trying to execute paragraph."+ioe.getMessage();
             LOG.error(msg);
-            new NotebookOperationException(msg,ioe);
+            new ExplorerOperationException(msg,ioe);
         }
 
     }

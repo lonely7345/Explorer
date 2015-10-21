@@ -202,7 +202,7 @@ public class ExplorerConfiguration extends XMLConfiguration {
 	}
 
 	public String getExplorerDir(){
-		return getRelativeDir(ConfVars.EXPLORER_NOTEBOOK_DIR);
+		return getRelativeDir(ConfVars.EXPLORER_NOTEBOOKS_DIR);
 	}
 
 	public String getInterpreterDir(){
@@ -257,7 +257,7 @@ public class ExplorerConfiguration extends XMLConfiguration {
 		EXPLORER_INTERPRETER_DIR("explorer.interpreter.dir", "interpreter"),
 		EXPLORER_INTERPRETER_MODE("explorer.interpreter.mode", "share"),     // 'separate', 'share'
 		EXPLORER_ENCODING("explorer.encoding", "UTF-8"),
-		EXPLORER_NOTEBOOK_DIR("explorer.notebook.dir", "explorer")
+		EXPLORER_NOTEBOOKS_DIR("explorer.notebook.dir", "explorer")
 		;
 
 		private String varName;

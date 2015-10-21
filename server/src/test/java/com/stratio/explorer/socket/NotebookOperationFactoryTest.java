@@ -17,7 +17,7 @@
  */
 package com.stratio.explorer.socket;
 
-import com.stratio.explorer.socket.notebookOperations.*;
+import com.stratio.explorer.socket.explorerOperations.*;
 import org.junit.Test;
 
 import static com.stratio.explorer.socket.Message.OP;

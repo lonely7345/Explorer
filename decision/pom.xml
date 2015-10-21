@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>streaming-interpreter</artifactId>
+    <artifactId>decision-interpreter</artifactId>
     <name>Explorer: Streaming Interpreter</name>
     <description>Interpreter for Stratio Streaming</description>
     <dependencies>

@@ -17,7 +17,7 @@
  */
 package com.stratio.explorer.socket;
 
-import com.stratio.explorer.socket.notebookOperations.*;
+import com.stratio.explorer.socket.explorerOperations.*;
 
 /**
  * This Factory must create the correct Operation class.
@@ -31,9 +31,9 @@ public class NotebookOperationFactory {
      * @param operation the operation id.
      * @return  The Operation.
      */
-    public static INotebookOperation getOperation(Message.OP operation){
+    public static IExplorerOperation getOperation(Message.OP operation){
 
-        INotebookOperation notebookOperation;
+        IExplorerOperation notebookOperation;
         if (operation!=null) {
             switch (operation) {
                 case LIST_NOTES:

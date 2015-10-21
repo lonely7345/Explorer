@@ -23,7 +23,7 @@ import org.java_websocket.WebSocket;
 /**
  * Created by jmgomez on 3/09/15.
  */
-public interface INotebookOperation {
+public interface IExplorerOperation {
 
     /**
      * This method execute the NoteBook Opereation.
@@ -34,5 +34,5 @@ public interface INotebookOperation {
      * @throw NotebookOperationException if a exception happens.
      *
      */
-    void execute(WebSocket conn, Notebook notebook,  Message messagereceived) throws NotebookOperationException;
+    void execute(WebSocket conn, Notebook notebook,  Message messagereceived) throws ExplorerOperationException;
 }
