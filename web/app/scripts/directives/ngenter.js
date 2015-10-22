@@ -19,7 +19,7 @@
 
 /**
  * @ngdoc directive
- * @name zeppelinWebApp.directive:ngEnter
+ * @name explorerWebApp.directive:ngEnter
  * @description
  * # ngEnter
  * Bind the <enter> event

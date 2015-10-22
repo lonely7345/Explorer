@@ -36,17 +36,17 @@
             ingestion: 'ace/mode/svg',
             shell: 'ace/mode/text',
             crossdata: 'ace/mode/xdql',
-            streaming: 'ace/mode/streaming',
+            decision: 'ace/mode/streaming',
             scala: 'ace/mode/scala',
             sql: 'ace/mode/sql',
             markdown: 'ace/mode/markdown',
             cassandra :'ace/mode/lucene'
         };
-        $scope.editorModeMap = {};
+        $scope.editorModeMap = {}; //TODO :  when include new interpreter need to map in threee diferents places change this
         $scope.editorModeMap[editorMode.ingestion] = 'ingestion';
         $scope.editorModeMap[editorMode.shell] = 'shell';
         $scope.editorModeMap[editorMode.crossdata] = 'crossdata';
-        $scope.editorModeMap[editorMode.streaming] = 'streaming';
+        $scope.editorModeMap[editorMode.streaming] = 'decision';
         $scope.editorModeMap[editorMode.sql] = 'spark-sql';
         $scope.editorModeMap[editorMode.scala] = 'spark';
         $scope.editorModeMap[editorMode.markdown] = 'markdown';
@@ -604,7 +604,7 @@
         });
         $scope.changeDefaultInterpreter = function(interpreter) {
             var newInterpreter = editorMode.crossdata;
-            switch (interpreter) {
+            switch (interpreter) { //TODO : change by eficient selector
             case 'crossdata':
                 newInterpreter = editorMode.crossdata;
                 break;
@@ -614,8 +614,8 @@
             case 'ingestion':
                 newInterpreter = editorMode.ingestion;
                 break;
-            case 'streaming':
-                newInterpreter = editorMode.streaming;
+            case 'decision':
+                newInterpreter = editorMode.streaming; //TODO : CHANGE REFERENCE
                 break;
             case 'spark':
                 newInterpreter = editorMode.scala;
@@ -626,6 +626,9 @@
             case 'shell':
                 newInterpreter = editorMode.shell;
                 break;
+            case 'cassandra' :
+                newInterpreter = editorMode.cassandra;
+                 break;
             default:
                 newInterpreter = editorMode.crossdata;
             }

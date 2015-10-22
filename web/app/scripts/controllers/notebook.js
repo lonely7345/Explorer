@@ -17,9 +17,7 @@
  */
 
 
-//(function() {
     'use strict';
-//    angular.module('explorerWebApp').controller('NotebookCtrl', NotebookCtrl);
     /**
      * @ngdoc function
      * @name explorerWebApp.controller:NotebookCtrl
@@ -31,10 +29,6 @@
      * @author ivdiaz
      *
      */
-//    NotebookCtrl.$inject = ['$scope', '$http', '$route', '$routeParams', '$location', '$rootScope', 'websocketMsgSrv',
-//    'baseUrlSrv', '$timeout'];
-//    function NotebookCtrl($scope, $http, $route, $routeParams, $location, $rootScope, websocketMsgSrv, baseUrlSrv,
-//    $timeout) {
 
     angular.module('explorerWebApp').controller('NotebookCtrl',function ($scope, $http, $route, $routeParams,
     $location,$rootScope, websocketMsgSrv, baseUrlSrv,$timeout){
@@ -42,7 +36,7 @@
         $scope.note = null;
         $scope.settings = {};
         $scope.settings.interpreter = 'crossdata';
-        $scope.settings.interpreters = ['crossdata', 'ingestion', 'spark', 'spark-sql', 'markdown', 'streaming', 'shell'];
+        $scope.settings.interpreters = ['crossdata', 'ingestion', 'spark', 'spark-sql', 'markdown', 'decision', 'shell','cassandra'];
         $scope.active = 'none';
         $scope.showEditor = false;
         $scope.editorToggled = true;
@@ -197,7 +191,6 @@
             }
             $scope.note = note;
             if ($scope.note === null) {
-//                console.log($scope.note);
                 initialize();
             } else {
                 updateNote(note);

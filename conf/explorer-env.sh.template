@@ -5,13 +5,13 @@
 # export KAFKA=                  # kafka server:port
 # export ZOOKEEPER=              # zookeeper server:port
 # export EXPLORER_JAVA_OPTS      # additional jvm options. for example, export EXPLORER_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
-# export EXPLORER_MEM            # zeppelin jvm mem options Defualt -Xmx1024m -XX:MaxPermSize=512m
+# export EXPLORER_MEM            # explorer jvm mem options Defualt -Xmx1024m -XX:MaxPermSize=512m
 
-# export EXPLORER_CONF_DIR       # Alternate zeppelin conf dir. Default is ${HBASE_HOME}/conf.
+# export EXPLORER_CONF_DIR       # Alternate explorer conf dir. Default is ${HBASE_HOME}/conf.
 # export EXPLORER_LOG_DIR        # Where log files are stored.  PWD by default.
 # export EXPLORER_PID_DIR        # The pid files are stored. /tmp by default.
-# export EXPLORER_NOTEBOOK_DIR   # Where notebook saved
-# export EXPLORER_IDENT_STRING   # A string representing this instance of zeppelin. $USER by default
+# export EXPLORER_NOTEBOOKS_DIR  # Where notebooks saved
+# export EXPLORER_IDENT_STRING   # A string representing this instance of explorer. $USER by default
 # export EXPLORER_NICENESS       # The scheduling priority for daemons. Defaults to 0.
 # export EXPLORER_SPARK_USEHIVECONTEXT    # Use HiveContext instead of SQLContext if set true. true by default.
 

@@ -19,7 +19,7 @@ package com.stratio.explorer.socket;
 
 import com.stratio.explorer.notebook.Note;
 import com.stratio.explorer.notebook.Notebook;
-import com.stratio.explorer.server.ZeppelinServer;
+import com.stratio.explorer.server.ExplorerServer;
 import org.java_websocket.WebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,7 +155,7 @@ public class ConnectionManager {
     }
 
     public void broadcastNoteList() {
-        Notebook notebook = ZeppelinServer.notebook;
+        Notebook notebook = ExplorerServer.notebook;
         List<Note> notes = notebook.getAllNotes();
         List<Map<String, String>> notesInfo = new LinkedList<Map<String, String>>();
         for (Note note : notes) {

@@ -54,7 +54,6 @@ import com.stratio.explorer.interpreter.InterpreterResult.Code;
 import com.stratio.explorer.notebook.NoteInterpreterLoader;
 import com.stratio.explorer.scheduler.Scheduler;
 import com.stratio.explorer.scheduler.SchedulerFactory;
-import com.stratio.explorer.spark.dep.DependencyResolver;
 
 import scala.Console;
 import scala.None;
@@ -81,13 +80,12 @@ public class SparkInterpreter extends Interpreter {
         Interpreter.register("s", SparkInterpreter.class.getName());
     }
 
-    private ZeppelinContext z;
+    private ExplorerContext explorerContext;
     private SparkILoop interpreter;
     private SparkIMain intp;
     private SparkContext sc;
     private ByteArrayOutputStream out;
     private SQLContext sqlc;
-    private DependencyResolver dep;
     private SparkJLineCompletion completor;
 
     private JobProgressListener sparkListener;
@@ -183,18 +181,6 @@ public class SparkInterpreter extends Interpreter {
         return sqlc;
     }
 
-    public DependencyResolver getDependencyResolver() {
-        if (dep == null) {
-            // save / load sc from common share
-            Map<String, Object> share = (Map<String, Object>) getProperty().get("share");
-            dep = (DependencyResolver) share.get("dep");
-            if (dep == null) {
-                dep = new DependencyResolver(intp, sc);
-                //share.put("dep", dep);
-            }
-        }
-        return dep;
-    }
 
     public SparkContext createSparkContext() {
         logger.info("------ Create new SparkContext " + getMaster() + " -------");
@@ -337,12 +323,10 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
             sc = getSparkContext();
             sqlc = getSQLContext();
 
-            dep = getDependencyResolver();
-
             NoteInterpreterLoader noteInterpreterLoader = (NoteInterpreterLoader) getProperty().get("noteIntpLoader");
-            z = new ZeppelinContext(sc, sqlc, dep, noteInterpreterLoader, printStream);
-            logger.info(z.sc.getConf().toDebugString());
-            logger.info(z.sqlContext.getAllConfs().mkString());
+            explorerContext = new ExplorerContext(sc, sqlc, noteInterpreterLoader, printStream);
+            logger.info(explorerContext.sc.getConf().toDebugString());
+            logger.info(explorerContext.sqlContext.getAllConfs().mkString());
 
             try {
                 if (sc.version().startsWith("1.1") || sc.version().startsWith("1.2")) {
@@ -368,11 +352,11 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
             binder = (Map<String, Object>) getValue("_binder");
             binder.put("sc", sc);
             binder.put("sqlc", sqlc);
-            binder.put("z", z);
+            binder.put("z", explorerContext);
             binder.put("out", printStream);
 
             intp.interpret(
-                    "@transient val z = _binder.get(\"z\").asInstanceOf[com.nflabs.zeppelin.spark.ZeppelinContext]");
+                    "@transient val explorerContext = _binder.get(\"explorerContext\").asInstanceOf[com.stratio.explorer.spark.ExplorerContext]");
             intp.interpret("@transient val sc = _binder.get(\"sc\").asInstanceOf[org.apache.spark.SparkContext]");
             intp.interpret("@transient val sqlc = _binder.get(\"sqlc\").asInstanceOf[org.apache.spark.sql.SQLContext]");
             intp.interpret(
@@ -466,12 +450,9 @@ Alternatively you can set the class path throuh nsc.Settings.classpath.
     }
 
     public InterpreterResult _interpret(String[] lines) {
-        //Map<String, Object> share = (Map<String, Object>)getProperty().get("share");
-        //SparkEnv env = (SparkEnv) share.get("sparkEnv");
+
         SparkEnv.set(env);
 
-        // add print("") to make sure not finishing with comment
-        // see https://github.com/NFLabs/zeppelin/issues/151
         String[] linesToRun = new String[lines.length + 1];
         for (int i = 0; i < lines.length; i++) {
             linesToRun[i] = lines[i];

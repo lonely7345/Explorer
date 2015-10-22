@@ -18,9 +18,12 @@
 package com.stratio.explorer.conf;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.reader.PathFileCalculator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.tree.ConfigurationNode;
@@ -28,9 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExplorerConfiguration extends XMLConfiguration {
-    private static final String EXPLORER_SITE_XML = "explorer-site.xml";
+
 	private static final long serialVersionUID = -8830696863101855773L;
-    private static final Logger LOG = LoggerFactory.getLogger(ExplorerConfiguration.class);
+    private static final Logger Logger = LoggerFactory.getLogger(ExplorerConfiguration.class);
 	private static ExplorerConfiguration conf;
 
 	/**
@@ -43,59 +46,26 @@ public class ExplorerConfiguration extends XMLConfiguration {
 		load(url);
 	}
 
-	public ExplorerConfiguration() {
-		ConfVars[] vars = ConfVars.values();
-		for(ConfVars v : vars){
-			if(v.getType()==ConfVars.VarType.BOOLEAN){
-				this.setProperty(v.getVarName(), v.getBooleanValue());
-			} else if(v.getType()==ConfVars.VarType.LONG){
-				this.setProperty(v.getVarName(), v.getLongValue());
-			} else if(v.getType()==ConfVars.VarType.INT){
-				this.setProperty(v.getVarName(), v.getIntValue());
-			} else if(v.getType()==ConfVars.VarType.FLOAT){
-				this.setProperty(v.getVarName(), v.getFloatValue());
-			} else if(v.getType()==ConfVars.VarType.STRING){
-				this.setProperty(v.getVarName(), v.getStringValue());
-			} else {
-				throw new RuntimeException("Unsupported VarType");
-			}
-		}
-	}
 
+	//TODO : The XML file should be loaded in Properties Class
 	/**
 	 * Load from resource
 	 * @throws ConfigurationException
 	 */
-	public static ExplorerConfiguration create() {
+	public static ExplorerConfiguration create(String nameconfFile) {
 		if (conf != null) return conf;
-
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		URL url;
-
-		url = ExplorerConfiguration.class.getResource(EXPLORER_SITE_XML);
-		if (url == null) {
-			 ClassLoader cl = ExplorerConfiguration.class.getClassLoader();
-			 if (cl!=null) {
-				 url = cl.getResource(EXPLORER_SITE_XML);
-			 }
+		try {
+			String path  =new PathFileCalculator().getPath(nameconfFile, ConstantsFolder.CT_EXTENSION_FILE_XML);
+			URL url = new File(path).toURI().toURL();
+			Logger.info("Load configuration from " + url);
+			conf = new ExplorerConfiguration(url);
+		}catch(MalformedURLException  | ConfigurationException e){
+			Logger.error("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML );
+			throw new RuntimeException("File "+ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML + " not exist ");
+		}catch(FolderNotFoundException e){
+			Logger.info("folder configuration not exist ");
+			throw new RuntimeException("folder configuration not exist ");
 		}
-		if (url == null) {
-			url = classLoader.getResource(EXPLORER_SITE_XML);
-		}
-
-		if (url == null){
-            LOG.warn("Failed to load configuration, proceeding with a default");
-		    conf =  new ExplorerConfiguration();
-		} else {
-			try {
-				LOG.info("Load configuration from "+url);
-			    conf = new ExplorerConfiguration(url);
-			} catch (ConfigurationException e) {
-			    LOG.warn("Failed to load configuration from " + url + " proceeding with a default", e);
-			    conf = new ExplorerConfiguration();
-			}
-		}
-
 		return conf;
 	}
 
@@ -229,7 +199,7 @@ public class ExplorerConfiguration extends XMLConfiguration {
 	}
 
 	public String getExplorerDir(){
-		return getRelativeDir(ConfVars.EXPLORER_NOTEBOOK_DIR);
+		return getRelativeDir(ConfVars.EXPLORER_NOTEBOOKS_DIR);
 	}
 
 	public String getInterpreterDir(){
@@ -274,17 +244,17 @@ public class ExplorerConfiguration extends XMLConfiguration {
 		return CROSSDATA_DEFAULT_SETTINGS_PATH;
 	}
 
-
+	//TODO : This enum should be removed when load in properties class
 	public static enum ConfVars {
-		EXPLORER_HOME("zeppelin.home", "../"),
-		EXPLORER_PORT("zeppelin.server.port", 8084),
-		EXPLORER_WAR("zeppelin.war", "../web/src/main/webapp"),
-	    EXPLORER_API_WAR("zeppelin.api.war", "../doc/src/main/swagger"),
-		EXPLORER_INTERPRETERS("zeppelin.interpreters", "com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter"),
-		EXPLORER_INTERPRETER_DIR("zeppelin.interpreter.dir", "interpreter"),
-		EXPLORER_INTERPRETER_MODE("zeppelin.interpreter.mode", "share"),     // 'separate', 'share'
-		EXPLORER_ENCODING("zeppelin.encoding", "UTF-8"),
-		EXPLORER_NOTEBOOK_DIR("zeppelin.notebook.dir", "explorer")
+		EXPLORER_HOME("explorer.home", "../"),
+		EXPLORER_PORT("explorer.server.port", 8084),
+		EXPLORER_WAR("explorer.war", "../web/src/main/webapp"),
+	    EXPLORER_API_WAR("explorer.api.war", "../doc/src/main/swagger"),
+		EXPLORER_INTERPRETERS("explorer.interpreters", "com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter"),
+		EXPLORER_INTERPRETER_DIR("explorer.interpreter.dir", "interpreter"),
+		EXPLORER_INTERPRETER_MODE("explorer.interpreter.mode", "share"),     // 'separate', 'share'
+		EXPLORER_ENCODING("explorer.encoding", "UTF-8"),
+		EXPLORER_NOTEBOOKS_DIR("explorer.notebook.dir", "explorer")
 		;
 
 		private String varName;
@@ -406,5 +376,4 @@ public class ExplorerConfiguration extends XMLConfiguration {
 	        abstract void checkType(String value) throws Exception;
 	    }
 	}
-
 }
