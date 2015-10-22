@@ -2,32 +2,15 @@
 Configuration
 =============
 
-In Stratio Explorer some  interpreters end point may be 
-configure by user using the same web client.
+To configure Stratio Explorer you need to have some configration files
+in etc/sds/conf folder.
 
-Following interpreters end point can be configure by user.
+To connect Cassandra you need file with name Cassandra and thos cofiguration :
 
-- Crossdata
-- Ingestion
-- Cassandra
+   cassandra.host=127.0.0.1
+   cassandra.port=9042
 
-To configure any interpreter please follow this steps:
-
-1.-Click in Stratio button 
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. image:: images/stratio_button.png
+cassandra.host must be filled with host where cassandra listen.
+cassandra.port must be filled with port where cassandra listen.
 
 
-2.-Click in Settings option
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. image:: images/settings_option.png
-
-
-3.-Select interpreter to configure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. image:: images/all_settings.png
-
-To configure any interpreter button "+" should be clicked
