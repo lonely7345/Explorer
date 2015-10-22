@@ -9,9 +9,11 @@ Explorer documentation
    :numbered: 3
    :titlesonly:
 
-   0_introduction
-   00_feature_guide
+   00_introduction
+   01_feature_guide
+   02_architecture_guide
    04_how_do_i_get_started
+   10_relates_other
    install
 
 Link
