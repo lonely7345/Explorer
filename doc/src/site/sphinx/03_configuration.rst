@@ -22,7 +22,7 @@ To connect with Crossdata you need file with name driver-application.conf and th
 
 To connect with Ingestion you need file with name ingestion.conf and this parameters :
 
-	ingestion.home=/instalation_ingestion_folder/flume-ingestion/stratio-ingestion-0.5.0-SNAPSHOT
+-	ingestion.home=/instalation_ingestion_folder/flume-ingestion/stratio-ingestion-0.5.0-SNAPSHOT
 
 
 Also exist many files created by developers and can be remove or modify and should be in 
