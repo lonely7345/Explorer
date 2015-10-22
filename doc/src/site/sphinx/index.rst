@@ -6,7 +6,7 @@ Explorer documentation
 
 .. toctree::
    :maxdepth: 4
-   :numbered: 2
+   :numbered: 3
    :titlesonly:
 
    0_introduction
