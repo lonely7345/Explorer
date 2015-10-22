@@ -16,7 +16,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>explorer-engine</artifactId>
-
             <version>0.4.1-RC1-SNAPSHOT</version>
 
             <scope>provided</scope>
