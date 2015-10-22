@@ -22,10 +22,16 @@ Stratio Crossdata interpreter
 Explorer allows to the user interact with Stratio Crossdata with a web based interface.
 If you want to know about Stratio Crossdata you follow this URL: http://docs.stratio.com/modules/crossdata/development/
 
+Stratio Decision Interpreter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Explorer allows to the user interact with Stratio Decision with a web based interface.
+If you want to know about Stratio Decision you follow this URL: http://docs.stratio.com/modules/decision/development/
+
+
 Stratio Ingestion Interpreter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Explorer allows to the user interact with Stratio Ingestion with a web based interface.
-If you want to know about Stratio Decision you follow this URL: http://docs.stratio.com/modules/flume-ingestion/development/
+If you want to know about Stratio Ingestion you follow this URL: http://docs.stratio.com/modules/flume-ingestion/development/
 
 Apache Cassandra Interpreter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
