@@ -18,6 +18,7 @@
 package com.stratio.crossdata;
 
 import com.stratio.crossdata.common.result.*;
+import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.utils.CrossdataUtils;
 import com.stratio.explorer.interpreter.InterpreterResult;
 import com.stratio.explorer.interpreter.ResultHandler;
