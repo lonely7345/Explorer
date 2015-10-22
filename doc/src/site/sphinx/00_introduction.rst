@@ -10,4 +10,5 @@ Stratio Notebook is based in Apache Zeppelin .
 
 With Stratio Notebook you can make paragraphs that connect with diferents platforms , 
 write insructions to the platform and visualize results in your web browser with 
-formats (text and diferents type graphs)
+formats (text and diferents type graphics)
+
