@@ -7,8 +7,8 @@ in etc/sds/conf folder.
 
 To connect with Cassandra you need file with name Cassandra and this parameters :
 
-   cassandra.host=127.0.0.1
-   cassandra.port=9042
+   cassandra.host=127.0.0.1 
+   cassandra.port=9042 
 
 cassandra.host must be filled with host where cassandra listen.
 cassandra.port must be filled with port where cassandra listen.
@@ -16,11 +16,11 @@ cassandra.port must be filled with port where cassandra listen.
 
 To connect with Crossdata you need file with name driver-application.conf and this parameters:
 
-	crossdata-driver.config.cluster.name = "CrossdataServerCluster"
-	crossdata-driver.config.cluster.actor = "crossdata-server"
-	crossdata-driver.config.cluster.hosts = ["127.0.0.1:13420"]
-	crossdata-driver.config.retry.times = 3
-	crossdata-driver.config.retry.duration = 120s
+	crossdata-driver.config.cluster.name = "CrossdataServerCluster" 
+	crossdata-driver.config.cluster.actor = "crossdata-server" 
+	crossdata-driver.config.cluster.hosts = ["127.0.0.1:13420"] 
+	crossdata-driver.config.retry.times = 3 	
+	crossdata-driver.config.retry.duration = 120s 
 
 
 crossdata-driver.config.cluster.name must be filled with cluster name.
