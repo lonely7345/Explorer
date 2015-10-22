@@ -14,6 +14,8 @@ Explorer documentation
    02_architecture_guide
    03_configuration
    04_how_do_i_get_started
+   06_reference_guide
+   07_quick_reference
    10_relates_other
    install
 
