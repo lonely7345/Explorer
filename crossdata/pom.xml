@@ -14,7 +14,7 @@
     <name>Explorer: Crossdata interpreter</name>
     <url>https://github.com/Stratio/crossdata</url>
     <properties>
-        <crossdata.version>0.4.3</crossdata.version>
+        <crossdata.version>0.5.0-RC1</crossdata.version>
     </properties>
 
     <dependencies>
