@@ -18,6 +18,8 @@ Explorer documentation
    07_quick_reference
    10_relates_other
    13_relases_notes
+   10_relates_other
+>>>>>>> Add interact with others
    install
 
 Link
