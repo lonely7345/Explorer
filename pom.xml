@@ -54,9 +54,7 @@
             <organizationUrl>http://www.nflabs.com</organizationUrl>
         </developer>
     </developers>
-
     <inceptionYear>2013</inceptionYear>
-
     <modules>
         <module>engine</module>
         <module>crossdata</module>
