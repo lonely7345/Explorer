@@ -16,6 +16,10 @@ Table of contents
 -  `3) PARAGRAPHS <#paragraphs>´__
     -  `3.1) EXECUTE <#execute>`__
 
+-  `4) SETINGS <#settings>`__
+    - `4.1) INTERPRETERS <#interpreters>´__
+
+
 
 1.- Login Explorer
 ==================
@@ -81,5 +85,23 @@ Before interpreter have been selected the user must to write an instruction of i
 
 If you want stop the execution then click stop button this button show when click in play button.
 
+4.- settings
+==============
 
+User can modify setting if button settings is clicked.
+
+.. image:: images/settings_option.png
+
+4.1.- Interpreters 
+------------------
+
+You can change configuration of Stratio Ingestion , Stratio Crossdata and Cassandra interpreter.
+
+
+.. image:: images/settings_interpreters.png
+
+
+Values must be configure same parameters that explained `in configuration  <03_configuration.rst>`__
+
+to save new settings user must click "save" button
 
