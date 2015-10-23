@@ -23,7 +23,6 @@ Explorer documentation
    12_faq
    13_relases_notes
 
-
 Link
 ====================================
 .. toctree::
