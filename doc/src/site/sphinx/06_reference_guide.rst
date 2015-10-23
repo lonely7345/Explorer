@@ -17,7 +17,7 @@ Table of contents
     -  `3.1) EXECUTE <#execute>`__
 
 -  `4) SETINGS <#settings>`__
-    - `4.1) INTERPRETERS <#interpreters>´__
+    - `4.1) INTERPRETERS <#interpreters>`__
     
 
 1.- Login Explorer
