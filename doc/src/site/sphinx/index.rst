@@ -17,6 +17,7 @@ Explorer documentation
    06_reference_guide
    07_quick_reference
    10_relates_other
+   12_faq
    13_relases_notes
    10_relates_other
 >>>>>>> Add interact with others
