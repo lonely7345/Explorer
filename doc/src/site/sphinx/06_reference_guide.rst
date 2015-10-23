@@ -20,7 +20,6 @@ Table of contents
     - `4.1) INTERPRETERS <#interpreters>`__
 
 
-
 1.- Login Explorer
 ==================
 
