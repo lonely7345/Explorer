@@ -10,8 +10,11 @@ Table of contents
 
 -  `2) NOTEBOOKS <#notebooks>`__
     -  `2.1) CREATE <#create>`__
-    -  `2.2) CHANGE NAME <#change-name>
+    -  `2.2) CHANGE NAME <#change-name>__
     -  `2.3) REMOVE <#remove>`__
+
+-  `3) PARAGRAPHS <#paragraphs>´__
+    -  `3.1) EXECUTE <#execute>`__
 
 
 1.- Login Explorer
@@ -29,7 +32,7 @@ then you enter in Stratio Explorer . If Username or Password is wrong then you w
 2.- Notebooks
 ==============
 
-The main element of Stratio explorer is a notebooks .
+The main element of Stratio explorer are notebooks .
 
 2.1.- Create 
 ------------
@@ -58,4 +61,25 @@ User can change name of notebook in this input type
 To remove notebook click "x" button 
 
 .. image:: images/generated_notebook.png
+
+3.- Paragraphs
+==============
+
+Notebooks are composed by paragraphs. User can execute interpreters in paragraphs. The first paragraph 
+is created automatically with the Notebook. Next paragraphs will be created when execute actual paragraph first time.
+
+3.1.- Execute 
+-------------
+
+To execute a paragraph user must select a interpreter in paragraph.
+
+.. image:: images/interpreters.png
+
+Before interpreter have been selected the user must to write an instruction of interpreter. Result show under the command .
+
+.. image:: images/execution.png
+
+If you want stop the execution then click stop button this button show when click in play button.
+
+
 
