@@ -1,32 +1,35 @@
+<!-- TODO : include all properties in this file -->
 <configuration>
 
+
+
     <property>
-        <name>zeppelin.server.port</name>
+        <name>explorer.server.port</name>
         <value>8084</value>
         <description>Server port. port+1 is used for web socket.</description>
     </property>
 
     <property>
-        <name>zeppelin.notebook.dir</name>
+        <name>explorer.notebook.dir</name>
         <value>notebooks</value>
-        <description>notebook persist</description>
+        <description>notebooks persist</description>
     </property>
 
     <property>
-        <name>zeppelin.interpreter.dir</name>
+        <name>explorer.interpreter.dir</name>
         <value>interpreter</value>
         <description>Interpreter implementation base directory</description>
     </property>
 
     <property>
-        <name>zeppelin.interpreter.mode</name>
+        <name>explorer.interpreter.mode</name>
         <value>share</value>
         <description>Interpreter mode. separate or share. 'separate' for separate interpreter for each notebook. 'share' for share single interpreter for all notebook</description>
     </property>
     <!--TODO study if we can change this to use convention over configuration, for example all class under com.stratio.<module>.interpreter.<module>Interpreter will be configure like an interpreter -->
     <property>
-        <name>zeppelin.interpreters</name>
-        <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.streaming.StreamingInterpreter,com.stratio.explorer.spark.SparkInterpreter,com.stratio.explorer.spark.SparkSqlInterpreter,com.stratio.explorer.markdown.Markdown,com.stratio.explorer.cassandra.CassandraInterpreter,com.stratio.explorer.shell.ShellInterpreter</value>
+        <name>explorer.interpreters</name>
+        <value>com.stratio.crossdata.CrossdataInterpreter,com.stratio.ingestion.IngestionInterpreter,com.stratio.decision.DecisionInterpreter,com.stratio.explorer.spark.SparkInterpreter,com.stratio.explorer.spark.SparkSqlInterpreter,com.stratio.explorer.markdown.Markdown,com.stratio.explorer.cassandra.CassandraInterpreter,com.stratio.explorer.shell.ShellInterpreter</value>
         <description>Comma separated interpreter configurations. First interpreter become a default</description>
 
     </property>

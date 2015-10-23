@@ -16,9 +16,9 @@
  * under the License.
  */
 
-//(function() {
+
     'use strict';
-//    angular.module('explorerWebApp').controller('NotebookSelectorCtrl', NotebookSelectorCtrl);
+
     /**
      * @ngdoc function
      * @name explorerWebApp.controller:NotebookSelectorCtrl
@@ -30,8 +30,6 @@
      * @author anthonycorbacho
      *
      */
-//    NotebookSelectorCtrl.$inject = ['$scope', '$rootScope', '$http', 'websocketMsgSrv'];
-//    function NotebookSelectorCtrl ($scope, $rootScope, $http, websocketMsgSrv){
 
     angular.module('explorerWebApp').controller('ExplorerSelectorCtrl',function($scope, $rootScope, $http,
     websocketMsgSrv){
@@ -83,4 +81,3 @@
             });
         };
     });
-//})()

@@ -19,7 +19,7 @@
 
 /**
  * @ngdoc directive
- * @name zeppelinWebApp.directive:delete
+ * @name explorerWebApp.directive:delete
  * @description
  * # ngDelete
  */

@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 
 import com.stratio.explorer.conf.ConstantsFolder;
 
-//TODO : METHOD CODE WILL NEED CLEAN
+//TODO : METHOD CALCULATEPATH WILL NEED CLEAN
 public class EnvironmentPathCalculator implements PathCalculator{
 
     private String stringFolder;

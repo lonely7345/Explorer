@@ -24,6 +24,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.stratio.explorer.conf.ConstantsFolder;
 import org.apache.spark.SparkContext;
 import org.apache.spark.scheduler.ActiveJob;
 import org.apache.spark.scheduler.DAGScheduler;
@@ -68,7 +69,7 @@ public class SparkSqlInterpreter extends Interpreter {
     public void open() {
 //        getSparkInterpreter().open();
 //        getSparkInterpreter().interpret("");
-        ExplorerConfiguration conf = ExplorerConfiguration.create();
+        ExplorerConfiguration conf = ExplorerConfiguration.create(ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE);
         this.maxResult = conf.getInt("NOTEBOOK_SPARK_MAX_RESULT", "zeppelin.spark.maxResult", 10000);
     }
 

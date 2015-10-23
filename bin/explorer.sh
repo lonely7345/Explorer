@@ -32,7 +32,7 @@ EXPLORER_LOGFILE=$EXPLORER_LOG_DIR/explorer-$EXPLORER_IDENT_STRING-$HOSTNAME.log
 echo EXPLORER_HOME $EXPLORER_HOME
 echo EXPLORER_LOGFILE $EXPLORER_LOG_DIR/explorer-$EXPLORER_IDENT_STRING-$HOSTNAME.log
 
-EXPLORER_SERVER=com.stratio.explorer.server.ZeppelinServer
+EXPLORER_SERVER=com.stratio.explorer.server.ExplorerServer
 JAVA_OPTS+=" -Dnexplorer.log.file=$EXPLORER_LOGFILE"
 
 if [[ ! -d "$EXPLORER_LOG_DIR" ]]; then

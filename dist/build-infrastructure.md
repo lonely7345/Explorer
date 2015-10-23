@@ -27,7 +27,7 @@ build modules          => *.jar, war
 test                   => UnitTest reports
 package -P package-deb => .deb file
 package -P package-rpm => .rpm file
-integration-test       => selenium over running zeppelin-server (from package)
+integration-test       => selenium over running explorer-server (from package)
 
 
 verify:
