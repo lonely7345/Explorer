@@ -1,7 +1,6 @@
     <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.stratio</groupId>
@@ -54,9 +53,7 @@
             <organizationUrl>http://www.nflabs.com</organizationUrl>
         </developer>
     </developers>
-
     <inceptionYear>2013</inceptionYear>
-
     <modules>
         <module>engine</module>
         <module>crossdata</module>
@@ -992,6 +989,5 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
     </build>
 </project>

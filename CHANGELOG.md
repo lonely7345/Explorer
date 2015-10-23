@@ -4,6 +4,8 @@
 
 * Add cassandra Interpreter
 * Notebook becomes Explorer
+* Change Stratio Streaming 0.8.1 by Stratio Decision 0.9.0
+* Change Stratio Crossdata 0.4 by 0.5
 
 ## 0.3.4 (September 2015)
 
