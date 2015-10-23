@@ -6,10 +6,10 @@ Reference Guide
 Table of contents
 *****************
 
--  `1) LOGIN EXPLORER<#login-explorer>`__
+-  `1) LOGIN EXPLORER <#login-explorer>`__
 
 -  `2) NOTEBOOKS <#notebooks>`__
-   -   `2.1) CREATE <#create>`__
+    -  `2.1) CREATE <#create>`__
 
 
 
