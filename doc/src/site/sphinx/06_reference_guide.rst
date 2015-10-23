@@ -15,6 +15,8 @@ Table of contents
 
 -  `3) PARAGRAPHS <#paragraphs>`__
     -  `3.1) EXECUTE <#execute>`__
+    -  `2.2) CHANGE NAME <#change-name>
+    -  `2.3) REMOVE <#remove>`__
 
 -  `4) SETINGS <#settings>`__
     - `4.1) INTERPRETERS <#interpreters>`__
@@ -35,7 +37,11 @@ then you enter in Stratio Explorer . If Username or Password is wrong then you w
 2.- Notebooks
 ==============
 
+<<<<<<< HEAD
 The main element of Stratio explorer are notebooks .
+=======
+The main element of Stratio explorer is a notebooks .
+>>>>>>> docu Notebooks
 
 
 2.1.- Create 
@@ -122,4 +128,3 @@ You can change configuration of Stratio Ingestion , Stratio Crossdata and Cassan
 
 Values must be configure same parameters that explained `in configuration  <03_configuration.rst>`__
 to save new settings user must click "save" button
-
