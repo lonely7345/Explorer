@@ -10,10 +10,10 @@ Table of contents
 
 -  `2) NOTEBOOKS <#notebooks>`__
     -  `2.1) CREATE <#create>`__
-    -  `2.2) CHANGE NAME <#change-name>__
+    -  `2.2) CHANGE NAME <#change-name>`__
     -  `2.3) REMOVE <#remove>`__
 
--  `3) PARAGRAPHS <#paragraphs>´__
+-  `3) PARAGRAPHS <#paragraphs>`__
     -  `3.1) EXECUTE <#execute>`__
 
 -  `4) SETINGS <#settings>`__
