@@ -31,10 +31,11 @@ crossdata-driver.config.retry.duration   120s                        Time to wai
 
 To connect with Ingestion you need file with name ingestion.conf and this parameters :
 
-=================  ======================
+=================  ===============================
 Parameter          Description
-=================  ======================
- ingestion.home     folder where injestions jar is
+=================  ===============================
+ingestion.home     folder where injestions jar is
+=================  ===============================
 
 
 Also exist many files created by developers and can not be removed .
@@ -47,12 +48,12 @@ Also exist many files created by developers and can not be removed .
 
 Next values of explorer-site.xml can be modified.
 
-=======================  =========================================================== 
+=======================  ============================================================ 
 Parameter                Description
-=======================  =========================================================== 
+=======================  ============================================================ 
 explorer.server.port     port where explorer server listen , next port will be free
 explorer.notebook.dir    folder where notebooks will be saved
-=======================  ===========================================================
+=======================  ============================================================
 
 
 
