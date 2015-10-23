@@ -19,15 +19,15 @@ cassandra.port   9042            Cassandra Port
 To connect with Crossdata you need file with name driver-application.conf and this parameters:
 
 
-======================================  ==========================  ========================================
-Parameter                               Default Value               Description
-======================================  ==========================  ========================================
-crossdata-driver.config.cluster.name    "CrossdataServerCluster"    Cluster
-crossdata-driver.config.cluster.actor   "crossdata-server"          Server 
-crossdata-driver.config.cluster.hosts   ["127.0.0.1:13420"]         Host and port
-crossdata-driver.config.retry.times     3 	                        times to retry query
-crossdata-driver.config.retry.duration  120s                        time to wait result in synchronous mode
-======================================  ==========================  =========================================   
+=======================================  ==========================  =========================================
+Parameter                                Default Value               Description
+=======================================  ==========================  =========================================
+crossdata-driver.config.cluster.name     "CrossdataServerCluster"    Cluster
+crossdata-driver.config.cluster.actor    "crossdata-server"          Server 
+crossdata-driver.config.cluster.hosts    ["127.0.0.1:13420"]         Host and port
+crossdata-driver.config.retry.times      3 	                         Times to retry query
+crossdata-driver.config.retry.duration   120s                        Time to wait result in synchronous mode
+=======================================  ==========================  =========================================   
 
 To connect with Ingestion you need file with name ingestion.conf and this parameters :
 
