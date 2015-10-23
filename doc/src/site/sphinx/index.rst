@@ -20,6 +20,7 @@ Explorer documentation
    09_best_practices
    10_relates_other
    11_Benchmarks
+   12_faq
    13_relases_notes
 
 
