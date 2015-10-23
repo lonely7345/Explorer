@@ -16,86 +16,24 @@ Requirements
 Getting Started
 ---------------
 
-Build
+Install
 ~~~~~
 
-If you want to build Explorer from the source, please first clone this
-repository. And then:
+Explorer is packed in a rpm and y a deb file. If you want install Stratio Explorer choses the correct file for your operating symen and install it.
 
-::
-
-    mvn clean package
-
-Configure
-~~~~~~~~~
-
-If you wish to configure Explorer options (like port number), configure
-the following files:
-
-::
-
-    ./conf/explorer-env.sh
-    ./conf/explorer-site.xml
-
-If you want to configure Apache Mesos you must uncomment this lines of :
-
-::
-
-    # ./conf/notebook-env.sh
-    export MASTER=mesos://...
-    export NOTEBOOK_JAVA_OPTS="-Dspark.executor.uri=/path/to/spark-*.tgz" or SPARK_HOME="/path/to/spark_home"
-    export MESOS_NATIVE_LIBRARY=/path/to/libmesos.so
-
-If you set ``SPARK_HOME``, you should deploy spark binary on the same
-location to all worker nodes. And if you set ``spark.executor.uri``,
-every worker can read that file on its node.
-
-**Stratio Crossdata configuration files**
-
-You can modify Stratio Crossdata driver's properties in:
-
-::
-
-    ./conf/crossdata/driver-application.conf
-
-For using another Stratio Crossdata's version modify:
-
-::
-
-    ./crossdata/pom.xml
-
-::
-
-        <properties>
-            <crossdata.version>HERE_YOUR_CROSSDATA'S_VERSION</crossdata.version>
-        </properties>
-
-**Stratio Ingestion configuration files**
-
-You can modify Stratio Ingestion driver's properties in:
-
-::
-
-    ./conf/ingestions.conf
-
-**Apache Cassandra configuration files**
-
-::
-
-    ./cassandra/src/main/resources/cassandra.properties
 
 Run
 ~~~
 
 ::
 
-    ./bin/notebook.sh -> to launch a console session depending instance
+    ./bin/explorer.sh -> to launch a console session depending instance
 
 or
 
 ::
 
-    ./bin/notebook-daemon.sh start -> to launch the service
+    ./bin/explorer-daemon.sh start -> to launch the service
 
 The default URL is:
 
@@ -116,7 +54,7 @@ Stop
 
 ::
 
-    ./bin/notebook-daemon.sh stop
+    ./bin/explorer-daemon.sh stop
 
 browse localhost:8084 in your browser. 8085 port should be accessible
 for websocket connection. **For configuration details check ./conf
