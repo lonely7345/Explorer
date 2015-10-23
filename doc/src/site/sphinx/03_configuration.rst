@@ -8,12 +8,12 @@ in etc/sds/conf folder.
 To connect with Cassandra you need file with name Cassandra and this parameters :
 
 
-==============  ==============  ==============
-Parameter        Default Value  Description
-==============  ==============  ==============
-cassandra.host  127.0.0.1       Cassandra Host 
-cassandra.port  9042            Cassandra Port
-==============  =============== ============== 
+===============  ==============  ===============
+Parameter        Default Value   Description
+===============  ==============  ===============
+cassandra.host   127.0.0.1       Cassandra Host 
+cassandra.port   9042            Cassandra Port
+===============  ==============  =============== 
 
 
 To connect with Crossdata you need file with name driver-application.conf and this parameters:
