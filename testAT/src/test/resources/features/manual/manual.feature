@@ -20,3 +20,4 @@ Feature: Manual template
 
       | something | value |
       | example   | test  |
+

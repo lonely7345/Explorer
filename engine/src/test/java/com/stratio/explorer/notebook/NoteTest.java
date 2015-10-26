@@ -14,6 +14,7 @@ import org.quartz.Scheduler;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -290,7 +291,7 @@ public class NoteTest {
         EasyMock.expectLastCall();
         Paragraph paragraph = new Paragraph(jobListener, replLoader);
         paragraph.setTitle("PARAGRAPH_TITLE");
-        Whitebox.setInternalState(paragraph, "dateCreated", new Date(1000000));
+        Whitebox.setInternalState(paragraph, "dateCreated", new SimpleDateFormat("dd/MM/yyyy HH:mm").parse("05/01/1970 12:43"));
         Whitebox.setInternalState(paragraph, "jobName", "paragraph_1444033271219_-1226681848");
 
 
