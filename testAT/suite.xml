@@ -1,0 +1,7 @@
+<suite name="Explorer" verbose="10" parallel="instances" thread-count="1">
+    <test name="explorer acceptance tests">
+        <packages>
+            <package name="com.stratio.explorer.testsAT.*"/>
+        </packages>
+    </test>
+</suite>
