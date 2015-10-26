@@ -15,24 +15,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.reader;
+
+package com.stratio.explorer.functions;
+
+import java.io.File;
+
+public class SearchFileFunction implements SearcherFunction<File> {
 
 
-import java.util.ArrayList;
-import java.util.List;
+    private String fileName;
 
-import com.stratio.explorer.conf.ConstantsFolder;
 
-public class PathCalculatorListBuilder {
-
-    /**
-     * Build list with all pathCalculators
-     * @return List with path Calculators
-     */
-    public static List<PathCalculator> build(){
-        List<PathCalculator> listCalculators = new ArrayList<>();
-       // listCalculators.add(new NormalPathCalculator(ConstantsFolder.CT_FOLDER_CONFIGURATION));
-       // listCalculators.add(new EnvironmentPathCalculator(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV));
-        return listCalculators;
+    public SearchFileFunction(String fileName) {
+        this.fileName = fileName;
     }
+
+    @Override
+    public boolean isValid(File file) {
+        return fileName.equals(file.getName());
+    }
+
 }
+

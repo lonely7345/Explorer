@@ -308,7 +308,7 @@ public class NoteTest {
         EasyMock.expectLastCall();
         Paragraph paragraph = new Paragraph(jobListener, replLoader);
         paragraph.setTitle("PARAGRAPH_TITLE");
-        Whitebox.setInternalState(paragraph, "dateCreated", new SimpleDateFormat("dd/MM/yyyy HH:mm").parse("05/01/1970 12:43"));
+        Whitebox.setInternalState(paragraph, "dateCreated", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("05/01/1970 12:16:40"));
         Whitebox.setInternalState(paragraph, "jobName", "paragraph_1444033271219_-1226681848");
 
 

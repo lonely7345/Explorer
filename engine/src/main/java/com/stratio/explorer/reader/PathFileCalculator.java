@@ -36,7 +36,9 @@ public class PathFileCalculator {
     public String getPath(String nameFile,String extensionFile){
 
 
-        return parentProjectFolder() +nameFile+extensionFile;
+        return new FileConfLocator().locate(nameFile+extensionFile);
+
+     //   return parentProjectFolder() +nameFile+extensionFile;
     }
 
 

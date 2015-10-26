@@ -15,24 +15,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.reader;
+
+package com.stratio.explorer.doubles;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import com.stratio.explorer.functions.SearcherFunction;
 
-import com.stratio.explorer.conf.ConstantsFolder;
+public class DoubleSearch implements SearcherFunction<String>{
 
-public class PathCalculatorListBuilder {
+    private String value;
 
-    /**
-     * Build list with all pathCalculators
-     * @return List with path Calculators
-     */
-    public static List<PathCalculator> build(){
-        List<PathCalculator> listCalculators = new ArrayList<>();
-       // listCalculators.add(new NormalPathCalculator(ConstantsFolder.CT_FOLDER_CONFIGURATION));
-       // listCalculators.add(new EnvironmentPathCalculator(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV));
-        return listCalculators;
+
+    public DoubleSearch(String value){
+        this.value = value;
+    }
+
+
+    @Override
+    public boolean isValid(String value) {
+        return value.equals(this.value);
     }
 }

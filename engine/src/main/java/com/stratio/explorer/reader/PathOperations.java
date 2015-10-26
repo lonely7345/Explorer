@@ -24,6 +24,8 @@ import java.nio.file.Paths;
 
 import com.stratio.explorer.conf.ConstantsFolder;
 
+//TODO : THIS FILE WILL BE REMOVED
+//
 public class PathOperations {
 
     private Path path;
