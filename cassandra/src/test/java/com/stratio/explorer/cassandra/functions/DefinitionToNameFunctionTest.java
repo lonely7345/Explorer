@@ -38,6 +38,6 @@ public class DefinitionToNameFunctionTest {
     @Test public void whenCallTransformFunction(){
         String name ="";
         DefinitionToNameFunction function = new DefinitionToNameFunction();
-        assertThat(function.transform(new DoubleDefinition().buildDefinitionWithName(name)), is(name));
+        assertThat("Result should be equals name of column Definition",function.transform(new DoubleDefinition().buildDefinitionWithName(name)), is(name));
     }
 }

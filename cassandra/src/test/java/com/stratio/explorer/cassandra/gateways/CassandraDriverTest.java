@@ -41,8 +41,6 @@ public class CassandraDriverTest  {
 
     private CassandraDriver driver;
 
-
-
     @Before
     public void setUp() throws InterruptedException, IOException {
         driver = new CassandraDriver(new MockSessionCassandra(new DoubleSession().mockSession()));
@@ -54,7 +52,7 @@ public class CassandraDriverTest  {
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
         List<String> header = new ArrayList<>();
         header.add("");
-        assertThat(result.header(), is(header));
+        assertThat("Header sould be equals a header table",result.header(), is(header));
     }
 
 
@@ -62,7 +60,7 @@ public class CassandraDriverTest  {
     public void rowsWillBerecovered(){
 
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
-        assertThat(result.rows().size(), is(1));
+        assertThat("rows should be equals to result in table",result.rows().size(), is(1));
     }
 
 
@@ -71,6 +69,6 @@ public class CassandraDriverTest  {
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
         RowData rows = result.rows().get(0);
         List<CellData> cells = rows.cells();
-        assertThat(cells.size(), is(1));
+        assertThat("Cells should be equals number cells in row",cells.size(), is(1));
     }
 }

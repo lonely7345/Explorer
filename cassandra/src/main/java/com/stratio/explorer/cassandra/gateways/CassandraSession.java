@@ -28,6 +28,9 @@ import com.stratio.explorer.gateways.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 
 /**
@@ -41,8 +44,9 @@ public class CassandraSession implements Connector<Session> {
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
-    private int port = 0;
-    private String host = "";
+  //  private int port = 0;
+  //  private String host = "";
+    private Collection<InetSocketAddress> contacPoints = new ArrayList<>();
     private boolean isNewConfiguration=true;
 
     /**
@@ -62,9 +66,14 @@ public class CassandraSession implements Connector<Session> {
         }
     }
 
-    public void buildProperties(Properties properties){
-        int port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
-        String host =properties.getProperty(StringConstants.HOST);;
+    private void buildProperties(Properties properties){
+
+      //  int port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
+      //  String host =properties.getProperty(StringConstants.HOST);
+        Collection<InetSocketAddress> localConcatpoint = new PropertiesReader().getListSocketAddres(properties);
+        if (!contacPoints.containsAll(localConcatpoint) || localConcatpoint.size() == contacPoints.size()){
+
+        }
         if (host==null ){
             String errorMessage = " Host property is not filled";
             logger.error(errorMessage);
@@ -80,13 +89,16 @@ public class CassandraSession implements Connector<Session> {
 
     /**
      *
-     * @return
+     * @return Session with cassandra
      */
     @Override
     public Session getConnector() {
         try {
             if (isNewConfiguration){
-                Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
+                InetSocketAddress socket = new InetSocketAddress(host,port);
+                Collection<InetSocketAddress> contactPointWithPorts =  new ArrayList<>();
+                contactPointWithPorts.add(socket);
+                Cluster cluster = Cluster.builder().addContactPointsWithPorts(contactPointWithPorts).build();
                 session = cluster.connect();
                 isNewConfiguration = false;
             }

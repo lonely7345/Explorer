@@ -15,25 +15,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.interpreter;
 
+package com.stratio.explorer.cassandra.exceptions;
 
-import com.stratio.explorer.gateways.Connector;
+/**
+ * Created by afidalgo on 26/10/15.
+ */
+public class NotValidPortException extends RuntimeException{
 
-public interface InterpreterDriver<T> {
 
     /**
-     *  Execute command in one interpreter
-     * @param st string to exec
-     * @return Table
+     * Constructor.
+     * @param e original exception.
+     * @param errorMessage message.
      */
-    T executeCommand(String st);
-
-    /**
-     *
-     * @return connector to persistence
-     */
-     Connector getConnector();
-
+    public NotValidPortException(Exception e,String errorMessage){
+        super(errorMessage,e);
+    }
 }
-

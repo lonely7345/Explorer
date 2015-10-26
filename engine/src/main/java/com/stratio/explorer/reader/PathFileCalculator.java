@@ -33,6 +33,7 @@ public class PathFileCalculator {
      * @return complete path
      */
     public String getPath(String nameFile,String extensionFile){
+<<<<<<< HEAD
 
          String path = new FileConfLocator().locate(nameFile+extensionFile);
          if ("".equals(path)) {
@@ -45,5 +46,21 @@ public class PathFileCalculator {
          }
 
          return path;
+    }
+
+
+
+    private String parentProjectFolder() {
+
+        List<PathCalculator> pathCalculators = PathCalculatorListBuilder.build();
+        for (PathCalculator pathCalculator:pathCalculators){
+            Path path = pathCalculator.calculatePath();
+            if (!path.toString().equals(ConstantsFolder.CT_NOT_EXIST_FOLDER)) {
+                return path.toString() + "/";
+            }
+
+        }
+        throw new FolderNotFoundException("Folder not exist ");
+>>>>>>> initial cassandra multicluster
     }
 }
