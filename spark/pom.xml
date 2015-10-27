@@ -90,6 +90,10 @@
                     <artifactId>quasiquotes_2.10</artifactId>
                     <groupId>org.scalamacros</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.github.rwl</groupId>
+                    <artifactId>jtransforms</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 

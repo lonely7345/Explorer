@@ -107,6 +107,10 @@
                     <groupId>com.sun.jersey</groupId>
                     <artifactId>jersey-servlet</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.jvnet</groupId>
+                    <artifactId>mimepull</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
