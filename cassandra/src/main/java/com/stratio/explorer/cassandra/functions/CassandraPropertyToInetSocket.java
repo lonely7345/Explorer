@@ -18,6 +18,7 @@
 
 package com.stratio.explorer.cassandra.functions;
 
+import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
 import com.stratio.explorer.cassandra.gateways.CassandraDriver;
 import com.stratio.explorer.functions.TransformFunction;
@@ -59,6 +60,10 @@ public class CassandraPropertyToInetSocket implements TransformFunction<String, 
             String message ="Port is not valid in cassandra properies "+propertieName;
             logger.error(message);
             throw new NotValidPortException(e, message);
+        }catch (IndexOutOfBoundsException e){
+            String message = "Any cassandra property is not filled ";
+            logger.error(message);
+            throw new NotPropertyFoundException(e,message);
         }
     }
 }

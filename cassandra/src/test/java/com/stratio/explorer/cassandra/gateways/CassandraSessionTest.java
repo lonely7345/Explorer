@@ -33,7 +33,7 @@ public class CassandraSessionTest {
          session.loadConfiguration(properties);
     }
 
-  /*  @Test (expected = NotPropertyFoundException.class)
+    @Test (expected = NotPropertyFoundException.class)
     public void whenPortIsEmpty(){
         properties.put(StringConstants.HOST, "127.0.1.1");
         session.loadConfiguration(properties);
@@ -44,5 +44,5 @@ public class CassandraSessionTest {
     public void whenHostIsEmpty(){
         properties.put(StringConstants.PORT, "123");
         session.loadConfiguration(properties);
-    }*/
+    }
 }

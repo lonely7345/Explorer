@@ -3,7 +3,6 @@ package com.stratio.explorer.cassandra.gateways;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.NoHostAvailableException;
-import com.stratio.explorer.cassandra.constants.StringConstants;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
@@ -26,10 +25,7 @@ public class CassandraSession implements Connector<Session> {
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
-  //  private int port = 0;
-  //  private String host = "";
-    private Collection<InetSocketAddress> contactPointWithPorts = new ArrayList<>();
-    private boolean isNewConfiguration=true; //TODO :
+    private PropertiesReader reader = new PropertiesReader();
 
     /**
      * Load configuration to Cassandra DataBase
@@ -39,34 +35,12 @@ public class CassandraSession implements Connector<Session> {
     @Override
     public Connector loadConfiguration(Properties properties) {
         try {
-            buildProperties(properties);
+            reader.buildConnections(properties);
             return this;
         }catch (NumberFormatException e){
            String errorMessage = " Port property is not filled";
            logger.error(errorMessage);
            throw  new NotPropertyFoundException(e,errorMessage);
-        }
-    }
-
-    private void buildProperties(Properties properties){
-
-      //  int port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
-      //  String host =properties.getProperty(StringConstants.HOST);
-        Collection<InetSocketAddress> localConcatpoint = new PropertiesReader().getListSocketAddres(properties);
-        if (contactPointWithPorts.containsAll(localConcatpoint) && localConcatpoint.size() == contactPointWithPorts.size()){
-            isNewConfiguration = false;
-        }
-        if (localConcatpoint.isEmpty() ){
-            String errorMessage = " Host port property is not filled";
-            logger.error(errorMessage);
-            throw  new NotPropertyFoundException(new Exception(),errorMessage);
-        }
-
-        if (isNewConfiguration==true){
-            this.port = port;
-            this.host = host;
-            contactPointWithPorts =
-            isNewConfiguration = true;
         }
     }
 
@@ -77,13 +51,10 @@ public class CassandraSession implements Connector<Session> {
     @Override
     public Session getConnector() {
         try {
-            if (isNewConfiguration){
-                InetSocketAddress socket = new InetSocketAddress(host,port);
-                Collection<InetSocketAddress> contactPointWithPorts =  new ArrayList<>();
-                contactPointWithPorts.add(socket);
-                Cluster cluster = Cluster.builder().addContactPointsWithPorts(contactPointWithPorts).build();
+            if (reader.isNewConnexionLoaded()){
+                Cluster cluster = Cluster.builder().addContactPointsWithPorts(reader.getConnections()).build();
                 session = cluster.connect();
-                isNewConfiguration = false;
+                reader.setNewConnection(false);
             }
             return session;
         }catch (NoHostAvailableException e ){

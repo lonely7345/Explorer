@@ -17,7 +17,6 @@
  */
 package com.stratio.explorer.doubles;
 
-
 import com.stratio.explorer.functions.SearcherFunction;
 
 public class DoubleSearch implements SearcherFunction<String>{
