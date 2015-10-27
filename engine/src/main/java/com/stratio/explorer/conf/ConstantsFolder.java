@@ -26,6 +26,8 @@ public class ConstantsFolder {
      */
     public static String CT_NAME_PROJECT_FOLDER ="Explorer" ;
 
+    public static String CT_PRODUCTION_FOLDER ="sds/explorer/";
+
 
 
     /**

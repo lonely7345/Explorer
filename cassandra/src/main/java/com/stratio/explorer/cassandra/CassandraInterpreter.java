@@ -25,7 +25,7 @@ import com.stratio.explorer.cassandra.exceptions.CassandraInterpreterException;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.operations.CQLExecutor;
-import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.exceptions.FileConfNotExisException;
 import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;
@@ -89,7 +89,7 @@ public class CassandraInterpreter extends Interpreter {
         }catch (ConnectionException | CassandraInterpreterException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
-        }catch (FolderNotFoundException e){
+        }catch (FileConfNotExisException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }catch (NotPropertyFoundException e){

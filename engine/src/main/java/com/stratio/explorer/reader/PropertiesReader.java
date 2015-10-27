@@ -19,7 +19,7 @@ package com.stratio.explorer.reader;
 
 
 import com.stratio.explorer.conf.ConstantsFolder;
-import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.exceptions.FileConfNotExisException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
 
-    static Logger Logger = LoggerFactory.getLogger(PropertiesReader.class);
+    private static Logger Logger = LoggerFactory.getLogger(PropertiesReader.class);
 
     /**
      * Read configuration file from file
@@ -46,7 +46,7 @@ public class PropertiesReader {
         }catch(IOException e){
             String msg = "File properties not loaded. ";
             Logger.error(msg);
-            throw new FolderNotFoundException("File properties "+path +" NOT FOUND "+e.getMessage());
+            throw new FileConfNotExisException("File properties "+path +" NOT FOUND "+e.getMessage());
         }
         return prop;
     }

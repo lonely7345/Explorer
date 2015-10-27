@@ -19,6 +19,7 @@ package com.stratio.explorer.writer;
 
 
 import com.stratio.explorer.conf.ConstantsFolder;
+import com.stratio.explorer.exceptions.FileConfNotExisException;
 import com.stratio.explorer.reader.PathFileCalculator;
 import com.stratio.explorer.reader.PropertiesReader;
 import org.junit.After;
@@ -36,7 +37,7 @@ public class PropertiesFileUpdaterTest {
 
 
     private Properties result;
-    private static final String CT_FILE="changer";
+    private static final String CT_FILE="writeble_file";
     private PropertiesFileUpdater updater;
 
 
@@ -45,14 +46,20 @@ public class PropertiesFileUpdaterTest {
         updater = new PropertiesFileUpdater();
     }
 
-
-    @After public void tearDown(){
-        new File(new PathFileCalculator().getPath(CT_FILE, ConstantsFolder.CT_EXTENSION_FILE_PROPERTIES)).delete();
-    }
-
     @Test public void whenFileContainsPropertyThenActualizeValue() throws IOException {
-        result.put("prop1","prop8");
-        updater.updateFileWithProperties(CT_FILE,"prop1=prop8");
-        assertThat(new PropertiesReader().readConfigFrom(CT_FILE), is(result));
+        result.put("prop1", "prop8");
+        updater.updateFileWithProperties(CT_FILE, "prop1:prop8");
+        Properties prop = new PropertiesReader().readConfigFrom(CT_FILE);
+        assertThat(prop, is(result));
     }
+
+
+    @Test(expected = FileConfNotExisException.class)
+    public void whenfilenotExistThenthrowexception(){
+        String not_exist_file = "no_exist_file";
+        updater.updateFileWithProperties(not_exist_file, "prop1:prop8");
+    }
+
+
+
 }
