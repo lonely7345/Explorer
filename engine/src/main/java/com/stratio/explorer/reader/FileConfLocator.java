@@ -42,7 +42,7 @@ public class FileConfLocator {
     private static Logger Logger = LoggerFactory.getLogger(FileConfLocator.class);
     private File folder;
     /**
-     * Constructor init with
+     * Constructor init with folder of class.
      */
     public FileConfLocator(){
         try {
@@ -55,7 +55,7 @@ public class FileConfLocator {
 
     //TODO : CHANGE TO NOT VISITED FOLDER MORE ONE TIME
     /**
-     * locate any file into tree folders
+     * locate any file into tree folders.
      * @param fileName file to search
      * @return String with path
      */

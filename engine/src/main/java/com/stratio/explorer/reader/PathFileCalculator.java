@@ -28,14 +28,14 @@ public class PathFileCalculator {
 
     private static org.slf4j.Logger Logger = LoggerFactory.getLogger(PathFileCalculator.class);
     /**
-     * Obtain complete path to file
+     * Obtain complete path to file.
      * @param nameFile without extension
      * @return complete path
      */
     public String getPath(String nameFile,String extensionFile){
 
          String path = new FileConfLocator().locate(nameFile+extensionFile);
-         if (path.equals("")) {
+         if ("".equals(path)) {
              path = System.getenv(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV);
          }
          if (path==null){
