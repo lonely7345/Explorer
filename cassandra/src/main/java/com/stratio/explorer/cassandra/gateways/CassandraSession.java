@@ -46,8 +46,8 @@ public class CassandraSession implements Connector<Session> {
     private Session session;
   //  private int port = 0;
   //  private String host = "";
-    private Collection<InetSocketAddress> contacPoints = new ArrayList<>();
-    private boolean isNewConfiguration=true;
+    private Collection<InetSocketAddress> contactPointWithPorts = new ArrayList<>();
+    private boolean isNewConfiguration=true; //TODO :
 
     /**
      * Load configuration to Cassandra DataBase
@@ -71,19 +71,20 @@ public class CassandraSession implements Connector<Session> {
       //  int port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
       //  String host =properties.getProperty(StringConstants.HOST);
         Collection<InetSocketAddress> localConcatpoint = new PropertiesReader().getListSocketAddres(properties);
-        if (!contacPoints.containsAll(localConcatpoint) || localConcatpoint.size() == contacPoints.size()){
+        if (contactPointWithPorts.containsAll(localConcatpoint) && localConcatpoint.size() == contactPointWithPorts.size()){
             isNewConfiguration = false;
         }
-        if (host==null ){
-            String errorMessage = " Host property is not filled";
+        if (localConcatpoint.isEmpty() ){
+            String errorMessage = " Host port property is not filled";
             logger.error(errorMessage);
             throw  new NotPropertyFoundException(new Exception(),errorMessage);
         }
 
-        if (port!=this.port || !host.equals(this.host)){
+        if (isNewConfiguration==true){
             this.port = port;
             this.host = host;
-            this.isNewConfiguration = true;
+            contactPointWithPorts =
+            isNewConfiguration = true;
         }
     }
 

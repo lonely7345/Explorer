@@ -37,15 +37,15 @@ public class CassandraPropertyToInetSocket implements TransformFunction<String, 
     private Logger logger = LoggerFactory.getLogger(CassandraPropertyToInetSocket.class);
 
     /**
-     * Constructor
-     * @param properties
+     * Constructor.
+     * @param properties properties to load
      */
     public CassandraPropertyToInetSocket(Properties properties){
         this.properties = properties;
     }
 
     /**
-     * Tranform list propertyValue of propertieName to InetSocketAddress
+     * Tranform list propertyValue of propertieName to InetSocketAddress.
      * @param propertieName key Of properties
      * @return InetSocketAddress
      */
