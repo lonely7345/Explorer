@@ -24,12 +24,11 @@ public class ConstantsFolder {
     /**
      * Name of project root folder
      */
-    public static String CT_NAME_PROJECT_FOLDER ="explorer" ;
+    public static String CT_NAME_PROJECT_FOLDER ="Explorer" ;
 
-    /**
-     * folder  that contain all file configuratiosn
-     */
-    public static String CT_FOLDER_CONFIGURATION ="/conf";
+    public static String CT_PRODUCTION_FOLDER ="sds/explorer/";
+
+
 
     /**
      * Extension to configuration filess

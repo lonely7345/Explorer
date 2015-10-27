@@ -22,7 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.exceptions.FileConfNotExisException;
 import com.stratio.explorer.reader.PathFileCalculator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -62,7 +62,7 @@ public class ExplorerConfiguration extends XMLConfiguration {
 		}catch(MalformedURLException  | ConfigurationException e){
 			Logger.error("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML );
 			throw new RuntimeException("File "+ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML + " not exist ");
-		}catch(FolderNotFoundException e){
+		}catch(FileConfNotExisException e){
 			Logger.info("folder configuration not exist ");
 			throw new RuntimeException("folder configuration not exist ");
 		}

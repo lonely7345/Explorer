@@ -18,7 +18,7 @@
 package com.stratio.explorer.rest;
 
 import com.stratio.explorer.converters.PropertiesToStringConverter;
-import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.exceptions.FileConfNotExisException;
 import com.stratio.explorer.interpreter.InterpreterException;
 import com.stratio.explorer.interpreter.InterpreterFactory;
 import com.stratio.explorer.reader.PropertiesReader;
@@ -122,7 +122,7 @@ public class InterpreterRestApi {
         try {
             PropertiesFileUpdater updater = new PropertiesFileUpdater();
             updater.updateFileWithProperties("ingestion", newProperties);
-        } catch (FolderNotFoundException e) {
+        } catch (FileConfNotExisException e) {
             response = new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
         }
         return response;
@@ -146,7 +146,7 @@ public class InterpreterRestApi {
         try {
             PropertiesFileUpdater updater = new PropertiesFileUpdater();
             updater.updateFileWithProperties("cassandra", newProperties);
-        } catch (FolderNotFoundException e) {
+        } catch (FileConfNotExisException e) {
             return new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
         }
         return new JsonResponse(Response.Status.OK, "", newProperties).build();
@@ -168,7 +168,7 @@ public class InterpreterRestApi {
         try {
             PropertiesFileUpdater updater = new PropertiesFileUpdater();
             updater.updateFileWithProperties("driver-application", newProperties);
-        } catch (FolderNotFoundException e) {
+        } catch (FileConfNotExisException e) {
             response = new JsonResponse(Response.Status.NOT_FOUND, e.getMessage(), e).build();
         }
         return response;

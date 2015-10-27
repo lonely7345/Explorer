@@ -15,17 +15,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.exceptions;
+
+package com.stratio.explorer.doubles;
 
 
-public class FolderNotFoundException extends RuntimeException{
+import com.stratio.explorer.functions.SearcherFunction;
 
-    public FolderNotFoundException(String errorMessage){
-        super(errorMessage);
+public class DoubleSearch implements SearcherFunction<String>{
+
+    private String value;
+
+
+    public DoubleSearch(String value){
+        this.value = value;
     }
 
-    public String getMessage(){
 
-        return super.getMessage();
+    @Override
+    public boolean isValid(String value) {
+        return value.equals(this.value);
     }
 }

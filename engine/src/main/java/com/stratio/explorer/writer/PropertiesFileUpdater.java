@@ -32,7 +32,9 @@ import java.util.Properties;
 public class PropertiesFileUpdater {
 
     private  StringToPropertiesConverter converter = new StringToPropertiesConverter();
-    static   Logger Logger = LoggerFactory.getLogger(PropertiesFileUpdater.class);
+    private static   Logger Logger = LoggerFactory.getLogger(PropertiesFileUpdater.class);
+
+
     /**
      * Update configuration File with properties
      * @param nameFile name of file without extension

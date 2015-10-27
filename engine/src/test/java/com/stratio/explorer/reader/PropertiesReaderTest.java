@@ -17,8 +17,7 @@
  */
 package com.stratio.explorer.reader;
 
-import com.stratio.explorer.conf.ConstantsFolder;
-import com.stratio.explorer.exceptions.FolderNotFoundException;
+import com.stratio.explorer.exceptions.FileConfNotExisException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,7 @@ import static org.junit.Assert.assertThat;
 public class PropertiesReaderTest {
 
 
-    private static final String NOT_EXIST_PATH ="not_exit";
+
     private Properties result ;
     private PropertiesReader reader;
 
@@ -48,18 +47,17 @@ public class PropertiesReaderTest {
 
     @After
     public void tearDown(){
-        ConstantsFolder.CT_FOLDER_CONFIGURATION ="/conf";
     }
 
 
-    @Test(expected = FolderNotFoundException.class)
-    public void whenNotExistPath(){
-        reader.readConfigFrom(NOT_EXIST_PATH);
+    @Test(expected = FileConfNotExisException.class)
+    public void whenNotExistFile(){
+        reader.readConfigFrom("not_Exist");
     }
 
     @Test public void whenExistFileAndContainsData(){
         result.put("cassandra.host","127.0.0.1");
         result.put("cassandra.port","9042");
-        assertThat(reader.readConfigFrom("cassandra"), is(result));
+        assertThat(reader.readConfigFrom("test_file"), is(result));
     }
 }
