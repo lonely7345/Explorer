@@ -7,13 +7,7 @@ This module depends on a QA library (stratio-test-bdd), where common logic and s
 
 ## EXECUTION
 
-These tests will be executed as part of the continuous integration flow as follows:
-
-mvn verify [-D\<ENV_VAR>=\<VALUE>] [-Dit.test=\<TEST_TO_EXECUTE>|-Dgroups=\<GROUP_TO_EXECUTE>]
-
-Example:
-
-mvn verify -DEXPLORER_PORT=8085 -Dit.test=com.stratio.sparkta.testsAT.automated.gui.inputs.AddNewSocket
+These tests will be executed as part of the continuous integration flow.
 
 By default, in jenkins we will execute the group basic, which should contain a subset of tests, that are key to the functioning of the module and the ones generated for the new feature.
 
