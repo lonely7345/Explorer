@@ -103,6 +103,7 @@ You can change configuration of Stratio Ingestion , Stratio Crossdata and Cassan
 
 Values must be configure same parameters that explained `in configuration  <03_configuration.rst>`__
 
+<<<<<<< HEAD
 4.- settings
 ==============
 
@@ -121,5 +122,4 @@ You can change configuration of Stratio Ingestion , Stratio Crossdata and Cassan
 
 Values must be configure same parameters that explained `in configuration  <03_configuration.rst>`__
 to save new settings user must click "save" button
-
 
