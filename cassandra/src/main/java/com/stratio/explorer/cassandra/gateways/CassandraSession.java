@@ -54,7 +54,7 @@ public class CassandraSession implements Connector<Session> {
       //  String host =properties.getProperty(StringConstants.HOST);
         Collection<InetSocketAddress> localConcatpoint = new PropertiesReader().getListSocketAddres(properties);
         if (!contacPoints.containsAll(localConcatpoint) || localConcatpoint.size() == contacPoints.size()){
-
+            isNewConfiguration = false;
         }
         if (host==null ){
             String errorMessage = " Host property is not filled";
