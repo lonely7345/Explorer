@@ -19,9 +19,12 @@
 
 package com.stratio.explorer.cassandra.gateways;
 
+import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
 import com.stratio.explorer.functions.TransformFunction;
 import com.stratio.explorer.lists.FunctionalList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.util.*;
@@ -29,16 +32,59 @@ import java.util.*;
 
 public class PropertiesReader {
 
-
+    private Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
+    private List<InetSocketAddress> contactPointWithPorts = new ArrayList<>();
+    private boolean isNewConection=false;
 
     /**
-     * Read properties to Cassandra Database
+     * Read properties to Cassandra Database .
      * @param properties properties with (anyValue)->host:port estructure
      * @return Collection of InetSocketAddress
      */
-    public Collection<InetSocketAddress> getListSocketAddres(Properties properties) {
+    public void buildConnections(Properties properties) {
+        Collection<InetSocketAddress> localConcatpoint = extractConectionFrom(properties);
+        fillAttributtes(localConcatpoint);
+        if (localConcatpoint.isEmpty()){
+            String errorMessage = " Host port property is not filled";
+            logger.error(errorMessage);
+            throw  new NotPropertyFoundException(new Exception(),errorMessage);
+        }
+    }
+
+    private Collection<InetSocketAddress> extractConectionFrom(Properties properties){
         List<String> keys = new ArrayList<>(properties.stringPropertyNames());
         FunctionalList<String,InetSocketAddress> functionalList = new FunctionalList<String,InetSocketAddress>(keys);
         return functionalList.map(new CassandraPropertyToInetSocket(properties));
+    }
+
+    private void fillAttributtes(Collection<InetSocketAddress> localConcatpoint){
+        if (!contactPointWithPorts.containsAll(localConcatpoint) || !(localConcatpoint.size() == contactPointWithPorts.size())){
+            isNewConection = true;
+            contactPointWithPorts = new ArrayList<>(localConcatpoint);
+        }
+    }
+
+    /**
+     * Obtain last loaded connectionsAndHost .
+     * @return last loaded connectionsAndHost
+     */
+    public Collection<InetSocketAddress> getConnections(){
+        return contactPointWithPorts;
+    }
+
+    /**
+     * Check if last loaded have new properties.
+     * @return true if last Loaded has new properties false in other case
+     */
+    public boolean isNewConnexionLoaded() {
+        return isNewConection;
+    }
+
+    /**
+     * Change value to check if is new connection.
+     * @param isNew new value
+     */
+    public void setNewConnection(boolean isNew) {
+        isNewConection = isNew;
     }
 }

@@ -56,8 +56,7 @@ public class PropertiesReaderTest {
     }
 
     @Test public void whenExistFileAndContainsData(){
-        result.put("cassandra.host","127.0.0.1");
-        result.put("cassandra.port","9042");
+        result.put("cassandra.hostPort","127.0.0.1:8080");
         assertThat(reader.readConfigFrom("test_file"), is(result));
     }
 }

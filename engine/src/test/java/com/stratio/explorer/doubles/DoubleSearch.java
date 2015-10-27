@@ -15,9 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package com.stratio.explorer.doubles;
-
 
 import com.stratio.explorer.functions.SearcherFunction;
 
