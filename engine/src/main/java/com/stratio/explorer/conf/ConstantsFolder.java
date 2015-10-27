@@ -50,10 +50,6 @@ public class ConstantsFolder {
      * Name of configuration file to interpreters
      */
     public static String CT_NAME_FILE_INTERPRETERS_CONFIGURE ="explorer-site";
-
-    /**
-     * Error folder value
-     */
-    public static String CT_NOT_EXIST_FOLDER="****?¿?***";
+    
 
 }
