@@ -53,7 +53,7 @@ public class FileConfLocator {
         }
     }
 
-    //TODO 
+    //TODO : CHANGE TO NOT VISITED FOLDER MORE ONE TIME
     /**
      * locate any file into tree folders
      * @param fileName file to search
