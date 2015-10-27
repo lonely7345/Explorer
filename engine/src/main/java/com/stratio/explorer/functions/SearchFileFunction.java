@@ -15,16 +15,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.reader;
 
 
-import java.nio.file.Path;
+package com.stratio.explorer.functions;
 
-public interface PathCalculator {
+import java.io.File;
 
-    /**
-     * Calculate Path object
-     * @return Path object
-     */
-    Path calculatePath();
+public class SearchFileFunction implements SearcherFunction<File> {
+
+
+    private String fileName;
+
+
+    public SearchFileFunction(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Override
+    public boolean isValid(File file) {
+        return fileName.equals(file.getName());
+    }
+
 }
+

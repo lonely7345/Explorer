@@ -19,7 +19,7 @@ Getting Started
 Install
 ~~~~~
 
-Explorer is packed in a rpm and y a deb file. If you want install Stratio Explorer choses the correct file for your operating symen and install it.
+Explorer is packed in a rpm and and a deb file. If you want install Stratio Explorer choses the correct file for your operating symen and install it.
 
 
 Run

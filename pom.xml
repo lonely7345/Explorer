@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.stratio</groupId>
         <artifactId>parent</artifactId>
-        <version>0.4.0</version>
+        <version>0.5.0</version>
     </parent>
     <groupId>com.stratio.explorer</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.5.0-SNAPSHOT</version>
+    <version>0.4.1-RC1-SNAPSHOT</version>
     <name>Stratio Explorer</name>
     <description>Web shell for Stratio platform</description>
     <url>http://www.stratio.com</url>
@@ -20,13 +20,6 @@
     	<developerConnection>scm:git:git@github.com:Stratio/Explorer.git
             </developerConnection>
     </scm>
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
     <developers>
         <developer>
             <id>ivdiaz</id>
@@ -917,53 +910,9 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
-
-
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>2.11</version>
-                <configuration>
-                   <headerDefinitions>
-                        <headerDefinition>stratioDefinition.xml</headerDefinition>
-                    </headerDefinitions>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                    <header>stratioLicense.txt</header>
-                     <excludes>
-                        <exclude>**/README</exclude>
-                        <exclude>**/LICENSE</exclude>
-                        <exclude>**/CHANGELOG.md</exclude>
-                        <exclude>**/stratioLicense.txt</exclude>
-                        <exclude>**/src/test/assemble/**</exclude>
-                        <exclude>**/src/main/unix/**</exclude>
-                        <exclude>**/node/**</exclude>
-                        <exclude>**/test/resources/**</exclude>
-                        <exclude>**/web/node*/**</exclude>
-                        <exclude>**/src/main/webapp/**</exclude>
-                        <exclude>**/stratio.txt</exclude>
-                         <exclude>**/stratioDefinition.xml</exclude>
-                        <exclude>**/.*/**</exclude>
-			            <exclude>**/target/**</exclude>
-                         <exclude>**/ace/**/*.js</exclude>
-                         <exclude>**/swagger/**/*.js</exclude>
-                         <exclude>**/*.css</exclude>
-                         <exclude>**/*.html</exclude>
-                         <exclude>**/*.xml</exclude>
-                         <exclude>**/web/**</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-
         </plugins>
-
         <pluginManagement>
             <plugins>
-
-                <plugin>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>2.8</version>
-                </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>2.4</version>
