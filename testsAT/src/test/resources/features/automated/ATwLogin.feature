@@ -3,7 +3,7 @@ Feature: Login
 
   Background:
 
-    Given I set web base url to '172.17.0.6:8084'
+    Given I set web base url to '${EXPLORER_HOST}:${EXPLORER_PORT}'
     Given I browse to '/'
 
   Scenario: Correct fields
