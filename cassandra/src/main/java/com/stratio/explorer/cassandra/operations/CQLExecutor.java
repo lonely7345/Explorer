@@ -13,13 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stratio.explorer.testsAT.specs;
+package com.stratio.explorer.cassandra.operations;
 
-public class BaseSpec {
+import com.stratio.explorer.cassandra.gateways.CassandraInterpreterGateways;
+import com.stratio.explorer.cassandra.models.Table;
 
-    protected Common commonspec;
 
-    public Common getCommonSpec() {
-        return this.commonspec;
+import com.stratio.explorer.interpreter.InterpreterDriver;
+
+public class CQLExecutor {
+
+
+    private InterpreterDriver<Table> driver = CassandraInterpreterGateways.commandDriver;
+
+    public Table execute(String command) {
+         return driver.executeCommand(command);
     }
 }
