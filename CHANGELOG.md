@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 (incoming)
+## 0.4.0 (October 2015)
 
 * Add cassandra Interpreter
 * Notebook becomes Explorer
