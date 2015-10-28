@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stratio.explorer.cassandra.exceptions;
+
+package com.stratio.explorer.exceptions;
 
 /**
  *  This exception occur when not have any property
@@ -25,7 +26,7 @@ public class NotPropertyFoundException extends RuntimeException{
      * @param e original exception.
      * @param errorMessage message.
      */
-    public NotPropertyFoundException(Exception e,String errorMessage){
+    public NotPropertyFoundException(Exception e, String errorMessage){
         super(errorMessage,e);
     }
 }
