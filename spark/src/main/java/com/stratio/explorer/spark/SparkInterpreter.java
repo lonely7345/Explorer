@@ -227,6 +227,7 @@ public class SparkInterpreter extends Interpreter {
         return new SparkContext(conf);
     }
 
+    //TODO : THIS METHOD WILL BE REMOVED
     public String getMaster() {
         String envMaster = System.getenv().get("MASTER");
         if (envMaster != null) {

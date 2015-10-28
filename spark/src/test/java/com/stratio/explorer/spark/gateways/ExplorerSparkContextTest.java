@@ -19,7 +19,8 @@
 package com.stratio.explorer.spark.gateways;
 
 import com.stratio.explorer.exceptions.NotPropertyFoundException;
-import com.stratio.explorer.spark.exception.MasterPropertyNotCorrectException;
+import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
+import com.stratio.explorer.spark.exception.SparkEndPointException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,10 +48,18 @@ public class ExplorerSparkContextTest {
     }
 
 
-    @Test(expected = MasterPropertyNotCorrectException.class)
+    @Test(expected = MasterPropertyNotFilledException.class)
     public void whenSparkContextExistbutNotFilled(){
         String sparkMasterProperty ="spark.master";
         properties.put(sparkMasterProperty, "");
+        sparkContex.loadConfiguration(properties);
+    }
+
+
+    @Test(expected = SparkEndPointException.class)
+    public void whenSparkContextisNotexist(){
+        String sparkMasterProperty ="spark.master";
+        properties.put(sparkMasterProperty, "mesos,other");
         sparkContex.loadConfiguration(properties);
     }
 }

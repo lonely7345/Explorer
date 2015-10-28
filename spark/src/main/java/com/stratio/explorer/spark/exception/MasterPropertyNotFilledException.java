@@ -19,10 +19,10 @@
 package com.stratio.explorer.spark.exception;
 
 
-public class MasterPropertyNotCorrectException extends RuntimeException{
+public class MasterPropertyNotFilledException extends RuntimeException{
 
 
-    public MasterPropertyNotCorrectException(String message){
+    public MasterPropertyNotFilledException(String message){
         super(message);
     }
 }
