@@ -48,13 +48,17 @@ public class IngestionUtils {
         BufferedReader br = new BufferedReader(new FileReader(filepath));
         String line = br.readLine();
         while (line != null) {
-            if (!line.trim().startsWith("#")) {
+            if (isValidLine(line)) {
                 String[] split = line.trim().split("\\.");
                 return split[0];
             }
             line = br.readLine();
         }
         return null;
+    }
+
+    private static boolean isValidLine(String line) {
+        return !line.trim().startsWith("#") && !line.isEmpty();
     }
 
     public static DefaultExecuteResultHandler executeBash(String command) throws IOException {
