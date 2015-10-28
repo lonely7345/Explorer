@@ -11,7 +11,7 @@ To connect with Cassandra you need file with name Cassandra and this parameters 
 ==================  =================  ====================
 Parameter           Default Value      Description
 ==================  =================  ====================
-cassandra.hostPort  "127.0.0.1:8080"   Cassandra Host:port
+cassandra.hostPort  127.0.0.1:8080     Cassandra Host:port
 ==================  =================  ====================
 
 If you want include more cassandra cluster only need add lines with the same structure.
