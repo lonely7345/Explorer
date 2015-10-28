@@ -19,7 +19,7 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

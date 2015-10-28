@@ -16,13 +16,11 @@
 
 package com.stratio.explorer.cassandra.functions;
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
-import com.stratio.explorer.cassandra.gateways.CassandraDriver;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.functions.TransformFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import java.net.InetSocketAddress;
 import java.util.Properties;

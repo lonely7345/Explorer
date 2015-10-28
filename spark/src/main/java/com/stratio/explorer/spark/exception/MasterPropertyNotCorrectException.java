@@ -22,4 +22,7 @@ package com.stratio.explorer.spark.exception;
 public class MasterPropertyNotCorrectException extends RuntimeException{
 
 
+    public MasterPropertyNotCorrectException(String message){
+        super(message);
+    }
 }

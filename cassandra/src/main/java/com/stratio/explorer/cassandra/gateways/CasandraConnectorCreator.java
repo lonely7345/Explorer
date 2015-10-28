@@ -17,8 +17,8 @@
 
 package com.stratio.explorer.cassandra.gateways;
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.lists.FunctionalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

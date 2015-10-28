@@ -17,7 +17,6 @@
 package com.stratio.explorer.cassandra.gateways;
 
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
 import org.junit.Before;
 import org.junit.Test;
