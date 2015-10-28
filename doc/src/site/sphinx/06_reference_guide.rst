@@ -1,6 +1,6 @@
-=================
+===============
 Reference Guide
-=================
+===============
 
 
 Table of contents
@@ -36,8 +36,6 @@ then you enter in Stratio Explorer . If Username or Password is wrong then you w
 ==============
 
 The main element of Stratio explorer are notebooks .
-
-
 
 2.1.- Create 
 ------------
