@@ -7,6 +7,7 @@
         <artifactId>parent</artifactId>
         <groupId>com.stratio.explorer</groupId>
         <version>0.4.1-RC1-SNAPSHOT</version>
+
     </parent>
 
     <artifactId>server</artifactId>
@@ -19,6 +20,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>explorer-engine</artifactId>
             <version>0.4.1-RC1-SNAPSHOT</version>
+
         </dependency>
 
         <dependency>

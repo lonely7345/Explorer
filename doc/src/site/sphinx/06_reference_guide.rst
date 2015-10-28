@@ -1,6 +1,6 @@
-=================
+===============
 Reference Guide
-=================
+===============
 
 
 Table of contents
@@ -36,7 +36,6 @@ then you enter in Stratio Explorer . If Username or Password is wrong then you w
 ==============
 
 The main element of Stratio explorer are notebooks .
-
 
 2.1.- Create 
 ------------
@@ -85,25 +84,6 @@ Before interpreter have been selected the user must to write an instruction of i
 
 If you want stop the execution then click stop button this button show when click in play button.
 
-4.- settings
-==============
-
-User can modify setting if button settings is clicked.
-
-.. image:: images/settings_option.png
-
-4.1.- Interpreters 
-------------------
-
-You can change configuration of Stratio Ingestion , Stratio Crossdata and Cassandra interpreter.
-
-
-.. image:: images/settings_interpreters.png
-
-
-Values must be configure same parameters that explained `in configuration  <03_configuration.rst>`__
-
-<<<<<<< HEAD
 4.- settings
 ==============
 

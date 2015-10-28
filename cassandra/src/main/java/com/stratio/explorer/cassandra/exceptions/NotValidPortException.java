@@ -15,17 +15,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.stratio.explorer.notebook.utils;
+
+package com.stratio.explorer.cassandra.exceptions;
+
+/**
+ * Created by afidalgo on 26/10/15.
+ */
+public class NotValidPortException extends RuntimeException{
 
 
-public class EntrySplitParameters {
-
-
-   public  String str = "";
-   public  String escapeSeq = "";
-   public  char escapeChar =' ';
-   public  String [] blockStart = new String[]{};
-   public  String [] blockEnd = new String[]{};
-   public  String [] splitters = new String[]{};
-   public  boolean includeSplitter = false;
+    /**
+     * Constructor.
+     * @param e original exception.
+     * @param errorMessage message.
+     */
+    public NotValidPortException(Exception e,String errorMessage){
+        super(errorMessage,e);
+    }
 }
