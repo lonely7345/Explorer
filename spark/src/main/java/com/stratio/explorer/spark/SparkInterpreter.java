@@ -242,31 +242,8 @@ public class SparkInterpreter extends Interpreter {
     @Override
     public void open() {
 
-//            Map<String, Object> share = (Map<String, Object>) getProperty().get("share");
             URL[] urls = (URL[]) getProperty().get("classloaderUrls");
 
-            // Very nice discussion about how scala compiler handle classpath
-            // https://groups.google.com/forum/#!topic/scala-user/MlVwo2xCCI0
-
-		/*
-         * > val env = new nsc.Settings(errLogger)
-> env.usejavacp.value = true
-> val p = new Interpreter(env)
-> p.setContextClassLoader
->
-Alternatively you can set the class path throuh nsc.Settings.classpath.
-
->> val settings = new Settings()
->> settings.usejavacp.value = true
->> settings.classpath.value += File.pathSeparator +
->> System.getProperty("java.class.path")
->> val in = new Interpreter(settings) {
->>    override protected def parentClassLoader = getClass.getClassLoader
->> }
->> in.setContextClassLoader()
-
-
-		 */
             Settings settings = new Settings();
             if (getProperty().containsKey("args")) {
                 SparkCommandLine command = new SparkCommandLine(
