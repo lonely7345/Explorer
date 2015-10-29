@@ -27,7 +27,13 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 
+
 public class PropertiesReader {
+
+/**
+ * This class must create Cassandra Connections.
+ */
+
 
     private Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
     private List<InetSocketAddress> contactPointWithPorts = new ArrayList<>();
