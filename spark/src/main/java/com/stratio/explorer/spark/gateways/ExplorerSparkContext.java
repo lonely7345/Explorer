@@ -69,7 +69,7 @@ public class ExplorerSparkContext implements Connector<SparkContext> {
     private void buildSparkContext(SparkConf sparkConf){
         try {
             sc=  new SparkContext(sparkConf);
-        }catch(Exception e){ //this is exception because SparkException is not Runtimeexception extended
+        }catch(UnsatisfiedLinkError e){
             String message = "Spark end point not valid or Spark is not upper";
             logger.error(message);
             throw new SparkEndPointException(new Exception(),message);

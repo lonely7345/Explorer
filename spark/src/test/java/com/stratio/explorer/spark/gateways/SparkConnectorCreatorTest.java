@@ -78,12 +78,13 @@ public class SparkConnectorCreatorTest {
 
     @Test
     public void whenPropertiesWithSameValuesHasLoaded(){
-        properties.put("spark.master", "messos");
+        String anyURL = "mesos://any";
+        properties.put("spark.master", anyURL);
         creator.buildConnections(properties);
         assertThat("is new connection should be true", creator.isNewConnexionLoaded(), is(true));
         creator.setNewConnection(false);
         Properties newProperties = new Properties();
-        newProperties.put("spark.master", "messos");
+        newProperties.put("spark.master", anyURL);
         creator.buildConnections(newProperties);
         assertThat("is new connection should be false",creator.isNewConnexionLoaded(), is(false));
     }

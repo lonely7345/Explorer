@@ -35,7 +35,7 @@ public class SparkPropertyToSparkConfTest {
 
     private Properties properties;
     private SparkPropertyToSparkConf transform;
-    private final String    CT_SPARK_MASTER ="spark.master";
+    private final String  CT_SPARK_MASTER ="spark.master";
 
 
 
@@ -64,5 +64,4 @@ public class SparkPropertyToSparkConfTest {
         properties.put(CT_SPARK_MASTER, anyUrl);
         assertThat("Result should be be SparkConf object",transform.transform(CT_SPARK_MASTER).get(CT_SPARK_MASTER), is(anyUrl));
     }
-
 }

@@ -18,6 +18,7 @@
 package com.stratio.explorer.spark.checks;
 
 
+import com.stratio.explorer.spark.exception.MalformedSparkURLException;
 import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,12 +37,12 @@ public class PropertyCorrectURLSparkCheckTest {
     }
 
 
-    @Test(expected = MasterPropertyNotFilledException.class)
+    @Test(expected = MalformedSparkURLException.class)
     public void whenNotContainsValidStartURL(){
         checker.check("mesos1://asassa,spark1://");
     }
 
-    @Test(expected = MasterPropertyNotFilledException.class)
+    @Test(expected = MalformedSparkURLException.class)
     public void whenContainAnyStartedURLCorrect(){
         checker.check("mesos1://asassa,spark://");
        assertTrue("Result shoudl be not throw exception",true);

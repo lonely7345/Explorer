@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-
 package com.stratio.explorer.spark.checks;
 
 import com.stratio.explorer.checks.PropertyChecker;
-import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
+import com.stratio.explorer.spark.exception.MalformedSparkURLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +31,7 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
 
     private Logger logger = LoggerFactory.getLogger(PropertyCorrectURLSparkCheck.class);
 
+    private final String CT_SEPARATOR_START_URL ="://";
     private List<String> startedURL;
 
     /**
@@ -42,7 +42,7 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
         this.startedURL = Arrays.asList(startedURL);
     }
     /**
-     * Check property value have valid SPAR url
+     * Check property value have valid SPARK  url
      * @param propertyValue
      */
     @Override
@@ -53,7 +53,7 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
             if (isNotValid(url))  {
                 String message = "spark url "+url+" is not valid";
                 logger.error(message);
-                throw new MasterPropertyNotFilledException(message);
+                throw new MalformedSparkURLException(message);
             }
         }
     }
@@ -62,7 +62,7 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
     private boolean isNotValid(String url){
         boolean result = false;
         for (int index=0;index<startedURL.size() && !result;index++){
-            result = url.startsWith(startedURL.get(index)+"://");
+            result = url.startsWith(startedURL.get(index)+CT_SEPARATOR_START_URL);
         }
         return !result;
     }

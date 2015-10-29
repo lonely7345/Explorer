@@ -56,7 +56,7 @@ public class ExplorerSparkContextTest {
 
     @Test(expected = SparkEndPointException.class)
     public void whenSparkContextisNotexist(){
-        properties.put(CT_SPARK_MASTER, "mesos,other");
+        properties.put(CT_SPARK_MASTER, "mesos://HOST:5050");
         sparkContex.loadConfiguration(properties);
     }
 }
