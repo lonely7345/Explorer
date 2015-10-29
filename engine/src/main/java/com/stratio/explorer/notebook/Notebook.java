@@ -122,15 +122,18 @@ public class Notebook {
                 boolean isHidden = !f.getName().startsWith(".");
                 if (f.isDirectory() && isHidden) {
                     Scheduler scheduler = schedulerFactory.createOrGetFIFOScheduler("note_" + System.currentTimeMillis());
-                    logger.info("Loading note from " + f.getName());
+
                     Note note = Note
                             .load(f.getName(), conf, new NoteInterpreterLoader(replFactory, isLoaderStatic()), scheduler,
                                     jobListenerFactory, quartzSched);
                     if (note!=null) {
                         synchronized (notes) {
+                            logger.info("Loading note from " + f.getName());
                             notes.put(note.id(), note);
                             refreshCron(note.id());
                         }
+                    }else{
+                        logger.info("Loading note from " + f.getName() + "fail");
                     }
                 }
             }
