@@ -27,6 +27,9 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 
+/**
+ * This class must create Cassandra Connections.
+ */
 public class CasandraConnectorCreator {
 
     private Logger logger = LoggerFactory.getLogger(CasandraConnectorCreator.class);
