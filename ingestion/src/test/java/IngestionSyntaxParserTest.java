@@ -50,6 +50,8 @@ public class IngestionSyntaxParserTest {
         try {
             IngestionParserResult result = parser.parse(command);
             Assert.assertEquals("The two instances are the sames",expectedResult, result);
+            Assert.assertEquals(expectedResult, result);
+
         } catch (IngestionParserException e) {
             Assert.fail(e.getMessage());
         }

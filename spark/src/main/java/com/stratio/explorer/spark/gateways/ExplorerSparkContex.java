@@ -52,8 +52,6 @@ public class ExplorerSparkContex implements Connector<SparkContext> {
      */
     @Override
     public Connector loadConfiguration(Properties properties) {
-        List<String> keys = new ArrayList<>(properties.stringPropertyNames());
-        FunctionalList<String,InetSocketAddress> functionalList = new FunctionalList<String,InetSocketAddress>(keys);
 
         String propertyValue =(String)properties.get(PROPERTY_SPARK_MASTER);
         checkPropertyMasterExist(propertyValue);
@@ -62,12 +60,12 @@ public class ExplorerSparkContex implements Connector<SparkContext> {
             sc=  new SparkContext(new SparkConf()
                                        .setMaster(propertyValue)
                                         .setAppName("stratio-explorer"));
-        }catch(Exception e){ //TODO : this is exception becaus
+        }catch(Exception e){ //this is exception because SparkException is not Runtimeexception extended
             String message = "Spark end point not valid or Spark is not upper";
+            e.printStackTrace();
             logger.error(message);
             throw new SparkEndPointException(new Exception(),message);
-        }
-
+       }
 
         return this;
     }
@@ -76,8 +74,11 @@ public class ExplorerSparkContex implements Connector<SparkContext> {
     private List<SparkConf> genrateSparkConf(Properties properties){
         List<String> keys = new ArrayList<>(properties.stringPropertyNames());
         FunctionalList<String,SparkConf> functionalList = new FunctionalList<String,SparkConf>(keys);
-        functionalList.map()
+       // functionalList.map()
+        return null;
     }
+
+
 
 
     private void checkPropertyMasterExist(String propertyValue){
