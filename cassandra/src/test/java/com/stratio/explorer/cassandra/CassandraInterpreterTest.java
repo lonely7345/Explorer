@@ -67,15 +67,15 @@ public class CassandraInterpreterTest {
     @Test public void whenCassandraDataBAseIsShutDownThenResultError(){
         selector.driverWithConnectionShutDown(initialDataInStore);
         InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
-        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.ERROR));
-        Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
+        Assert.assertThat("When cassandra is shutDown status is error",result.code(),Matchers.is(InterpreterResult.Code.ERROR));
+        Assert.assertThat("and return error message",result.message(),Matchers.is(Matchers.any(String.class)));
     }
 
     @Test public void whenCQLIsIncorrectResultShouldBeError(){
         selector.driverWithSyntaxError(initialDataInStore);
         InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name");
-        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.ERROR));
-        Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
+        Assert.assertThat("When CQL is incorrect status is error",result.code(),Matchers.is(InterpreterResult.Code.ERROR));
+        Assert.assertThat("and return error message",result.message(),Matchers.is(Matchers.any(String.class)));
     }
 
     @Test public void whenCQLIsCorrectAndReturnOneResult(){
@@ -83,8 +83,8 @@ public class CassandraInterpreterTest {
         header.add(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
-        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat(result.message(),Matchers.is(NAME + "\n" + VALUE));
+        Assert.assertThat("When CQL is correct status is success",result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat("And return objetc in text format",result.message(),Matchers.is(NAME + "\n" + VALUE));
     }
 
     @Test public void whenCQULISCorrectAndHaveMoreResults(){
@@ -93,38 +93,38 @@ public class CassandraInterpreterTest {
         header.add(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
-        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat(result.message(), Matchers.is(NAME + "\n" + VALUE + "\n" + VALUE));
+        Assert.assertThat("When CQL is correct status is success",result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat("And return objetc in text format",result.message(), Matchers.is(NAME + "\n" + VALUE + "\n" + VALUE));
     }
 
     @Test public void whenCqlIsCorrectAndNotHaceReturnedData(){
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("USE DEMO");
-        Assert.assertThat(result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat(result.message(), Matchers.is(StringConstants.OPERATION_OK));
+        Assert.assertThat("When CQL is correct status is success",result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat("And return objetc in text format",result.message(), Matchers.is(StringConstants.OPERATION_OK));
     }
 
 
     @Test public void whenPropertyNotFoundException(){
         selector.driverWithNotPropertFoundException(initialDataInStore);
         InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
-        Assert.assertThat(result.code(),Matchers.is(InterpreterResult.Code.ERROR));
-        Assert.assertThat(result.message(),Matchers.is(Matchers.any(String.class)));
+        Assert.assertThat("When property not found return error",result.code(),Matchers.is(InterpreterResult.Code.ERROR));
+        Assert.assertThat("With message",result.message(),Matchers.is(Matchers.any(String.class)));
     }
 
 
     @Test public void whenCallCompletion(){
         List<String> resultList =interpreter.completion("", 0);
-        Assert.assertTrue(resultList.isEmpty());
+        Assert.assertTrue("Always retirn cero",resultList.isEmpty());
     }
 
     @Test public void whenCallFormType(){
         Interpreter.FormType formType =interpreter.getFormType();
-        Assert.assertThat(formType, Matchers.is(Interpreter.FormType.SIMPLE));
+        Assert.assertThat("Always return SIMPLE",formType, Matchers.is(Interpreter.FormType.SIMPLE));
     }
 
     @Test public void whenCallGetValue(){
-            Assert.assertEquals(interpreter.getValue("any"), null);
+            Assert.assertEquals("Always return null",interpreter.getValue("any"), null);
     }
 
     private RowData buildRowData(CellData... cells){

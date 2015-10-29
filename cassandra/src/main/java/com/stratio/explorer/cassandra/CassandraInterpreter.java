@@ -16,6 +16,7 @@
 package com.stratio.explorer.cassandra;
 
 import com.stratio.explorer.cassandra.dto.TableDTO;
+import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
 import com.stratio.explorer.cassandra.gateways.CassandraDriver;
 import com.stratio.explorer.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.explorer.cassandra.gateways.CassandraSession;
@@ -62,6 +63,10 @@ public class CassandraInterpreter extends Interpreter {
             connector.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
         }catch (ConnectionException e){
             logger.error("Cassandra database not avalaible " + e.getMessage());
+        }catch(NotPropertyFoundException e){
+            logger.error("Not propery configured " + e.getMessage());
+        }catch(NotValidPortException e){
+            logger.error("Not valid port " + e.getMessage());
         }
     }
 
@@ -91,6 +96,9 @@ public class CassandraInterpreter extends Interpreter {
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }catch (NotPropertyFoundException e){
+            code =InterpreterResult.Code.ERROR;
+            message = e.getMessage();
+        }catch(NotValidPortException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }

@@ -29,6 +29,7 @@ import java.util.Properties;
 /**
  * Created by afidalgo on 15/10/15.
  */
+//TODO : CHNAGE THIS TEST
 public class CassandraSessionTest {
 
     private Connector session;

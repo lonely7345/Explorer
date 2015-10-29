@@ -58,13 +58,17 @@ public class CassandraDriver implements InterpreterDriver<Table> {
             Session session = cassandraSession.getConnector();
             ResultSet rs =session.execute(command);
             List<String> header = header(rs.getColumnDefinitions());
-            List<RowData> rows = createRow(rs.all(), header);
+            List<RowData> rows = new FunctionalList<Row,RowData> (rs.all()).map(new RowToRowDataFunction(header));
             return new Table(header,rows);
         }catch (SyntaxError | InvalidQueryException e){
             String errorMessage = "  Query to execute in cassandra database is not correct ";
             logger.error(errorMessage);
             throw new CassandraInterpreterException(e,errorMessage);
         }
+    }
+
+    private List<String> header(ColumnDefinitions definition){
+        return new FunctionalList<ColumnDefinitions.Definition,String>(definition.asList()).map(new DefinitionToNameFunction());
     }
 
     /**
@@ -74,15 +78,5 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     @Override
     public Connector getConnector() {
         return cassandraSession;
-    }
-
-    private List<String> header(ColumnDefinitions definition){
-        FunctionalList<ColumnDefinitions.Definition,String> functionalList = new FunctionalList<>(definition.asList());
-        return functionalList.map(new DefinitionToNameFunction());
-    }
-
-    private List<RowData> createRow(List<Row> rows ,List<String> headerRows){
-        FunctionalList<Row,RowData>  functionalList = new FunctionalList<>(rows);
-        return functionalList.map(new RowToRowDataFunction(headerRows));
     }
 }

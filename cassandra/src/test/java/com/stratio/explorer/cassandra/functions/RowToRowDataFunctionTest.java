@@ -52,7 +52,7 @@ public class RowToRowDataFunctionTest {
 
         RowToRowDataFunction function = new RowToRowDataFunction(header);
         RowData row = function.transform(doubleRow.bildRow());
-        assertThat(row.cells().size(),is(2));
+        assertThat("Result should be transfor Cassandra Row to ",row.cells().size(),is(2));
 
     }
 
@@ -63,7 +63,7 @@ public class RowToRowDataFunctionTest {
         RowToRowDataFunction function = new RowToRowDataFunction(header);
         RowData row = function.transform(doubleRow.bildRow());
         List<CellData> cells = row.cells();
-        assertThat(cells.get(0).getValue(),is((Object)"header1"));
-        assertThat(cells.get(1).getValue(),is((Object)"header2"));
+        assertThat("RowData should have cells",cells.get(0).getValue(),is((Object)"header1"));
+        assertThat("RowData should have cells",cells.get(1).getValue(),is((Object)"header2"));
     }
 }

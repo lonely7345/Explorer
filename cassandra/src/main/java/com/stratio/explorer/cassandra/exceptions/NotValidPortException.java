@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stratio.explorer.doubles;
 
-import com.stratio.explorer.functions.SearcherFunction;
+package com.stratio.explorer.cassandra.exceptions;
 
-public class DoubleSearch implements SearcherFunction<String>{
-
-    private String value;
-
-
-    public DoubleSearch(String value){
-        this.value = value;
-    }
+/**
+ * Created by afidalgo on 26/10/15.
+ */
+public class NotValidPortException extends RuntimeException{
 
 
-    @Override
-    public boolean isValid(String value) {
-        return value.equals(this.value);
+    /**
+     * Constructor.
+     * @param e original exception.
+     * @param errorMessage message.
+     */
+    public NotValidPortException(Exception e,String errorMessage){
+        super(errorMessage,e);
     }
 }

@@ -15,9 +15,6 @@
  */
 package com.stratio.explorer.testsAT.utils;
 
-/**
- * Created by mpenate on 26/10/15.
- */
 import com.stratio.cucumber.testng.ICucumberFormatter;
 import com.stratio.cucumber.testng.ICucumberReporter;
 import com.stratio.explorer.testsAT.specs.BaseSpec;

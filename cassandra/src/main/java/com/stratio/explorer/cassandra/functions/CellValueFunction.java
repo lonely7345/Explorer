@@ -28,7 +28,7 @@ public class CellValueFunction implements TransformFunction<String,CellData>{
 
 
     /**
-     * Constructor
+     * Constructor.
      * @param row row to transforms cell in cellData
      */
     public CellValueFunction(Row row){
@@ -38,7 +38,7 @@ public class CellValueFunction implements TransformFunction<String,CellData>{
 
 
     /**
-     * Transform cell with header name in CellData
+     * Transform cell with header name in CellData.
      * @param header neme in ros
      * @return CellDataObject
      */

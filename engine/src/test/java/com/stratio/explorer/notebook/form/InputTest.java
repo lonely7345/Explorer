@@ -28,8 +28,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 
-
-//TODO : WHEN FINISHED TEST THEN INCU
 public class InputTest {
 
 
