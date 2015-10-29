@@ -3,13 +3,15 @@ package com.stratio.explorer.cassandra.gateways;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.NoHostAvailableException;
-import com.stratio.explorer.cassandra.constants.StringConstants;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 
 /**
@@ -23,9 +25,7 @@ public class CassandraSession implements Connector<Session> {
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
-    private int port = 0;
-    private String host = "";
-    private boolean isNewConfiguration=true;
+    private PropertiesReader reader = new PropertiesReader();
 
     /**
      * Load configuration to Cassandra DataBase
@@ -35,7 +35,7 @@ public class CassandraSession implements Connector<Session> {
     @Override
     public Connector loadConfiguration(Properties properties) {
         try {
-            buildProperties(properties);
+            reader.buildConnections(properties);
             return this;
         }catch (NumberFormatException e){
            String errorMessage = " Port property is not filled";
@@ -44,33 +44,17 @@ public class CassandraSession implements Connector<Session> {
         }
     }
 
-    public void buildProperties(Properties properties){
-        int port = Integer.valueOf(properties.getProperty(StringConstants.PORT));
-        String host =properties.getProperty(StringConstants.HOST);;
-        if (host==null ){
-            String errorMessage = " Host property is not filled";
-            logger.error(errorMessage);
-            throw  new NotPropertyFoundException(new Exception(),errorMessage);
-        }
-
-        if (port!=this.port || !host.equals(this.host)){
-            this.port = port;
-            this.host = host;
-            this.isNewConfiguration = true;
-        }
-    }
-
     /**
      *
-     * @return
+     * @return Session with cassandra
      */
     @Override
     public Session getConnector() {
         try {
-            if (isNewConfiguration){
-                Cluster cluster = Cluster.builder().addContactPoint(host).withPort(port).build();
+            if (reader.isNewConnexionLoaded()){
+                Cluster cluster = Cluster.builder().addContactPointsWithPorts(reader.getConnections()).build();
                 session = cluster.connect();
-                isNewConfiguration = false;
+                reader.setNewConnection(false);
             }
             return session;
         }catch (NoHostAvailableException e ){

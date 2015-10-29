@@ -1,9 +1,5 @@
 package com.stratio.explorer.testsAT.utils;
 
-/**
- * Created by mpenate on 26/10/15.
- */
-
 import com.stratio.tests.utils.BaseGTest;
 import com.stratio.tests.utils.ThreadProperty;
 import org.testng.ITestContext;
@@ -28,7 +24,7 @@ abstract public class BaseTest extends BaseGTest {
     }
 
     @BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method method) {
+    public void beforeMethod(Method method){
         ThreadProperty.set("browser", this.browser);
     }
 

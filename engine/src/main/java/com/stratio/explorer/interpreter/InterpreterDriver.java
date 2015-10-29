@@ -16,7 +16,7 @@ public interface InterpreterDriver<T> {
      *
      * @return connector to persistence
      */
-    Connector getConnector();
+     Connector getConnector();
 
 }
 

@@ -17,9 +17,10 @@ Getting Started
 ---------------
 
 Install
-~~~~~
+~~~~~~~
 
-Explorer is packed in a rpm and and a deb file. If you want install Stratio Explorer choses the correct file for your operating symen and install it.
+
+Explorer is packed in a rpm and a deb file. If you want install Stratio Explorer choses the correct file for your operating symen and install it.
 
 
 Run
@@ -58,4 +59,6 @@ Stop
 
 browse localhost:8084 in your browser. 8085 port should be accessible
 for websocket connection. **For configuration details check ./conf
+
 subdirectory.**
+
