@@ -18,6 +18,7 @@ package com.stratio.explorer.cassandra.gateways;
 
 
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -72,7 +73,4 @@ public class CasandraConnectorCreatorTest {
         reader.buildConnections(newProperties);
         assertThat(reader.isNewConnexionLoaded(), is(false));
     }
-
-
-
 }

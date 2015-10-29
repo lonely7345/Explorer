@@ -17,16 +17,18 @@
 package com.stratio.explorer.spark.exception;
 
 /**
- * When Master.spark property is not filled
+ *  URL to Spark master not correct
  */
-public class MasterPropertyNotFilledException extends RuntimeException{
+public class MalformedSparkURLException extends RuntimeException{
+
+    private String message;
 
 
     /**
-     * Constructor exception with message
-     * @param message error message
+     * Contructor with error message .
+     * @param message
      */
-    public MasterPropertyNotFilledException(String message){
-        super(message);
+    public MalformedSparkURLException(String message){
+        this.message = message;
     }
 }

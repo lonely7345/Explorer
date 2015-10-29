@@ -18,8 +18,8 @@
 package com.stratio.explorer.cassandra.gateways;
 
 import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
-import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.lists.FunctionalList;
+import com.stratio.explorer.checks.CheckerCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +43,9 @@ public class CasandraConnectorCreator {
      */
     public void buildConnections(Properties properties) {
         Collection<InetSocketAddress> localConcatpoint = extractConectionFrom(properties);
+        CheckerCollection checkerCollection = new CheckerCollection<InetSocketAddress>(" Host port property is not filled");
+        checkerCollection.checkIsCollectionISNotEmpty(localConcatpoint);
         fillAttributtes(localConcatpoint);
-        if (localConcatpoint.isEmpty()){
-            String errorMessage = " Host port property is not filled";
-            logger.error(errorMessage);
-            throw  new NotPropertyFoundException(new Exception(),errorMessage);
-        }
     }
 
     private Collection<InetSocketAddress> extractConectionFrom(Properties properties){

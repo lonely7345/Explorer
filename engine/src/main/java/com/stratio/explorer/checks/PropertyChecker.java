@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.spark.exception;
+package com.stratio.explorer.checks;
 
 /**
- * When Master.spark property is not filled
+ * Checks values of property
  */
-public class MasterPropertyNotFilledException extends RuntimeException{
-
+public interface PropertyChecker {
 
     /**
-     * Constructor exception with message
-     * @param message error message
+     * Checks if property is valid , if is not valid throw error .
+     * @param property to check
      */
-    public MasterPropertyNotFilledException(String message){
-        super(message);
-    }
+    public void check(String propertyValue);
 }

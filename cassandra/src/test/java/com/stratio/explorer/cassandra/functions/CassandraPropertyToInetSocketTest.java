@@ -18,6 +18,7 @@ package com.stratio.explorer.cassandra.functions;
 
 
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
