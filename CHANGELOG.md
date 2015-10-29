@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 
+
+* You can set more than one cassandra host in property's file.
+
 ## 0.4.0 (October 2015)
 
 * Add cassandra Interpreter
