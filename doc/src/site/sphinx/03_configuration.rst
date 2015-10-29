@@ -11,7 +11,10 @@ To connect with Cassandra you need file with name Cassandra and this parameters 
 ==================  =================  ====================
 Parameter           Default Value      Description
 ==================  =================  ====================
-cassandra.hostPort  127.0.0.1:8080     Cassandra Host:port
+cassandra.hostPort1  127.0.0.1:8080     Cassandra Host1:port1
+cassandra.hostPort2  127.0.0.1:8080     Cassandra Host2:port2
+      ....                ...                  ...
+cassandra.hostPortn  127.0.0.1:8080     Cassandra Host3:port3
 ==================  =================  ====================
 
 If you want include more cassandra cluster only need add lines with the same structure.
@@ -35,7 +38,7 @@ To connect with Ingestion you need file with name ingestion.conf and this parame
 =================  ===============================
 Parameter          Description
 =================  ===============================
-ingestion.home     folder where injestions jar is
+ingestion.home     folder where ingestions jar is
 =================  ===============================
 
 
