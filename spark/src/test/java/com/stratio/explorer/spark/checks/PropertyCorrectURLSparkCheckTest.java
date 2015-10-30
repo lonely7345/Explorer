@@ -33,7 +33,7 @@ public class PropertyCorrectURLSparkCheckTest {
 
     @Before
     public void setUp(){
-        checker = new PropertyCorrectURLSparkCheck("mesos","spark");
+        checker = new PropertyCorrectURLSparkCheck("mesos://","spark://");
     }
 
 

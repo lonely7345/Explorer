@@ -31,7 +31,6 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
 
     private Logger logger = LoggerFactory.getLogger(PropertyCorrectURLSparkCheck.class);
 
-    private final String CT_SEPARATOR_START_URL ="://";
     private List<String> startedURL;
 
     /**
@@ -62,7 +61,7 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
     private boolean isNotValid(String url){
         boolean result = false;
         for (int index=0;index<startedURL.size() && !result;index++){
-            result = url.startsWith(startedURL.get(index)+CT_SEPARATOR_START_URL);
+            result = url.startsWith(startedURL.get(index));
         }
         return !result;
     }

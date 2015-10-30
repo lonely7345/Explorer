@@ -37,7 +37,7 @@ public class ConnectorCreator<TypeConnector> {
     private Logger logger = LoggerFactory.getLogger(ConnectorCreator.class);
     private ConnectorCreatorModel connectorCreatorModel = new ConnectorCreatorModel();
 
-    private CheckerCollection checkerCollection =  new CheckerCollection<TypeConnector>("  Host port property is not filled ");
+    private CheckerCollection checkerCollection;
 
     private CollectionsComparator<TypeConnector> comparator ;
 

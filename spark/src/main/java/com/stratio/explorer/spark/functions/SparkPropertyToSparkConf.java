@@ -51,7 +51,7 @@ public class SparkPropertyToSparkConf implements TransformFunction<String,SparkC
         this.properties = properties;
         runnerPropertiesCheck.addCheck(new PropertyExistCheck())
                 .addCheck(new PropertyNotEmptyCheck())
-                .addCheck(new PropertyCorrectURLSparkCheck("mesos"));
+                .addCheck(new PropertyCorrectURLSparkCheck("mesos","local[*]"));
 
     }
 

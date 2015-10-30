@@ -30,6 +30,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.stratio.explorer.reader.PathFileCalculator;
+import com.stratio.explorer.reader.PropertiesReader;
+import com.stratio.explorer.spark.gateways.ExplorerSparkContext;
 import org.apache.spark.HttpServer;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
@@ -181,65 +184,14 @@ public class SparkInterpreter extends Interpreter {
 
 
     public SparkContext createSparkContext() {
-        logger.info("------ Create new SparkContext " + getMaster() + " -------");
 
-        String execUri = System.getenv("SPARK_EXECUTOR_URI");
-        String[] jars = SparkILoop.getAddedJars();
-
-        String classServerUri = null;
-
-
-        logger.info(interpreter.toString());
-        logger.info(interpreter.intp().toString());
-        try { // in case of spark 1.1x, spark 1.2x
-            Method classServer = interpreter.intp().getClass().getMethod("classServer");
-            HttpServer httpServer = (HttpServer) classServer.invoke(interpreter.intp());
-            classServerUri = httpServer.uri();
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException e) {
-            // continue
-        }
-
-        if (classServerUri == null) {
-            try { // for spark 1.3x, 1.4x
-                Method classServer = interpreter.intp().getClass().getMethod("classServerUri");
-                classServerUri = (String) classServer.invoke(interpreter.intp());
-            } catch (NoSuchMethodException | SecurityException | IllegalAccessException
-                    | IllegalArgumentException | InvocationTargetException e) {
-                logger.error(e.getMessage());
-            }
-        }
-
-        SparkConf conf =
-                new SparkConf()
-                        .setMaster(getMaster())
-                        .setAppName("stratio-explorer")
-                        .setJars(jars)
-                        .set("spark.repl.class.uri", classServerUri);
-        if (execUri != null) {
-            conf.set("spark.executor.uri", execUri);
-        }
-        if (System.getenv("SPARK_HOME") != null) {
-            conf.setSparkHome(System.getenv("SPARK_HOME"));
-        }
-        conf.set("spark.scheduler.mode", "FAIR");
-
-        return new SparkContext(conf);
+        //TODO : PROPERTIES READER ALLWAYS IS READ , SHOULD BE AN GLOBL
+        ExplorerSparkContext context = new ExplorerSparkContext();
+        context.loadConfiguration(new PropertiesReader().readConfigFrom("spark_interpreter"));
+        return context.getConnector();
     }
 
-    //TODO : THIS METHOD WILL BE REMOVED
-    public String getMaster() {
-        String envMaster = System.getenv().get("MASTER");
-        if (envMaster != null) {
-            return envMaster;
-        }
-        String propMaster = System.getProperty("spark.master");
-        if (propMaster != null) {
-            return propMaster;
-        }
-        return "local[*]";
-    }
-
+    //TODO : THIS METHOD IS TOO LONG
     @Override
     public void open() {
 
