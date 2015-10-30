@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.spark.exception;
+package com.stratio.explorer.lists;
+
+import java.util.Collection;
 
 /**
- * When Spark End Point is not avalaible
+ *  Compare two Collections of TypeInput
  */
-public class SparkEndPointException extends RuntimeException{
+public interface CollectionsComparator<typeInput> {
+
 
     /**
-     * Constructor exception with original exception and error message
-     * @param e origina exception
-     * @param message message
+     *  Compare if two collections are not equals
+     * @param firstCollection
+     * @param secondCollection
+     * @return true is not equals
      */
-    public SparkEndPointException(Throwable e, String message){
-           super(message,e);
-    }
+    boolean notEquals(Collection<typeInput> firstCollection, Collection<typeInput> secondCollection);
 }

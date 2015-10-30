@@ -26,7 +26,7 @@ import java.net.InetSocketAddress;
 import java.util.Properties;
 
 
-public class CassandraPropertyToInetSocket implements TransformFunction<String, InetSocketAddress> {
+public class CassandraPropertyToInetSocket  implements TransformFunction<String, InetSocketAddress> {
 
     private Properties properties;
     private Logger logger = LoggerFactory.getLogger(CassandraPropertyToInetSocket.class);

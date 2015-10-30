@@ -16,11 +16,14 @@
 
 package com.stratio.explorer.spark.gateways;
 
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
+import com.stratio.explorer.gateways.ConnectorCreator;
 import com.stratio.explorer.lists.FunctionalList;
 import com.stratio.explorer.spark.exception.SparkEndPointException;
 import com.stratio.explorer.spark.functions.SparkPropertyToSparkConf;
 import com.stratio.explorer.checks.CheckerCollection;
+import com.stratio.explorer.spark.lists.SparkConfComparator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.slf4j.Logger;
@@ -39,6 +42,8 @@ public class ExplorerSparkContext implements Connector<SparkContext> {
 
     private final String PROPERTY_SPARK_MASTER ="spark.master";
 
+    private ConnectorCreator<SparkConf> creator = new ConnectorCreator<SparkConf>(new SparkConfComparator()," Porperty spark master is not filled ");
+
 
     private SparkContext sc;
 
@@ -49,36 +54,25 @@ public class ExplorerSparkContext implements Connector<SparkContext> {
      */
     @Override
     public Connector loadConfiguration(Properties properties) {
-
-        String propertyValue =(String)properties.get(PROPERTY_SPARK_MASTER);
-        List<SparkConf> confs =  genrateSparkConf(properties);
-        CheckerCollection checkerCollection = new CheckerCollection<SparkConf>("Porperty "+PROPERTY_SPARK_MASTER+ "no exist");
-        checkerCollection.checkIsCollectionISNotEmpty(confs);
-        buildSparkContext(confs.get(0));
-        return this;
+            List<String> keysToInspect = new ArrayList<>(properties.stringPropertyNames());
+            creator.buildConnections(keysToInspect,new SparkPropertyToSparkConf(properties));
+            return this;
     }
 
-
-    private List<SparkConf> genrateSparkConf(Properties properties){
-        List<String> keys = new ArrayList<>(properties.stringPropertyNames());
-        FunctionalList<String,SparkConf> functionalList = new FunctionalList<String,SparkConf>(keys);
-        return  functionalList.map(new SparkPropertyToSparkConf(properties));
-    }
-
-
-    private void buildSparkContext(SparkConf sparkConf){
-        try {
-            sc=  new SparkContext(sparkConf);
-        }catch(UnsatisfiedLinkError e){
-            String message = "Spark end point not valid or Spark is not upper";
-            logger.error(message);
-            throw new SparkEndPointException(new Exception(),message);
-        }
-    }
 
 
     @Override
     public SparkContext getConnector() {
-        return sc;
+      try {
+          if (creator.isNewConnexionLoaded()) {
+              sc = new SparkContext(new ArrayList<>(creator.getConnections()).get(0));
+              creator.setNewConnection(false);
+          }
+          return sc;
+      }catch (UnsatisfiedLinkError e){
+          String message = "Spark end point not valid or Spark is not upper";
+          logger.error(message);
+          throw new SparkEndPointException(e,message);
+      }
     }
 }

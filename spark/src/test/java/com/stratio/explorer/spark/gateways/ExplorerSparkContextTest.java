@@ -58,5 +58,6 @@ public class ExplorerSparkContextTest {
     public void whenSparkContextisNotexist(){
         properties.put(CT_SPARK_MASTER, "mesos://HOST:5050");
         sparkContex.loadConfiguration(properties);
+        sparkContex.getConnector();
     }
 }
