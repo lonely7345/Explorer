@@ -1,9 +1,8 @@
-
-
-As Stratio Explorer user
-I want to make some basic functions.
-
+@ignore @manual
 Feature: Basic Explorer Operations
+  In order to Know the Stratio Explorer basis
+  As a Stratio Explorer User
+  I want to do basic stuffs in Stratio Explorer
 
   Background: Login user
     Given an user logged into Explorer
