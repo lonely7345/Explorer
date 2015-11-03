@@ -1,0 +1,21 @@
+
+
+As Stratio Explorer user
+I want to make some basic functions.
+
+Feature: Basic Explorer Operations
+
+  Background: Login user
+    Given an user logged into Explorer
+
+  Scenario: Test create new Notebook
+    When I click in the add notebook button
+    Then I get a new notebook with a random name
+
+  Scenario: Test Delete a Notebook
+
+  Scenario: Test Rename a Notebook
+
+  Scenario: Test Organize a Notebooks
+
+
