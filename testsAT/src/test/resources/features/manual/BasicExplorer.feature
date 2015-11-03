@@ -53,7 +53,62 @@ Feature: Basic Explorer Operations
 
   Scenario: Test insert new paragraph
 
-    ##button disabled?
+  Scenario: Test remove paragraph
+
+ #No probed
+  Scenario: Test remove paragraph
+
+ #NoteBook tools
+  Scenario: Test show / hide the code
+
+  Scenario: Test show / hide the output
+
+  Scenario: Test remove notebook
+
+  Scenario: Test save notebook
+
+  Scenario: Test modify target directory to save notebook
+
+  Scenario: Test save current notebook status
+
+  Scenario: Test remove all paragraphs status
+
+  Scenario: Test remove all paragraphs status
+
+  Scenario: Test select default/simple view
+
+  #General settings
+  Scenario: Test edit config crossdata and save
+
+  Scenario: Test edit config ingestion and save
+
+  Scenario: Test edit config cassandra and save
+
+  Scenario: Test logout
+
+  Scenario: Test search field
+
+  Scenario: Test click on Stratio's logo
+
+  Scenario: Test view help
+
+    #Test Shortcuts
+  Scenario: Shift + Enter  Run the note
+
+  Scenario: Ctrl + Spacebar  Syntax autocomplete helper
+
+  Scenario: Ctrl + a  Select the whole line
+
+  Scenario: Ctrl + x  Cut the line
+
+  Scenario: Ctrl + v  Paste the line
+
+  Scenario: Up arrow Move cursor Up
+
+  Scenario: Down arrow Move cursor Down
+
+
+    #button disabled?
   Scenario: Check empty fields markdown Engine
     Given empty 'editor' field
     And Select 'markdown' engine

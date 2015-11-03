@@ -2,7 +2,7 @@
 Feature: Explorer Shell Interaction
   In order to interact with the server linux Shell
   As a Stratio Explorer User
-  I want to do send commands to the server using Stratio Explorer.
+  I want to send commands to the server using Stratio Explorer.
 
 
   Scenario: Check empty fields shell Engine
@@ -11,3 +11,17 @@ Feature: Explorer Shell Interaction
     When Click run button
     Then return none
 
+
+  Scenario: Test 'cd' command
+
+  Scenario: Test 'pwd' command
+
+  Scenario: Test 'ls | grep s*' command
+
+  Scenario: Test 'cd' command
+
+  Scenario: Test 'cd' command
+
+  Scenario: Test 'cd' command
+
+  Scenario: Test 'cd' command
