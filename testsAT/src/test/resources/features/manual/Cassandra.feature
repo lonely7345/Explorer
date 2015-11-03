@@ -1,66 +1,47 @@
 @ignore @manual
 
-Feature: Explorer-Crossdata Integration
-  In order to Connect to Stratio Crossdata and query differents Databases
+Feature: Explorer-Cassandra Integration
+  In order to Connect to Cassandra
   As a Stratio Explorer User
-  I want to do some queries against Stratio Crossdata
-
+  I want to do some queries against Cassandra
 
   Background: Login user
     Given an user logged into Explorer
-    And a dataset ingested in Elasticsearch
+    And a dataset ingested in Cassandra
     And All required Crossdata Connectors started
     And a new Notebook
 
+  Scenario: Check empty fields Cassandra Engine
+    Given empty 'editor' field
+    And Select 'Cassandra' engine
+    When Click run button
+    Then return Cassandra error
 
-  Scenario: Test Basic Crossdata Commands
-    When I execute a "DESCRIBE CONNECTORS" in Crossdata
-    Then I got the list with the connector states
+  Scenario: Test Create Keyspace
 
-  Scenario: Test Crossdata Attach Cluster
+  Scenario: Test Create Table
 
-  Scenario: Test Crossdata Attach Connector
+  Scenario: Test Insert Into
 
-  Scenario: Test Crossdata Create Catalog
+  Scenario: Test Select *
 
-  Scenario: Test Crossdata Create Catalog with options
+  Scenario: Test Create Index
 
-  Scenario: Test Crossdata Register Table
+  Scenario: Test Create Secondary Index
 
-  Scenario: Test Crossdata Create Table command
+  Scenario: Test Drop Table
 
-  Scenario: Test Crossdata INSERT command
+  Scenario: Test Drop Index
 
-  Scenario: Test Crossdata Select * Without filters
+  Scenario: Test Drop keyspace
 
-  Scenario: Test Crossdata Select * With simple filters
+  Scenario: Test Select with filters
 
-  Scenario: Test Crossdata Select * With multiple filters
+  Scenario: Test Select with invalid filter
 
-  Scenario: Test Crossdata Select * With Order By
+  Scenario: Test Select with no indexed filters
 
-  Scenario: Test Crossdata Select * With Limit
+  Scenario: Test Select with filters in secondary index
 
-  Scenario: Test Crossdata Select With projections
 
-  Scenario: Test Crossdata Select Into
 
-  Scenario: Test Crossdata Select With Inner Join
-
-  Scenario: Test Crossdata Select GROUP BY
-
-  Scenario: Test Crossdata DELETE FROM
-
-  Scenario: Test Crossdata CREATE INDEX
-
-  Scenario: Test Crossdata CREATE Secondary Index in C*
-
-  Scenario: Test Crossdata Update command
-
-  Scenario: Test Crossdata DROP Index
-
-  Scenario: Test Crossdata DROP Table
-
-  Scenario: Test Crossdata DROP Catalog
-
-  Scenario: Test Crossdata Detach Cluster
