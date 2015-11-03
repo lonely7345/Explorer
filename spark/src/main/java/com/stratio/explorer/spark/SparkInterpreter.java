@@ -33,6 +33,7 @@ import java.util.Set;
 import com.stratio.explorer.reader.PathFileCalculator;
 import com.stratio.explorer.reader.PropertiesReader;
 import com.stratio.explorer.spark.gateways.ExplorerSparkContext;
+import com.stratio.explorer.spark.lists.SparkConfComparator;
 import org.apache.spark.HttpServer;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
@@ -96,11 +97,14 @@ public class SparkInterpreter extends Interpreter {
 
     static SparkInterpreter _singleton;
 
+    private  ExplorerSparkContext context = new ExplorerSparkContext(new SparkConfComparator());
+
     public static SparkInterpreter singleton() {
         return _singleton;
     }
 
     public static SparkInterpreter singleton(Properties property) {
+
         if (_singleton == null) {
             new SparkInterpreter(property);
         }
@@ -111,6 +115,7 @@ public class SparkInterpreter extends Interpreter {
         _singleton = si;
     }
 
+    //TODO : PROPERTIES ALWAYS IS EMPTY
     public SparkInterpreter(Properties property) {
         super(property);
         out = new ByteArrayOutputStream();
@@ -120,34 +125,11 @@ public class SparkInterpreter extends Interpreter {
     }
 
     public synchronized SparkContext getSparkContext() {
-        Map<String, Object> share = (Map<String, Object>) getProperty().get("share");
-        logger.info("SC in Map share " + share.containsKey("sc"));
 
-        if (sc == null) {
-            sc = (SparkContext) share.get("sc");
-            sparkListener = (JobProgressListener) share.get("sparkListener");
-            logger.info("sparkListener in Map share " + share.containsKey("sparkListener"));
-
-            if (sc == null) {
-                sc = createSparkContext();
-                env = SparkEnv.get();
-                sparkListener = new JobProgressListener(sc.getConf());
-                sc.listenerBus().addListener(sparkListener);
-
-				/* Sharing a single spark context across scala repl is not possible at the moment.
-                 * because of spark's limitation.
-				 *   1) Each SparkImain (scala repl) creates classServer but worker (executor uses only the first one)
-				 *   2) creating a SparkContext creates corresponding worker's Executor. which executes tasks and reuse classloader.
-				 *      the same Classloader can confuse classes from many different scala repl.
-				 *      
-				 * The code below is commented out until this limitation removes
-				 */
-                share.put("sc", sc);
-                //share.put("sparkEnv", env);
-                //share.put("sparkListener", sparkListener);
-            }
-
-        }
+        sc = createSparkContext();
+        env = SparkEnv.get();
+        sparkListener = new JobProgressListener(sc.getConf());
+        sc.listenerBus().addListener(sparkListener);
 
         return sc;
     }
@@ -156,6 +138,7 @@ public class SparkInterpreter extends Interpreter {
         return Boolean.parseBoolean(System.getenv("NOTEBOOK_SPARK_USEHIVECONTEXT"));
     }
 
+    //TODO : this method will be move to othre class
     public SQLContext getSQLContext() {
         if (sqlc == null) {
             if (useHiveContext()) {
@@ -186,7 +169,7 @@ public class SparkInterpreter extends Interpreter {
     public SparkContext createSparkContext() {
 
         //TODO : PROPERTIES READER ALLWAYS IS READ , SHOULD BE AN GLOBL
-        ExplorerSparkContext context = new ExplorerSparkContext();
+
         context.loadConfiguration(new PropertiesReader().readConfigFrom("spark_interpreter"));
         return context.getConnector();
     }

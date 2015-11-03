@@ -48,6 +48,7 @@ public class SparkConfComparator implements CollectionsComparator<SparkConf>{
         for (int index=0;index<secondList.size() && equals;index++){
             equals = !firstList.search(new CompareSparkConf(secondList.get(index),CT_MASTER)).isEmpty();
         }
+
         return !equals;
     }
 }

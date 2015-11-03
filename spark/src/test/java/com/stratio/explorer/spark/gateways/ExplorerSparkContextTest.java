@@ -19,27 +19,45 @@ package com.stratio.explorer.spark.gateways;
 import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
 import com.stratio.explorer.spark.exception.SparkEndPointException;
+import com.stratio.explorer.spark.lists.SparkConfComparator;
+import org.apache.spark.SparkContext;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Properties;
 
-/**
- * Created by afidalgo on 28/10/15.
- */
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+
 public class ExplorerSparkContextTest {
 
     private Properties properties;
     private ExplorerSparkContext sparkContex;
     private final String CT_SPARK_MASTER ="spark.master";
+    private final String CT_ANY_MESOS = "mesos://HOST:5050";
+    private final String CT_LOCAL ="local[*]";
 
 
     @Before
     public void setUp(){
         properties = new Properties();
-        sparkContex = new ExplorerSparkContext();
+        sparkContex = new ExplorerSparkContext(new SparkConfComparator());
     }
 
+
+    @After
+    public void tearDown(){
+       try {
+           SparkContext context = sparkContex.getConnector();
+           if (context != null) {
+               context.stop();
+           }
+       }catch (SparkEndPointException e){
+          // left empty deliverely
+       }
+    }
 
     @Test(expected = NotPropertyFoundException.class)
     public void whenPropertysparkMasterNotExist(){
@@ -59,5 +77,20 @@ public class ExplorerSparkContextTest {
         properties.put(CT_SPARK_MASTER, "mesos://HOST:5050");
         sparkContex.loadConfiguration(properties);
         sparkContex.getConnector();
+    }
+
+
+    @Test
+    public void whenLoadSamePropertiesLoadTwoTimes(){
+        try {
+            properties.put(CT_SPARK_MASTER, CT_LOCAL);
+            sparkContex.loadConfiguration(properties);
+            sparkContex.getConnector();
+            sparkContex.getConnector();
+            assertTrue("When load two times same configuration not try new connection ", true);
+
+        }catch (Throwable e){
+            fail("When load two times same configuration not try new connection ");
+        }
     }
 }
