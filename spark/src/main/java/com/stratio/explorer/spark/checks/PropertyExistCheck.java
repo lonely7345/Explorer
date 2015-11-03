@@ -32,11 +32,12 @@ public class PropertyExistCheck implements PropertyChecker {
     /**
      * Check if proiperty is not null .
      * @param property to check
+     * @param  propertyName
      */
     @Override
-    public void check(String propertyValue) {
+    public void check(String propertyName,String propertyValue) {
         if (propertyValue==null) {
-            String message = "Property " + propertyValue + " no exist ";
+            String message = "Property " + propertyName + " no exist ";
             logger.error(message);
             throw new NotPropertyFoundException(new Exception(), message);
         }

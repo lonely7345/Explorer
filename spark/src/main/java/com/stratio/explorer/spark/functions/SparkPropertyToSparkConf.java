@@ -18,12 +18,9 @@ package com.stratio.explorer.spark.functions;
 
 
 import com.stratio.explorer.checks.PropertyCheckerLauncher;
-import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.functions.TransformFunction;
-import com.stratio.explorer.spark.checks.PropertyCorrectURLSparkCheck;
-import com.stratio.explorer.spark.checks.PropertyExistCheck;
-import com.stratio.explorer.spark.checks.PropertyNotEmptyCheck;
-import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
+import com.stratio.explorer.spark.checks.*;
+import com.stratio.explorer.spark.conf.AttributteNames;
 import org.apache.spark.SparkConf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,26 +34,26 @@ public class SparkPropertyToSparkConf implements TransformFunction<String,SparkC
 
     private Logger logger = LoggerFactory.getLogger(SparkPropertyToSparkConf.class);
     private Properties properties;
-
     private final String CT_APP_NAME = "stratio-explorer";
 
     private PropertyCheckerLauncher runnerPropertiesCheck = new PropertyCheckerLauncher();
+    private SparkConf sparkConf = new SparkConf().setAppName(CT_APP_NAME);
 
     /**
      * Constructor with SparkContex configuration
      *
      * @param properties
+     * @param sparkConf initial configuration
      */
     public SparkPropertyToSparkConf(Properties properties) {
         this.properties = properties;
         runnerPropertiesCheck.addCheck(new PropertyExistCheck())
                 .addCheck(new PropertyNotEmptyCheck())
-                .addCheck(new PropertyCorrectURLSparkCheck("mesos","local[*]"));
+                .addCheck(new PropertyCheckWithCondition(new PropertyCorrectURLSparkCheck("mesos", "local[*]"),new ExecutablePropertyCondition(AttributteNames.CT_MASTER)));
 
     }
 
-
-    /**
+     /**
      * Transform propertyName into file properties in SparkConf.
      *
      * @param propertyName
@@ -65,9 +62,8 @@ public class SparkPropertyToSparkConf implements TransformFunction<String,SparkC
     @Override
     public SparkConf transform(String propertyName) {
         String valueProperty = (String) properties.get(propertyName);
-        runnerPropertiesCheck.runAllChecks(valueProperty);
-        return new SparkConf()
-                .setMaster(valueProperty)
-                .setAppName(CT_APP_NAME);
+        runnerPropertiesCheck.runAllChecks(propertyName,valueProperty);
+        sparkConf.set(propertyName,valueProperty);
+        return sparkConf;
     }
 }

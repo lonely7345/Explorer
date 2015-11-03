@@ -17,6 +17,8 @@
 package com.stratio.explorer.spark.gateways;
 
 import com.stratio.explorer.exceptions.NotPropertyFoundException;
+import com.stratio.explorer.gateways.Connector;
+import com.stratio.explorer.spark.conf.AttributteNames;
 import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
 import com.stratio.explorer.spark.exception.SparkEndPointException;
 import com.stratio.explorer.spark.lists.SparkConfComparator;
@@ -27,17 +29,18 @@ import org.junit.Test;
 
 import java.util.Properties;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-
+//TODO : CHANGE EMBEDED SPARK CONTEXT BY MOCKER
 public class ExplorerSparkContextTest {
 
     private Properties properties;
     private ExplorerSparkContext sparkContex;
-    private final String CT_SPARK_MASTER ="spark.master";
     private final String CT_ANY_MESOS = "mesos://HOST:5050";
     private final String CT_LOCAL ="local[*]";
+    private final String CT_SIZE_DRIVER_MEMORY ="250M";
 
 
     @Before
@@ -67,23 +70,32 @@ public class ExplorerSparkContextTest {
 
     @Test(expected = MasterPropertyNotFilledException.class)
     public void whenSparkContextExistbutNotFilled(){
-        properties.put(CT_SPARK_MASTER, "");
+        properties.put(AttributteNames.CT_MASTER, "");
         sparkContex.loadConfiguration(properties);
     }
 
 
     @Test(expected = SparkEndPointException.class)
     public void whenSparkContextisNotexist(){
-        properties.put(CT_SPARK_MASTER, "mesos://HOST:5050");
+        properties.put(AttributteNames.CT_MASTER, "mesos://HOST:5050");
+
+        properties.put(AttributteNames.CT_DRIVER_MEMORY,"250M");
+        properties.put(AttributteNames.CT_EXECUTOR_MEMORY,"250M");
+        properties.put(AttributteNames.CT_CORES, "4");
         sparkContex.loadConfiguration(properties);
         sparkContex.getConnector();
+
     }
 
 
     @Test
     public void whenLoadSamePropertiesLoadTwoTimes(){
         try {
-            properties.put(CT_SPARK_MASTER, CT_LOCAL);
+
+            properties.put(AttributteNames.CT_MASTER, CT_LOCAL);
+            properties.put(AttributteNames.CT_DRIVER_MEMORY,"250M");
+            properties.put(AttributteNames.CT_EXECUTOR_MEMORY,"250M");
+            properties.put(AttributteNames.CT_CORES,"4");
             sparkContex.loadConfiguration(properties);
             sparkContex.getConnector();
             sparkContex.getConnector();

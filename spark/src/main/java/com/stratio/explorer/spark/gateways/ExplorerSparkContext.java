@@ -21,6 +21,7 @@ import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.gateways.ConnectorCreator;
 import com.stratio.explorer.lists.CollectionsComparator;
 import com.stratio.explorer.lists.FunctionalList;
+import com.stratio.explorer.spark.conf.MadatoryPropertiesList;
 import com.stratio.explorer.spark.exception.SparkEndPointException;
 import com.stratio.explorer.spark.functions.SparkPropertyToSparkConf;
 import com.stratio.explorer.checks.CheckerCollection;
@@ -62,7 +63,7 @@ public class ExplorerSparkContext implements Connector<SparkContext> {
      */
     @Override
     public Connector loadConfiguration(Properties properties) {
-            List<String> keysToInspect = new ArrayList<>(properties.stringPropertyNames());
+            List<String> keysToInspect = MadatoryPropertiesList.buildMandatoryPropertiesListToBuildSparkContext();
             creator.buildConnections(keysToInspect,new SparkPropertyToSparkConf(properties));
             return this;
     }

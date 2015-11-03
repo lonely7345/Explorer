@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.checks;
+package com.stratio.explorer.spark.conf;
 
 /**
- * Checks values of property
+ * all constanst to module
  */
-public interface PropertyChecker {
+public class AttributteNames {
 
-    /**
-     * Checks if property is valid , if is not valid throw error .
-     * @param property to check
-     * @param propertyName
-     *
-     */
-    public void check(String propertyName,String propertyValue);
+    public static  final String CT_MASTER="spark.master";
+    public static String CT_DRIVER_MEMORY ="spark.driver.memory";
+    public static String CT_EXECUTOR_MEMORY ="spark.executor.memory";
+    public static String CT_CORES ="spark.cores.max";
+    public static String CT_HIVE_CONTEXT ="spark.hiveContext";
 }

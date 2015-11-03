@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.checks;
+package com.stratio.explorer.spark.checks;
 
 /**
- * Checks values of property
+ * condition to exec check
  */
-public interface PropertyChecker {
+public interface ConditionExecCheck {
 
-    /**
-     * Checks if property is valid , if is not valid throw error .
-     * @param property to check
-     * @param propertyName
-     *
-     */
-    public void check(String propertyName,String propertyValue);
+
+
+    boolean isExecutable(String propertyName);
 }

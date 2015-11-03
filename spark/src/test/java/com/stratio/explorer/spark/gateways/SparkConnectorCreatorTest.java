@@ -19,6 +19,7 @@ package com.stratio.explorer.spark.gateways;
 
 import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.ConnectorCreator;
+import com.stratio.explorer.spark.conf.AttributteNames;
 import com.stratio.explorer.spark.exception.MalformedSparkURLException;
 import com.stratio.explorer.spark.functions.SparkPropertyToSparkConf;
 import com.stratio.explorer.spark.lists.SparkConfComparator;
@@ -37,11 +38,14 @@ public class SparkConnectorCreatorTest {
 
     private Properties properties;
     private ConnectorCreator<SparkConf> creator;
-    private final String CT_MASTER ="spark.master";
+    private List<String> keysToInspect ;
+
 
 
     @Before
     public void setUp(){
+        keysToInspect = new ArrayList<>();
+        keysToInspect.add(AttributteNames.CT_MASTER);
         properties = new Properties();
         creator = new ConnectorCreator<SparkConf>(new SparkConfComparator()," Porperty spark master is not filled ");
     }
@@ -56,9 +60,9 @@ public class SparkConnectorCreatorTest {
     @Test
     public void whenPropertiesHaveOneValue(){
         String url = "mesos://";
-        properties.put(CT_MASTER, url);
+        properties.put(AttributteNames.CT_MASTER, url);
         Collection<SparkConf> expected = Arrays.asList(new SparkConf().setMaster(url).setAppName("stratio-explorer"));
-        creator.buildConnections(new ArrayList<>(properties.stringPropertyNames()), new SparkPropertyToSparkConf(properties));
+        creator.buildConnections(keysToInspect, new SparkPropertyToSparkConf(properties));
         assertTrue("Result should not be  empty list", isEquals(creator.getConnections(), expected));
     }
 
@@ -67,7 +71,7 @@ public class SparkConnectorCreatorTest {
         List<SparkConf> secondList = new ArrayList<>(connectorConfigurer);
         boolean equals = firstList.size() == secondList.size();
         for (int index=0;index<firstList.size() && equals;index++){
-            equals = firstList.get(index).get(CT_MASTER).equals(secondList.get(index).get(CT_MASTER));
+            equals = firstList.get(index).get(AttributteNames.CT_MASTER).equals(secondList.get(index).get(AttributteNames.CT_MASTER));
         }
         return equals;
     }
@@ -75,20 +79,20 @@ public class SparkConnectorCreatorTest {
 
     @Test(expected =MalformedSparkURLException.class)
     public void whenURLIsNotCorrect(){
-        properties.put(CT_MASTER, "127.0.0.1:8080aaaaa");
-        creator.buildConnections(new ArrayList<>(properties.stringPropertyNames()),new SparkPropertyToSparkConf(properties));
+        properties.put(AttributteNames.CT_MASTER, "127.0.0.1:8080aaaaa");
+        creator.buildConnections(keysToInspect,new SparkPropertyToSparkConf(properties));
     }
 
     @Test
     public void whenPropertiesWithSameValuesHasLoaded(){
         String anyURL = "mesos://any";
-        properties.put("spark.master", anyURL);
-        creator.buildConnections(new ArrayList<>(properties.stringPropertyNames()),new SparkPropertyToSparkConf(properties));
+        properties.put(AttributteNames.CT_MASTER, anyURL);
+        creator.buildConnections(keysToInspect,new SparkPropertyToSparkConf(properties));
         assertThat("is new connection should be true", creator.isNewConnexionLoaded(), is(true));
         creator.setNewConnection(false);
         Properties newProperties = new Properties();
-        newProperties.put("spark.master", anyURL);
-        creator.buildConnections(new ArrayList<>(newProperties.stringPropertyNames()),new SparkPropertyToSparkConf(properties));
+        newProperties.put(AttributteNames.CT_MASTER, anyURL);
+        creator.buildConnections(keysToInspect,new SparkPropertyToSparkConf(properties));
         assertThat("is new connection should be false",creator.isNewConnexionLoaded(), is(false));
     }
 }

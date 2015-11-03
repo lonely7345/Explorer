@@ -18,6 +18,7 @@ package com.stratio.explorer.spark.lists;
 
 import com.stratio.explorer.lists.CollectionsComparator;
 import com.stratio.explorer.lists.FunctionalList;
+import com.stratio.explorer.spark.conf.AttributteNames;
 import com.stratio.explorer.spark.functions.CompareSparkConf;
 import org.apache.spark.SparkConf;
 
@@ -30,8 +31,6 @@ import java.util.List;
  */
 public class SparkConfComparator implements CollectionsComparator<SparkConf>{
 
-
-    private final String CT_MASTER ="spark.master";
 
     /**
      * Compare two collections
@@ -46,7 +45,7 @@ public class SparkConfComparator implements CollectionsComparator<SparkConf>{
         List<SparkConf> secondList = new ArrayList<>(secondCollection);
         boolean equals = firstList.size() == secondList.size();
         for (int index=0;index<secondList.size() && equals;index++){
-            equals = !firstList.search(new CompareSparkConf(secondList.get(index),CT_MASTER)).isEmpty();
+            equals = !firstList.search(new CompareSparkConf(secondList.get(index), AttributteNames.CT_MASTER)).isEmpty();
         }
 
         return !equals;

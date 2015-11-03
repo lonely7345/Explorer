@@ -14,39 +14,26 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.checks;
-
+package com.stratio.explorer.spark.conf;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Launch all configured checks in property
+ * Must buil list with mandatory properties in file
  */
-public class PropertyCheckerLauncher {
-
-
-
-    private List<PropertyChecker> list = new ArrayList<>();
+public class MadatoryPropertiesList {
 
     /**
-     * Add new checker to run .
-     * @param checker checker to run
-     * @return  this object
+     * List manadatory attrbuttes that must be in conf file to create SparkContext
+     * @return List with attributtes
      */
-    public PropertyCheckerLauncher addCheck(PropertyChecker checker){
-        list.add(checker);
-        return this;
-    }
-
-
-    /**
-     * Run all configured checks , if any fail throw error
-     * @param property property to check
-     */
-    public void runAllChecks(String propertyName,String property){
-        for (PropertyChecker checker:list){
-            checker.check(propertyName,property);
-        }
+    public static List<String> buildMandatoryPropertiesListToBuildSparkContext(){
+        List<String> returned = new ArrayList<>();
+        returned.add(AttributteNames.CT_MASTER);
+        returned.add(AttributteNames.CT_DRIVER_MEMORY);
+        returned.add(AttributteNames.CT_EXECUTOR_MEMORY);
+        returned.add(AttributteNames.CT_CORES);
+        return returned;
     }
 }

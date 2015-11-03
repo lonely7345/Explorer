@@ -45,12 +45,12 @@ public class PropertyCorrectURLSparkCheck implements PropertyChecker {
      * @param propertyValue
      */
     @Override
-    public void check(String propertyValue) {
+    public void check(String propertyName,String propertyValue) {
         String [] urls = propertyValue.split(",");
 
         for (String url : urls){
             if (isNotValid(url))  {
-                String message = "spark url "+url+" is not valid";
+                String message = propertyName +" with spark url "+url+" is not valid";
                 logger.error(message);
                 throw new MalformedSparkURLException(message);
             }

@@ -39,21 +39,19 @@ public class PropertyCorrectURLSparkCheckTest {
 
     @Test(expected = MalformedSparkURLException.class)
     public void whenNotContainsValidStartURL(){
-        checker.check("mesos1://asassa,spark1://");
+        checker.check("anyNameProperty","mesos1://asassa,spark1://");
     }
 
     @Test(expected = MalformedSparkURLException.class)
     public void whenContainAnyStartedURLCorrect(){
-        checker.check("mesos1://asassa,spark://");
+        checker.check("anyNameProperty","mesos1://asassa,spark://");
        assertTrue("Result shoudl be not throw exception",true);
     }
-
-
 
     @Test
     public void whenPropertyContainsAllInitialURL(){
        try {
-           checker.check("mesos://asassa,spark://");
+           checker.check("anyNameProperty","mesos://asassa,spark://");
            assertTrue("Result shoudl be not throw exception",true);
        }catch (MasterPropertyNotFilledException e){
            fail("Result shoudl be not throw exception");

@@ -17,27 +17,34 @@
 package com.stratio.explorer.spark.checks;
 
 import com.stratio.explorer.checks.PropertyChecker;
-import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- *  check property is not empty
+ * Check must be execute if condition complain
  */
-public class PropertyNotEmptyCheck implements PropertyChecker {
+public class PropertyCheckWithCondition implements PropertyChecker {
 
-    private Logger logger = LoggerFactory.getLogger(PropertyNotEmptyCheck.class);
+     private PropertyChecker checker;
+     private ConditionExecCheck condition;
+
 
     /**
-     * Check property not empty ,if is empty throw error
-     * @param property to check
+     * Constructor
+      * @param checker to execute
+     * @param condition to execute checker
+     */
+    public PropertyCheckWithCondition(PropertyChecker checker,ConditionExecCheck condition){
+         this.checker = checker;
+         this.condition = condition;
+     }
+
+    /**
+     * Execute check if condition is true
+     * @param propertyValue
      */
     @Override
     public void check(String propertyName,String propertyValue) {
-        if (propertyValue.isEmpty()) {
-            String message = "Property " + propertyName + " not filled";
-            logger.error(message);
-            throw new MasterPropertyNotFilledException(message);
+        if (condition.isExecutable(propertyName)) {
+            checker.check(propertyName,propertyValue);
         }
     }
 }

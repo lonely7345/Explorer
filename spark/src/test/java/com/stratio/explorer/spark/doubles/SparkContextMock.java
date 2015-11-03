@@ -24,7 +24,7 @@ import org.apache.spark.SparkContext;
 import java.util.Properties;
 import static org.mockito.Mockito.mock;
 
-
+//TODO : CHANGE EMBBEDED BY MOCKS
 public class SparkContextMock  implements Connector<SparkContext> {
 
 
@@ -39,8 +39,6 @@ public class SparkContextMock  implements Connector<SparkContext> {
 
     @Override
     public SparkContext getConnector() {
-
-
         return sparkContext;
     }
 }
