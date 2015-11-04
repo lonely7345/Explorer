@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.spark.gateways;
+package com.stratio.explorer.spark.gateways.contexts;
 
-import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.gateways.ConnectorCreator;
 import com.stratio.explorer.lists.CollectionsComparator;
-import com.stratio.explorer.lists.FunctionalList;
 import com.stratio.explorer.spark.conf.MadatoryPropertiesList;
 import com.stratio.explorer.spark.exception.SparkEndPointException;
 import com.stratio.explorer.spark.functions.SparkPropertyToSparkConf;
-import com.stratio.explorer.checks.CheckerCollection;
-import com.stratio.explorer.spark.lists.SparkConfComparator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.slf4j.Logger;

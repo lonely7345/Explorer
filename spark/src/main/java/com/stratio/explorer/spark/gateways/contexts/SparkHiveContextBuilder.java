@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stratio.explorer.spark.gateways;
+package com.stratio.explorer.spark.gateways.contexts;
 
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.hive.HiveContext;

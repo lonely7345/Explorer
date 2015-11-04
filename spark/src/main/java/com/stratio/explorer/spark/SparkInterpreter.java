@@ -19,7 +19,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -30,12 +29,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import com.stratio.explorer.reader.PathFileCalculator;
 import com.stratio.explorer.reader.PropertiesReader;
-import com.stratio.explorer.spark.gateways.ExplorerSparkContext;
+import com.stratio.explorer.spark.gateways.contexts.ExplorerSparkContext;
+import com.stratio.explorer.spark.gateways.contexts.ExplorerSparkSQLContext;
 import com.stratio.explorer.spark.lists.SparkConfComparator;
-import org.apache.spark.HttpServer;
-import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.SparkEnv;
 import org.apache.spark.repl.SparkCommandLine;
@@ -57,7 +54,6 @@ import com.stratio.explorer.notebook.NoteInterpreterLoader;
 import com.stratio.explorer.scheduler.Scheduler;
 import com.stratio.explorer.scheduler.SchedulerFactory;
 
-import scala.Console;
 import scala.None;
 import scala.Some;
 import scala.Tuple2;
@@ -82,12 +78,10 @@ public class SparkInterpreter extends Interpreter {
         Interpreter.register("s", SparkInterpreter.class.getName());
     }
 
-    private ExplorerContext explorerContext;
     private SparkILoop interpreter;
     private SparkIMain intp;
-    private SparkContext sc;
     private ByteArrayOutputStream out;
-    private SQLContext sqlc;
+    //private SQLContext sqlc;
     private SparkJLineCompletion completor;
 
     private JobProgressListener sparkListener;
@@ -97,7 +91,9 @@ public class SparkInterpreter extends Interpreter {
 
     static SparkInterpreter _singleton;
 
+    //TODO : THIS ATTR WAS NEW ADD
     private  ExplorerSparkContext context = new ExplorerSparkContext(new SparkConfComparator());
+    private  ExplorerSparkSQLContext sqlcontext = new ExplorerSparkSQLContext(context);
 
     public static SparkInterpreter singleton() {
         return _singleton;
@@ -125,13 +121,12 @@ public class SparkInterpreter extends Interpreter {
     }
 
     public synchronized SparkContext getSparkContext() {
-
-        sc = createSparkContext();
+        context.loadConfiguration(new PropertiesReader().readConfigFrom("spark_interpreter"));
         env = SparkEnv.get();
-        sparkListener = new JobProgressListener(sc.getConf());
-        sc.listenerBus().addListener(sparkListener);
+        sparkListener = new JobProgressListener(context.getConnector().getConf());
+        context.getConnector().listenerBus().addListener(sparkListener);
 
-        return sc;
+        return context.getConnector();
     }
 
     private boolean useHiveContext() {
@@ -140,39 +135,10 @@ public class SparkInterpreter extends Interpreter {
 
     //TODO : this method will be move to othre class
     public SQLContext getSQLContext() {
-        if (sqlc == null) {
-            if (useHiveContext()) {
-                String name = "org.apache.spark.sql.hive.HiveContext";
-                Constructor<?> hc;
-                try {
-                    hc = getClass().getClassLoader().loadClass(name)
-                            .getConstructor(SparkContext.class);
-                    sqlc = (SQLContext) hc.newInstance(getSparkContext());
-                } catch (NoSuchMethodException | SecurityException
-                        | ClassNotFoundException | InstantiationException
-                        | IllegalAccessException | IllegalArgumentException
-                        | InvocationTargetException e) {
-                    logger.warn("Can't create HiveContext. Fallback to SQLContext", e);
-                    // when hive dependency is not loaded, it'll fail.
-                    // in this case SQLContext can be used.
-                    sqlc = new SQLContext(getSparkContext());
-                }
-            } else {
-                sqlc = new SQLContext(getSparkContext());
-            }
-        }
-
-        return sqlc;
+        sqlcontext.loadConfiguration(new PropertiesReader().readConfigFrom("spark_interpreter"));
+        return sqlcontext.getConnector();
     }
 
-
-    public SparkContext createSparkContext() {
-
-        //TODO : PROPERTIES READER ALLWAYS IS READ , SHOULD BE AN GLOBL
-
-        context.loadConfiguration(new PropertiesReader().readConfigFrom("spark_interpreter"));
-        return context.getConnector();
-    }
 
     //TODO : THIS METHOD IS TOO LONG
     @Override
@@ -231,23 +197,22 @@ public class SparkInterpreter extends Interpreter {
 
             completor = new SparkJLineCompletion(intp);
 
-            sc = getSparkContext();
-            sqlc = getSQLContext();
+            getSparkContext();
+            getSQLContext();
 
             NoteInterpreterLoader noteInterpreterLoader = (NoteInterpreterLoader) getProperty().get("noteIntpLoader");
-            explorerContext = new ExplorerContext(sc, sqlc, noteInterpreterLoader, printStream);
-            logger.info(explorerContext.sc.getConf().toDebugString());
-            logger.info(explorerContext.sqlContext.getAllConfs().mkString());
+            logger.info(context.getConnector().getConf().toDebugString());
+            logger.info(sqlcontext.getConnector().getAllConfs().mkString()); //SUSTITUTE BY
 
             try {
-                if (sc.version().startsWith("1.1") || sc.version().startsWith("1.2")) {
+                if (context.getConnector().version().startsWith("1.1") || context.getConnector().version().startsWith("1.2")) {
                     Method loadFiles = this.interpreter.getClass().getMethod("loadFiles", Settings.class);
                     loadFiles.invoke(this.interpreter, settings);
-                } else if (sc.version().startsWith("1.3")) {
+                } else if (context.getConnector().version().startsWith("1.3")) {
                     Method loadFiles = this.interpreter.getClass().getMethod(
                             "org$apache$spark$repl$SparkILoop$$loadFiles", Settings.class);
                     loadFiles.invoke(this.interpreter, settings);
-                } else if (sc.version().startsWith("1.4")) {
+                } else if (context.getConnector().version().startsWith("1.4")) {
                     Method loadFiles = this.interpreter.getClass().getMethod(
                             "org$apache$spark$repl$SparkILoop$$loadFiles", Settings.class);
                     loadFiles.invoke(this.interpreter, settings);
@@ -260,9 +225,11 @@ public class SparkInterpreter extends Interpreter {
             }
 
             intp.interpret("@transient var _binder = new java.util.HashMap[String, Object]()");
+            ExplorerContext explorerContext = new ExplorerContext(context.getConnector(), sqlcontext.getConnector(), noteInterpreterLoader, printStream);
+           /****************************************************************************************************************************/
             binder = (Map<String, Object>) getValue("_binder");
-            binder.put("sc", sc);
-            binder.put("sqlc", sqlc);
+            binder.put("sc", context.getConnector());
+            binder.put("sqlc", sqlcontext.getConnector());
             binder.put("z", explorerContext);
             binder.put("out", printStream);
 
@@ -275,19 +242,20 @@ public class SparkInterpreter extends Interpreter {
             intp.interpret("import org.apache.spark.SparkContext._");
             intp.interpret("import sqlc._");
 
-            if (sc.version().startsWith("1.1")) {
+            if (context.getConnector().version().startsWith("1.1")) {
                 intp.interpret("import sqlContext._");
-            } else if (sc.version().startsWith("1.2")) {
+            } else if (context.getConnector().version().startsWith("1.2")) {
                 intp.interpret("import sqlContext._");
-            } else if (sc.version().startsWith("1.3")) {
+            } else if (context.getConnector().version().startsWith("1.3")) {
                 intp.interpret("import sqlContext.implicits._");
                 intp.interpret("import sqlContext.sql");
                 intp.interpret("import org.apache.spark.sql.functions._");
-            } else if (sc.version().startsWith("1.4")) {
+            } else if (context.getConnector().version().startsWith("1.4")) {
                 intp.interpret("import sqlContext.implicits._");
                 intp.interpret("import sqlContext.sql");
                 intp.interpret("import org.apache.spark.sql.functions._");
             }
+        /*************************************************************************************************************************************/
     }
 
     private List<File> currentClassPath() {
@@ -351,11 +319,12 @@ public class SparkInterpreter extends Interpreter {
         return interpret(line.split("\n"));
     }
 
+    //TODO : THIS METHODS SHOULD BE REMOVED
     public InterpreterResult interpret(String[] lines) {
         synchronized (this) {
-            sc.setJobGroup(jobGroup, "Notebook", false);
+            context.getConnector().setJobGroup(jobGroup, "Notebook", false);
             InterpreterResult r = _interpret(lines);
-            sc.clearJobGroup();
+            context.getConnector().clearJobGroup();
             return r;
         }
     }
@@ -370,7 +339,7 @@ public class SparkInterpreter extends Interpreter {
         }
         linesToRun[lines.length] = "print(\"\")";
 
-        Console.setOut((java.io.PrintStream) binder.get("out"));
+      //  Console.setOut((java.io.PrintStream) binder.get("out"));
         out.reset();
         Code r = null;
         String incomplete = "";
@@ -379,7 +348,7 @@ public class SparkInterpreter extends Interpreter {
             try {
                 res = intp.interpret(incomplete + s);
             } catch (Exception e) {
-                sc.clearJobGroup();
+                context.getConnector().clearJobGroup();
                 logger.info("Interpreter exception", e);
                 return new InterpreterResult(Code.ERROR, e.getMessage());
             }
@@ -387,7 +356,7 @@ public class SparkInterpreter extends Interpreter {
             r = getResultCode(res);
 
             if (r == Code.ERROR) {
-                sc.clearJobGroup();
+                context.getConnector().clearJobGroup();
                 return new InterpreterResult(r, out.toString());
             } else if (r == Code.INCOMPLETE) {
                 incomplete += s + "\n";
@@ -404,14 +373,14 @@ public class SparkInterpreter extends Interpreter {
     }
 
     public void cancel() {
-        sc.cancelJobGroup(jobGroup);
+        context.getConnector().cancelJobGroup(jobGroup);
     }
 
     public int getProgress() {
         int completedTasks = 0;
         int totalTasks = 0;
 
-        DAGScheduler scheduler = sc.dagScheduler();
+        DAGScheduler scheduler = context.getConnector().dagScheduler();
         if (scheduler == null) {
             return 0;
         }
@@ -425,7 +394,7 @@ public class SparkInterpreter extends Interpreter {
             String g = (String) job.properties().get("spark.jobGroup.id");
             if (jobGroup.equals(g)) {
                 int[] progressInfo = null;
-                if (sc.version().startsWith("1.0")) {
+                if (context.getConnector().version().startsWith("1.0")) {
                     progressInfo = getProgressFromStage_1_0x(sparkListener, job.finalStage());
                 } else {
                     progressInfo = getProgressFromStage_1_1x(sparkListener, job.finalStage());
@@ -523,9 +492,7 @@ public class SparkInterpreter extends Interpreter {
 
     @Override
     public void close() {
-        sc.stop();
-        sc = null;
-
+        context.getConnector().stop();
         intp.close();
     }
 

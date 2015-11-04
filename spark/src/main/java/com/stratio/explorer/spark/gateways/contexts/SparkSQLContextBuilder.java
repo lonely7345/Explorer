@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.spark.gateways;
+package com.stratio.explorer.spark.gateways.contexts;
 
-import com.stratio.explorer.gateways.Connector;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.SQLContext;
 
 /**
- * Must build types of SparkSQL context
+ * Must build SparkSQLContext
  */
-public interface SQLContextBuilder <TpeContext extends SQLContext>{
+public class SparkSQLContextBuilder implements SQLContextBuilder<SQLContext>{
+
 
     /**
-     * Build a SQLContext from sparkContext .
+     * Build SQLcontext from SparkContext
      * @param sparkContext to configure SQLContext
-     * @return SQLContext
+     * @return
      */
-    TpeContext build(SparkContext sparkContext);
+    @Override
+    public SQLContext build(SparkContext sparkContext) {
+        return new SQLContext(sparkContext);
+    }
 }

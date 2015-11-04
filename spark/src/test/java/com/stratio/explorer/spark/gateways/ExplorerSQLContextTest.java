@@ -24,6 +24,7 @@ import com.stratio.explorer.spark.doubles.SparkContextMock;
 
 import com.stratio.explorer.spark.exception.PropertyHiveContextValueException;
 import com.stratio.explorer.spark.exception.PropertyHiveNotFilledException;
+import com.stratio.explorer.spark.gateways.contexts.ExplorerSparkSQLContext;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.hive.HiveContext;

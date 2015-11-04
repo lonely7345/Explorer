@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.spark.gateways;
+package com.stratio.explorer.spark.gateways.contexts;
 
 import com.stratio.explorer.spark.exception.PropertyHiveNotFilledException;
 import org.slf4j.Logger;

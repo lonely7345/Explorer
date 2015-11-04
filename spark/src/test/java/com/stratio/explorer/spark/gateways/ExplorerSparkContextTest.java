@@ -17,10 +17,10 @@
 package com.stratio.explorer.spark.gateways;
 
 import com.stratio.explorer.exceptions.NotPropertyFoundException;
-import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.spark.conf.AttributteNames;
 import com.stratio.explorer.spark.exception.MasterPropertyNotFilledException;
 import com.stratio.explorer.spark.exception.SparkEndPointException;
+import com.stratio.explorer.spark.gateways.contexts.ExplorerSparkContext;
 import com.stratio.explorer.spark.lists.SparkConfComparator;
 import org.apache.spark.SparkContext;
 import org.junit.After;

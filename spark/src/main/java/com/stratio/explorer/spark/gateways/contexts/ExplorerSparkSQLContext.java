@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.stratio.explorer.spark.gateways;
+package com.stratio.explorer.spark.gateways.contexts;
 
 import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.spark.exception.PropertyHiveContextValueException;
-import com.stratio.explorer.spark.exception.PropertyHiveNotFilledException;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.hive.HiveContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
