@@ -5,15 +5,17 @@ Feature: Explorer-Spark Integration
   As a Stratio Explorer User
   I want to do some request to Spark
 
-  Scenario: Check empty fields Spark Engine
+    #JIRA - EXPLORER-132
+  Scenario: Check empty fields Spark interpreter
     Given empty 'editor' field
-    And Select 'Spark' engine
+    And Select 'Spark' interpreter
     When Click run button
     Then infinite loop
 
-  Scenario: Check empty fields Spark-sql Engine
+    #JIRA - EXPLORER-132
+  Scenario: Check empty fields Spark-sql interpreter
     Given empty 'editor' field
-    And Select 'Spark-sql' engine
+    And Select 'Spark-sql' interpreter
     When Click run button
     Then infinite loop
 

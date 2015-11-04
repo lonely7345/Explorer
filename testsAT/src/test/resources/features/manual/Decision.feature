@@ -9,8 +9,9 @@ Feature: Decision Integration
     Given an user logged into Explorer
     And a new Notebook
 
-  Scenario: Check empty fields decision Engine
+    #JIRA - EXPLORER-132
+  Scenario: Check empty fields decision
     Given empty 'editor' field
-    And Select 'decision' engine
+    And Select 'decision' interpreter
     When Click run button
-    Then return decision error
+    Then return decision interpreter error

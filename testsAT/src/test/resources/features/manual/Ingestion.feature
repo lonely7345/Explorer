@@ -4,9 +4,9 @@ Feature: Basic Explorer Operations
   As a Stratio Explorer User
   I want to do basic stuffs in Stratio Explorer
 
-
-  Scenario: Check empty fields Ingestion Engine
+    #JIRA - EXPLORER-132
+  Scenario: Check empty fields Ingestion interpreter
     Given empty 'editor' field
-    And Select 'Ingestion' engine
+    And Select 'Ingestion' interpreter
     When Click run button
     Then infinite loop
