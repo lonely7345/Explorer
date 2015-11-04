@@ -202,7 +202,7 @@ public class SparkInterpreter extends Interpreter {
 
             NoteInterpreterLoader noteInterpreterLoader = (NoteInterpreterLoader) getProperty().get("noteIntpLoader");
             logger.info(context.getConnector().getConf().toDebugString());
-            logger.info(sqlcontext.getConnector().getAllConfs().mkString()); //SUSTITUTE BY
+        logger.info(sqlcontext.getConnector().getAllConfs().mkString()); //SUSTITUTE BY
 
             try {
                 if (context.getConnector().version().startsWith("1.1") || context.getConnector().version().startsWith("1.2")) {
