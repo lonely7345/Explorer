@@ -40,7 +40,7 @@ public class DescribeKeyspaceExecutor implements DescribeExecutor{
         List<RowData> rowDatas = functional.map(new KeyspacestoRowDataFuntion());
         return new Table(buildHeader(CT_KEYSPACES),rowDatas);
     }
-    
+
     private List<String> buildHeader(String... headers){
         List<String> result = new ArrayList<>();
         for (String cad:headers){
