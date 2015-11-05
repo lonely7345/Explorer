@@ -9,7 +9,7 @@ import java.util.List;
  * Execute describe in cassandra
  */
 
-//TODO : THIS INTERFAZE NAME WILL BE CHANGED
+//TODO : THIS INTERFAZ WILL BE CHANGED
 public interface DescribeExecutor {
 
 

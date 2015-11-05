@@ -16,14 +16,14 @@ import java.util.List;
 /**
  * Execute Describe Keysapces
  */
-public class DescribeKeyspaceExecutor implements DescribeExecutor{
+public class DescribeKeyspacesExecutor implements DescribeExecutor{
 
     private Metadata metaData;
 
     public static final String CT_KEYSPACES ="keySpaces";
 
 
-    public DescribeKeyspaceExecutor(Metadata metaData){
+    public DescribeKeyspacesExecutor(Metadata metaData){
         this.metaData = metaData;
     }
 
