@@ -15,6 +15,8 @@ import com.stratio.explorer.lists.FunctionalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,10 +43,6 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     @Override public Table executeCommand(String command) {
         try {
             Session session = cassandraSession.getConnector();
-            Cluster cluster = session.getCluster();
-
-            Metadata metaData =session.getCluster().getMetadata();
-            KeyspaceMetadata metaData1 =session.getCluster().getMetadata().getKeyspace("demo");
             ResultSet rs =session.execute(command);
             List<String> header = header(rs.getColumnDefinitions());
             List<RowData> rows = new FunctionalList<Row,RowData> (rs.all()).map(new RowToRowDataFunction(header));
@@ -55,6 +53,8 @@ public class CassandraDriver implements InterpreterDriver<Table> {
             throw new CassandraInterpreterException(e,errorMessage);
         }
     }
+
+
 
     private List<String> header(ColumnDefinitions definition){
         return new FunctionalList<ColumnDefinitions.Definition,String>(definition.asList()).map(new DefinitionToNameFunction());
