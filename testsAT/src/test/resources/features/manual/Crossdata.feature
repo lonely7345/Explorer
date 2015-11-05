@@ -12,9 +12,9 @@ Feature: Explorer-Crossdata Integration
     And All required Crossdata Connectors started
     And a new Notebook
 
-  Scenario: Check empty fields crossdata Engine
+  Scenario: Check empty fields crossdata interpreter
     Given empty 'editor' field
-    And Select 'crossdata' engine
+    And Select 'crossdata' interpreter
     When Click run button
     Then return crossdata error
 
