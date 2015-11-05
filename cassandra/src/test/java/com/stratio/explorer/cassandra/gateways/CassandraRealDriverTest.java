@@ -27,33 +27,11 @@ public class CassandraRealDriverTest {
         CassandraSession sesion = new CassandraSession();
         sesion.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
 
-        mockDescribeKeySpace(sesion.getConnector().getCluster());
         mockDescribeKeySpacedemo(sesion.getConnector().getCluster());
         mockDescribeTables(sesion.getConnector().getCluster());
         mockDescribeTableDemo(sesion.getConnector().getCluster());
 
     }
-
-
-
-    private void mockDescribeKeySpace(Cluster cluster){
-        Metadata metaData = cluster.getMetadata();
-        List<KeyspaceMetadata> list = metaData.getKeyspaces();
-        KeyspaceMetadata first = list.get(0);
-        String firstName = first.getName();
-
-        KeyspaceMetadata second = list.get(1);
-        String secondName = second.getName();
-
-        KeyspaceMetadata third = list.get(2);
-        String thirdName = third.getName();
-
-        KeyspaceMetadata fourth = list.get(3);
-        String fourthName = fourth.getName();
-
-        int b=0;
-    }
-
 
 
     private void mockDescribeKeySpacedemo(Cluster cluster){
