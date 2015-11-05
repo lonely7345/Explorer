@@ -33,20 +33,13 @@ public class DescribeClusterExecutor implements DescribeExecutor{
      */
     @Override
     public Table execute(String... params) {
-        List<String> result = new ArrayList<>();
-
-        return buildTable(metaData.getClusterName(),metaData.getPartitioner());
-    }
-
-
-    private Table buildTable(String clusterName,String partitioner){
-
-
-        FunctionalList<String,CellData> functionalList = new FunctionalList<String,CellData>(buildList( clusterName, partitioner));
-        List<CellData> cells = functionalList.map(new StringToCellDatafunction());
-        RowData rowData = new RowData(cells);
+        FunctionalList<String,CellData> functionalList =
+                new FunctionalList<String,CellData>(buildList( metaData.getClusterName(),
+                                                               metaData.getPartitioner()
+                                                              )
+                                                   );
         List<RowData> data = new ArrayList<>();
-        data.add(rowData);
+        data.add(new RowData(functionalList.map(new StringToCellDatafunction())));
         return new Table(buildList(CT_CLUSTER, CT_PARTIRIONER),data);
     }
 
