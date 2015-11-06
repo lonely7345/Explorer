@@ -21,15 +21,8 @@ public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
 
 
     public static final String CT_SCRIPT ="SCRIPT IMPLEMNETATION";
+    public static final String WORD_SELECTOR="KEYSPACE";
     private Metadata metaData;
-
-    /**
-     * Constructor
-     * @param metaData
-     */
-    public DescribeKeySpaceAnyExecutor(Metadata metaData){
-         this.metaData = metaData;
-    }
 
 
     /**
@@ -38,8 +31,8 @@ public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
      * @return
      */
     @Override
-    public Table execute(String... params) {
-        KeyspaceMetadata keySpaceMetada = metaData.getKeyspace(params[0]);
+    public Table execute(Metadata metaData,String params) {
+        KeyspaceMetadata keySpaceMetada = metaData.getKeyspace(params);
         FunctionalList<TableMetadata,RowData> functionalList = new FunctionalList<>(new ArrayList<>(keySpaceMetada.getTables()));
         List<RowData> rows = functionalList.map(new TableMetadataToRowDataFunction());
         rows.add(0,buildFirst(keySpaceMetada.toString()));

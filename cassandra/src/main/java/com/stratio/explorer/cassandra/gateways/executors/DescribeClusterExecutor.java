@@ -18,13 +18,10 @@ public class DescribeClusterExecutor implements DescribeExecutor{
 
     public static final String CT_CLUSTER ="Cluster ";
     public static final String CT_PARTIRIONER ="Partitioner ";
+    public static final String WORD_SELECTOR ="CLUSTER";
 
     private Metadata metaData;
 
-
-    public DescribeClusterExecutor(Metadata metaData){
-        this.metaData = metaData;
-    }
 
     /**
      * Excute DESCRIBE CLUSTER
@@ -32,7 +29,7 @@ public class DescribeClusterExecutor implements DescribeExecutor{
      * @return
      */
     @Override
-    public Table execute(String... params) {
+    public Table execute(Metadata metaData,String param) {
         FunctionalList<String,CellData> functionalList =
                 new FunctionalList<String,CellData>(buildList( metaData.getClusterName(),
                                                                metaData.getPartitioner()
