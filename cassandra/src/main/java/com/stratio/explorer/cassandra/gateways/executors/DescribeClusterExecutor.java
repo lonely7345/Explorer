@@ -2,7 +2,7 @@ package com.stratio.explorer.cassandra.gateways.executors;
 
 
 import com.datastax.driver.core.Metadata;
-import com.stratio.explorer.cassandra.functions.StringToCellDatafunction;
+import com.stratio.explorer.cassandra.functions.StringToCellData;
 import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
@@ -45,7 +45,7 @@ public class DescribeClusterExecutor implements DescribeExecutor{
                                                                         )
                                                    );
         List<RowData> data = new ArrayList<>();
-        data.add(new RowData(functionalList.map(new StringToCellDatafunction())));
+        data.add(new RowData(functionalList.map(new StringToCellData())));
         return new Table(ListUtils.buildList(CT_CLUSTER, CT_PARTIRIONER),data);
     }
 

@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 /**
  * Mock Metadadata
  */
+//TODO : THIS CLASS MOCKS WILL NEED DEEP REFACTOR
 public class CassandraSessionMocks {
 
 
@@ -34,13 +35,13 @@ public class CassandraSessionMocks {
 
 
 
-    public Session mockDescribeKeySpaces(String nameTable){
+    public Session mockDescribeKeySpaces(String nameKeySpace){
 
         KeyspaceMetadata keySpaceMetaData = mock(KeyspaceMetadata.class);
-        when(keySpaceMetaData.getName()).thenReturn(nameTable);
+        when(keySpaceMetaData.getName()).thenReturn(nameKeySpace);
 
         Metadata metaData = mock(Metadata.class);
-        when(metaData.getKeyspaces()).thenReturn(buildList(keySpaceMetaData));
+        when(metaData.getKeyspaces()).thenReturn(buildListKeySpace(keySpaceMetaData));
 
         Cluster cluster = mock(Cluster.class);
         when(cluster.getMetadata()).thenReturn(metaData);
@@ -51,12 +52,22 @@ public class CassandraSessionMocks {
         return session;
     }
 
+    private List<KeyspaceMetadata> buildListKeySpace(KeyspaceMetadata... metaDatas){
+
+        List<KeyspaceMetadata> result = new ArrayList<>();
+        for (KeyspaceMetadata metadata:metaDatas){
+            result.add(metadata);
+        }
+
+        return result;
+    }
+
 
     public Session mockDescribe_keySpace_any(String keySpaceName,String createDemoScript,String creationFirstTable,String creationSecond){
 
         KeyspaceMetadata metaDataDemo = mock(KeyspaceMetadata.class);
         when(metaDataDemo.toString()).thenReturn(createDemoScript);
-        doReturn(buildCollection(creationFirstTable, creationSecond)).when(metaDataDemo).getTables();
+        doReturn(buildCollectionCreation(creationFirstTable, creationSecond)).when(metaDataDemo).getTables();
 
         Metadata metaData = mock(Metadata.class);
         when(metaData.getKeyspace(keySpaceName)).thenReturn(metaDataDemo);
@@ -72,7 +83,7 @@ public class CassandraSessionMocks {
     }
 
 
-    private Collection<TableMetadata> buildCollection(String creationFirstTable,String creationSecond){
+    private Collection<TableMetadata> buildCollectionCreation(String creationFirstTable,String creationSecond){
         Collection<TableMetadata> collection = new ArrayList<TableMetadata>();
 
         TableMetadata firstTable = mock(TableMetadata.class);
@@ -87,14 +98,50 @@ public class CassandraSessionMocks {
         return collection;
     }
 
+    public Session mockDescribeTables(String keySpaceName,String nameTableOne,String nameTableTwo){
 
-    private List<KeyspaceMetadata> buildList(KeyspaceMetadata... metaDatas){
+        KeyspaceMetadata metaDataDemo = mock(KeyspaceMetadata.class);
+        when(metaDataDemo.getName()).thenReturn(keySpaceName);
+        doReturn(buildCollectionNameTables(nameTableOne, nameTableTwo)).when(metaDataDemo).getTables();
 
-       List<KeyspaceMetadata> result = new ArrayList<>();
-        for (KeyspaceMetadata metadata:metaDatas){
-            result.add(metadata);
-        }
+        Metadata metaData = mock(Metadata.class);
+        when(metaData.getKeyspaces()).thenReturn(buildKeySpaceMetadat(metaDataDemo));
 
-       return result;
+
+        Cluster cluster = mock(Cluster.class);
+        when(cluster.getMetadata()).thenReturn(metaData);
+
+        Session session = mock(Session.class);
+        when(session.getCluster()).thenReturn(cluster);
+
+        return session;
     }
+
+    private List<KeyspaceMetadata> buildKeySpaceMetadat(KeyspaceMetadata metaDataDemo){
+        List<KeyspaceMetadata> result = new ArrayList<>();
+        result.add(metaDataDemo);
+        return result;
+    }
+
+
+    private Collection<TableMetadata> buildCollectionNameTables(String nameFirstTable,String nameSecondTable){
+        Collection<TableMetadata> collection = new ArrayList<TableMetadata>();
+
+        TableMetadata firstTable = mock(TableMetadata.class);
+        when(firstTable.getName()).thenReturn(nameFirstTable);
+        collection.add(firstTable);
+
+        TableMetadata secondTable = mock(TableMetadata.class);
+        when(secondTable.getName()).thenReturn(nameSecondTable);
+        collection.add(secondTable);
+
+
+        return collection;
+    }
+
+
+
+
+
+
 }

@@ -19,6 +19,7 @@ public class DescribeExecutorFactory {
                  {  put(DescribeClusterExecutor.WORD_SELECTOR.toLowerCase(),new DescribeClusterExecutor());
                     put(DescribeKeySpaceAnyExecutor.WORD_SELECTOR.toLowerCase(),new DescribeKeySpaceAnyExecutor());
                     put(DescribeKeyspacesExecutor.WORD_SELECTOR.toLowerCase(),new DescribeKeyspacesExecutor());
+                    put(DescribeTablesExecutor.WORD_SELECTOR.toLowerCase(),new DescribeTablesExecutor());
                  }
              };
 
