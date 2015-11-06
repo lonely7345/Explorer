@@ -1,8 +1,8 @@
 package com.stratio.explorer.cassandra.gateways.executors;
 
 
+import com.datastax.driver.core.Metadata;
 import com.stratio.explorer.cassandra.models.Table;
-
 import java.util.List;
 
 /**
@@ -18,5 +18,5 @@ public interface DescribeExecutor {
      * @param params attributtes describe
      * @return  table with results
      */
-    public Table execute(String... params);
+    public Table execute(Metadata metaData,String params);
 }

@@ -21,12 +21,7 @@ public class DescribeKeyspacesExecutor implements DescribeExecutor{
     private Metadata metaData;
 
     public static final String CT_KEYSPACES ="keySpaces";
-
-
-    public DescribeKeyspacesExecutor(Metadata metaData){
-        this.metaData = metaData;
-    }
-
+    public static final String WORD_SELECTOR="KEYSPACES";
 
 
     /**
@@ -35,7 +30,7 @@ public class DescribeKeyspacesExecutor implements DescribeExecutor{
      * @return
      */
     @Override
-    public Table execute(String... params) {
+    public Table execute(Metadata metaData,String params) {
         FunctionalList<KeyspaceMetadata,RowData> functional = new FunctionalList<>(metaData.getKeyspaces());
         List<RowData> rowDatas = functional.map(new KeyspacestoRowDataFuntion());
         return new Table(buildHeader(CT_KEYSPACES),rowDatas);
