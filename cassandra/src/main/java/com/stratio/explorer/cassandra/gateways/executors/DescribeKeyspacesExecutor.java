@@ -7,6 +7,7 @@ import com.stratio.explorer.cassandra.functions.KeyspacestoRowDataFuntion;
 import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
+import com.stratio.explorer.cassandra.utils.ListUtils;
 import com.stratio.explorer.lists.FunctionalList;
 
 import java.util.ArrayList;
@@ -25,22 +26,22 @@ public class DescribeKeyspacesExecutor implements DescribeExecutor{
 
 
     /**
-     * Execute Describe Keysapces
-     * @param params attributtes describe
-     * @return
+     * not mandoatory param .
+     * @param param
      */
-    @Override
-    public Table execute(Metadata metaData,String params) {
-        FunctionalList<KeyspaceMetadata,RowData> functional = new FunctionalList<>(metaData.getKeyspaces());
-        List<RowData> rowDatas = functional.map(new KeyspacestoRowDataFuntion());
-        return new Table(buildHeader(CT_KEYSPACES),rowDatas);
+    public void optionalParam(String param){
+       //left empty deliveraly
     }
 
-    private List<String> buildHeader(String... headers){
-        List<String> result = new ArrayList<>();
-        for (String cad:headers){
-            result.add(cad);
-        }
-        return result;
+    /**
+     * Execute Describe Keysapces
+     * @param metaData
+     * @return  table
+     */
+    @Override
+    public Table execute(Metadata metaData) {
+        FunctionalList<KeyspaceMetadata,RowData> functional = new FunctionalList<>(metaData.getKeyspaces());
+        List<RowData> rowDatas = functional.map(new KeyspacestoRowDataFuntion());
+        return new Table(ListUtils.buildList(CT_KEYSPACES), rowDatas);
     }
 }

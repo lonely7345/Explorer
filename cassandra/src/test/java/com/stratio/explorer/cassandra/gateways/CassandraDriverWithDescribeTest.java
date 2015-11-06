@@ -23,8 +23,8 @@ public class CassandraDriverWithDescribeTest {
     // DESCRIBE CLUSTER; (Inlude Table) (done)
     // DESCRIBE KEYSPACES; **
     // DESCRIBE KEYSPACE PortfolioDemo; **
-    // DESCRIBE TABLES; **
-    // DESCRIBE TABLE Stocks;
+    // DESCRIBE TABLES; ** (1 HORA)
+    // DESCRIBE TABLE Stocks; (1 HORA)
 
     CassandraDriverWithDescribe describe;
 

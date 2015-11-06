@@ -11,13 +11,15 @@ import com.stratio.explorer.cassandra.models.Table;
 /**
  * Execute Describe KeySpace
  */
+//TODO : CHANGE NAME AND PACKAGE OF THIS CLASS
 public class CassandraDriverWithDescribe {
 
 
 
     /**
      * execute shCQLcoomand
-     * @param shCQLcommand
+     * @param Session session
+     * @param shCQLcommand command shCQL
      * @return List string with result
      */
     public Table execute(Session session,String shCQLcommand) {
@@ -25,6 +27,7 @@ public class CassandraDriverWithDescribe {
         SHCQLOperation shCqlOperation = new SHCQLOperation(shCQLcommand);
         Cluster cluster = session.getCluster();
         DescribeExecutor executor = DescribeExecutorFactory.select(shCqlOperation.identifier());
-        return executor.execute(cluster.getMetadata(),shCqlOperation.optionalValue());
+        executor.optionalParam(shCqlOperation.optionalValue());
+        return executor.execute(cluster.getMetadata());
     }
 }
