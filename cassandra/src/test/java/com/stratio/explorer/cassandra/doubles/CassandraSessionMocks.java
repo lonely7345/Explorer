@@ -2,7 +2,6 @@ package com.stratio.explorer.cassandra.doubles;
 
 import com.datastax.driver.core.*;
 import com.stratio.explorer.cassandra.gateways.CassandraSession;
-import javafx.beans.binding.When;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -98,17 +97,4 @@ public class CassandraSessionMocks {
 
        return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

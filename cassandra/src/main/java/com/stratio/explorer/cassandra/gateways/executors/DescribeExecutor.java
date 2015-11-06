@@ -8,15 +8,19 @@ import java.util.List;
 /**
  * Execute describe in cassandra
  */
-
-//TODO : THIS INTERFAZ WILL BE CHANGED
 public interface DescribeExecutor {
 
 
     /**
+     * last param in Describe with three params
+     * @param param
+     */
+    public void optionalParam(String param);
+
+    /**
      * Execute Describe shCQL
-     * @param params attributtes describe
+     * @param metaData
      * @return  table with results
      */
-    public Table execute(Metadata metaData,String params);
+    public Table execute(Metadata metaData);
 }

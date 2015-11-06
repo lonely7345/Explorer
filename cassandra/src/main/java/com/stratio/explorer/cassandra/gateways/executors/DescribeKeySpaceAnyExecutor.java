@@ -7,9 +7,8 @@ import com.stratio.explorer.cassandra.functions.TableMetadataToRowDataFunction;
 import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
+import com.stratio.explorer.cassandra.utils.ListUtils;
 import com.stratio.explorer.lists.FunctionalList;
-import com.sun.xml.internal.ws.api.addressing.WSEndpointReference;
-import javafx.scene.control.Cell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +21,29 @@ public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
 
     public static final String CT_SCRIPT ="SCRIPT IMPLEMNETATION";
     public static final String WORD_SELECTOR="KEYSPACE";
-    private Metadata metaData;
+    private String param;
 
 
     /**
+     * Last param of describe keyspaces
+     * @param param
+     */
+    public void optionalParam(String param){
+        this.param = param;
+    }
+
+    /**
      *  Execute when shCQL is DESCRIBE KEYSPACE anyvalue
-     * @param params attributtes describe
-     * @return
+     *  @param metaData
+     * @return  table
      */
     @Override
-    public Table execute(Metadata metaData,String params) {
-        KeyspaceMetadata keySpaceMetada = metaData.getKeyspace(params);
+    public Table execute(Metadata metaData) {
+        KeyspaceMetadata keySpaceMetada = metaData.getKeyspace(param);
         FunctionalList<TableMetadata,RowData> functionalList = new FunctionalList<>(new ArrayList<>(keySpaceMetada.getTables()));
         List<RowData> rows = functionalList.map(new TableMetadataToRowDataFunction());
         rows.add(0,buildFirst(keySpaceMetada.toString()));
-        return new Table(buildHeader(CT_SCRIPT),rows);
+        return new Table(ListUtils.buildList(CT_SCRIPT),rows);
     }
 
     private RowData buildFirst(String valueuniqueCell){
@@ -46,11 +53,4 @@ public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
     }
 
 
-    private List<String> buildHeader(String... headers){
-        List<String> result = new ArrayList<>();
-        for (String cad:headers){
-            result.add(cad);
-        }
-        return result;
-    }
 }
