@@ -12,14 +12,6 @@ Feature: Explorer-Spark Integration
     When Click run button
     Then infinite loop
 
-    #JIRA - EXPLORER-132
-  Scenario: Check empty fields Spark-sql interpreter
-    Given empty 'editor' field
-    And Select 'Spark-sql' interpreter
-    When Click run button
-    Then infinite loop
-
-
   Scenario: Test simple Spark Command
 
   Scenario: Test simple Spark Script
@@ -34,3 +26,6 @@ Feature: Explorer-Spark Integration
 
     Scenario: Load HDFS file
     val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+
+
+
