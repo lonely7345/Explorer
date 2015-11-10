@@ -2,8 +2,10 @@ package com.stratio.explorer.cassandra.gateways.executors;
 
 
 import com.datastax.driver.core.Metadata;
+import com.stratio.explorer.cassandra.functions.NameValueToRowData;
 import com.stratio.explorer.cassandra.functions.StringToCellData;
 import com.stratio.explorer.cassandra.models.CellData;
+import com.stratio.explorer.cassandra.models.NameValue;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
 import com.stratio.explorer.cassandra.utils.ListUtils;
@@ -17,8 +19,8 @@ import java.util.List;
  */
 public class DescribeClusterExecutor implements DescribeExecutor{
 
-    public static final String CT_CLUSTER ="Cluster ";
-    public static final String CT_PARTIRIONER ="Partitioner ";
+    public static final String CT_CLUSTER ="Cluster";
+    public static final String CT_PARTIRIONER ="Partitioner";
     public static final String WORD_SELECTOR ="CLUSTER";
 
     private Metadata metaData;
@@ -39,14 +41,17 @@ public class DescribeClusterExecutor implements DescribeExecutor{
      */
     @Override
     public Table execute(Metadata metaData) {
-        FunctionalList<String,CellData> functionalList =
-                new FunctionalList<String,CellData>(ListUtils.buildList(metaData.getClusterName(),
-                                                                        metaData.getPartitioner()
-                                                                        )
+        FunctionalList<NameValue,RowData> functionalList =
+                new FunctionalList<NameValue,RowData>(ListUtils.buildListNameValue(new NameValue(CT_CLUSTER, metaData.getClusterName()),
+                                                                                   new NameValue(CT_PARTIRIONER, metaData.getPartitioner())
+                                                      )
                                                    );
-        List<RowData> data = new ArrayList<>();
-        data.add(new RowData(functionalList.map(new StringToCellData())));
-        return new Table(ListUtils.buildList(CT_CLUSTER, CT_PARTIRIONER),data);
+        List<RowData> data = functionalList.map(new NameValueToRowData());
+        return new Table(ListUtils.buildList(),data);
     }
+
+
+
+
 
 }

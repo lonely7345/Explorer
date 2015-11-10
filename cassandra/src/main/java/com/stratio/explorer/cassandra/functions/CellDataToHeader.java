@@ -6,6 +6,7 @@ import com.stratio.explorer.functions.TransformFunction;
 /**
  * Transform Celldata to String Header
  */
+//TODO : THIS CLASS SHOULD BE REMOVED
 public class CellDataToHeader implements TransformFunction<CellData,String>{
 
 

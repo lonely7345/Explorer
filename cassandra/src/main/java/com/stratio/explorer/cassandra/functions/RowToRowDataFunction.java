@@ -33,14 +33,7 @@ public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
      */
     @Override
     public RowData transform(Row row) {
-        RowData rowData=null;
-        try {
-             System.out.println("EL VALOR DEL ROW ES :"+row);
-             rowData = new RowData(functionalList.map(new CellValueFunction(row)));
-        }catch (Throwable e){
-            System.out.println("ENTRA EN LA EXCEPCION");
-            e.printStackTrace();
-        }
-        return rowData;
+         return new RowData(functionalList.map(new CellValueFunction(row)));
+
     }
 }

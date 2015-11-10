@@ -44,13 +44,13 @@ public class CassandraDriverTest  {
     }
 
 
-  /*  @Test
+    @Test
     public void whenOperationIsSHCQL(){
         String nameKeySpace = "nameKeySpace";
         driver = new CassandraDriver(new MockSessionCassandra(new CassandraSessionMocks().mockDescribeKeySpaces(nameKeySpace)));
         Table result = driver.executeCommand("DESCRIBE keySpaces");
         assertThat(result.header(), is(ListUtils.buildList()));
         assertThat(result.rows().get(0).cells().get(0).getValue().toString(),is(nameKeySpace));
-    }*/
+    }
 
 }
