@@ -9,7 +9,7 @@ Feature: Explorer-Cassandra Integration
     Given an user logged into Explorer
     And a dataset ingested in Cassandra
     And All required Crossdata Connectors started
-    And a new Notebook
+    Then: a new Notebook
 
   Scenario: Check empty fields Cassandra interpreter
     Given empty 'editor' field
@@ -39,17 +39,12 @@ Feature: Explorer-Cassandra Integration
     Then: Reg inserted
 
   Scenario: Test Select *
-    When I try to select regs with "select" command
+    When I try to select regs with "select *" command
     Then: Regs show inserted
-
 
   Scenario: Test Create Index
     When: I try to create index with "create index" command
     Then: index created
-
-  Scenario: Test Create Secondary Index
-    When:
-    Then:
 
   Scenario: Test Drop Table
     When: I try to drop table with "drop table" command
@@ -59,18 +54,45 @@ Feature: Explorer-Cassandra Integration
     When: I try to drop index with "drop index" command
     Then: index dropped
 
-
   Scenario: Test Drop keyspace
     When: I try to drop keyspace with "drop keyspace" command
     Then: table dropped
 
+  Scenario: Test limit clause
+    When: I try to select with limit clause "10"
+    Then: It shows results succesfully
+
   Scenario: Test Select with filters
+    When: I try to select with filter in column "year"
+    And I Create index in year column
+    Then: It shows results succesfully
 
   Scenario: Test Select with invalid filter
+    When: I try to select with filter in column "year"
+    And I Create index in year column
+    Then: It shows results succesfully
 
   Scenario: Test Select with no indexed filters
+    When: I try to "select *" with no indexed column filters
+    And I drop any column index
+    And The query is filtered by no indexed column / no partition column
+    Then: It return query incorrect
+
+  Scenario: Test alter keyspace command
+    When:  I try to alter a existing keyspace with "alter keyspace" command
+    Then: KeySpace altered succesfully
+
+  Scenario: Test Create Secondary Index
+    When:
+    Then:
 
   Scenario: Test Select with filters in secondary index
+    When:
+    Then:
 
+    #EXPLORER-138
+  Scenario: Test Execute "script" with various command
+    When: I execute script with various command
+    Then: Interpreter returns: Query to execute in cassandra database is not correct
 
 
