@@ -1,4 +1,4 @@
-package com.stratio.explorer.cassandra.gateways;
+package com.stratio.explorer.cassandra.gateways.operations;
 
 
 import com.datastax.driver.core.Session;
@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class CassandraDriverWithDescribeTest {
+public class DecribeOperationTest {
 
 
     // DESCRIBE CLUSTER; (Inlude Table) (done)
@@ -26,12 +26,12 @@ public class CassandraDriverWithDescribeTest {
     // DESCRIBE TABLES; ** (1 HORA)
     // DESCRIBE TABLE Stocks; (1 HORA)
 
-    CassandraDriverWithDescribe describe;
+    DecribeOperation describe;
 
 
     @Before
     public void setUp(){
-        describe = new  CassandraDriverWithDescribe();
+        describe = new DecribeOperation();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class CassandraDriverWithDescribeTest {
         String nameKeySpace ="unicquename";
         Session mockSession = new CassandraSessionMocks().mockDescribeKeySpaces(nameKeySpace);
         Table table = describe.execute(mockSession,"DESCRIBE KEYSPACES");
-        assertThat(table.header(), is(buildList(DescribeKeyspacesExecutor.CT_KEYSPACES)));
+        assertThat(table.header(), is(buildList()));
         assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(nameKeySpace));
     }
 

@@ -3,6 +3,7 @@ package com.stratio.explorer.cassandra.gateways.executors;
 import com.datastax.driver.core.KeyspaceMetadata;
 import com.datastax.driver.core.Metadata;
 import com.datastax.driver.core.TableMetadata;
+import com.stratio.explorer.cassandra.functions.CellDataToHeader;
 import com.stratio.explorer.cassandra.functions.KeyspaceTablestoRowData;
 import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.RowData;
@@ -46,6 +47,15 @@ public class DescribeTablesExecutor implements DescribeExecutor{
     public Table execute(Metadata metaData) {
         FunctionalList<KeyspaceMetadata,RowData> functional = new FunctionalList<>( metaData.getKeyspaces());
         List<RowData> rows = functional.map(new KeyspaceTablestoRowData());
-        return new Table(ListUtils.buildList(NAME_KEYSPACE,NAME_TABLE,NAME_TABLE),rows);
+        return new Table(buildHeader(rows.get(0)), rows);
+    }
+
+    private List<String> buildHeader(RowData row){
+        List<String> header = new ArrayList<>();
+        if (row!=null){
+            FunctionalList<CellData,String> functional = new FunctionalList<>(row.cells());
+            header = functional.map(new CellDataToHeader(NAME_KEYSPACE,NAME_TABLE));
+        }
+        return header;
     }
 }

@@ -1,4 +1,4 @@
-package com.stratio.explorer.cassandra.gateways;
+package com.stratio.explorer.cassandra.gateways.operations;
 
 
 import com.datastax.driver.core.Cluster;
@@ -9,10 +9,9 @@ import com.stratio.explorer.cassandra.models.SHCQLOperation;
 import com.stratio.explorer.cassandra.models.Table;
 
 /**
- * Execute Describe KeySpace
+ * Execute Describe operations
  */
-//TODO : CHANGE NAME AND PACKAGE OF THIS CLASS
-public class CassandraDriverWithDescribe {
+public class DecribeOperation implements CassandraOperation {
 
 
 
@@ -22,7 +21,8 @@ public class CassandraDriverWithDescribe {
      * @param shCQLcommand command shCQL
      * @return List string with result
      */
-    public Table execute(Session session,String shCQLcommand) {
+    @Override
+    public Table execute(Session session, String shCQLcommand) {
 
         SHCQLOperation shCqlOperation = new SHCQLOperation(shCQLcommand);
         Cluster cluster = session.getCluster();

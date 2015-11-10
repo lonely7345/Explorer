@@ -5,6 +5,7 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.KeyspaceMetadata;
 import com.datastax.driver.core.Metadata;
 import com.datastax.driver.core.TableMetadata;
+import com.stratio.explorer.cassandra.models.Table;
 import org.junit.Test;
 
 import com.stratio.explorer.reader.PropertiesReader;
@@ -22,16 +23,21 @@ public class CassandraRealDriverTest {
 
 
 
-    @Test
+   /*@Test
     public void whenUseDescribe(){
         CassandraSession sesion = new CassandraSession();
         sesion.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
 
-        mockDescribeKeySpacedemo(sesion.getConnector().getCluster());
-        mockDescribeTables(sesion.getConnector().getCluster());
-        mockDescribeTableDemo(sesion.getConnector().getCluster());
+        CassandraDriver driver = new CassandraDriver(sesion);
+       Table table =driver.executeCommand("USE DEMO");
+       Table table1 = driver.executeCommand("SELECT * FROM DEPARTMENT");
+       int a =0;
+       int b=1;
+    //    mockDescribeKeySpacedemo(sesion.getConnector().getCluster());
+    //   mockDescribeTables(sesion.getConnector().getCluster());
+    //    mockDescribeTableDemo(sesion.getConnector().getCluster());
 
-    }
+    }*/
 
 
     private void mockDescribeKeySpacedemo(Cluster cluster){

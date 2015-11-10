@@ -22,7 +22,10 @@ public class TableMetadataToRowDataFunction implements TransformFunction<TableMe
     @Override
     public RowData transform(TableMetadata tableMetadata) {
         List<CellData> cells = new ArrayList<>();
-        cells.add(new CellData(tableMetadata.toString()));
+        cells.add(new CellData(tableMetadata.toString().replaceAll(" AND ","\\n AND ")));
         return new RowData(cells);
     }
+
+
+
 }

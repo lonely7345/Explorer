@@ -42,6 +42,6 @@ public class DescribeKeyspacesExecutor implements DescribeExecutor{
     public Table execute(Metadata metaData) {
         FunctionalList<KeyspaceMetadata,RowData> functional = new FunctionalList<>(metaData.getKeyspaces());
         List<RowData> rowDatas = functional.map(new KeyspacestoRowDataFuntion());
-        return new Table(ListUtils.buildList(CT_KEYSPACES), rowDatas);
+        return new Table(ListUtils.buildList(), rowDatas);
     }
 }

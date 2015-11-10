@@ -9,7 +9,7 @@ import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
 import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;
-import org.hamcrest.Matchers;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,6 +17,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.endsWith;
 
 
 public class CassandraInterpreterTest {
@@ -52,15 +56,15 @@ public class CassandraInterpreterTest {
     @Test public void whenCassandraDataBAseIsShutDownThenResultError(){
         selector.driverWithConnectionShutDown(initialDataInStore);
         InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
-        Assert.assertThat("When cassandra is shutDown status is error",result.code(),Matchers.is(InterpreterResult.Code.ERROR));
-        Assert.assertThat("and return error message",result.message(),Matchers.is(Matchers.any(String.class)));
+        Assert.assertThat("When cassandra is shutDown status is error", result.code(),is(InterpreterResult.Code.ERROR));
+        Assert.assertThat("and return error message",result.message(),is(any(String.class)));
     }
 
     @Test public void whenCQLIsIncorrectResultShouldBeError(){
         selector.driverWithSyntaxError(initialDataInStore);
         InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name");
-        Assert.assertThat("When CQL is incorrect status is error",result.code(),Matchers.is(InterpreterResult.Code.ERROR));
-        Assert.assertThat("and return error message",result.message(),Matchers.is(Matchers.any(String.class)));
+        Assert.assertThat("When CQL is incorrect status is error", result.code(),is(InterpreterResult.Code.ERROR));
+        Assert.assertThat("and return error message", result.message(),is(any(String.class)));
     }
 
     @Test public void whenCQLIsCorrectAndReturnOneResult(){
@@ -68,8 +72,8 @@ public class CassandraInterpreterTest {
         header.add(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
-        Assert.assertThat("When CQL is correct status is success",result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat("And return objetc in text format",result.message(),Matchers.is(NAME + "\n" + VALUE));
+        Assert.assertThat("When CQL is correct status is success",result.code(), is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat("And return objetc in text format", result.message(), is(NAME + "\n" + VALUE));
     }
 
     @Test public void whenCQULISCorrectAndHaveMoreResults(){
@@ -78,38 +82,44 @@ public class CassandraInterpreterTest {
         header.add(NAME);
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("select * from demo.users");
-        Assert.assertThat("When CQL is correct status is success",result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat("And return objetc in text format",result.message(), Matchers.is(NAME + "\n" + VALUE + "\n" + VALUE));
+        Assert.assertThat("When CQL is correct status is success", result.code(), is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat("And return objetc in text format", result.message(), is(NAME + "\n" + VALUE + "\n" + VALUE));
     }
 
-    @Test public void whenCqlIsCorrectAndNotHaceReturnedData(){
+    @Test public void whenCqlIsCorrectAndNotHaceReturnedData() {
+        rows.add(buildRowData(new CellData<>(StringConstants.OPERATION_OK)));
         selector.driverWithCorrectCQL(initialDataInStore);
         InterpreterResult result =interpreter.interpret("USE DEMO");
-        Assert.assertThat("When CQL is correct status is success",result.code(), Matchers.is(InterpreterResult.Code.SUCCESS));
-        Assert.assertThat("And return objetc in text format",result.message(), Matchers.is(StringConstants.OPERATION_OK));
+        Assert.assertThat("When CQL is correct status is success", result.code(), is(InterpreterResult.Code.SUCCESS));
+        Assert.assertThat("And return objetc in text format", result.message(), endsWith(StringConstants.OPERATION_OK));
     }
 
 
     @Test public void whenPropertyNotFoundException(){
         selector.driverWithNotPropertFoundException(initialDataInStore);
         InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
-        Assert.assertThat("When property not found return error",result.code(),Matchers.is(InterpreterResult.Code.ERROR));
-        Assert.assertThat("With message",result.message(),Matchers.is(Matchers.any(String.class)));
+        Assert.assertThat("When property not found return error", result.code(), is(InterpreterResult.Code.ERROR));
+        Assert.assertThat("With message", result.message(), is(any(String.class)));
     }
 
 
     @Test public void whenCallCompletion(){
         List<String> resultList =interpreter.completion("", 0);
-        Assert.assertTrue("Always retirn cero",resultList.isEmpty());
+        Assert.assertTrue("Always retirn cero", resultList.isEmpty());
     }
 
     @Test public void whenCallFormType(){
         Interpreter.FormType formType =interpreter.getFormType();
-        Assert.assertThat("Always return SIMPLE",formType, Matchers.is(Interpreter.FormType.SIMPLE));
+        Assert.assertThat("Always return SIMPLE", formType, is(Interpreter.FormType.SIMPLE));
     }
 
     @Test public void whenCallGetValue(){
-            Assert.assertEquals("Always return null",interpreter.getValue("any"), null);
+            Assert.assertEquals("Always return null", interpreter.getValue("any"), null);
+    }
+
+
+    @Test public void callWithReal(){
+        InterpreterResult result =interpreter.interpret("select * from DEMO.department");
     }
 
     private RowData buildRowData(CellData... cells){
