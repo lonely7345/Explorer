@@ -79,12 +79,20 @@ Feature: Explorer-Cassandra Integration
     Then: It return query incorrect
 
   Scenario: Test alter keyspace command
-    When:  I try to alter a existing keyspace with "alter keyspace" command
+    When: I try to alter a existing keyspace with "alter keyspace" command
     Then: KeySpace altered succesfully
 
   Scenario: Test Create Secondary Index
-    When:
-    Then:
+    Given: I create "keyspace"
+    And: I create table "users"
+    And: I try to create a secondary lucene index with "create custom index"
+    When: Press enter
+    Then: Index created succesfully
+
+    #JIRA - EXPLORER 147
+  Scenario: Test Create a existing keyspace
+    When: I try to create a existing keyspace
+    Then: infinite loop
 
   Scenario: Test Select with filters in secondary index
     When:
