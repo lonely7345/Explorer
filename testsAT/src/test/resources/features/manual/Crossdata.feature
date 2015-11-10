@@ -154,23 +154,80 @@ Feature: Explorer-Crossdata Integration
     //DOES NOT WORK...
   REGISTER TABLE songs.songs ON CLUSTER cassandraCluster (track_id text PRIMARY KEY, title text, song_id text, release text, artist_id text, artist_mbid text, artist_name text, duration double, artist_familiarity double, artist_hotttnesss double, year int);
 
+    ##FAIL JIRA EXPLORER-136 Got an error
+  Scenario: Test USE command
+    Given a "explorer" Catalog
+    When I execute a "use explorer;"
+    Then I got "OK"
+
+  ##FAIL JIRA EXPLORER-137 UX fail, Not scroll
   Scenario: Test Crossdata Select * Without filters
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "select * from movie;"
+    Then I got a result table
+
+  Scenario: Test Crossdata Select * with bad table
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "select * from movieaaaaaaaaa;"
+    Then I got a "[movies.movieas]  doesn't exist yet" error
 
   Scenario: Test Crossdata Select * With simple filters
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "select * from movie where imdbID = "tt0986233";"
+    Then I got a result table
 
-  Scenario: Test Crossdata Select * With multiple filters
+  Scenario: Test Crossdata Select * With bad Query
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "select * from movie where imdbID = tt0986233;"
+    Then I got a "[movies.movie.tt0986233]  doesn't exist yet" error
+
+  Scenario: Test Crossdata Select * with bad Query2
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "select * from movie where imdbID =;"
+    Then I got a "Parser exception" error
+
+  Scenario: Test Crossdata GROUP-BY
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "select SUB_FIELD(country, "raw"), count(*) from movie group by SUB_FIELD(country,"raw");"
+    Then I got a result table
+    When I push in the Pie chart button, I got a chart.
+
 
   Scenario: Test Crossdata Select * With Order By
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "SELECT title, imdbRating FROM movie order by imdbRating DESC;"
+    Then I got a result table
 
-  Scenario: Test Crossdata Select * With Limit
-
-  Scenario: Test Crossdata Select With projections
-
-  Scenario: Test Crossdata Select Into
+  Scenario: Test Crossdata Select * With Order By
+    Given a "movies" Catalog
+    And the cluster "elasticsearchCluster" attached to "elasticsearch" connector
+    And a table "movies" registered with registers
+    And "use movies" command executed.
+    When I execute "SELECT title, imdbRating FROM movie limit 5;"
+    Then I got a result table
 
   Scenario: Test Crossdata Select With Inner Join
-
-  Scenario: Test Crossdata Select GROUP BY
 
   Scenario: Test Crossdata DELETE FROM
 
