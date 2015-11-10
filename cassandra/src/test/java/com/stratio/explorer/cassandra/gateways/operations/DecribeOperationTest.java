@@ -40,9 +40,12 @@ public class DecribeOperationTest {
         String partitioner = "partitioner";
         Session mockSession = new CassandraSessionMocks().mockDescribeCluster(clusterName, partitioner);
         Table table = describe.execute(mockSession,"DESCRIBE CLUSTER");
-        assertThat(table.header(), is(buildList(DescribeClusterExecutor.CT_CLUSTER, DescribeClusterExecutor.CT_PARTIRIONER)));
-        assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(clusterName));
-        assertThat(table.rows().get(0).cells().get(1).getValue().toString(),is(partitioner));
+        assertThat(table.header(), is(buildList()));
+        assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(DescribeClusterExecutor.CT_CLUSTER));
+        assertThat(table.rows().get(1).cells().get(0).getValue().toString(),is(DescribeClusterExecutor.CT_PARTIRIONER));
+
+        assertThat(table.rows().get(0).cells().get(1).getValue().toString(),is(clusterName));
+        assertThat(table.rows().get(1).cells().get(1).getValue().toString(),is(partitioner));
     }
 
     @Test

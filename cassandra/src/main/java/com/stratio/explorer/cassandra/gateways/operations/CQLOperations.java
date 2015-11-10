@@ -39,7 +39,6 @@ public class CQLOperations implements CassandraOperation {
         try {
             ResultSet rs =session.execute(shCQLcommand);
             List<String> header = header(rs.getColumnDefinitions());
-            System.out.println("EL HEADER ES "+header);
             List<RowData> rows = new FunctionalList<Row,RowData>(rs.all()).map(new RowToRowDataFunction(header));
 
             return new Table(header,appendOperationOkIfEmpty(rows,header));
