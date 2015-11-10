@@ -70,7 +70,7 @@ Feature: Basic Explorer Operations
   Scenario: Test group 2 to 12 columns with same width
     When: I press settings button
     And: Select 1..12 same widths in all windows
-    Then: Windows fit correctly
+    Then: Windows fits correctly
 
   Scenario: Test show title of the paragraph
     When: I press settings button
@@ -114,7 +114,7 @@ Feature: Basic Explorer Operations
     When: I press into settings button
     And:  I Click on "remove" option
     Then I removed Notebook's paragraph succesfully
-    
+
  #NoteBook options
   #JIRA - EXPLORER-143
   Scenario: Test show / hide the code
@@ -170,9 +170,14 @@ Feature: Basic Explorer Operations
   #General settings
   Scenario: Test edit config crossdata and save
 
+
   Scenario: Test edit config ingestion and save
 
+
   Scenario: Test edit config cassandra and save
+    When: I click on "Stratio's" select
+    When: I click on "settings" options
+    Then: Config changed succesfully
 
   Scenario: Test logout
     Given: I Enter into Notebook
