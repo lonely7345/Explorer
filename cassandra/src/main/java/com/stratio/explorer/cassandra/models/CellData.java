@@ -19,6 +19,7 @@ public class CellData<K> {
      * @return value of cell
      */
     public K getValue() {
+        System.out.println("LLEGA HASTA ESTE VALOR"+ value);
         return value;
     }
 }

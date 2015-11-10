@@ -3,25 +3,38 @@ package com.stratio.explorer.cassandra.models;
 /**
  * bean with values of describe operation
  */
-
-//TODO : INCLUDE JAVADOC
 public class SHCQLOperation {
 
     private String [] describe;
 
+    /**
+     * Constructor of shCQL command .
+     * @param shCQLcommand
+     */
     public SHCQLOperation(String shCQLcommand){
         describe = shCQLcommand.split(" +");;
     }
 
+    /**
+     * name of shCql operation .
+     * @return name of shCql operation
+     */
     public String nameOperation(){
         return describe[0];
     }
 
+    /**
+     * identifier of Describe (table,Tables,KeySpace,KeySpaces) .
+     * @return identifier of Describe
+     */
     public String identifier(){
-        return describe[1];
+        return describe[1].trim();
     }
 
-    //TODO : THIS METHOD WILL NEED THROW EXCEPTION
+    /**
+     * Recovery optional value of Describe
+     * @return optional Value
+     */
     public String optionalValue(){
         String result ="";
         if (describe.length>2)

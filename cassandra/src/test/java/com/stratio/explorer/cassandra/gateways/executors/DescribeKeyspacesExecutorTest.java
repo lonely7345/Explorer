@@ -18,7 +18,7 @@ public class DescribeKeyspacesExecutorTest {
         Session mockSession = new CassandraSessionMocks().mockDescribeKeySpaces(nameKeySpace);
         DescribeExecutor executor = new DescribeKeyspacesExecutor();
         Table table = executor.execute(mockSession.getCluster().getMetadata());
-        assertThat(table.header(), is(ListUtils.buildList(DescribeKeyspacesExecutor.CT_KEYSPACES)));
+        assertThat(table.header(), is(ListUtils.buildList()));
         assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(nameKeySpace));
     }
 

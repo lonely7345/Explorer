@@ -53,13 +53,14 @@
         <module>spark</module>
         <module>markdown</module>
         <module>shell</module>
+        <module>cassandra</module>
         <module>web</module>
         <module>server</module>
         <module>dist</module>
         <module>doc</module>
         <module>decision</module>
         <module>ingestion</module>
-        <module>cassandra</module>
+
     </modules>
     <properties>
         <spark.version>1.4.0</spark.version>

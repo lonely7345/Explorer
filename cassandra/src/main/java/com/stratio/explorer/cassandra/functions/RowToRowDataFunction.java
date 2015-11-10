@@ -6,6 +6,7 @@ import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.functions.TransformFunction;
 import com.stratio.explorer.lists.FunctionalList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,8 +15,6 @@ import java.util.List;
 public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
 
 
-    private List<String> header;
-
     private FunctionalList<String,CellData> functionalList;
 
     /**
@@ -23,6 +22,7 @@ public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
      * @param header list of row names
      */
     public RowToRowDataFunction(List<String> header){
+
         this.functionalList = new FunctionalList<>(header);
     }
 
@@ -33,7 +33,14 @@ public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
      */
     @Override
     public RowData transform(Row row) {
-        RowData rowData = new RowData(functionalList.map(new CellValueFunction(row)));
+        RowData rowData=null;
+        try {
+             System.out.println("EL VALOR DEL ROW ES :"+row);
+             rowData = new RowData(functionalList.map(new CellValueFunction(row)));
+        }catch (Throwable e){
+            System.out.println("ENTRA EN LA EXCEPCION");
+            e.printStackTrace();
+        }
         return rowData;
     }
 }
