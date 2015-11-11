@@ -3,15 +3,12 @@ package com.stratio.explorer.cassandra.gateways.executors;
 
 import com.datastax.driver.core.Metadata;
 import com.stratio.explorer.cassandra.functions.NameValueToRowData;
-import com.stratio.explorer.cassandra.functions.StringToCellData;
-import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.NameValue;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
 import com.stratio.explorer.cassandra.utils.ListUtils;
 import com.stratio.explorer.lists.FunctionalList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

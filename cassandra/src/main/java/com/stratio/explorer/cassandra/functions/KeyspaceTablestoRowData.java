@@ -4,6 +4,8 @@ import com.datastax.driver.core.KeyspaceMetadata;
 import com.datastax.driver.core.TableMetadata;
 import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.RowData;
+import com.stratio.explorer.cassandra.models.Table;
+import com.stratio.explorer.cassandra.utils.ListUtils;
 import com.stratio.explorer.functions.TransformFunction;
 import com.stratio.explorer.lists.FunctionalList;
 
@@ -26,8 +28,16 @@ public class KeyspaceTablestoRowData implements TransformFunction<KeyspaceMetada
 
         List<TableMetadata> tables = new ArrayList<>(keyspaceMetadata.getTables());
         FunctionalList<TableMetadata,CellData> functional = new FunctionalList<>(tables);
-        List<CellData> tableNames = functional.map(new TableMetaDataToCellData());
-        tableNames.add(0,new CellData(keyspaceMetadata.getName()));
-        return new RowData(tableNames);
+        List<CellData> cells = new ArrayList<>();
+        cells.add(new CellData(buildTable(keyspaceMetadata.getName(),functional)));
+        return new RowData(cells);
+    }
+
+
+    private Table buildTable(String NameKeySpace,FunctionalList<TableMetadata,CellData> functional){
+        List<String> header = ListUtils.buildList(NameKeySpace);
+        List<RowData> rows = new ArrayList<>();
+        rows.add(new RowData(functional.map(new TableMetaDataToCellData())));
+        return new Table(header,rows);
     }
 }
