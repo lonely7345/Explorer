@@ -49,7 +49,7 @@ public class IngestionSyntaxParserTest {
         String command = "agent start --file ".concat(filepath).concat(" --port 1000");
         try {
             IngestionParserResult result = parser.parse(command);
-            Assert.assertEquals(expectedResult, result);
+            Assert.assertEquals("The two instances are the sames",expectedResult, result);
         } catch (IngestionParserException e) {
             Assert.fail(e.getMessage());
         }
