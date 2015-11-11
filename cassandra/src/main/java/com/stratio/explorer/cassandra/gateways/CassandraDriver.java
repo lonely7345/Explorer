@@ -41,10 +41,6 @@ public class CassandraDriver implements InterpreterDriver<Table> {
     @Override public Table executeCommand(String command) {
         try {
             Session session = cassandraSession.getConnector();
-            Cluster cluster = session.getCluster();
-
-            Metadata metaData =session.getCluster().getMetadata();
-            KeyspaceMetadata metaData1 =session.getCluster().getMetadata().getKeyspace("demo");
             ResultSet rs =session.execute(command);
             List<String> header = header(rs.getColumnDefinitions());
             List<RowData> rows = new FunctionalList<Row,RowData> (rs.all()).map(new RowToRowDataFunction(header));
