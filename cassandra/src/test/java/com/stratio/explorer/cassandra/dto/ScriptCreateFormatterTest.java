@@ -44,8 +44,4 @@ public class ScriptCreateFormatterTest {
                  FOUR_WHITE_SPACE+"other"+System.getProperty("line.separator")+")";
         assertThat("result should be Script formatted",scriptCreateFormatter.format(script),is(result));
     }
-
-
-
-
 }

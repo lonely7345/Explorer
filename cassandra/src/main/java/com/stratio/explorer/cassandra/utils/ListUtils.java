@@ -9,17 +9,17 @@ import java.util.List;
  * Utils to build Lists
  */
 //
-public class ListUtils {
+public class ListUtils<TypeList> {
 
     /**
      * build String list with params
      * @param params
      * @return
      */
-    public static List<String> buildList(String... params){
-        List<String> result = new ArrayList<>();
-        for (String cad:params){
-            result.add(cad);
+    public List<TypeList> buildList(TypeList... params){
+        List<TypeList> result = new ArrayList<>();
+        for (TypeList param:params){
+            result.add(param);
         }
         return result;
     }

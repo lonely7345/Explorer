@@ -118,10 +118,6 @@ public class CassandraInterpreterTest {
     }
 
 
-    @Test public void callWithReal(){
-        InterpreterResult result =interpreter.interpret("select * from DEMO.department");
-    }
-
     private RowData buildRowData(CellData... cells){
         List<CellData> cellsData = new ArrayList<>();
         for (CellData cell : cells)
