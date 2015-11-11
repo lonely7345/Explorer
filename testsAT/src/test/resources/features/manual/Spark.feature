@@ -22,7 +22,7 @@ Feature: Explorer-Spark Integration
 
   Scenario: Test Spark Streaming capabilities
 
-  Scenario: Test Spark MLib capabilities
+  Scenario: Test Spark MLib capabilitiesanqis
 
     Scenario: Load HDFS file
     val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
