@@ -66,7 +66,7 @@ public class DecribeOperationTest {
         String creationSecond = "CREATE_SECOND_TABLE";
         Session mockSession = new CassandraSessionMocks().mockDescribe_keySpace_any(keySpaceName,createDemoScript,creationFirstTable,creationSecond);
         Table table = describe.execute(mockSession, "DESCRIBE KEYSPACE demo");
-        assertThat(table.header(),is(buildList(DescribeKeySpaceAnyExecutor.CT_SCRIPT)));
+        assertThat(table.header(),is(buildList()));
         assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(createDemoScript));
         assertThat(table.rows().get(1).cells().get(0).getValue().toString(),is(creationFirstTable));
         assertThat(table.rows().get(2).cells().get(0).getValue().toString(),is(creationSecond));
