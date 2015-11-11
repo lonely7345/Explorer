@@ -16,11 +16,11 @@ Feature: Decision Integration
     When: Click run button
     Then: return decision interpreter error
 
-
+    #JIRA - Explorer-151 (Decision Shell doesn't work)
   Scenario: Check lists all streams (and their associated actions) and queries with "list" command
     Given: I put "list" command into shell
     When: I press enter
-    Then:
+    Then: I recibed "Error recognized: line 1:0: no viable alternative at input 'list' ?list" error
 
   Scenario: Check create a new stream with the given structure with "create" command
     Given: I put "create" command into shell
