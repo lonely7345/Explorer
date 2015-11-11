@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.stratio.explorer.cassandra.dto;
 
 /**
@@ -23,6 +24,7 @@ public class ScriptCreateFormatter implements ScriptFormatter {
 
     private final String FOUR_WHITE_SPACE ="    ";
     private final String LINE_SEPARATOR = System.getProperty("line.separator");
+
 
     /**
      * Format script Create to visible DTO .

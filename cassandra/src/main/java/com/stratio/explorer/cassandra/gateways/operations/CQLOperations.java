@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.stratio.explorer.cassandra.gateways.operations;
 
 import com.datastax.driver.core.ColumnDefinitions;

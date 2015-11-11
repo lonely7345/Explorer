@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.stratio.explorer.cassandra.gateways.executors;
 
 import com.stratio.explorer.cassandra.exceptions.NotDescribeOptionException;
@@ -45,7 +46,9 @@ public class DescribeExecutorFactory {
      * @return DescribeExecutor to type describe
      */
     public static DescribeExecutor select(String wordSelector){
+
         DescribeExecutor executor = executors.get(wordSelector.toUpperCase());
+
         if (executor==null){
             String message =wordSelector + " not is correct in describe ";
             logger.error(message);
