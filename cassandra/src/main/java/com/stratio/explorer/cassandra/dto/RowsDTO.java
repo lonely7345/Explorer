@@ -30,15 +30,10 @@ public class RowsDTO {
     private String cellDto(List<CellData> cells){
         List<Object> list = new ArrayList<>();
         for (CellData cell:cells) {
-            String value = cell.getValue().toString();
-            ScriptFormatter formatter = ScriptFormatterFactory.getFormatterTo(type(value));
-            list.add(formatter.format(value));
+            CellDTO cellDTO = CellDTOFactory.getDTO(cell);
+            list.add(cellDTO.toDTO(cell));
         }
         return StringUtils.join(list, StringConstants.TABULATOR) ;
     }
 
-    private String type(String value){
-        String [] separated = value.split(" ");
-        return separated[0];
-    }
 }

@@ -28,16 +28,14 @@ public class KeyspaceTablestoRowData implements TransformFunction<KeyspaceMetada
 
         List<TableMetadata> tables = new ArrayList<>(keyspaceMetadata.getTables());
         FunctionalList<TableMetadata,CellData> functional = new FunctionalList<>(tables);
-        List<CellData> cells = new ArrayList<>();
-        cells.add(new CellData(buildTable(keyspaceMetadata.getName(),functional)));
+        List<CellData> cells = new ListUtils<CellData>().buildList(new CellData(buildTable(keyspaceMetadata.getName(),functional)));
         return new RowData(cells);
     }
 
 
     private Table buildTable(String NameKeySpace,FunctionalList<TableMetadata,CellData> functional){
-        List<String> header = ListUtils.buildList(NameKeySpace);
-        List<RowData> rows = new ArrayList<>();
-        rows.add(new RowData(functional.map(new TableMetaDataToCellData())));
+        List<String> header = new ListUtils<String>().buildList("Keyspace "+NameKeySpace);
+        List<RowData> rows = new ListUtils<RowData>().buildList(new RowData(functional.map(new TableMetaDataToCellData())));
         return new Table(header,rows);
     }
 }

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO : THIS TEST WILL BE CHANGED
 public class CassandraDriverTest  {
 
 
@@ -36,7 +35,6 @@ public class CassandraDriverTest  {
 
     @Test
     public void whenOperationIsNormalCQL() throws InterruptedException, IOException {
-
         Table result = driver.executeCommand("select * from mytable WHERE id='myKey01'");
         List<String> header = new ArrayList<>();
         header.add("");
@@ -49,8 +47,7 @@ public class CassandraDriverTest  {
         String nameKeySpace = "nameKeySpace";
         driver = new CassandraDriver(new MockSessionCassandra(new CassandraSessionMocks().mockDescribeKeySpaces(nameKeySpace)));
         Table result = driver.executeCommand("DESCRIBE keySpaces");
-        assertThat(result.header(), is(ListUtils.buildList()));
+        assertThat(result.header(), is(new ListUtils<String>().buildList()));
         assertThat(result.rows().get(0).cells().get(0).getValue().toString(),is(nameKeySpace));
     }
-
 }

@@ -24,7 +24,7 @@ public class DescribeClusterExecutorTest {
         Session mockSession = new CassandraSessionMocks().mockDescribeCluster(clusterName, partitioner);
         Table table = executor.execute(mockSession.getCluster().getMetadata());
 
-        assertThat("Header should be empty",table.header(), is(ListUtils.buildList()));
+        assertThat("Header should be empty",table.header(), is(new ListUtils<String>().buildList()));
         assertThat("should be Identifier ",table.rows().get(0).cells().get(0).getValue().toString(), is(DescribeClusterExecutor.CT_CLUSTER));
         assertThat("should be Identifier ",table.rows().get(1).cells().get(0).getValue().toString(),is(DescribeClusterExecutor.CT_PARTIRIONER));
 

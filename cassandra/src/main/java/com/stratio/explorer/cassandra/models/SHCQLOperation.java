@@ -28,7 +28,7 @@ public class SHCQLOperation {
      * @return identifier of Describe
      */
     public String identifier(){
-        return describe[1].trim();
+        return describe[1].replaceAll(";","").trim();
     }
 
     /**

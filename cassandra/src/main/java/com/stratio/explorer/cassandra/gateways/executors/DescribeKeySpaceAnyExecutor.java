@@ -43,13 +43,11 @@ public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
         FunctionalList<TableMetadata,RowData> functionalList = new FunctionalList<>(new ArrayList<>(keySpaceMetada.getTables()));
         List<RowData> rows = functionalList.map(new TableMetadataToRowDataFunction());
         rows.add(0,buildFirst(keySpaceMetada.toString()));
-        return new Table(ListUtils.buildList(),rows);
+        return new Table(new ListUtils<String>().buildList(),rows);
     }
 
     private RowData buildFirst(String valueuniqueCell){
-        List<CellData> cells = new ArrayList<>();
-        cells.add(new CellData(valueuniqueCell));
-        return new RowData(cells);
+        return new RowData(new ListUtils<CellData>().buildList(new CellData(valueuniqueCell)));
     }
 
 
