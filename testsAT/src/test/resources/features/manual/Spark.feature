@@ -22,10 +22,14 @@ Feature: Explorer-Spark Integration
 
   Scenario: Test Spark Streaming capabilities
 
-  Scenario: Test Spark MLib capabilitiesanqis
+  Scenario: Test Spark MLib capabilities
 
-    Scenario: Load HDFS file
-    val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+    #JIRA - EXPLORER-157
+  Scenario: Load HDFS file
+    Given a file "songs.txt" stored in HDFS
+    And a val named textFile in the context with the data of "songs.txt"
+    When I execute "val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _).collect"
+    Then I got the file data
 
 
 
