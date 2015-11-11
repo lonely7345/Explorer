@@ -22,7 +22,7 @@ public class ScriptCreateFormatter implements ScriptFormatter {
 
 
     private final String FOUR_WHITE_SPACE ="    ";
-
+    private final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
      * Format script Create to visible DTO .
@@ -31,10 +31,10 @@ public class ScriptCreateFormatter implements ScriptFormatter {
      */
     @Override
     public String format(String script) {
-        String result = script.replaceAll(" AND ", System.getProperty("line.separator")+FOUR_WHITE_SPACE+"AND ");
-        result = result.replaceAll("\\(","("+System.getProperty("line.separator")+FOUR_WHITE_SPACE);
-        result = result.replaceAll("\\)",System.getProperty("line.separator")+")");
-        result = result.replaceAll(",",","+System.getProperty("line.separator")+FOUR_WHITE_SPACE);
+        String result = script.replaceAll(" AND ", LINE_SEPARATOR+FOUR_WHITE_SPACE+"AND ");
+        result = result.replaceAll("\\(","("+LINE_SEPARATOR+FOUR_WHITE_SPACE);
+        result = result.replaceAll("\\)",LINE_SEPARATOR+")");
+        result = result.replaceAll(",",","+LINE_SEPARATOR+FOUR_WHITE_SPACE);
         return result;
     }
 }

@@ -31,10 +31,10 @@ public class DescribeExecutorFactory {
 
     private static final Map<String,DescribeExecutor> executors =
              new HashMap<String,DescribeExecutor>(){
-                 {  put(DescribeClusterExecutor.WORD_SELECTOR.toLowerCase(),new DescribeClusterExecutor());
-                    put(DescribeKeySpaceAnyExecutor.WORD_SELECTOR.toLowerCase(),new DescribeKeySpaceAnyExecutor());
-                    put(DescribeKeyspacesExecutor.WORD_SELECTOR.toLowerCase(),new DescribeKeyspacesExecutor());
-                    put(DescribeTablesExecutor.WORD_SELECTOR.toLowerCase(),new DescribeTablesExecutor());
+                 {  put(DescribeClusterExecutor.WORD_SELECTOR,new DescribeClusterExecutor());
+                    put(DescribeKeySpaceAnyExecutor.WORD_SELECTOR,new DescribeKeySpaceAnyExecutor());
+                    put(DescribeKeyspacesExecutor.WORD_SELECTOR,new DescribeKeyspacesExecutor());
+                    put(DescribeTablesExecutor.WORD_SELECTOR,new DescribeTablesExecutor());
                  }
              };
 
@@ -45,7 +45,7 @@ public class DescribeExecutorFactory {
      * @return DescribeExecutor to type describe
      */
     public static DescribeExecutor select(String wordSelector){
-        DescribeExecutor executor = executors.get(wordSelector.toLowerCase());
+        DescribeExecutor executor = executors.get(wordSelector.toUpperCase());
         if (executor==null){
             String message =wordSelector + " not is correct in describe ";
             logger.error(message);
