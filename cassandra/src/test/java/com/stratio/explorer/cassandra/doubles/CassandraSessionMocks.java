@@ -102,10 +102,11 @@ public class CassandraSessionMocks {
 
         KeyspaceMetadata metaDataDemo = mock(KeyspaceMetadata.class);
         when(metaDataDemo.getName()).thenReturn(keySpaceName);
-        doReturn(buildCollectionNameTables(nameTableOne, nameTableTwo)).when(metaDataDemo).getTables();
+        doReturn(buildCollectionNameTables(metaDataDemo,nameTableOne, nameTableTwo)).when(metaDataDemo).getTables();
 
         Metadata metaData = mock(Metadata.class);
         when(metaData.getKeyspaces()).thenReturn(buildKeySpaceMetadat(metaDataDemo));
+
 
 
         Cluster cluster = mock(Cluster.class);
@@ -124,15 +125,17 @@ public class CassandraSessionMocks {
     }
 
 
-    private Collection<TableMetadata> buildCollectionNameTables(String nameFirstTable,String nameSecondTable){
+    private Collection<TableMetadata> buildCollectionNameTables(KeyspaceMetadata metaDataDemo,String nameFirstTable,String nameSecondTable){
         Collection<TableMetadata> collection = new ArrayList<TableMetadata>();
 
         TableMetadata firstTable = mock(TableMetadata.class);
         when(firstTable.getName()).thenReturn(nameFirstTable);
+        when(firstTable.getKeyspace()).thenReturn(metaDataDemo);
         collection.add(firstTable);
 
         TableMetadata secondTable = mock(TableMetadata.class);
         when(secondTable.getName()).thenReturn(nameSecondTable);
+        when(secondTable.getKeyspace()).thenReturn(metaDataDemo);
         collection.add(secondTable);
 
 
