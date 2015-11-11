@@ -12,11 +12,8 @@ Feature: Explorer-Spark Integration
     When Click run button
     Then infinite loop
 
-  Scenario: Test simple Spark Command
 
   Scenario: Test simple Spark Script
-
-  Scenario: Test Spark Script with RDDs
 
   Scenario: Test Spark Script with RDDs
 
@@ -31,5 +28,30 @@ Feature: Explorer-Spark Integration
     When I execute "val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _).collect"
     Then I got the file data
 
+  Scenario: Test create simple array
+    Given: Create simple array with "Array(1,2,3,4,5)" command
+    Then: Array created succesfully
 
+  Scenario: Test parallelize data
+    Given: Create parallelize with "sc.parallelize(data)" command
+    Then: Transform created succesfully
 
+  Scenario: Test collect data
+    Given: Ckeck Collect data with "collect" command
+    Then: Action works succesfully
+
+  Scenario: Test mapping pairs
+    Given: Ckeck mapping pairs of data with "map" transform
+    Then: Transform created succesfully
+
+  Scenario: Test take command
+    Given: Ckeck "take" action
+    Then: Action works succesfully
+
+  Scenario: Test reduce command
+    Given: Ckeck "reduce" transform
+    Then: Transform created succesfully
+
+  Scenario: Test take command
+    Given: Ckeck "reduceByKey" action
+    Then: Transform created succesfully
