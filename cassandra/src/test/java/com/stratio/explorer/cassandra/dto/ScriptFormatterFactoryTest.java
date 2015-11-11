@@ -13,7 +13,7 @@ public class ScriptFormatterFactoryTest {
     public void whenScriptTypeIsReservedWordCreate(){
         String scriptType ="CREATE";
         ScriptFormatter formatter =ScriptFormatterFactory.getFormatterTo(scriptType);
-        assertThat(formatter,instanceOf(ScriptCreateFormatter.class));
+        assertThat("return create formmater",formatter,instanceOf(ScriptCreateFormatter.class));
 
     }
 
@@ -22,7 +22,7 @@ public class ScriptFormatterFactoryTest {
     public void whenScriptTypeIsNotReservedWordCreate(){
         String scriptType ="SELECT";
         ScriptFormatter formatter =ScriptFormatterFactory.getFormatterTo(scriptType);
-        assertThat(formatter,instanceOf(NoFormatter.class));
+        assertThat("return no formatter",formatter,instanceOf(NoFormatter.class));
     }
 
 }
