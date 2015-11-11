@@ -21,15 +21,24 @@ public class RowsDTO {
      */
     public String toDTO(List<RowData> rows){
         List<String>  list = new ArrayList<>();
-        for (RowData row:rows)
+        for (RowData row:rows) {
             list.add(cellDto(row.cells()));
+        }
         return StringUtils.join(list, System.getProperty("line.separator"));
     }
 
     private String cellDto(List<CellData> cells){
         List<Object> list = new ArrayList<>();
-        for (CellData cell:cells)
-            list.add(cell.getValue().toString());
+        for (CellData cell:cells) {
+            String value = cell.getValue().toString();
+            ScriptFormatter formatter = ScriptFormatterFactory.getFormatterTo(type(value));
+            list.add(formatter.format(value));
+        }
         return StringUtils.join(list, StringConstants.TABULATOR) ;
+    }
+
+    private String type(String value){
+        String [] separated = value.split(" ");
+        return separated[0];
     }
 }

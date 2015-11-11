@@ -19,7 +19,7 @@ import java.util.List;
 public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
 
 
-    public static final String CT_SCRIPT ="SCRIPT IMPLEMNETATION";
+
     public static final String WORD_SELECTOR="KEYSPACE";
     private String param;
 
@@ -43,7 +43,7 @@ public class DescribeKeySpaceAnyExecutor implements DescribeExecutor{
         FunctionalList<TableMetadata,RowData> functionalList = new FunctionalList<>(new ArrayList<>(keySpaceMetada.getTables()));
         List<RowData> rows = functionalList.map(new TableMetadataToRowDataFunction());
         rows.add(0,buildFirst(keySpaceMetada.toString()));
-        return new Table(ListUtils.buildList(CT_SCRIPT),rows);
+        return new Table(ListUtils.buildList(),rows);
     }
 
     private RowData buildFirst(String valueuniqueCell){
