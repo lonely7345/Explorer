@@ -23,7 +23,7 @@ public class ScriptCreateFormatterTest {
     public void whenScriptHaveReservedWordAnd(){
         String script = "CREATE TABLE DEMO.WITHFLOAT AND REPLICATION";
         String result= "CREATE TABLE DEMO.WITHFLOAT"+ System.getProperty("line.separator") +FOUR_WHITE_SPACE+"AND REPLICATION";
-        assertThat(scriptCreateFormatter.format(script),is(result));
+        assertThat("result should be Script formatted",scriptCreateFormatter.format(script),is(result));
     }
 
 
@@ -32,7 +32,7 @@ public class ScriptCreateFormatterTest {
         String script = "CREATE TABLE DEMO.WITHFLOAT (any)";
         String result = "CREATE TABLE DEMO.WITHFLOAT (" +System.getProperty("line.separator")
                         +FOUR_WHITE_SPACE+"any"+System.getProperty("line.separator")+")";
-        assertThat(scriptCreateFormatter.format(script),is(result));
+        assertThat("result should be Script formatted",scriptCreateFormatter.format(script),is(result));
     }
 
 
@@ -42,7 +42,7 @@ public class ScriptCreateFormatterTest {
         String result = "CREATE TABLE DEMO.WITHFLOAT (" +System.getProperty("line.separator")
                 +FOUR_WHITE_SPACE+"any,"+System.getProperty("line.separator")+
                  FOUR_WHITE_SPACE+"other"+System.getProperty("line.separator")+")";
-        assertThat(scriptCreateFormatter.format(script),is(result));
+        assertThat("result should be Script formatted",scriptCreateFormatter.format(script),is(result));
     }
 
 

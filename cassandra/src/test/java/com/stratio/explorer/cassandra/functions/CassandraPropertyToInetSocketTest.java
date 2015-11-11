@@ -52,8 +52,8 @@ public class CassandraPropertyToInetSocketTest {
         String port = "80";
         properties.put("prop", host + ":" + port);
         InetSocketAddress inetSocket = toInetSocket.transform("prop");
-        assertThat(inetSocket.getHostString(),is(host));
-        assertThat(inetSocket.getPort(),is(Integer.valueOf(port)));
+        assertThat("return host",inetSocket.getHostString(),is(host));
+        assertThat("return port",inetSocket.getPort(),is(Integer.valueOf(port)));
     }
 
     @Test(expected = NotValidPortException.class)

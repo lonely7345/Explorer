@@ -31,7 +31,7 @@ public class TableDTOSelectorTest {
     public void whenTableNotHaveHeader(){
 
         Table table = new Table(ListUtils.buildList(),new ArrayList<RowData>());
-        assertThat(selector.toDTO(table),startsWith(StringConstants.TYPE_TEXT));
+        assertThat("return text",selector.toDTO(table),startsWith(StringConstants.TYPE_TEXT));
 
     }
 
@@ -40,7 +40,7 @@ public class TableDTOSelectorTest {
     public void whenTableHaveHeader(){
         String anyCellHeader = "anyCellHeader";
         Table table = new Table(ListUtils.buildList(anyCellHeader),build());
-        assertThat(selector.toDTO(table),startsWith(StringConstants.TYPE_TABLE));
+        assertThat("return table",selector.toDTO(table),startsWith(StringConstants.TYPE_TABLE));
     }
 
     private List<RowData> build(){

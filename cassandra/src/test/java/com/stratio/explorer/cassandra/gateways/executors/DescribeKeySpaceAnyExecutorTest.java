@@ -26,10 +26,10 @@ public class DescribeKeySpaceAnyExecutorTest {
         Session mockSession = new CassandraSessionMocks().mockDescribe_keySpace_any(keySpaceName,createDemoScript,creationFirstTable,creationSecond);
         executor.optionalParam("demo");
         Table table = executor.execute(mockSession.getCluster().getMetadata());
-        assertThat(table.header(),is(ListUtils.buildList()));
-        assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(createDemoScript));
-        assertThat(table.rows().get(1).cells().get(0).getValue().toString(),is(creationFirstTable));
-        assertThat(table.rows().get(2).cells().get(0).getValue().toString(),is(creationSecond));
+        assertThat("header should be empty",table.header(),is(ListUtils.buildList()));
+        assertThat("first script",table.rows().get(0).cells().get(0).getValue().toString(),is(createDemoScript));
+        assertThat("second script",table.rows().get(1).cells().get(0).getValue().toString(),is(creationFirstTable));
+        assertThat("third script",table.rows().get(2).cells().get(0).getValue().toString(),is(creationSecond));
 
     }
 }

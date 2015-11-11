@@ -20,13 +20,7 @@ import static org.hamcrest.Matchers.is;
 public class DecribeOperationTest {
 
 
-    // DESCRIBE CLUSTER; (Inlude Table) (done)
-    // DESCRIBE KEYSPACES; **
-    // DESCRIBE KEYSPACE PortfolioDemo; **
-    // DESCRIBE TABLES; ** (1 HORA)
-    // DESCRIBE TABLE Stocks; (1 HORA)
-
-    DecribeOperation describe;
+    private DecribeOperation describe;
 
 
     @Before
@@ -40,12 +34,12 @@ public class DecribeOperationTest {
         String partitioner = "partitioner";
         Session mockSession = new CassandraSessionMocks().mockDescribeCluster(clusterName, partitioner);
         Table table = describe.execute(mockSession,"DESCRIBE CLUSTER");
-        assertThat(table.header(), is(buildList()));
-        assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(DescribeClusterExecutor.CT_CLUSTER));
-        assertThat(table.rows().get(1).cells().get(0).getValue().toString(),is(DescribeClusterExecutor.CT_PARTIRIONER));
+        assertThat("header should be empty",table.header(), is(buildList()));
+        assertThat("return cluster",table.rows().get(0).cells().get(0).getValue().toString(),is(DescribeClusterExecutor.CT_CLUSTER));
+        assertThat("return cluster",table.rows().get(1).cells().get(0).getValue().toString(), is(DescribeClusterExecutor.CT_PARTIRIONER));
 
-        assertThat(table.rows().get(0).cells().get(1).getValue().toString(),is(clusterName));
-        assertThat(table.rows().get(1).cells().get(1).getValue().toString(),is(partitioner));
+        assertThat("return cluster",table.rows().get(0).cells().get(1).getValue().toString(),is(clusterName));
+        assertThat("return cluster",table.rows().get(1).cells().get(1).getValue().toString(),is(partitioner));
     }
 
     @Test
@@ -53,8 +47,8 @@ public class DecribeOperationTest {
         String nameKeySpace ="unicquename";
         Session mockSession = new CassandraSessionMocks().mockDescribeKeySpaces(nameKeySpace);
         Table table = describe.execute(mockSession,"DESCRIBE KEYSPACES");
-        assertThat(table.header(), is(buildList()));
-        assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(nameKeySpace));
+        assertThat("return keySpaces",table.header(), is(buildList()));
+        assertThat("return keySpaces",table.rows().get(0).cells().get(0).getValue().toString(),is(nameKeySpace));
     }
 
     @Test
@@ -66,10 +60,10 @@ public class DecribeOperationTest {
         String creationSecond = "CREATE_SECOND_TABLE";
         Session mockSession = new CassandraSessionMocks().mockDescribe_keySpace_any(keySpaceName,createDemoScript,creationFirstTable,creationSecond);
         Table table = describe.execute(mockSession, "DESCRIBE KEYSPACE demo");
-        assertThat(table.header(),is(buildList()));
-        assertThat(table.rows().get(0).cells().get(0).getValue().toString(),is(createDemoScript));
-        assertThat(table.rows().get(1).cells().get(0).getValue().toString(),is(creationFirstTable));
-        assertThat(table.rows().get(2).cells().get(0).getValue().toString(),is(creationSecond));
+        assertThat("return keySpace",table.header(),is(buildList()));
+        assertThat("return keySpace",table.rows().get(0).cells().get(0).getValue().toString(), is(createDemoScript));
+        assertThat("return keySpace",table.rows().get(1).cells().get(0).getValue().toString(),is(creationFirstTable));
+        assertThat("return keySpace",table.rows().get(2).cells().get(0).getValue().toString(),is(creationSecond));
 
     }
 

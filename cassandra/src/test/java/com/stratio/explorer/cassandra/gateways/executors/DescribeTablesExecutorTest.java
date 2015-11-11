@@ -4,6 +4,7 @@ package com.stratio.explorer.cassandra.gateways.executors;
 import com.datastax.driver.core.Session;
 import com.stratio.explorer.cassandra.doubles.CassandraSessionMocks;
 import com.stratio.explorer.cassandra.models.Table;
+import com.stratio.explorer.cassandra.utils.ListUtils;
 import org.testng.annotations.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -21,7 +22,7 @@ public class DescribeTablesExecutorTest {
         DescribeTablesExecutor executor = new DescribeTablesExecutor();
         Session session = new CassandraSessionMocks().mockDescribeTables(keySpaceName,nameTableOne,nameTableTwo);
         Table table =  executor.execute(session.getCluster().getMetadata());
-        assertThat("First column should be keySpace Name",table.header().get(0),is(DescribeTablesExecutor.NAME_KEYSPACE));
+        assertThat("Header should be empty",table.header(),is(ListUtils.buildList()));
         assertThat("Second column should be Table Name",table.header().get(1),is(DescribeTablesExecutor.NAME_TABLE));
         assertThat("Second column should be Table Name",table.header().get(2),is(DescribeTablesExecutor.NAME_TABLE));
 
