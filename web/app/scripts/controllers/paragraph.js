@@ -46,7 +46,7 @@
         $scope.editorModeMap[editorMode.ingestion] = 'ingestion';
         $scope.editorModeMap[editorMode.shell] = 'shell';
         $scope.editorModeMap[editorMode.crossdata] = 'crossdata';
-        $scope.editorModeMap[editorMode.streaming] = 'decision';
+        $scope.editorModeMap[editorMode.decision] = 'decision';
         $scope.editorModeMap[editorMode.sql] = 'spark-sql';
         $scope.editorModeMap[editorMode.scala] = 'spark';
         $scope.editorModeMap[editorMode.markdown] = 'markdown';
@@ -141,12 +141,6 @@
         });
         // TODO: this may have impact on performance when there are many paragraphs in a note.
         $rootScope.$on('updateParagraph', function(event, data) {
-//            console.log('updateParagraph@data');
-//            console.log(data);
-//            console.log('updateParagraph@paragraph.config');
-//            console.log($scope.paragraph.config);
-//            console.log('updateParagraph@paragraph.settings');
-//            console.log($scope.paragraph.settings);
             $scope.lastData.config = angular.copy($scope.paragraph.config);
             $scope.lastData.settings = angular.copy($scope.paragraph.settings);
 
@@ -161,15 +155,12 @@
             !angular.equals(data.paragraph.settings, $scope.lastData.settings) ||
             !angular.equals(data.paragraph.config, $scope.lastData.config)
             )){
-  //              console.log('updateParagraph');
 
                 var oldType = $scope.getResultType();
                 var newType = $scope.getResultType(data.paragraph);
                 var oldGraphMode = $scope.getGraphMode();
                 var newGraphMode = $scope.getGraphMode(data.paragraph);
                 var resultRefreshed = (data.paragraph.dateFinished !== $scope.paragraph.dateFinished);
-
-                //      console.log('updateParagraph oldData %o, newData %o. type %o -> %o, mode %o -> %o', $scope.paragraph, data, oldType, newType, oldGraphMode, newGraphMode);
 
                 if ($scope.paragraph.text !== data.paragraph.text) {
                     if ($scope.dirtyText) { // check if editor has local update
@@ -241,18 +232,18 @@
             websocketMsgSrv.cancelParagraphRun($scope.paragraph.id);
         };
         $scope.runParagraph = function(data) {
-            //console.log('send new paragraph: %o with %o', $scope.paragraph.id, data);
+
             var code = $scope.editor.getSession().getValue();
             var path;
             //allow to open modal-window for editing plain text files only under ingestion interpreter
             if (String(code).startsWith('%ing edit ')) {
+
                 path = String(code).replace('%ing edit ', '');
                 $rootScope.$broadcast('openPropertiesEditor', path);
             } else if (String(code).startsWith('edit ') && $scope.paragraph.config.interpreter === $scope.editorModeMap[editorMode.ingestion]) {
                 path = String(code).replace('edit ', '');
                 $rootScope.$broadcast('openPropertiesEditor', path);
             } else {
-
                 websocketMsgSrv.runParagraph($scope.paragraph.id, $scope.paragraph.title,
                                                  data, $scope.paragraph.config, $scope.paragraph.settings.params);
                 $scope.dirtyText = undefined;
@@ -319,26 +310,16 @@
             }
         };
         $scope.closeTable = function() {
-//            console.log('close the output');
             var newParams = angular.copy($scope.paragraph.settings.params);
             var newConfig = angular.copy($scope.paragraph.config);
-//            console.log('old config');
-//            console.log($scope.paragraph.config);
-//            console.log('new config');
             newConfig.tableHide = true;
-//            console.log(newConfig);
             websocketMsgSrv.commitParagraph($scope.paragraph.id,$scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
         };
         $scope.openTable = function() {
-//            console.log('open the output');
             var newParams = angular.copy($scope.paragraph.settings.params);
             var newConfig = angular.copy($scope.paragraph.config);
-//            console.log('old config');
-//            console.log($scope.paragraph.config);
-//            console.log('new config');
-            newConfig.tableHide = false;
-//            console.log(newConfig);
-            websocketMsgSrv.commitParagraph($scope.paragraph.id,$scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
+                newConfig.tableHide = false;
+                websocketMsgSrv.commitParagraph($scope.paragraph.id,$scope.paragraph.title, $scope.paragraph.text, newConfig, newParams);
         };
         $scope.showTitle = function() {
             var newParams = angular.copy($scope.paragraph.settings.params);
@@ -399,7 +380,7 @@
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.scala];
                 console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%str ')) {
-                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.streaming];
+                $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.decision];
                 console.log(String(code) + ' -> ' + $scope.paragraph.config.interpreter);
             } else if (String(code).startsWith('%xdql ')) {
                 $scope.paragraph.config.interpreter = $scope.editorModeMap[editorMode.crossdata];
@@ -615,7 +596,7 @@
                 newInterpreter = editorMode.ingestion;
                 break;
             case 'decision':
-                newInterpreter = editorMode.streaming; //TODO : CHANGE REFERENCE
+                newInterpreter = editorMode.decision; //TODO : CHANGE REFERENCE
                 break;
             case 'spark':
                 newInterpreter = editorMode.scala;
@@ -1101,7 +1082,6 @@
                         }
                     };
                 var traverse = function(sKey, s, rKey, r, func, rowName, rowValue, colName) {
-                        //console.log('TRAVERSE sKey=%o, s=%o, rKey=%o, r=%o, rowName=%o, rowValue=%o, colName=%o', sKey, s, rKey, r, rowName, rowValue, colName);
                         if (s.type === 'key') {
                             rowName = concat(rowName, sKey);
                             rowValue = concat(rowValue, rKey);

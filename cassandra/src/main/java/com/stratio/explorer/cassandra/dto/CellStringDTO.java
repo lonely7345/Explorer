@@ -31,7 +31,7 @@ public class CellStringDTO implements CellDTO{
      */
     @Override
     public String toDTO(CellData cell) {
-        String value = (String)cell.getValue();
+        String value = cell.getValue().toString();
         ScriptFormatter formatter = ScriptFormatterFactory.getFormatterTo(type(value));
         return formatter.format(value);
 

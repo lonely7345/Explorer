@@ -34,7 +34,9 @@ public class CellTableDTO implements CellDTO {
      */
     @Override
     public String toDTO(CellData cellWithTable) {
+
         Table table = (Table)cellWithTable.getValue();
-        return StringUtils.join(table.header(), StringConstants.TABULATOR) + System.getProperty("line.separator") + new RowsDTO().toDTO(table.rows());
+        String noType ="";
+        return new TableDTO(noType).toDTO(table);
     }
 }
