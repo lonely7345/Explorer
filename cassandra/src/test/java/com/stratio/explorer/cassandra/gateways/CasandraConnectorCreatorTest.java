@@ -28,15 +28,15 @@ import java.util.*;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class PropertiesReaderTest {
+public class CasandraConnectorCreatorTest {
 
     private Properties properties;
-    private PropertiesReader reader;
+    private CasandraConnectorCreator reader;
 
     @Before
     public void setUp(){
         properties = new Properties();
-        reader = new PropertiesReader();
+        reader = new CasandraConnectorCreator();
     }
 
     @Test(expected = NotPropertyFoundException.class)

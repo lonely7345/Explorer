@@ -18,7 +18,6 @@ package com.stratio.explorer.cassandra.gateways;
 
 import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
-import com.stratio.explorer.functions.TransformFunction;
 import com.stratio.explorer.lists.FunctionalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,14 +27,14 @@ import java.util.*;
 
 
 
-public class PropertiesReader {
+public class CasandraConnectorCreator {
 
 /**
  * This class must create Cassandra Connections.
  */
 
 
-    private Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
+    private Logger logger = LoggerFactory.getLogger(CasandraConnectorCreator.class);
     private List<InetSocketAddress> contactPointWithPorts = new ArrayList<>();
     private boolean isNewConection=false;
 

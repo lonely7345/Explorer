@@ -24,9 +24,6 @@ import com.stratio.explorer.gateways.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Properties;
 
 /**
@@ -40,7 +37,7 @@ public class CassandraSession implements Connector<Session> {
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
-    private PropertiesReader reader = new PropertiesReader();
+    private CasandraConnectorCreator reader = new CasandraConnectorCreator();
 
     /**
      * Load configuration to Cassandra DataBase
