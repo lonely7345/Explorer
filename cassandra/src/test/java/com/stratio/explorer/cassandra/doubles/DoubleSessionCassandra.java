@@ -47,6 +47,6 @@ public class DoubleSessionCassandra implements Connector<Session> {
     public Session getConnector() {
         if (!isUpper)
             throw new ConnectionException(new Exception(),"exception");
-        return new DoubleSession().mockSession();
+        return new DoubleSession().mockSessionWithData();
     }
 }

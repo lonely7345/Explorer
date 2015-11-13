@@ -27,7 +27,7 @@
     <groupId>com.stratio.explorer</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.4.1-RC1-SNAPSHOT</version>
+    <version>0.4.1-RC3-SNAPSHOT</version>
     <name>Stratio Explorer</name>
     <description>Web shell for Stratio platform</description>
     <url>http://www.stratio.com</url>
@@ -70,13 +70,14 @@
         <module>spark</module>
         <module>markdown</module>
         <module>shell</module>
+        <module>cassandra</module>
         <module>web</module>
         <module>server</module>
         <module>dist</module>
         <module>doc</module>
         <module>decision</module>
         <module>ingestion</module>
-        <module>cassandra</module>
+
     </modules>
     <properties>
         <spark.version>1.4.0</spark.version>
@@ -833,6 +834,11 @@
             </dependency>
 
 
+            <dependency>
+                <groupId>com.datastax.cassandra</groupId>
+                <artifactId>cassandra-driver-core</artifactId>
+                <version>2.1.7.1</version>
+            </dependency>
         </dependencies>
 
 

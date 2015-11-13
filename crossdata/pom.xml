@@ -23,7 +23,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.stratio.explorer</groupId>
-        <version>0.4.1-RC1-SNAPSHOT</version>
+        <version>0.4.1-RC3-SNAPSHOT</version>
     </parent>
 
     <artifactId>crossdata-interpreter</artifactId>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>explorer-engine</artifactId>
-            <version>0.4.1-RC1-SNAPSHOT</version>
+            <version>0.4.1-RC3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

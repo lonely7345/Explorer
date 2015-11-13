@@ -132,20 +132,24 @@ public class Notebook {
     private void loadAllNotes() throws IOException {
         File notebookDir = new File(conf.getExplorerDir());
         File[] dirs = notebookDir.listFiles();
-        if (dirs == null) {
-            return;
-        }
-        for (File f : dirs) {
-            boolean isHidden = !f.getName().startsWith(".");
-            if (f.isDirectory() && isHidden) {
-                Scheduler scheduler = schedulerFactory.createOrGetFIFOScheduler("note_" + System.currentTimeMillis());
-                logger.info("Loading note from " + f.getName());
-                Note note = Note
-                        .load(f.getName(), conf, new NoteInterpreterLoader(replFactory, isLoaderStatic()), scheduler,
-                                jobListenerFactory, quartzSched);
-                synchronized (notes) {
-                    notes.put(note.id(), note);
-                    refreshCron(note.id());
+        if (dirs != null) {
+            for (File f : dirs) {
+                boolean isHidden = !f.getName().startsWith(".");
+                if (f.isDirectory() && isHidden) {
+                    Scheduler scheduler = schedulerFactory.createOrGetFIFOScheduler("note_" + System.currentTimeMillis());
+
+                    Note note = Note
+                            .load(f.getName(), conf, new NoteInterpreterLoader(replFactory, isLoaderStatic()), scheduler,
+                                    jobListenerFactory, quartzSched);
+                    if (note!=null) {
+                        synchronized (notes) {
+                            logger.info("Loading note from " + f.getName());
+                            notes.put(note.id(), note);
+                            refreshCron(note.id());
+                        }
+                    }else{
+                        logger.info("Loading note from " + f.getName() + "fail");
+                    }
                 }
             }
         }
