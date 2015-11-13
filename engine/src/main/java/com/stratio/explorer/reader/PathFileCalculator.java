@@ -21,7 +21,7 @@ import com.stratio.explorer.exceptions.FileConfNotExisException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+//TODO : THIS CLASS HAVE TWO RESPONSABILITIES SEPARATE
 public class PathFileCalculator {
 
     private static org.slf4j.Logger Logger = LoggerFactory.getLogger(PathFileCalculator.class);
@@ -32,7 +32,7 @@ public class PathFileCalculator {
      */
     public String getPath(String nameFile,String extensionFile){
 
-         String path = new FileConfLocator().locate(nameFile+extensionFile);
+         String path = calculatePath(nameFile,extensionFile);
          if ("".equals(path)) {
              path = System.getenv(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV);
          }
@@ -44,6 +44,18 @@ public class PathFileCalculator {
 
          return path;
     }
+
+
+    private String calculatePath(String nameFile,String extensionFile){
+        String path = "";
+        try{
+            path = new FileConfLocator().locate(nameFile+extensionFile);
+        }catch (OutOfMemoryError e){
+            Logger.info("Too many files");
+        }
+        return path;
+    }
+
 
 
 }
