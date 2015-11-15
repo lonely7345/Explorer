@@ -38,6 +38,7 @@ public class FileConfLocator {
 
     private static Logger Logger = LoggerFactory.getLogger(FileConfLocator.class);
     private File folder;
+
     /**
      * Constructor init with folder of class.
      */
@@ -56,13 +57,14 @@ public class FileConfLocator {
      * @param fileName file to search
      * @return String with path
      */
-    public String locate(String fileName)  {
-       FunctionalList<File, File> functional = new FunctionalList(new ArrayList<>(FileUtils.listFiles(folder, null, true)));
-       List<File> files = functional.search(new SearchFileFunction(fileName));
+    public String locate(String fileName,String extension)  {
+       String [] extenions = new String[]{extension};
+       FunctionalList<File, File> functional = new FunctionalList(new ArrayList<>(FileUtils.listFiles(folder, extenions, true)));
+       List<File> files = functional.search(new SearchFileFunction(fileName+"."+extension));
        String result = pathIfexistFiles(files);
        if (noRootFolder() && result.isEmpty()) {
             folder = new File(folder.getParent());
-            result = locate(fileName);
+            result = locate(fileName,extension);
        }
        return result;
     }

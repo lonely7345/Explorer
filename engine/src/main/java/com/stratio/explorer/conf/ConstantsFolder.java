@@ -30,7 +30,7 @@ public class ConstantsFolder {
     /**
      * Extension to configuration filess
      */
-    public static String CT_EXTENSION_FILE_PROPERTIES = ".conf";
+    public static String CT_EXTENSION_FILE_PROPERTIES = "conf";
 
     /**
      * Enviroment variable name configuration dir
@@ -40,7 +40,7 @@ public class ConstantsFolder {
     /**
      * Extension to xml files
      */
-    public static String CT_EXTENSION_FILE_XML = ".xml";
+    public static String CT_EXTENSION_FILE_XML = "xml";
 
 
     /**

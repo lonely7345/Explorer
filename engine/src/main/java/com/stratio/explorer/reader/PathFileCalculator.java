@@ -32,7 +32,7 @@ public class PathFileCalculator {
      */
     public String getPath(String nameFile,String extensionFile){
 
-         String path = new FileConfLocator().locate(nameFile+extensionFile);
+         String path = new FileConfLocator().locate(nameFile,extensionFile);
          if ("".equals(path)) {
              path = System.getenv(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV);
          }
