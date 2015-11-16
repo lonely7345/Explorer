@@ -16,34 +16,27 @@
 
 package com.stratio.explorer.reader;
 
+import com.stratio.explorer.exceptions.FileConfNotExisException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * Return path of file configuration by envioroment Paths
+ * Called when not exist fileConf
  */
-public class FileConfByEnviromentLocator implements FileConfLocator {
+public class FileConfNotExist implements FileConfLocator{
 
-    private String nameEnvitoment;
-
-
-    /**
-     * constructor with name enviroment path
-     * @param nameEnvitoment
-     */
-    public FileConfByEnviromentLocator(String nameEnvitoment){
-        this.nameEnvitoment =   nameEnvitoment;
-    }
+    private static org.slf4j.Logger Logger = LoggerFactory.getLogger(FileConfNotExist.class);
 
     /**
-     *
+     * Allwais thorw FileConfNotexistException
      * @param fileName name file
-     * @param extension extension
-     * @return  path by enviroment path
+     * @param extensionFile extension file
+     * @return
      */
-    public String locate(String fileName, String extension) {
-        String env = System.getenv(nameEnvitoment);
-        String result ="";
-        if (env!=null){
-            result =  env+"/"+fileName+"."+extension;
-        }
-        return result;
+    @Override
+    public String locate(String fileName, String extensionFile) {
+        String message = "File configuration "+fileName+"."+extensionFile+" not exist";
+        Logger.error(message);
+        throw new FileConfNotExisException(message);
     }
 }
