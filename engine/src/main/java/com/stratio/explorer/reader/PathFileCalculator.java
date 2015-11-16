@@ -18,13 +18,19 @@ package com.stratio.explorer.reader;
 
 import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.exceptions.FileConfNotExisException;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//TODO : THIS CLASS HAVE TWO RESPONSABILITIES SEPARATE
+/**
+ * Calculate path
+ */
 public class PathFileCalculator {
 
     private static org.slf4j.Logger Logger = LoggerFactory.getLogger(PathFileCalculator.class);
+
+
+    public PathFileCalculator(){
+
+    }
     /**
      * Obtain complete path to file.
      * @param nameFile without extension
@@ -32,30 +38,12 @@ public class PathFileCalculator {
      */
     public String getPath(String nameFile,String extensionFile){
 
-         String path = calculatePath(nameFile,extensionFile);
-         if ("".equals(path)) {
-             path = System.getenv(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV);
-         }
-         if (path==null){
+         String path = new LocatorsRunner().locate(nameFile,extensionFile);
+         if ("".equals(path)){
              String message = "File configuration "+nameFile+" not exist";
-             Logger.info(message);
+             Logger.error(message);
              throw new FileConfNotExisException(message);
          }
-
          return path;
     }
-
-
-    private String calculatePath(String nameFile,String extensionFile){
-        String path = "";
-        try{
-            path = new FileConfLocator().locate(nameFile+extensionFile);
-        }catch (OutOfMemoryError e){
-            Logger.info("Too many files");
-        }
-        return path;
-    }
-
-
-
 }
