@@ -18,13 +18,27 @@ package com.stratio.explorer.reader;
 
 import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.exceptions.FileConfNotExisException;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Calculate path
+ */
 public class PathFileCalculator {
 
-    private static org.slf4j.Logger Logger = LoggerFactory.getLogger(PathFileCalculator.class);
+    private List<FileConfLocator> locators = new ArrayList<>();
+
+
+    /**
+     * Constructor with all posible locators
+     */
+    public PathFileCalculator(){
+        locators.add(new FileConfByNameFileLocator());
+        locators.add(new FileConfByEnviromentLocator(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV));
+        locators.add(new FileConfNotExist());
+    }
     /**
      * Obtain complete path to file.
      * @param nameFile without extension
@@ -32,18 +46,12 @@ public class PathFileCalculator {
      */
     public String getPath(String nameFile,String extensionFile){
 
-         String path = new FileConfLocator().locate(nameFile,extensionFile);
-         if ("".equals(path)) {
-             path = System.getenv(ConstantsFolder.CT_EXPLORER_CONF_DIR_ENV);
-         }
-         if (path==null){
-             String message = "File configuration "+nameFile+" not exist";
-             Logger.info(message);
-             throw new FileConfNotExisException(message);
-         }
+        String path ="";
+        for (int index=0;index<locators.size() && path.isEmpty();index++){
+            FileConfLocator locator = locators.get(index);
+            path =  locator.locate(nameFile,extensionFile);
+        }
+        return path;
 
-         return path;
     }
-
-
 }

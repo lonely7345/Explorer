@@ -27,6 +27,8 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class CassandraPropertyToInetSocketTest {
 
@@ -64,9 +66,9 @@ public class CassandraPropertyToInetSocketTest {
 
     @Test(expected = NotPropertyFoundException.class)
     public void whenHostOrPortIsNotFilled(){
-        String host = "127.0.0.1";
-        String port = "";
-        properties.put("prop", host);
-        toInetSocket.transform("prop");
+         String host = "127.0.0.1";
+         String port = "";
+         properties.put("prop", host);
+         toInetSocket.transform("prop");
     }
 }

@@ -26,13 +26,13 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by afidalgo on 26/10/15.
  */
-public class FileConfLocatorTest {
+public class FileConfByNameFileLocatorTest {
 
-    private FileConfLocator locator;
+    private FileConfByNameFileLocator locator;
 
     @Before
     public void setUp(){
-        locator = new FileConfLocator();
+        locator = new FileConfByNameFileLocator();
     }
 
     @Test

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Stratio (http://stratio.com)
+ * Copyright (C) 2013 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.stratio.explorer.reader;
 
+import com.stratio.explorer.exceptions.FileConfNotExisException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * Locate path file
+ * Called when not exist fileConf
  */
-public interface FileConfLocator {
+public class FileConfNotExist implements FileConfLocator{
 
-
-
+    private static org.slf4j.Logger Logger = LoggerFactory.getLogger(FileConfNotExist.class);
 
     /**
-     * Obtaindf path of file
+     * Allwais thorw FileConfNotexistException
      * @param fileName name file
      * @param extensionFile extension file
-     * @return absolute path of file
+     * @return
      */
-     String locate(String fileName,String extensionFile);
-
+    @Override
+    public String locate(String fileName, String extensionFile) {
+        String message = "File configuration "+fileName+"."+extensionFile+" not exist";
+        Logger.error(message);
+        throw new FileConfNotExisException(message);
+    }
 }

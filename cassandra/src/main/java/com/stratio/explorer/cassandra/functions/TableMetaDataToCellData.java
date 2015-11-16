@@ -42,11 +42,5 @@ public class TableMetaDataToCellData implements TransformFunction<TableMetadata,
         return new CellData(value.getName());
     }
 
-    private Table buildTable(TableMetadata value){
-        List<String> header = new ListUtils<String>().buildList(value.getKeyspace().getName());
-        List<CellData> cells = new ListUtils<CellData>().buildList(new CellData(value.getName()));
-        List<RowData> rows = new ListUtils<RowData>().buildList(new RowData(cells));
-        return  new Table(header,rows);
-    }
 
 }
