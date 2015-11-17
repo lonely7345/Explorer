@@ -55,3 +55,13 @@ Feature: Explorer-Spark Integration
   Scenario: Test take command
     Given: Ckeck "reduceByKey" action
     Then: Transform created succesfully
+
+    #JIRA - EXPLORER-159
+  Scenario: Test scope of the commands
+    Given: Open a new notebook named "1"
+    And: Select "spark" interpreter
+    And: Open another new notebook named "2"
+    And: Select "spark" interpreter
+    When: I put "val data = Array(1, 2, 3, 4, 5)" command into notebook "1" and press run button
+    And: I Execute "data.collect" command in notebook "2"
+    Then: The command "data.collect" works in notebook "2"
