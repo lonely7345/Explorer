@@ -13,18 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.stratio.explorer.reader;
 
 /**
- * Locate path file
+ * Return path of file configuration by envioroment Paths
  */
-public interface FileConfLocator {
+public class FileConfByEnviromentLocator implements FileConfLocator {
+
+    private String nameEnvitoment;
+
 
     /**
-     * Obtaindf path of file
-     * @param fileName name file
-     * @param extensionFile extension file
-     * @return absolute path of file
+     * constructor with name enviroment path
+     * @param nameEnvitoment
      */
-    String locate(String fileName,String extensionFile);
+    public FileConfByEnviromentLocator(String nameEnvitoment){
+        this.nameEnvitoment =   nameEnvitoment;
+    }
+
+    /**
+     *
+     * @param fileName name file
+     * @param extension extension
+     * @return  path by enviroment path
+     */
+    public String locate(String fileName, String extension) {
+        String env = System.getenv(nameEnvitoment);
+        String result ="";
+        if (env!=null){
+            result =  env+"/"+fileName+"."+extension;
+        }
+        return result;
+    }
 }
