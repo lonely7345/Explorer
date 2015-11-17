@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ public class ConstantsFolder {
      */
     public static String CT_NAME_PROJECT_FOLDER = "Explorer";
 
-    public static String CT_PRODUCTION_FOLDER = "sds/explorer/";
+    public static String CT_PRODUCTION_FOLDER = "sds/explorer";
 
 
     /**
      * Extension to configuration filess
      */
-    public static String CT_EXTENSION_FILE_PROPERTIES = ".conf";
+    public static String CT_EXTENSION_FILE_PROPERTIES = "conf";
 
     /**
      * Enviroment variable name configuration dir
@@ -40,7 +40,7 @@ public class ConstantsFolder {
     /**
      * Extension to xml files
      */
-    public static String CT_EXTENSION_FILE_XML = ".xml";
+    public static String CT_EXTENSION_FILE_XML = "xml";
 
 
     /**

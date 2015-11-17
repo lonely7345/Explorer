@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,32 +26,32 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by afidalgo on 26/10/15.
  */
-public class FileConfLocatorTest {
+public class FileConfByNameFileLocatorTest {
 
-    private FileConfLocator locator;
+    private FileConfByNameFileLocator locator;
 
     @Before
     public void setUp(){
-        locator = new FileConfLocator();
+        locator = new FileConfByNameFileLocator();
     }
 
     @Test
     public void whenFileExistInSameFolder(){
-        String filePath = locator.locate("test_file.conf");
+        String filePath = locator.locate("test_file","conf");
         assertTrue("when locate file then return path",filePath.endsWith("test-classes/test_file.conf"));
     }
 
 
     @Test
     public void whenFileExistIndistinctFolder(){
-        String filePath = locator.locate("distinct_folder.conf");
+        String filePath = locator.locate("distinct_folder","conf");
         assertTrue("when locate file then return path", filePath.endsWith("test/java/com/stratio/explorer/reader/distinct_folder.conf"));
     }
 
 
     @Test
     public void whenFileNotexist(){
-        String filePath = locator.locate("NO_FILE_SKHASGFTF.conf");
+        String filePath = locator.locate("NO_FILE_SKHASGFTF","conf");
         assertThat("When file not exist then return emptyString", filePath,is(""));
     }
 }

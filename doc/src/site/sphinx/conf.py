@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 Stratio (http://stratio.com)
+# Copyright (C) 2015 Stratio (http://stratio.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Stratio SpaRkTA'
+project = u'Stratio Explorer'
 copyright = u'2015 Stratio'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -63,7 +63,7 @@ copyright = u'2015 Stratio'
 
 # The short X.Y version.
 
-version = '0.3.0-SNAPSHOT'
+version = '0.4.0-SNAPSHOT'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -120,7 +120,7 @@ html_theme = 'stratio'
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {    
-    'versions' : ['0.2.0'],
+    'versions' : ['0.4.0'],
     'github' : 'https://github.com/Stratio/Explorer',
     'jira': 'https://stratio.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=EXPLORER&view=planning&selectedIssue=EXPLORER-108&epics=visible',
     'module_name' : 'explorer'

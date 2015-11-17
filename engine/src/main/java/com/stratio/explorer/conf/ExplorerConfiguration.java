@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,14 +55,13 @@ public class ExplorerConfiguration extends XMLConfiguration {
 		try {
 			String path  =new PathFileCalculator().getPath(nameconfFile, ConstantsFolder.CT_EXTENSION_FILE_XML);
 			URL url = new File(path).toURI().toURL();
-			Logger.info("Load configuration from " + url);
 			conf = new ExplorerConfiguration(url);
-		}catch(MalformedURLException  | ConfigurationException e){
-			Logger.error("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML );
-			throw new RuntimeException("File "+ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML + " not exist ");
 		}catch(FileConfNotExisException e){
 			Logger.info("folder configuration not exist ");
 			throw new RuntimeException("folder configuration not exist ");
+		}catch(MalformedURLException  | ConfigurationException e){
+			Logger.error("Failed to load configuration from " + ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML);
+			throw new RuntimeException("File "+ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE + ConstantsFolder.CT_EXTENSION_FILE_XML + " not exist ",e);
 		}
 		return conf;
 	}

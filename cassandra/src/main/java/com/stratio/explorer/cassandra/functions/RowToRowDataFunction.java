@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.functions.TransformFunction;
 import com.stratio.explorer.lists.FunctionalList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,8 +30,6 @@ import java.util.List;
 public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
 
 
-    private List<String> header;
-
     private FunctionalList<String,CellData> functionalList;
 
     /**
@@ -38,6 +37,7 @@ public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
      * @param header list of row names
      */
     public RowToRowDataFunction(List<String> header){
+
         this.functionalList = new FunctionalList<>(header);
     }
 
@@ -48,7 +48,7 @@ public class RowToRowDataFunction implements TransformFunction<Row,RowData>{
      */
     @Override
     public RowData transform(Row row) {
-        RowData rowData = new RowData(functionalList.map(new CellValueFunction(row)));
-        return rowData;
+         return new RowData(functionalList.map(new CellValueFunction(row)));
+
     }
 }

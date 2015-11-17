@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,8 @@ public class DoubleSessionCassandra implements Connector<Session> {
 
     @Override
     public Session getConnector() {
-        if (!isUpper) {
-            throw new ConnectionException(new Exception(), "exception");
-        }
-        return new DoubleSession().mockSession();
+        if (!isUpper)
+            throw new ConnectionException(new Exception(),"exception");
+        return new DoubleSession().mockSessionWithData();
     }
 }
