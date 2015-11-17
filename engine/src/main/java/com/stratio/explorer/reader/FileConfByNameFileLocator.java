@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.stratio.explorer.reader;
 
 import com.stratio.explorer.conf.ConstantsFolder;
@@ -71,7 +72,7 @@ public class FileConfByNameFileLocator implements FileConfLocator{
     }
 
     private String pathIfexistFiles(List<File> files){
-       String result ="";
+        String result ="";
         if (!files.isEmpty()) {
             result = files.get(0).getPath();
         }
