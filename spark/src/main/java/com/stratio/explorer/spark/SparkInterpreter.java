@@ -253,7 +253,6 @@ public class SparkInterpreter extends Interpreter {
                 intp.interpret("import sqlContext.sql");
                 intp.interpret("import org.apache.spark.sql.functions._");
             }
-        /*************************************************************************************************************************************/
     }
 
     private List<File> currentClassPath() {
