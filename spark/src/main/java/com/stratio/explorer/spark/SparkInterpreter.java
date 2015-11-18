@@ -122,16 +122,14 @@ public class SparkInterpreter extends Interpreter {
 
     public synchronized SparkContext getSparkContext() {
         context.loadConfiguration(new PropertiesReader().readConfigFrom("spark_interpreter"));
+        SparkContext sc =context.getConnector();
         env = SparkEnv.get();
         sparkListener = new JobProgressListener(context.getConnector().getConf());
-        context.getConnector().listenerBus().addListener(sparkListener);
+        sc.listenerBus().addListener(sparkListener);
 
-        return context.getConnector();
+        return sc;
     }
 
-    private boolean useHiveContext() {
-        return Boolean.parseBoolean(System.getenv("NOTEBOOK_SPARK_USEHIVECONTEXT"));
-    }
 
     //TODO : this method will be move to othre class
     public SQLContext getSQLContext() {
@@ -224,7 +222,7 @@ public class SparkInterpreter extends Interpreter {
 
             }
 
-            intp.interpret("@transient var _binder = new java.util.HashMap[String, Object]()");
+        intp.interpret("@transient var _binder = new java.util.HashMap[String, Object]()");
             ExplorerContext explorerContext = new ExplorerContext(context.getConnector(), sqlcontext.getConnector(), noteInterpreterLoader, printStream);
            /****************************************************************************************************************************/
             binder = (Map<String, Object>) getValue("_binder");
