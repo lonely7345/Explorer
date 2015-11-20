@@ -17,8 +17,10 @@ package com.stratio.explorer.cassandra.doubles;
 
 import com.datastax.driver.core.Session;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -36,10 +38,12 @@ public class DoubleSessionCassandra implements Connector<Session> {
     }
 
 
+
     @Override
     public Connector loadConfiguration(Properties properties) {
-        if (notProperty)
-            throw new NotPropertyFoundException(new Exception(),"");
+        if (notProperty) {
+            throw new NotPropertyFoundException(new Exception(), "");
+        }
         return null;
     }
 
@@ -47,6 +51,6 @@ public class DoubleSessionCassandra implements Connector<Session> {
     public Session getConnector() {
         if (!isUpper)
             throw new ConnectionException(new Exception(),"exception");
-        return new DoubleSession().mockSession();
+        return new DoubleSession().mockSessionWithData();
     }
 }

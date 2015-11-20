@@ -16,8 +16,8 @@
 package com.stratio.explorer.cassandra.functions;
 
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,6 +27,8 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class CassandraPropertyToInetSocketTest {
 
@@ -49,8 +51,8 @@ public class CassandraPropertyToInetSocketTest {
         String port = "80";
         properties.put("prop", host + ":" + port);
         InetSocketAddress inetSocket = toInetSocket.transform("prop");
-        assertThat(inetSocket.getHostString(),is(host));
-        assertThat(inetSocket.getPort(),is(Integer.valueOf(port)));
+        assertThat("return host",inetSocket.getHostString(),is(host));
+        assertThat("return port",inetSocket.getPort(),is(Integer.valueOf(port)));
     }
 
     @Test(expected = NotValidPortException.class)
@@ -64,9 +66,9 @@ public class CassandraPropertyToInetSocketTest {
 
     @Test(expected = NotPropertyFoundException.class)
     public void whenHostOrPortIsNotFilled(){
-        String host = "127.0.0.1";
-        String port = "";
-        properties.put("prop", host);
-        toInetSocket.transform("prop");
+         String host = "127.0.0.1";
+         String port = "";
+         properties.put("prop", host);
+         toInetSocket.transform("prop");
     }
 }

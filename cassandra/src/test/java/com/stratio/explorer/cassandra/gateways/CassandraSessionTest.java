@@ -17,7 +17,7 @@ package com.stratio.explorer.cassandra.gateways;
 
 
 import com.stratio.explorer.cassandra.constants.StringConstants;
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,6 @@ import java.util.Properties;
 /**
  * Created by afidalgo on 15/10/15.
  */
-//TODO : CHNAGE THIS TEST
 public class CassandraSessionTest {
 
     private Connector session;

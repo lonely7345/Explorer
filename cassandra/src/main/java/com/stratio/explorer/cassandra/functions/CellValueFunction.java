@@ -16,6 +16,7 @@
 package com.stratio.explorer.cassandra.functions;
 
 import com.datastax.driver.core.Row;
+import com.stratio.explorer.cassandra.constants.StringConstants;
 import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.functions.TransformFunction;
 
@@ -44,6 +45,9 @@ public class CellValueFunction implements TransformFunction<String,CellData>{
      */
     @Override
     public CellData transform(String header) {
-        return new CellData(row.getObject(header));
+
+           return  new CellData(row.getObject(header));
     }
+
+
 }

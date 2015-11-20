@@ -13,19 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stratio.explorer.cassandra.exceptions;
+
+package com.stratio.explorer.cassandra.dto;
+
+import com.stratio.explorer.cassandra.models.CellData;
 
 /**
- *  This exception occur when not have any property
+ * Transform normal Cells toDTO
  */
-public class NotPropertyFoundException extends RuntimeException{
+public class CellStringDTO implements CellDTO{
+
 
     /**
-     * Constructor.
-     * @param e original exception.
-     * @param errorMessage message.
+     * Transform normal Cells toDTO.
+     * @param cellWithTable
+     * @return DTO
      */
-    public NotPropertyFoundException(Exception e,String errorMessage){
-        super(errorMessage,e);
+    @Override
+    public String toDTO(CellData cell) {
+        String value = cell.getValue().toString();
+        ScriptFormatter formatter = ScriptFormatterFactory.getFormatterTo(type(value));
+        return formatter.format(value);
+
+    }
+
+
+    private String type(String value){
+        String [] separated = value.split(" ");
+        return separated[0];
     }
 }

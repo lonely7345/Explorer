@@ -98,7 +98,7 @@ public class Paragraph extends Job implements Serializable {
             case "spark":
                 replName = "s";
                 break;
-            case "streaming":
+            case "decision":
                 replName = "str";
                 break;
             case "cassandra":

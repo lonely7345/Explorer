@@ -16,15 +16,16 @@
 package com.stratio.explorer.cassandra;
 
 import com.stratio.explorer.cassandra.dto.TableDTO;
-import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
+import com.stratio.explorer.cassandra.dto.TableDTOSelector;
+import com.stratio.explorer.cassandra.exceptions.*;
 import com.stratio.explorer.cassandra.gateways.CassandraDriver;
 import com.stratio.explorer.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.explorer.cassandra.gateways.CassandraSession;
-import com.stratio.explorer.cassandra.exceptions.CassandraInterpreterException;
-import com.stratio.explorer.cassandra.exceptions.ConnectionException;
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
-import com.stratio.explorer.cassandra.operations.CQLExecutor;
+
+import com.stratio.explorer.cassandra.models.Table;
+
 import com.stratio.explorer.exceptions.FileConfNotExisException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;
@@ -84,10 +85,11 @@ public class CassandraInterpreter extends Interpreter {
         InterpreterResult.Code code = InterpreterResult.Code.SUCCESS;
         String message="";
         try {
+
             Connector connector = CassandraInterpreterGateways.commandDriver.getConnector();
             connector.loadConfiguration(new PropertiesReader().readConfigFrom("cassandra"));
-            CQLExecutor executor = new CQLExecutor();
-            message += new TableDTO().toDTO(executor.execute(st));
+            Table table = CassandraInterpreterGateways.commandDriver.executeCommand(st);
+            message +=  new TableDTOSelector().toDTO(table);
 
         }catch (ConnectionException | CassandraInterpreterException e){
             code =InterpreterResult.Code.ERROR;
@@ -99,6 +101,9 @@ public class CassandraInterpreter extends Interpreter {
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }catch(NotValidPortException e){
+            code =InterpreterResult.Code.ERROR;
+            message = e.getMessage();
+        }catch(NotDescribeOptionException e){
             code =InterpreterResult.Code.ERROR;
             message = e.getMessage();
         }

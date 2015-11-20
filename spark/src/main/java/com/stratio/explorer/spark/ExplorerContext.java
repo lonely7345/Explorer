@@ -51,12 +51,7 @@ public class ExplorerContext {
 		return sqlContext.sql(sql);
 	}
 
-	
-	/**
-	 * Load dependency only interpreter
-	 * @param name
-	 * @return
-	 */
+
 
 	public Object input(String name) {
 		return input(name, "");

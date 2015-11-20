@@ -56,9 +56,18 @@ public class FunctionalList <EntryType,OutputType>{
     public List<EntryType> search(SearcherFunction<EntryType> searchCondition) {
         List<EntryType> resultList = new ArrayList<>();
         for (int index = 0;index<entryList.size();index++){
-            if (searchCondition.isValid(entryList.get(index)))
+            if (searchCondition.isValid(entryList.get(index))) {
                 resultList.add(entryList.get(index));
+            }
         }
         return resultList;
+    }
+
+    /**
+     * Size of list .
+     * @return numebr elements of list
+     */
+    public int size(){
+       return  entryList.size();
     }
 }

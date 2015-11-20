@@ -418,24 +418,23 @@ public class Note implements Serializable, JobListener {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
         Gson gson = gsonBuilder.create();
+        Note note  = null;
 
         File file = new File(conf.getExplorerDir() + "/" + id + "/note.json");
         logger.info("Load note {} from {}", id, file.getAbsolutePath());
 
-        if (!file.isFile()) {
-            return null;
-        }
-
-        FileInputStream ins = new FileInputStream(file);
-        String json = IOUtils.toString(ins, conf.getString(ConfVars.EXPLORER_ENCODING));
-        Note note = gson.fromJson(json, Note.class);
-        note.setExplorerConfiguration(conf);
-        note.setReplLoader(replLoader);
-        note.jobListenerFactory = jobListenerFactory;
-        for (Paragraph p : note.paragraphs) {
-            if (p.getStatus() == Job.Status.PENDING || p.getStatus() == Job.Status.REFRESH_RESULT || p.getStatus() == Job.Status
-                    .RUNNING) {
-                p.setStatus(Job.Status.ABORT);
+        if (file.isFile()) {
+            FileInputStream ins = new FileInputStream(file);
+            String json = IOUtils.toString(ins, conf.getString(ConfVars.EXPLORER_ENCODING));
+            note = gson.fromJson(json, Note.class);
+            note.setExplorerConfiguration(conf);
+            note.setReplLoader(replLoader);
+            note.jobListenerFactory = jobListenerFactory;
+            for (Paragraph p : note.paragraphs) {
+                if (p.getStatus() == Job.Status.PENDING || p.getStatus() == Job.Status.REFRESH_RESULT || p.getStatus() == Job.Status
+                        .RUNNING) {
+                    p.setStatus(Job.Status.ABORT);
+                }
             }
         }
 
