@@ -6,7 +6,7 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>com.stratio.explorer</groupId>
-    <version>0.4.1-RC4-SNAPSHOT</version>
+    <version>0.4.1</version>
 
   </parent>
 
