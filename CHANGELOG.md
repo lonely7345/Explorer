@@ -1,7 +1,12 @@
 # Changelog
 
-## 0.4.1 (October 2015) 
+## 0.4.1 (November 2015) 
 
+
+* Include describe Operation in Cassandra interpreter
+* Solve problem when create same Keyspace two times in Cassandra Interpreter.
+* Solve connection Spark with Haddop 2.6
+* solve minor bugs. 
 * You can set more than one cassandra host in property's file.
 
 ## 0.4.0 (October 2015)
