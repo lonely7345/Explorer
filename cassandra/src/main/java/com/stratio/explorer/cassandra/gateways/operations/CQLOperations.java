@@ -16,10 +16,17 @@
 
 package com.stratio.explorer.cassandra.gateways.operations;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.exceptions.DriverException;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
 import com.datastax.driver.core.exceptions.SyntaxError;
 import com.stratio.explorer.cassandra.constants.StringConstants;
@@ -30,11 +37,6 @@ import com.stratio.explorer.cassandra.models.CellData;
 import com.stratio.explorer.cassandra.models.RowData;
 import com.stratio.explorer.cassandra.models.Table;
 import com.stratio.explorer.lists.FunctionalList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Execute standard CQL operations
@@ -53,15 +55,18 @@ public class CQLOperations implements CassandraOperation {
     @Override
     public Table execute(Session session, String shCQLcommand) {
         try {
-            ResultSet rs =session.execute(shCQLcommand);
+            ResultSet rs = session.execute(shCQLcommand);
             List<String> header = header(rs.getColumnDefinitions());
-            List<RowData> rows = new FunctionalList<Row,RowData>(rs.all()).map(new RowToRowDataFunction(header));
+            List<RowData> rows = new FunctionalList<Row, RowData>(rs.all()).map(new RowToRowDataFunction(header));
 
-            return new Table(header,appendOperationOkIfEmpty(rows,header));
-        }catch (SyntaxError | InvalidQueryException e){
+            return new Table(header, appendOperationOkIfEmpty(rows, header));
+        } catch (SyntaxError | InvalidQueryException e) {
             String errorMessage = "  Query to execute in cassandra database is not correct ";
             logger.error(errorMessage);
-            throw new CassandraInterpreterException(e,errorMessage);
+            throw new CassandraInterpreterException(e, errorMessage);
+        } catch (DriverException e) {
+            logger.error(e.getMessage());
+            throw new CassandraInterpreterException(e, e.getMessage());
         }
     }
 

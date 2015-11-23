@@ -66,6 +66,10 @@ function init(){
 	mkdir -p "$EXPLORER_PID_DIR"
     fi
 
+    if [ -z $EXPLORER_NOTEBOOK_DIR ]; then
+	export EXPLORER_NOTEBOOK_DIR="/opt/sds/explorer/notebooks"
+    fi
+
 	if [ ! -d "$EXPLORER_NOTEBOOK_DIR" ]; then
 		echo "Notebooks dir doesn't exist, create $EXPLORER_NOTEBOOK_DIR"
 		mkdir -p "$EXPLORER_NOTEBOOK_DIR"
