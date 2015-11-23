@@ -55,13 +55,32 @@ public class CQLOperations implements CassandraOperation {
     @Override
     public Table execute(Session session, String shCQLcommand) {
         try {
-            ResultSet rs = session.execute(shCQLcommand);
-            List<String> header = header(rs.getColumnDefinitions());
-            List<RowData> rows = new FunctionalList<Row, RowData>(rs.all()).map(new RowToRowDataFunction(header));
 
-            return new Table(header, appendOperationOkIfEmpty(rows, header));
+            String[] commandSplit = shCQLcommand.split(";");
+            //ResultSet rs = session.execute(shCQLcommand);
+            //List<String> header = header(rs.getColumnDefinitions());
+            //List<RowData> rows = new FunctionalList<Row, RowData>(rs.all()).map(new RowToRowDataFunction(header));
+
+            List<RowData>rows=null;
+            List<String> header=null;
+            boolean moreOneCommand=false;
+
+            for (int i=0;i<commandSplit.length;i++) {
+                    logger.info("Commando: "+commandSplit[i]);
+                    String command = commandSplit[i].replaceAll("\\n","").trim().concat(";");
+                    ResultSet rs = session.execute(command);
+                    header = header(rs.getColumnDefinitions());
+                    rows = new FunctionalList<Row, RowData>(rs.all()).map(new RowToRowDataFunction(header));
+                    if (i>0) {
+                        moreOneCommand = true;
+                    }
+            }
+
+            return new Table(header, appendOperationOkIfEmpty(rows, header, moreOneCommand));
+
         } catch (SyntaxError | InvalidQueryException e) {
-            String errorMessage = "  Query to execute in cassandra database is not correct ";
+            //String errorMessage = "  Query to execute in cassandra database is not correct ";
+            String errorMessage = e.getMessage();
             logger.error(errorMessage);
             throw new CassandraInterpreterException(e, errorMessage);
         } catch (DriverException e) {
@@ -70,9 +89,14 @@ public class CQLOperations implements CassandraOperation {
         }
     }
 
-    private List<RowData> appendOperationOkIfEmpty(List<RowData> rows,List<String> header){
+    private List<RowData> appendOperationOkIfEmpty(List<RowData> rows,List<String> header, boolean moreOneCommand){
         List<CellData> cells = new ArrayList<>();
-        cells.add(new CellData(StringConstants.OPERATION_OK));
+        if (moreOneCommand){
+            cells.add(new CellData(StringConstants.OPERATIONS_OK));
+        }else{
+            cells.add(new CellData(StringConstants.OPERATION_OK));
+        }
+
         if (rows.isEmpty() && header.isEmpty()){
             rows.add(new RowData(cells));
         }

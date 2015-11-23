@@ -64,7 +64,10 @@ public class CassandraDriver implements InterpreterDriver<Table> {
         if (command.trim().toUpperCase().startsWith("DESCRIBE")){
             operation = new DecribeOperation();
         }
-        return operation.execute(cassandraSession.getConnector(), command);
+
+        Session session = cassandraSession.getConnector();
+
+        return operation.execute(session, command);
     }
 
 

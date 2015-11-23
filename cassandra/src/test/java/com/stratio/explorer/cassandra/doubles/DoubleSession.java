@@ -31,10 +31,11 @@ import java.util.List;
 public class DoubleSession {
 
 
+    public static final String CT_SELECT = "select * from mytable WHERE id='myKey01';";
 
     public Session mockSessionWithData(){
         Session session = mock(Session.class);
-        expect(session.execute("select * from mytable WHERE id='myKey01'")).andStubReturn(mockResultSet(mockRows(),mockColumnDefinions()));
+        expect(session.execute(CT_SELECT)).andStubReturn(mockResultSet(mockRows(),mockColumnDefinions()));
         replay(session);
         return session;
     }
