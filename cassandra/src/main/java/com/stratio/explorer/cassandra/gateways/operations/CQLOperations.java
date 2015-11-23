@@ -57,10 +57,6 @@ public class CQLOperations implements CassandraOperation {
         try {
 
             String[] commandSplit = shCQLcommand.split(";");
-            //ResultSet rs = session.execute(shCQLcommand);
-            //List<String> header = header(rs.getColumnDefinitions());
-            //List<RowData> rows = new FunctionalList<Row, RowData>(rs.all()).map(new RowToRowDataFunction(header));
-
             List<RowData>rows=null;
             List<String> header=null;
             boolean moreOneCommand=false;
