@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,8 @@ public class IngestionSyntaxParserTest {
         try {
             IngestionParserResult result = parser.parse(command);
             Assert.assertEquals("The two instances are the sames",expectedResult, result);
+            Assert.assertEquals(expectedResult, result);
+
         } catch (IngestionParserException e) {
             Assert.fail(e.getMessage());
         }

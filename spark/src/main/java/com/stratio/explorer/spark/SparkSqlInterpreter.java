@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,8 +65,6 @@ public class SparkSqlInterpreter extends Interpreter {
 
     @Override
     public void open() {
-//        getSparkInterpreter().open();
-//        getSparkInterpreter().interpret("");
         ExplorerConfiguration conf = ExplorerConfiguration.create(ConstantsFolder.CT_NAME_FILE_INTERPRETERS_CONFIGURE);
         this.maxResult = conf.getInt("NOTEBOOK_SPARK_MAX_RESULT", "zeppelin.spark.maxResult", 10000);
     }

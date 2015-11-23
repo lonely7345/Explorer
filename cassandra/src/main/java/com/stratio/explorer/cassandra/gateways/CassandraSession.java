@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,21 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.NoHostAvailableException;
 import com.stratio.explorer.cassandra.exceptions.ConnectionException;
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
+import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
+import com.stratio.explorer.cassandra.lists.InetSocketAddressComparator;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
+import com.stratio.explorer.gateways.ConnectorCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by afidalgo on 15/10/15.
+ * This class connect Session Cassandra
  */
 //TODO :  THIS CLASS ONLY TEST WITH REAL OR EMBBEDED CASSANDRA
 public class CassandraSession implements Connector<Session> {
@@ -40,7 +43,7 @@ public class CassandraSession implements Connector<Session> {
     private Logger logger = LoggerFactory.getLogger(CassandraDriver.class);
 
     private Session session;
-    private PropertiesReader reader = new PropertiesReader();
+    private ConnectorCreator<InetSocketAddress> creator = new ConnectorCreator<InetSocketAddress>(new InetSocketAddressComparator(),"  Host port property is not filled ");
 
     /**
      * Load configuration to Cassandra DataBase
@@ -50,7 +53,8 @@ public class CassandraSession implements Connector<Session> {
     @Override
     public Connector loadConfiguration(Properties properties) {
         try {
-            reader.buildConnections(properties);
+            List<String> keysToInspect =new ArrayList<>(properties.stringPropertyNames());
+            creator.buildConnections(keysToInspect,new CassandraPropertyToInetSocket(properties));
             return this;
         }catch (NumberFormatException e){
            String errorMessage = " Port property is not filled";
@@ -60,16 +64,16 @@ public class CassandraSession implements Connector<Session> {
     }
 
     /**
-     *
+     * Obtain sessionto connect cassandra
      * @return Session with cassandra
      */
     @Override
     public Session getConnector() {
         try {
-            if (reader.isNewConnexionLoaded()){
-                Cluster cluster = Cluster.builder().addContactPointsWithPorts(reader.getConnections()).build();
+            if (creator.isNewConnexionLoaded()){
+                Cluster cluster = Cluster.builder().addContactPointsWithPorts(creator.getConnections()).build();
                 session = cluster.connect();
-                reader.setNewConnection(false);
+                creator.setNewConnection(false);
             }
             return session;
         }catch (NoHostAvailableException e ){

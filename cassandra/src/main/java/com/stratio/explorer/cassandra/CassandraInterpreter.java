@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,11 @@ import com.stratio.explorer.cassandra.exceptions.*;
 import com.stratio.explorer.cassandra.gateways.CassandraDriver;
 import com.stratio.explorer.cassandra.gateways.CassandraInterpreterGateways;
 import com.stratio.explorer.cassandra.gateways.CassandraSession;
+
 import com.stratio.explorer.cassandra.models.Table;
+
 import com.stratio.explorer.exceptions.FileConfNotExisException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.gateways.Connector;
 import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;

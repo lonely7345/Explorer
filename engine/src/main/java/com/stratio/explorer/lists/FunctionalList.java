@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,9 +56,18 @@ public class FunctionalList <EntryType,OutputType>{
     public List<EntryType> search(SearcherFunction<EntryType> searchCondition) {
         List<EntryType> resultList = new ArrayList<>();
         for (int index = 0;index<entryList.size();index++){
-            if (searchCondition.isValid(entryList.get(index)))
+            if (searchCondition.isValid(entryList.get(index))) {
                 resultList.add(entryList.get(index));
+            }
         }
         return resultList;
+    }
+
+    /**
+     * Size of list .
+     * @return numebr elements of list
+     */
+    public int size(){
+       return  entryList.size();
     }
 }

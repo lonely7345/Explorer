@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stratio.explorer.cassandra.exceptions;
+package com.stratio.explorer.spark.exception;
 
 /**
- *  This exception occur when not have any property
+ * When Spark End Point is not avalaible
  */
-public class NotPropertyFoundException extends RuntimeException{
+public class SparkEndPointException extends RuntimeException{
 
     /**
-     * Constructor.
-     * @param e original exception.
-     * @param errorMessage message.
+     * Constructor exception with original exception and error message
+     * @param e origina exception
+     * @param message message
      */
-    public NotPropertyFoundException(Exception e,String errorMessage){
-        super(errorMessage,e);
+    public SparkEndPointException(Throwable e, String message){
+           super(message,e);
     }
 }

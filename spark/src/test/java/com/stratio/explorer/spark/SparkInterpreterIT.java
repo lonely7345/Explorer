@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,18 +52,9 @@ public class SparkInterpreterIT {
 	@Test
 	public void testBasicIntp() {
 		assertEquals(InterpreterResult.Code.SUCCESS, repl.interpret("val a = 1\nval b = 2").code());
-		
-		// when interpret incomplete expression
 		InterpreterResult incomplete = repl.interpret("val a = \"\"\"");
 		assertEquals(InterpreterResult.Code.INCOMPLETE, incomplete.code());
-		assertTrue(incomplete.message().length()>0); // expecting some error message
-		/*
-		assertEquals(1, repl.getValue("a"));
-		assertEquals(2, repl.getValue("b"));
-		repl.interpret("val ver = sc.version");
-		assertNotNull(repl.getValue("ver"));		
-		assertEquals("HELLO\n", repl.interpret("println(\"HELLO\")").message());
-		*/
+		assertTrue(incomplete.message().length()>0);
 	}
 	
 	@Test
