@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.stratio.explorer.cassandra.gateways;
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
-import com.stratio.explorer.functions.TransformFunction;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.lists.FunctionalList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +25,12 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 
-public class PropertiesReader {
+/**
+ * This class must create Cassandra Connections.
+ */
+public class CasandraConnectorCreator {
 
-    private Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
+    private Logger logger = LoggerFactory.getLogger(CasandraConnectorCreator.class);
     private List<InetSocketAddress> contactPointWithPorts = new ArrayList<>();
     private boolean isNewConection=false;
 

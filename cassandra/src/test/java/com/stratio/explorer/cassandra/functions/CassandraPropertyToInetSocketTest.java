@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 package com.stratio.explorer.cassandra.functions;
 
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
 import org.junit.Before;
 import org.junit.Test;
 

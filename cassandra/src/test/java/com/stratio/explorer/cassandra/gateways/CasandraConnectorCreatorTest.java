@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 Stratio (http://stratio.com)
+ * Copyright (C) 2015 Stratio (http://stratio.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,11 @@
 package com.stratio.explorer.cassandra.gateways;
 
 
-import com.stratio.explorer.cassandra.exceptions.NotPropertyFoundException;
 import com.stratio.explorer.cassandra.exceptions.NotValidPortException;
+import com.stratio.explorer.cassandra.functions.CassandraPropertyToInetSocket;
+import com.stratio.explorer.cassandra.lists.InetSocketAddressComparator;
+import com.stratio.explorer.exceptions.NotPropertyFoundException;
+import com.stratio.explorer.gateways.ConnectorCreator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,21 +31,21 @@ import java.util.*;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class PropertiesReaderTest {
+public class CasandraConnectorCreatorTest {
 
     private Properties properties;
-    private PropertiesReader reader;
+    private ConnectorCreator<InetSocketAddress> reader;
 
     @Before
     public void setUp(){
         properties = new Properties();
-        reader = new PropertiesReader();
+        reader = new ConnectorCreator<InetSocketAddress>(new InetSocketAddressComparator(),"");
     }
 
     @Test(expected = NotPropertyFoundException.class)
     public void whenPropertiestIsempty(){
         Collection<InetSocketAddress> expected = new ArrayList<>();
-        reader.buildConnections(properties);
+        reader.buildConnections(new ArrayList<>(properties.stringPropertyNames()),new CassandraPropertyToInetSocket(properties));
     }
 
 
@@ -50,7 +53,7 @@ public class PropertiesReaderTest {
     public void whenPropertiesHaveOneValue(){
         properties.put("cassandra.concat_point", "127.0.0.1:8080");
         Collection<InetSocketAddress> expected = Arrays.asList(new InetSocketAddress("127.0.0.1",8080));
-        reader.buildConnections(properties);
+        reader.buildConnections(new ArrayList<>(properties.stringPropertyNames()),new CassandraPropertyToInetSocket(properties));
         assertThat("Result should be empty list", reader.getConnections(), is(expected));
     }
 
@@ -58,21 +61,18 @@ public class PropertiesReaderTest {
     @Test(expected =NotValidPortException.class)
     public void whenPortIsNotNumber(){
         properties.put("cassandra.concat_point", "127.0.0.1:8080aaaaa");
-        reader.buildConnections(properties);
+        reader.buildConnections(new ArrayList<>(properties.stringPropertyNames()),new CassandraPropertyToInetSocket(properties));
     }
 
     @Test
     public void whenPropertiesWithSameValuesHasLoaded(){
         properties.put("cassandra.concat_point", "127.0.0.1:8080");
-        reader.buildConnections(properties);
+        reader.buildConnections(new ArrayList<>(properties.stringPropertyNames()),new CassandraPropertyToInetSocket(properties));
         assertThat(reader.isNewConnexionLoaded(), is(true));
         reader.setNewConnection(false);
         Properties newProperties = new Properties();
         newProperties.put("cassandra.concat_point", "127.0.0.1:8080");
-        reader.buildConnections(newProperties);
+        reader.buildConnections(new ArrayList<>(newProperties.stringPropertyNames()),new CassandraPropertyToInetSocket(newProperties));
         assertThat(reader.isNewConnexionLoaded(), is(false));
     }
-
-
-
 }
