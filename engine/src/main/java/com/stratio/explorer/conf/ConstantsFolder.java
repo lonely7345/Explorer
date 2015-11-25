@@ -47,4 +47,9 @@ public class ConstantsFolder {
      * Name of configuration file to interpreters
      */
     public static String CT_NAME_FILE_INTERPRETERS_CONFIGURE = "explorer-site";
+
+    /**
+     * Default Crossdata Async Query timeout
+     */
+    public static Integer CT_CROSSDATA_ASYNC_QUERY_TIMEOUT = 30000;
 }
