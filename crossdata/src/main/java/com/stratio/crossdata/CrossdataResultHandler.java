@@ -15,7 +15,15 @@
  */
 package com.stratio.crossdata;
 
-import com.stratio.crossdata.common.result.*;
+import java.util.HashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.stratio.crossdata.common.result.ErrorResult;
+import com.stratio.crossdata.common.result.IDriverResultHandler;
+import com.stratio.crossdata.common.result.QueryResult;
+import com.stratio.crossdata.common.result.QueryStatus;
 import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.utils.CrossdataUtils;
 import com.stratio.explorer.interpreter.InterpreterResult;
@@ -23,10 +31,15 @@ import com.stratio.explorer.interpreter.ResultHandler;
 import com.stratio.explorer.notebook.Paragraph;
 import com.stratio.explorer.scheduler.Job;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class CrossdataResultHandler extends ResultHandler implements IDriverResultHandler {
+
+    private final HashMap<String, AsyncQueryStatus> queryStatus;
+
+    enum AsyncQueryStatus {
+        RUNNING,
+        ERROR,
+        DONE
+    }
 
     /**
      * The Log.
@@ -38,6 +51,7 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
     public CrossdataResultHandler(CrossdataInterpreter interpreter, Paragraph p) {
         this.interpreter = interpreter;
         this.paragraph = p;
+        this.queryStatus = new HashMap<String, AsyncQueryStatus>();
     }
 
     @Override
@@ -49,7 +63,17 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
         LOG.info("Viewer is processing a error" + ErrorResult.class.cast(errorResult).getErrorMessage());
         paragraph.setReturn(new InterpreterResult(InterpreterResult.Code.SUCCESS,
                 ErrorResult.class.cast(errorResult).getErrorMessage()));
+        updateQueryStatus(errorResult.getQueryId(), AsyncQueryStatus.ERROR);
+
         isLastResult = true;
+    }
+
+    public void updateQueryStatus(String queryId, AsyncQueryStatus status) {
+        this.queryStatus.put(queryId, status);
+    }
+
+    public AsyncQueryStatus getQueryStatus(String queryId) {
+        return queryStatus.get(queryId);
     }
 
     @Override
@@ -81,6 +105,7 @@ public class CrossdataResultHandler extends ResultHandler implements IDriverResu
         } else {
             isLastResult = true;
         }
+        updateQueryStatus(result.getQueryId(),AsyncQueryStatus.DONE);
     }
 
 }

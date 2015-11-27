@@ -15,13 +15,22 @@
  */
 package com.stratio.crossdata;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.crossdata.common.exceptions.ConnectionException;
 import com.stratio.crossdata.common.result.ErrorResult;
 import com.stratio.crossdata.common.result.InProgressResult;
 import com.stratio.crossdata.common.result.Result;
 import com.stratio.crossdata.driver.BasicDriver;
 import com.stratio.crossdata.driver.DriverConnection;
+import com.stratio.crossdata.exception.AsyncQueryTimeoutException;
 import com.stratio.crossdata.utils.CrossdataUtils;
+import com.stratio.explorer.conf.ConstantsFolder;
 import com.stratio.explorer.interpreter.AsyncInterpreterResult;
 import com.stratio.explorer.interpreter.Interpreter;
 import com.stratio.explorer.interpreter.InterpreterResult;
@@ -29,13 +38,6 @@ import com.stratio.explorer.notebook.Paragraph;
 import com.stratio.explorer.scheduler.Job;
 import com.stratio.explorer.scheduler.Scheduler;
 import com.stratio.explorer.scheduler.SchedulerFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
 
 public class CrossdataInterpreter extends Interpreter {
 
@@ -75,7 +77,7 @@ public class CrossdataInterpreter extends Interpreter {
             logger.info("Crossdata's driver connected");
             driverConnected = true;
         } catch (ConnectionException e) {
-            logger.info("A error happens when we are trying to connect to crossdata"+ e.getMessage());
+            logger.info("A error happens when we are trying to connect to crossdata" + e.getMessage());
             driverConnected = false;
         }
 
@@ -93,14 +95,16 @@ public class CrossdataInterpreter extends Interpreter {
     }
 
     @Override
-    public InterpreterResult interpret(String st) {
+    public InterpreterResult interpret(String commandLine) {
         Result result;
-        String[] commands = st.split(";");
+        String[] commands = commandLine.split(";");
         sessionId = "sessionId";
         if (!driverConnected) {
             open();
-            if (!driverConnected) return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't connect to "
-                    + "Crossdata's server. Not found answer");
+            if (!driverConnected) {
+                return new InterpreterResult(InterpreterResult.Code.ERROR, "Couldn't connect to "
+                        + "Crossdata's server. Not found answer");
+            }
         }
 
         if (commands.length > 1) { //multiline command
@@ -125,7 +129,7 @@ public class CrossdataInterpreter extends Interpreter {
             CrossdataResultHandler callback = new CrossdataResultHandler(this, paragraph);
 
             try {
-                result = xdConnection.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback);
+                result = executeAsyncRawQuery(commandLine, callback);
                 if (ErrorResult.class.isInstance(result)) {
                     return new InterpreterResult(InterpreterResult.Code.ERROR,
                             ErrorResult.class.cast(result).getErrorMessage());
@@ -139,7 +143,17 @@ public class CrossdataInterpreter extends Interpreter {
                 return new InterpreterResult(InterpreterResult.Code.ERROR, e.getMessage());
             }
         }
+    }
 
+    protected Result executeAsyncRawQuery(String st, CrossdataResultHandler callback) throws InterruptedException {
+        Result result = xdConnection.executeAsyncRawQuery(st.replaceAll("\\s+", " ").trim(), callback);
+        callback.updateQueryStatus(result.getQueryId(), CrossdataResultHandler.AsyncQueryStatus.RUNNING);
+        Thread.sleep(ConstantsFolder.CT_CROSSDATA_ASYNC_QUERY_TIMEOUT);
+
+        if (CrossdataResultHandler.AsyncQueryStatus.RUNNING.equals(callback.getQueryStatus(result.getQueryId()))) {
+            throw new AsyncQueryTimeoutException("Async query execution timeout.");
+        }
+        return result;
     }
 
     public void removeHandler(String queryId) {
