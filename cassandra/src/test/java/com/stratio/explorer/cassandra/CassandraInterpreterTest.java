@@ -132,6 +132,10 @@ public class CassandraInterpreterTest {
             Assert.assertEquals("Always return null", interpreter.getValue("any"), null);
     }
 
+  /*  @Test public void whenConectionIsReal(){
+        InterpreterResult result =interpreter.interpret("INSERT INTOkeyspace_name.table_name;");
+    }*/
+
 
     private RowData buildRowData(CellData... cells){
         List<CellData> cellsData = new ArrayList<>();

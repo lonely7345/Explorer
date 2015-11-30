@@ -24,9 +24,8 @@ public interface StringConstants {
       String TYPE_TABLE ="%table ";
       String TYPE_TEXT ="%text ";
       String TABULATOR ="\t";
-
       String OPERATION_OK ="operation is successfully";
-
+      String OPERATIONS_OK ="all operations are successfully";
 
 
 }

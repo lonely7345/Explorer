@@ -46,6 +46,8 @@ public class CQLOperationsTest {
 
     }
 
+    /*
+
     @Test
     public void headerWillBeRecovered() throws InterruptedException, IOException {
 
@@ -81,4 +83,6 @@ public class CQLOperationsTest {
         assertThat("if not returned values then result is successfull ",cells.size(),is(1));
         assertThat("if not returned values then result is successfull ",cells.get(0).getValue().toString(),is(StringConstants.OPERATION_OK));
     }
+
+    */
 }
