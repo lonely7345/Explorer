@@ -1,5 +1,6 @@
 #Stratio Explorer
 
+*Disclaimer: As of 01/01/2016 this project has been deprecated. Thank you for your understanding and continued help throughout the project's life.
 
 
 **v0.4.0 Changes**
